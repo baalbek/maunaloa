@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="haleakala.models.mybatis.StockMapper">
+    <select id="selectStock" parameterType="int" resultType="oahu.financial.beans.StockBean">
+        select * from trader.stockprice where oid = #{id}
+    </select>
+
+    <!--
+    oid    | integer | not null default nextval('stockprice_oid_seq'::regclass)
+    ticker | ticker  |
+    dx     | date    | default now()
+    opn    | price   |
+    hi     | price   |
+    lo     | price   |
+    cls    | price   |
+    vol    | volume
+    -->
+
+    <resultMap id="stockResultMap" type="oahu.financial.beans.StockBean">
+        <result column="dx" property="dx"/>
+        <result column="opn" property="opn"/>
+        <result column="hi" property="hi"/>
+        <result column="lo" property="lo"/>
+        <result column="cls" property="cls"/>
+        <result column="vol" property="volume"/>
+    </resultMap>
+
+    <select id="selectTickerAll" parameterType="string" resultMap="stockResultMap">
+        select * from trader.stockprice where ticker = #{id} order by dx
+    </select>
+
+    <select id="selectTicker2" parameterType="map" resultMap="stockResultMap">
+        select * from trader.stockprice where ticker = #{ticker} and dx &gt;= #{fromDx} and dx &lt;= #{toDx} order by dx
+    </select>
+
+    <select id="selectTicker" parameterType="map" resultMap="stockResultMap">
+        select * from trader.stockprice where ticker = #{ticker} and dx &gt;= #{fromDx} order by dx
+    </select>
+
+    <select id="selectTickerWeek" parameterType="map" resultMap="stockResultMap">
+        select * from trader.stockprice_week where ticker = #{ticker} and dx &gt;= #{fromDx} order by dx
+    </select>
+
+    <!--
+    <insert id="insertStockPrice" parameterType="maunakea.financial.impl.StockImpl">
+        insert into trader.stockprice_week (ticker, opn, hi, lo, cls, vol)
+        values (#{ticker}, #{opn}, #{hi}, #{lo}, #{cls}, #{volume})
+    </insert>
+    -->
+</mapper>

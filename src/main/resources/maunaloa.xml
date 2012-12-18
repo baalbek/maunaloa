@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+    <!--
+    <bean id="chart" class="haleakala.views.graphics.impl.DemoChart"></bean>
+    -->
+    <bean id="chart" class="maunaloa.views.charts.CT1"></bean>
+
+    <bean id="netfonds-model" class="maunaloa.models.NetfondsModel"></bean>
+
+    <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
+        <constructor-arg ref="netfonds-model" />
+    </bean>
+
+    <bean id="derivatives-controller"
+          class="maunaloa.controllers.impl.DerivativesControllerImpl">
+        <property name="chart" ref="chart"/>
+        <constructor-arg ref="facade" />
+        <!--
+        <property name="ticker" value="STL"/>
+        -->
+    </bean>
+</beans>
+
+
