@@ -21,7 +21,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        final XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("/haleakala.xml"));
+        final XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("/maunaloa.xml"));
 
         URL url = this.getClass().getResource("/MainFrame.fxml");
 
