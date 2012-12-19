@@ -10,7 +10,10 @@
     -->
     <bean id="chart" class="maunaloa.views.charts.CT1" />
 
+    <!--
     <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader" />
+    -->
+    <bean id="downloader" class="maunaloa.dummy.Downloader" />
 
     <bean id="etrade" class="maunakea.financial.impl.Netfonds">
         <property name="downloader" ref="downloader" />
