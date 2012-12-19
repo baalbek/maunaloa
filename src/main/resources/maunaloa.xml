@@ -6,14 +6,21 @@
 
 
     <!--
-    <bean id="chart" class="haleakala.views.graphics.impl.DemoChart"></bean>
+    <bean id="chart" class="manualoa.views.graphics.impl.DemoChart"></bean>
     -->
-    <bean id="chart" class="maunaloa.views.charts.CT1"></bean>
+    <bean id="chart" class="maunaloa.views.charts.CT1" />
 
-    <bean id="netfonds-model" class="maunaloa.models.NetfondsModel"></bean>
+    <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader" />
+
+    <bean id="etrade" class="maunakea.financial.impl.Netfonds">
+        <property name="downloader" ref="downloader" />
+    </bean>
+
+    <bean id="netfonds-model" class="maunaloa.models.NetfondsModel" />
 
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
         <constructor-arg ref="netfonds-model" />
+        <constructor-arg ref="etrade" />
     </bean>
 
     <bean id="derivatives-controller"

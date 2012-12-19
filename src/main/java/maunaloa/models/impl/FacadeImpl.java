@@ -5,6 +5,7 @@ import maunaloa.models.mybatis.StockMapper;
 import maunaloa.utils.MyBatisUtils;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
+import oahu.financial.Etrade;
 import oahu.models.MaunaloaFacade;
 import org.apache.ibatis.session.SqlSession;
 
@@ -19,8 +20,11 @@ import java.util.List;
  */
 public class FacadeImpl implements MaunaloaFacade {
     private final NetfondsModel netfondsModel;
-    public FacadeImpl(NetfondsModel netfondsModel) {
+    private final Etrade etrade;
+    public FacadeImpl(NetfondsModel netfondsModel,
+                      Etrade etrade) {
         this.netfondsModel = netfondsModel;
+        this.etrade = etrade;
     }
     @Override
     public List<StockBean> stockPrices(String ticker, Date fromDx, int period) {
@@ -43,7 +47,7 @@ public class FacadeImpl implements MaunaloaFacade {
 
     @Override
     public List<DerivativeBean> calls(String ticker) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return etrade.getCalls(ticker);
     }
 
     @Override

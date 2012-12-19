@@ -119,15 +119,17 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         }
     }
 
-
     @Override()
     public ObservableList<DerivativeBean> derivatives() {
         if (beans == null) {
+            /*
             List<DerivativeBean> items = new ArrayList<>();
             items.add(new DerivativeBean("STL7X",DerivativeBean.CALL));
             items.add(new DerivativeBean("STL8X",DerivativeBean.CALL));
             items.add(new DerivativeBean("STL9X",DerivativeBean.PUT));
             beans = FXCollections.observableArrayList(items);
+            */
+            beans = FXCollections.observableArrayList(facade.calls(ticker));
         }
         return beans;
     }
