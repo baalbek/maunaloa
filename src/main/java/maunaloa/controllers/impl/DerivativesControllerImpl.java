@@ -212,7 +212,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     public void setTicker(String ticker) {
         this.ticker = ticker;
-        //derivativesTableView.getItems().setAll(derivatives());
+        ObservableList<DerivativeBean> items = derivatives();
+        if (items != null) {
+            derivativesTableView.getItems().setAll(items);
+        }
         draw();
     }
 
