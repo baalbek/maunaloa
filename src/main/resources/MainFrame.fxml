@@ -9,48 +9,32 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" xmlns:fx="http://javafx.com/fxml">
-  <children>
-    <TabPane prefHeight="800.0" prefWidth="1400.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-330.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-95.0" AnchorPane.topAnchor="0.0">
+<BorderPane prefHeight="750.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml">
+  <center>
+    <TabPane prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="Options">
           <content>
-            <BorderPane prefHeight="800.0" prefWidth="1400.0">
+            <BorderPane prefHeight="-1.0" prefWidth="-1.0">
               <center>
-                <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="388.0" prefWidth="1046.0">
-                  <columns>
-                    <TableColumn prefWidth="75.0" text="Selected" fx:id="colSelected" />
-                    <TableColumn editable="true" prefWidth="75.0" text="Option" fx:id="colOpName" />
-                    <TableColumn prefWidth="75.0" text="Expiry" fx:id="colExpiry" />
-                    <TableColumn prefWidth="75.0" text="Days" fx:id="colDays" />
-                    <TableColumn prefWidth="75.0" text="Buy" fx:id="colBuy" />
-                    <TableColumn prefWidth="75.0" text="Sell" fx:id="colSell" />
-                    <TableColumn prefWidth="75.0" text="Spread" fx:id="colSpread" />
-                    <TableColumn prefWidth="75.0" text="Iv Buy" fx:id="colIvBuy" />
-                    <TableColumn prefWidth="75.0" text="Iv" fx:id="colIvSell" />
-                    <TableColumn prefWidth="75.0" text="Delta" fx:id="colDelta" />
-                    <TableColumn prefWidth="75.0" text="Rating" fx:id="colRating" />
-                    <TableColumn prefWidth="75.0" text="Break Even" fx:id="colBreakEven" />
-                    <TableColumn prefWidth="75.0" text="Risc" fx:id="colRisc" />
-                  </columns>
-                </TableView>
+                  <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="-1" prefWidth="-1">
+                      <columns>
+                          <TableColumn prefWidth="75.0" text="Selected" fx:id="colSelected" />
+                          <TableColumn editable="true" prefWidth="75.0" text="Option" fx:id="colOpName" />
+                          <TableColumn prefWidth="75.0" text="Expiry" fx:id="colExpiry" />
+                          <TableColumn prefWidth="75.0" text="Days" fx:id="colDays" />
+                          <TableColumn prefWidth="75.0" text="Buy" fx:id="colBuy" />
+                          <TableColumn prefWidth="75.0" text="Sell" fx:id="colSell" />
+                          <TableColumn prefWidth="75.0" text="Spread" fx:id="colSpread" />
+                          <TableColumn prefWidth="75.0" text="Iv Buy" fx:id="colIvBuy" />
+                          <TableColumn prefWidth="75.0" text="Iv" fx:id="colIvSell" />
+                          <TableColumn prefWidth="75.0" text="Delta" fx:id="colDelta" />
+                          <TableColumn prefWidth="75.0" text="Rating" fx:id="colRating" />
+                          <TableColumn prefWidth="75.0" text="Break Even" fx:id="colBreakEven" />
+                          <TableColumn prefWidth="75.0" text="Risc" fx:id="colRisc" />
+                      </columns>
+                  </TableView>
               </center>
-              <top>
-                <HBox prefHeight="100.0" prefWidth="200.0">
-                  <children>
-                    <Button mnemonicParsing="false" onAction="#editBean" text="List bean status">
-                      <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" top="10.0" />
-                      </HBox.margin>
-                    </Button>
-                    <Button mnemonicParsing="false" onAction="#unCheckBeans" text="Un-check beans">
-                      <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" top="10.0" />
-                      </HBox.margin>
-                    </Button>
-                  </children>
-                </HBox>
-              </top>
             </BorderPane>
           </content>
         </Tab>
@@ -58,31 +42,23 @@
           <content>
             <VBox prefHeight="-1.0" prefWidth="-1.0">
               <children>
-                <HBox prefHeight="-1.0" prefWidth="-1.0">
-                  <children>
-                    <ChoiceBox fx:id="cbTickers">
-                      <!--
-                      <items>
-                        <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Item 1" />
-                          <String fx:value="Item 2" />
-                          <String fx:value="Item 3" />
-                        </FXCollections>
-                      </items>
-                      -->
-                      <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x1" />
-                      </HBox.margin>
-                    </ChoiceBox>
-                    <CheckBox alignment="CENTER_LEFT" mnemonicParsing="false" text="CheckBox" textAlignment="LEFT" HBox.margin="$x1" />
-                  </children>
-                </HBox>
-                <Canvas fx:id="myCanvas" focusTraversable="false" height="700.0" opacity="1.0" pickOnBounds="true" scaleX="1.0" scaleY="1.0" translateX="0.0" translateY="0.0" width="1350.0" />
+                <Canvas fx:id="myCanvas" focusTraversable="false" height="600.0" opacity="1.0" pickOnBounds="true" scaleX="1.0" scaleY="1.0" translateX="0.0" translateY="0.0" width="1200.0" />
               </children>
             </VBox>
           </content>
         </Tab>
       </tabs>
     </TabPane>
-  </children>
-</AnchorPane>
+  </center>
+  <top>
+    <HBox prefHeight="-1.0" prefWidth="-1.0">
+      <children>
+        <ChoiceBox fx:id="cbTickers">
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+          </HBox.margin>
+        </ChoiceBox>
+      </children>
+    </HBox>
+  </top>
+</BorderPane>
