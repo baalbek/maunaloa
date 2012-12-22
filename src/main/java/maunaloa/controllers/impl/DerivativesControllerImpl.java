@@ -70,10 +70,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                         return new CheckBoxTableCell<>();
                     }
                 });
-<<<<<<< HEAD
-        //derivativesTableView.getItems().setAll(derivatives());
-=======
->>>>>>> origin/tableviewbinding
+
 
         //derivativesTableView.getItems().setAll(derivatives());
 
@@ -213,26 +210,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
 
-<<<<<<< HEAD
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-        draw();
-        derivativesTableView.getItems().setAll(derivatives());
-    }
-
 
     //------------------------------------------------------------------------
     //------------------------- Interface methods ----------------------------
     //------------------------------------------------------------------------
-
-    @Override
-    public void draw() {
-        if (ticker == null) return;
-        chart.draw(myCanvas);
-    }
-
-=======
-
     public void setTicker(String ticker) {
         this.ticker = ticker;
         ObservableList<DerivativeBean> items = derivatives();
@@ -251,7 +232,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         if (ticker == null) return;
         chart.draw(myCanvas);
     }
->>>>>>> origin/tableviewbinding
 
     @Override
     public List<StockBean> stockPrices(int period) {
