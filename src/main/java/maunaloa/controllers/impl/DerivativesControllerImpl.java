@@ -67,7 +67,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                         return new CheckBoxTableCell<>();
                     }
                 });
-        derivativesTableView.getItems().setAll(derivatives());
+        //derivativesTableView.getItems().setAll(derivatives());
 
         /*
         myCanvas.widthProperty().bind(myVbox.widthProperty());
@@ -119,7 +119,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         }
     }
 
-    @Override()
     public ObservableList<DerivativeBean> derivatives() {
         if (beans == null) {
             /*
@@ -134,23 +133,27 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         return beans;
     }
 
-    @Override
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
         this.chart.setViewModel(this);
     }
 
 
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+        draw();
+        derivativesTableView.getItems().setAll(derivatives());
+    }
+
+
+    //------------------------------------------------------------------------
+    //------------------------- Interface methods ----------------------------
+    //------------------------------------------------------------------------
+
     @Override
     public void draw() {
         if (ticker == null) return;
         chart.draw(myCanvas);
-    }
-
-    @Override
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
-        draw();
     }
 
 
