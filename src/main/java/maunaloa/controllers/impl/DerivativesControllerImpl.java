@@ -1,5 +1,8 @@
 package maunaloa.controllers.impl;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.utils.DateUtils;
 import javafx.beans.value.ChangeListener;
@@ -67,8 +70,75 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                         return new CheckBoxTableCell<>();
                     }
                 });
+<<<<<<< HEAD
+        //derivativesTableView.getItems().setAll(derivatives());
+=======
+>>>>>>> origin/tableviewbinding
+
         //derivativesTableView.getItems().setAll(derivatives());
 
+        /*
+        derivativesTableView.itemsProperty().bind(new ObjectProperty<ObservableList<DerivativeBean>>() {
+            @Override
+            public ObservableList<DerivativeBean> get() {
+                return derivatives();
+            }
+
+
+            @Override
+            public void bind(ObservableValue<? extends ObservableList<DerivativeBean>> observableValue) {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+
+            @Override
+            public void unbind() {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+
+            @Override
+            public boolean isBound() {
+                //return false;throw new org.apache.commons.lang.NotImplementedException();
+                return true;
+            }
+
+            @Override
+            public Object getBean() {
+                //return null;throw new org.apache.commons.lang.NotImplementedException();
+                return null;
+            }
+
+            @Override
+            public String getName() {
+                //return null;throw new org.apache.commons.lang.NotImplementedException();
+                return null;
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super ObservableList<DerivativeBean>> changeListener) {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super ObservableList<DerivativeBean>> changeListener) {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+
+            @Override
+            public void addListener(InvalidationListener invalidationListener) {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+
+            @Override
+            public void removeListener(InvalidationListener invalidationListener) {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+
+            @Override
+            public void set(ObservableList<DerivativeBean> derivativeBeans) {
+                //throw new org.apache.commons.lang.NotImplementedException();
+            }
+        });
+        */
         /*
         myCanvas.widthProperty().bind(myVbox.widthProperty());
         myCanvas.heightProperty().bind(myVbox.heightProperty());
@@ -118,19 +188,23 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             b.setIsChecked(false);
         }
     }
+    /*
+    public ObjectProperty<ObservableList<DerivativeBean>> derivativesProperty() {
+
+        if (ticker == null) return null;
+        return FXCollections.observableArrayList(facade.calls(ticker));
+    }
+    */
 
     public ObservableList<DerivativeBean> derivatives() {
+        /*
         if (beans == null) {
-            /*
-            List<DerivativeBean> items = new ArrayList<>();
-            items.add(new DerivativeBean("STL7X",DerivativeBean.CALL));
-            items.add(new DerivativeBean("STL8X",DerivativeBean.CALL));
-            items.add(new DerivativeBean("STL9X",DerivativeBean.PUT));
-            beans = FXCollections.observableArrayList(items);
-            */
+            ticker = "YAR";
             beans = FXCollections.observableArrayList(facade.calls(ticker));
         }
-        return beans;
+        */
+        if (ticker == null) return null;
+        return FXCollections.observableArrayList(facade.calls(ticker));
     }
 
     public void setChart(MaunaloaChart chart) {
@@ -139,6 +213,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
 
+<<<<<<< HEAD
     public void setTicker(String ticker) {
         this.ticker = ticker;
         draw();
@@ -156,6 +231,27 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         chart.draw(myCanvas);
     }
 
+=======
+
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+        ObservableList<DerivativeBean> items = derivatives();
+        if (items != null) {
+            derivativesTableView.getItems().setAll(items);
+        }
+        draw();
+    }
+
+    //--------------------------------------------------------------
+    //----------------- Interface methods --------------------------
+    //--------------------------------------------------------------
+
+    @Override
+    public void draw() {
+        if (ticker == null) return;
+        chart.draw(myCanvas);
+    }
+>>>>>>> origin/tableviewbinding
 
     @Override
     public List<StockBean> stockPrices(int period) {
