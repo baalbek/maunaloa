@@ -10,21 +10,17 @@
     <name>MaunaLoa</name>
     <url>http://maven.apache.org</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <oahu.version>1.1</oahu.version>
-        <junit.version>3.8.1</junit.version>
-        <colt.version>1.2.0</colt.version>
-        <javafx.version>2.2</javafx.version>
-        <maunakea.version>1.2</maunakea.version>
-    </properties>
+    <parent>
+        <groupId>rcstadheim</groupId>
+        <artifactId>hawaii</artifactId>
+        <version>1.0</version>
+    </parent>
 
     <dependencies>
         <!-- JavaFX -->
         <dependency>
             <groupId>com.oracle.javafx</groupId>
             <artifactId>javafx</artifactId>
-            <version>${javafx.version}</version>
         </dependency>
 
         <!--****************************************************************
@@ -33,7 +29,6 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring</artifactId>
-            <version>2.5.6.SEC03</version>
         </dependency>
 
         <!--****************************************************************
@@ -43,12 +38,10 @@
         <dependency>
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
-            <version>2.10</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
         </dependency>
 
 
@@ -66,7 +59,6 @@
         <dependency>
             <groupId>rcstadheim</groupId>
             <artifactId>maunakea</artifactId>
-            <version>${maunakea.version}</version>
         </dependency>
 
 
@@ -76,15 +68,15 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>colt</groupId>
             <artifactId>colt</artifactId>
-            <version>${colt.version}</version>
         </dependency>
+        -->
 
         <!--****************************************************************
         ****************************** Clojure *****************************
@@ -92,35 +84,29 @@
         <dependency>
             <groupId>org.clojure</groupId>
             <artifactId>clojure</artifactId>
-            <version>1.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.clojure</groupId>
             <artifactId>math.numeric-tower</artifactId>
-            <version>0.0.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.clojure</groupId>
             <artifactId>clojure-contrib</artifactId>
-            <version>1.2.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.clojure</groupId>
             <artifactId>data.zip</artifactId>
-            <version>0.1.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.clojure</groupId>
             <artifactId>core.memoize</artifactId>
-            <version>0.5.2</version>
         </dependency>
         <dependency>
             <groupId>org.clojure</groupId>
             <artifactId>core.cache</artifactId>
-            <version>0.6.1</version>
         </dependency>
 
         <!--****************************************************************
@@ -129,7 +115,6 @@
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
-            <version>3.1.0</version>
         </dependency>
 
         <!--****************************************************************
@@ -138,7 +123,6 @@
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.1-901.jdbc4</version>
         </dependency>
 
         <!--****************************************************************
@@ -148,8 +132,8 @@
         <dependency>
             <groupId>net.sourceforge.htmlunit</groupId>
             <artifactId>htmlunit</artifactId>
-            <version>2.9</version>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>
