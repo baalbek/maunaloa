@@ -14,6 +14,7 @@ src/main/java/taharoa/viewmodels/impl/MainFrameViewModelImpl2.java
 .idea
 *.iml
 xml
+tmp
 src/main/clojure/taharoa.xml
 src/test/clojure/taharoa.xml
 src/test/clojure/taharoa/models
