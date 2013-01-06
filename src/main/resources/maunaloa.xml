@@ -27,6 +27,7 @@
         <property name="downloader" ref="downloader" />
         <property name="derivativeParser" ref="derivative-parser" />
         <property name="stockParser" ref="stock-parser" />
+        <property name="caching" value="true" />
     </bean>
 
     <bean id="netfonds-model" class="maunaloa.models.NetfondsModel" />
