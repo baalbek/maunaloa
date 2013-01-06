@@ -17,23 +17,23 @@
           <content>
             <BorderPane prefHeight="-1.0" prefWidth="-1.0">
               <center>
-                  <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="-1" prefWidth="-1">
-                      <columns>
-                          <TableColumn prefWidth="75.0" text="Selected" fx:id="colSelected" />
-                          <TableColumn editable="true" prefWidth="75.0" text="Option" fx:id="colOpName" />
-                          <TableColumn prefWidth="75.0" text="Expiry" fx:id="colExpiry" />
-                          <TableColumn prefWidth="75.0" text="Days" fx:id="colDays" />
-                          <TableColumn prefWidth="75.0" text="Buy" fx:id="colBuy" />
-                          <TableColumn prefWidth="75.0" text="Sell" fx:id="colSell" />
-                          <TableColumn prefWidth="75.0" text="Spread" fx:id="colSpread" />
-                          <TableColumn prefWidth="75.0" text="Iv Buy" fx:id="colIvBuy" />
-                          <TableColumn prefWidth="75.0" text="Iv" fx:id="colIvSell" />
-                          <TableColumn prefWidth="75.0" text="Delta" fx:id="colDelta" />
-                          <TableColumn prefWidth="75.0" text="Rating" fx:id="colRating" />
-                          <TableColumn prefWidth="75.0" text="Break Even" fx:id="colBreakEven" />
-                          <TableColumn prefWidth="75.0" text="Risc" fx:id="colRisc" />
-                      </columns>
-                  </TableView>
+                <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="-1.0" prefWidth="-1.0">
+                  <columns>
+                    <TableColumn prefWidth="75.0" text="Selected" fx:id="colSelected" />
+                    <TableColumn editable="true" prefWidth="75.0" text="Option" fx:id="colOpName" />
+                    <TableColumn prefWidth="75.0" text="Expiry" fx:id="colExpiry" />
+                    <TableColumn prefWidth="75.0" text="Days" fx:id="colDays" />
+                    <TableColumn prefWidth="75.0" text="Buy" fx:id="colBuy" />
+                    <TableColumn prefWidth="75.0" text="Sell" fx:id="colSell" />
+                    <TableColumn prefWidth="75.0" text="Spread" fx:id="colSpread" />
+                    <TableColumn prefWidth="75.0" text="Iv Buy" fx:id="colIvBuy" />
+                    <TableColumn prefWidth="75.0" text="Iv" fx:id="colIvSell" />
+                    <TableColumn prefWidth="75.0" text="Delta" fx:id="colDelta" />
+                    <TableColumn prefWidth="75.0" text="Rating" fx:id="colRating" />
+                    <TableColumn prefWidth="75.0" text="Break Even" fx:id="colBreakEven" />
+                    <TableColumn prefWidth="75.0" text="Risc" fx:id="colRisc" />
+                  </columns>
+                </TableView>
               </center>
             </BorderPane>
           </content>
@@ -53,6 +53,20 @@
   <top>
     <HBox prefHeight="-1.0" prefWidth="-1.0">
       <children>
+        <RadioButton fx:id="rgCalls" mnemonicParsing="false" selected="true" text="Calls" userData="calls">
+          <toggleGroup>
+            <ToggleGroup fx:id="rgDerivatives" />
+          </toggleGroup>
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+          </HBox.margin>
+        </RadioButton>
+        <RadioButton fx:id="rgPuts" mnemonicParsing="false" text="Puts" userData="puts" toggleGroup="$rgDerivatives">
+          <HBox.margin>
+            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" fx:id="x1" />
+          </HBox.margin>
+        </RadioButton>
+        <RadioButton fx:id="rgCallsAndPuts" mnemonicParsing="false" text="All" userData="all" toggleGroup="$rgDerivatives" HBox.margin="$x1" />
         <ChoiceBox fx:id="cbTickers">
           <HBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

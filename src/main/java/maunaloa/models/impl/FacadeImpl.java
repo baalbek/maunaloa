@@ -7,6 +7,7 @@ import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.financial.Etrade;
 import oahu.models.MaunaloaFacade;
+import org.apache.commons.lang.NotImplementedException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.Collection;
@@ -53,6 +54,11 @@ public class FacadeImpl implements MaunaloaFacade {
 
     @Override
     public Collection<DerivativeBean> puts(String ticker) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return etrade.getPuts(ticker);
+    }
+
+    @Override
+    public Collection<DerivativeBean> callsAndPuts(String ticker) {
+        return calls(ticker);
     }
 }

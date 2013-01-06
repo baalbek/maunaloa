@@ -14,9 +14,11 @@
     <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader" />
     -->
     <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator" />
+    <bean id="bean-factory" class="maunaloa.models.impl.DefaultHtmlRowBeanFactory" />
     <bean id="downloader" class="maunaloa.dummy.Downloader" />
     <bean id="derivative-parser" class="maunakea.financial.impl.DefaultDerivativeParser">
         <constructor-arg ref="calculator" />
+        <constructor-arg ref="bean-factory" />
     </bean>
 
     <bean id="stock-parser" class="maunakea.financial.impl.DefaultStockParser" />
@@ -36,11 +38,16 @@
 
     <bean id="derivatives-controller"
           class="maunaloa.controllers.impl.DerivativesControllerImpl">
-        <property name="chart" ref="chart"/>
         <constructor-arg ref="facade" />
-        <!--
-        <property name="ticker" value="STL"/>
-        -->
+        <property name="chart" ref="chart"/>
+        <property name="tickers">
+            <list>
+                <value>STL</value>
+                <value>YAR</value>
+                <value>NHY</value>
+                <value>ORK</value>
+            </list>
+        </property>
     </bean>
 </beans>
 
