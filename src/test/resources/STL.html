@@ -1,0 +1,2345 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Netfonds -- Derivater for Statoil</title>
+<link href="http://xochitl.netfonds.no/css/netfonds.css?ts=1326402969" rel="stylesheet"  type="text/css">
+<link rel="SHORTCUT ICON" href="http://xochitl.netfonds.no/bits/favicon.ico">
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" /> 
+</head>
+<body class="hbody">
+<table class=twholepage>
+<tr>
+<td class=logoside><span width="1px"></span></td>
+<td class=maincolumn>
+<form action="meta-paper.php" method=get name="gototick" class=hsearch autocomplete=off>
+<div class="hlogostrip"><table class="hlogostrip"><tr>
+<td class="hlogo"><div class="hlogo"><a href="http://www.netfonds.no/"><img src="http://xochitl.netfonds.no/bits/horizontal_logo_white1_small.png" alt="Netfonds Bank ASA" title="Netfonds Bank ASA" width=129 height=25 border=0></a></div>
+</td>
+<td class="hunlogo">&nbsp;<a class="logout" href="https://bang.netfonds.no/logout.php">Logg ut</a>&nbsp;|&nbsp;<a href="/derivative.php?underlying_paper=STL&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;help=t">Hjelp</a><span style="display: none; cursor: pointer;" id="topupdate" value="&nbsp;|&nbsp;Kontinuerlig oppdatert">&nbsp;|&nbsp;Start oppdatering</span>&nbsp;<input type="hidden" name="exchange" value="OSE" />
+<input class="pinput" id=papersearch type=text name="paper" size=6>&nbsp;<input type=submit class=hsearch value="S�k"></td>
+</tr>
+</table>
+</div>
+
+</form>
+</td>
+<td class=logoside><span width="1px"></span></td>
+</tr>
+
+<tr>
+<td class=menutopside></td>
+<td class=maincolumn>
+
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td nowrap>
+<a href="http://www.netfonds.no/index.php">Netfonds</a>&nbsp;|&nbsp;<a href="https://bang.netfonds.no/registrering.php">Bli kunde</a>&nbsp;|&nbsp;<a href="https://bang.netfonds.no/login.php">Min konto</a>&nbsp;|&nbsp;<a href="https://bang.netfonds.no/handel.php">Handel</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/investeringskonto.php">Livkonto</a>&nbsp;|&nbsp;<a href="https://bang.netfonds.no/managed-intro.php">Aktiv forvaltning</a>&nbsp;|&nbsp;<a href="https://rosa.netfonds.no/port.php">Verkt�y</a>&nbsp;|&nbsp;<a href="funds-main.php">Fondsmarked</a>&nbsp;|&nbsp;<a href="certificate-main.php">NDX</a>&nbsp;|&nbsp;<span class="htopselected"><a href="market.php">Marked</a></span></td><td class=htime nowrap>
+<span id=toptime>mandag 23/01-2012 16:15:03</span></td></tr></table></div>
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td class=hmarket>
+<span class="htopselected"><a href="market.php">Norge</a></span>&nbsp;|&nbsp;<a href="market.php?exchange=ST">Sverige</a>&nbsp;|&nbsp;<a href="market.php?exchange=CPH">Danmark</a>&nbsp;|&nbsp;<a href="market.php?exchange=ICEX">Island</a>&nbsp;|&nbsp;<a href="market.php?exchange=O">USA</a>&nbsp;|&nbsp;<a href="funds-main.php">Fond</a>&nbsp;|&nbsp;<a href="market.php?exchange=FXSB">Valuta</a>&nbsp;|&nbsp;<a href="market.php?exchange=ICEU&types=FU">R�varer</a>&nbsp;|&nbsp;<a href="nbb-main.php">Alternative investeringer</a></td><td nowrap class=hdelay><span id=menuupdate data="box.box_menu_updated_line,exchange.OMFE">Kurser i sanntid. Sist oppdatert: mandag 23. januar</span></td></tr></table>
+</div>
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td class=hmarket>
+<a href="market.php?exchange=OSE">Oslo B�rs</a>
+&nbsp;|&nbsp;<a href="market.php?exchange=OAX">Oslo Axess</a>
+&nbsp;|&nbsp;<span class="htopselected"><a href="market.php?exchange=OMFE">Opsjoner</a></span>
+&nbsp;|&nbsp;<a href="market.php?exchange=OTC">Unoterte</a>
+&nbsp;|&nbsp;<a href="market.php?exchange=OSE&amp;types=B">Obligasjoner</a>
+</td></tr></table>
+</div>
+</td>
+<td class=menutopside></td>
+</tr>
+<tr>
+<td></td>
+<td class=maincolumn>
+<table class=homaintable><tr valign=top><td class="hsidetd">
+<table class="hsidetable">
+<tr><td><a href="market.php?exchange=OMFE">Oversikt</a></td></tr>
+<tr><td><a href="kurs.php?exchange=OMFE">Kursliste</a></td></tr>
+<tr><td><a href="kurs.php?exchange=OMFE&sec_types=FU">Futures</a></td></tr>
+<tr><td><a href="largest.php?exchange=OMFE">St�rste handler</a></td></tr>
+<tr><td><a href="derivatives.php">Underliggende</a></td></tr>
+</table>
+</td><td class="hcontent"><div class="hcontent"><script type="text/javascript" src="http://xochitl.netfonds.no/js/general.js?ts=1322843501"></script><script type="text/javascript" src="http://xochitl.netfonds.no/js/paper-search.js?ts=1325823600"></script><script language="JavaScript" type="text/javascript">paperSearchBaseUrl = "";</script>
+<div><table id="updatetable1" width="" class="qbox" data="box.box_quote_line,paper.STL,exchange.OSE,underlyingp.Y" callback=""><tr>
+<th class="top" colspan="12">Kurs i underliggende papir STL (Statoil)</th>
+</tr>
+<tr>
+<th>Siste</th>
+<th>Endring</th>
+<th>Endr%</th>
+<th>Kj�per</th>
+<th>Selger</th>
+<th>�pning</th>
+<th>H�y</th>
+<th>Lav</th>
+<th>Forrige</th>
+<th>Volum</th>
+<th>Verdi</th>
+<th>Handler</th>
+</tr>
+<tr>
+<td name="ju.l" id="ju.l">149.90</td>
+<td class="up" name="ju.c">2.80</td>
+<td class="up" name="ju.cp">1.22%</td>
+<td align="right" id="ju.b.STL.OSE" name="ju.b.STL.OSE"><a href="https://bang.netfonds.no/order.php?paper=STL&amp;exchange=OSE&amp;type=S&amp;slimit=148.80&amp;suggest_number=0&amp;skind=limit">148.80</a></td>
+<td align="right" id="ju.o.STL.OSE" name="ju.o.STL.OSE"><a href="https://bang.netfonds.no/order.php?paper=STL&amp;exchange=OSE&amp;type=B&amp;blimit=148.90&amp;suggest_number=0&amp;bkind=limit">148.90</a></td>
+<td name="ju.op">147.80</td>
+<td name="ju.h">150.60</td>
+<td name="ju.lo">146.30</td>
+<td name="ju.pr" id="ju.pr">147.10</td>
+<td name="ju.vo" align="">4 553 790</td>
+<td name="ju.va" align="">676 391 211</td>
+<td name="ju.t" align="">5 172</td></tr>
+</table>
+</div>
+<table class="com topmargin"><tr>
+<th class="top" colspan="9">Derivater</th>
+</tr>
+<tr>
+<th>Ticker</th>
+<th>Type</th>
+<th>Innl�sningskurs</th>
+<th>Bortfall</th>
+<th>Kj�per</th>
+<th>Selger</th>
+<th>Siste</th>
+<th>Volum</th>
+<th>&nbsp;</th>
+</tr>
+<tr>
+<th class="top" colspan="9">American call</th>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B175&exchange=OMFE">STL2B175</a></td>
+<td>American call</td>
+<td align="right">175.00</td>
+<td align="right">16/02-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B170&exchange=OMFE">STL2B170</a></td>
+<td>American call</td>
+<td align="right">170.00</td>
+<td align="right">16/02-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.45</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B120&exchange=OMFE">STL2B120</a></td>
+<td>American call</td>
+<td align="right">120.00</td>
+<td align="right">16/02-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B125&exchange=OMFE">STL2B125</a></td>
+<td>American call</td>
+<td align="right">125.00</td>
+<td align="right">16/02-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B165&exchange=OMFE">STL2B165</a></td>
+<td>American call</td>
+<td align="right">165.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">0.03</td>
+<td align="right">0.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B140&exchange=OMFE">STL2B140</a></td>
+<td>American call</td>
+<td align="right">140.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">9.50</td>
+<td align="right">10.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B160&exchange=OMFE">STL2B160</a></td>
+<td>American call</td>
+<td align="right">160.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">0.30</td>
+<td align="right">0.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B155&exchange=OMFE">STL2B155</a></td>
+<td>American call</td>
+<td align="right">155.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">1.15</td>
+<td align="right">1.80</td>
+<td align="right">1.45</td>
+<td align="right">1 610</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B150&exchange=OMFE">STL2B150</a></td>
+<td>American call</td>
+<td align="right">150.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">3.00</td>
+<td align="right">3.65</td>
+<td align="right">3.50</td>
+<td align="right">705</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B145&exchange=OMFE">STL2B145</a></td>
+<td>American call</td>
+<td align="right">145.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">5.80</td>
+<td align="right">6.70</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B130&exchange=OMFE">STL2B130</a></td>
+<td>American call</td>
+<td align="right">130.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">18.25</td>
+<td align="right">20.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2B135&exchange=OMFE">STL2B135</a></td>
+<td>American call</td>
+<td align="right">135.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">13.50</td>
+<td align="right">15.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2B135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C175&exchange=OMFE">STL2C175</a></td>
+<td>American call</td>
+<td align="right">175.00</td>
+<td align="right">15/03-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C170&exchange=OMFE">STL2C170</a></td>
+<td>American call</td>
+<td align="right">170.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">0.09</td>
+<td align="right">0.65</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C165&exchange=OMFE">STL2C165</a></td>
+<td>American call</td>
+<td align="right">165.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">0.45</td>
+<td align="right">0.95</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C160&exchange=OMFE">STL2C160</a></td>
+<td>American call</td>
+<td align="right">160.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">1.45</td>
+<td align="right">1.70</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C155&exchange=OMFE">STL2C155</a></td>
+<td>American call</td>
+<td align="right">155.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">2.40</td>
+<td align="right">3.10</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C150&exchange=OMFE">STL2C150</a></td>
+<td>American call</td>
+<td align="right">150.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">4.50</td>
+<td align="right">5.30</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C145&exchange=OMFE">STL2C145</a></td>
+<td>American call</td>
+<td align="right">145.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">7.50</td>
+<td align="right">8.25</td>
+<td align="right">8.50</td>
+<td align="right">510</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C140&exchange=OMFE">STL2C140</a></td>
+<td>American call</td>
+<td align="right">140.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">10.50</td>
+<td align="right">12.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C135&exchange=OMFE">STL2C135</a></td>
+<td>American call</td>
+<td align="right">135.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">14.75</td>
+<td align="right">16.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C130&exchange=OMFE">STL2C130</a></td>
+<td>American call</td>
+<td align="right">130.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">19.00</td>
+<td align="right">21.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C125&exchange=OMFE">STL2C125</a></td>
+<td>American call</td>
+<td align="right">125.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">23.25</td>
+<td align="right">26.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C120&exchange=OMFE">STL2C120</a></td>
+<td>American call</td>
+<td align="right">120.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">28.00</td>
+<td align="right">31.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C115&exchange=OMFE">STL2C115</a></td>
+<td>American call</td>
+<td align="right">115.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">32.50</td>
+<td align="right">36.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C115.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C110&exchange=OMFE">STL2C110</a></td>
+<td>American call</td>
+<td align="right">110.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">37.50</td>
+<td align="right">41.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C110.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C105&exchange=OMFE">STL2C105</a></td>
+<td>American call</td>
+<td align="right">105.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">42.50</td>
+<td align="right">46.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C105.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2C100&exchange=OMFE">STL2C100</a></td>
+<td>American call</td>
+<td align="right">100.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">47.25</td>
+<td align="right">51.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2C100.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D130&exchange=OMFE">STL2D130</a></td>
+<td>American call</td>
+<td align="right">130.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">20.00</td>
+<td align="right">22.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D135&exchange=OMFE">STL2D135</a></td>
+<td>American call</td>
+<td align="right">135.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">16.00</td>
+<td align="right">18.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D140&exchange=OMFE">STL2D140</a></td>
+<td>American call</td>
+<td align="right">140.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">12.25</td>
+<td align="right">13.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D145&exchange=OMFE">STL2D145</a></td>
+<td>American call</td>
+<td align="right">145.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">9.00</td>
+<td align="right">9.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D150&exchange=OMFE">STL2D150</a></td>
+<td>American call</td>
+<td align="right">150.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">6.10</td>
+<td align="right">6.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D165&exchange=OMFE">STL2D165</a></td>
+<td>American call</td>
+<td align="right">165.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">1.20</td>
+<td align="right">1.55</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D160&exchange=OMFE">STL2D160</a></td>
+<td>American call</td>
+<td align="right">160.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">2.25</td>
+<td align="right">2.70</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2D155&exchange=OMFE">STL2D155</a></td>
+<td>American call</td>
+<td align="right">155.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">3.80</td>
+<td align="right">4.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2D155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F175&exchange=OMFE">STL2F175</a></td>
+<td>American call</td>
+<td align="right">175.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">0.25</td>
+<td align="right">1.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F170&exchange=OMFE">STL2F170</a></td>
+<td>American call</td>
+<td align="right">170.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">0.85</td>
+<td align="right">1.60</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F165&exchange=OMFE">STL2F165</a></td>
+<td>American call</td>
+<td align="right">165.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">1.95</td>
+<td align="right">2.40</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F160&exchange=OMFE">STL2F160</a></td>
+<td>American call</td>
+<td align="right">160.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">3.25</td>
+<td align="right">3.85</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F155&exchange=OMFE">STL2F155</a></td>
+<td>American call</td>
+<td align="right">155.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">5.00</td>
+<td align="right">5.70</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F150&exchange=OMFE">STL2F150</a></td>
+<td>American call</td>
+<td align="right">150.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">7.20</td>
+<td align="right">8.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F145&exchange=OMFE">STL2F145</a></td>
+<td>American call</td>
+<td align="right">145.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">10.00</td>
+<td align="right">10.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F140&exchange=OMFE">STL2F140</a></td>
+<td>American call</td>
+<td align="right">140.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">13.00</td>
+<td align="right">15.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F135&exchange=OMFE">STL2F135</a></td>
+<td>American call</td>
+<td align="right">135.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">16.75</td>
+<td align="right">18.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F130&exchange=OMFE">STL2F130</a></td>
+<td>American call</td>
+<td align="right">130.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">20.25</td>
+<td align="right">23.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F125&exchange=OMFE">STL2F125</a></td>
+<td>American call</td>
+<td align="right">125.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">24.75</td>
+<td align="right">27.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F120&exchange=OMFE">STL2F120</a></td>
+<td>American call</td>
+<td align="right">120.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">29.25</td>
+<td align="right">32.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F115&exchange=OMFE">STL2F115</a></td>
+<td>American call</td>
+<td align="right">115.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">33.50</td>
+<td align="right">37.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F115.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F110&exchange=OMFE">STL2F110</a></td>
+<td>American call</td>
+<td align="right">110.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">38.25</td>
+<td align="right">42.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F110.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F105&exchange=OMFE">STL2F105</a></td>
+<td>American call</td>
+<td align="right">105.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">43.25</td>
+<td align="right">47.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F105.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2F100&exchange=OMFE">STL2F100</a></td>
+<td>American call</td>
+<td align="right">100.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">48.00</td>
+<td align="right">51.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2F100.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I175&exchange=OMFE">STL2I175</a></td>
+<td>American call</td>
+<td align="right">175.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">1.20</td>
+<td align="right">1.95</td>
+<td align="right">1.80</td>
+<td align="right">100</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I170&exchange=OMFE">STL2I170</a></td>
+<td>American call</td>
+<td align="right">170.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">2.00</td>
+<td align="right">3.50</td>
+<td align="right">2.70</td>
+<td align="right">50</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I165&exchange=OMFE">STL2I165</a></td>
+<td>American call</td>
+<td align="right">165.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">3.30</td>
+<td align="right">4.40</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I160&exchange=OMFE">STL2I160</a></td>
+<td>American call</td>
+<td align="right">160.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">5.10</td>
+<td align="right">5.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I155&exchange=OMFE">STL2I155</a></td>
+<td>American call</td>
+<td align="right">155.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">6.90</td>
+<td align="right">7.60</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I150&exchange=OMFE">STL2I150</a></td>
+<td>American call</td>
+<td align="right">150.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">9.00</td>
+<td align="right">10.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I145&exchange=OMFE">STL2I145</a></td>
+<td>American call</td>
+<td align="right">145.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">11.75</td>
+<td align="right">12.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I140&exchange=OMFE">STL2I140</a></td>
+<td>American call</td>
+<td align="right">140.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">14.75</td>
+<td align="right">16.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I135&exchange=OMFE">STL2I135</a></td>
+<td>American call</td>
+<td align="right">135.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">18.00</td>
+<td align="right">20.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I130&exchange=OMFE">STL2I130</a></td>
+<td>American call</td>
+<td align="right">130.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">21.50</td>
+<td align="right">24.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I125&exchange=OMFE">STL2I125</a></td>
+<td>American call</td>
+<td align="right">125.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">25.50</td>
+<td align="right">28.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I120&exchange=OMFE">STL2I120</a></td>
+<td>American call</td>
+<td align="right">120.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">30.00</td>
+<td align="right">33.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I115&exchange=OMFE">STL2I115</a></td>
+<td>American call</td>
+<td align="right">115.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">34.00</td>
+<td align="right">37.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I115.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I110&exchange=OMFE">STL2I110</a></td>
+<td>American call</td>
+<td align="right">110.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">38.50</td>
+<td align="right">42.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I110.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2I105&exchange=OMFE">STL2I105</a></td>
+<td>American call</td>
+<td align="right">105.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">43.25</td>
+<td align="right">47.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2I105.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L175&exchange=OMFE">STL2L175</a></td>
+<td>American call</td>
+<td align="right">175.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">2.00</td>
+<td align="right">3.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L130&exchange=OMFE">STL2L130</a></td>
+<td>American call</td>
+<td align="right">130.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">23.25</td>
+<td align="right">25.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L135&exchange=OMFE">STL2L135</a></td>
+<td>American call</td>
+<td align="right">135.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">20.00</td>
+<td align="right">21.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L150&exchange=OMFE">STL2L150</a></td>
+<td>American call</td>
+<td align="right">150.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">11.00</td>
+<td align="right">12.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L170&exchange=OMFE">STL2L170</a></td>
+<td>American call</td>
+<td align="right">170.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">3.30</td>
+<td align="right">4.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L165&exchange=OMFE">STL2L165</a></td>
+<td>American call</td>
+<td align="right">165.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">5.40</td>
+<td align="right">6.20</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L160&exchange=OMFE">STL2L160</a></td>
+<td>American call</td>
+<td align="right">160.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">7.10</td>
+<td align="right">7.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L155&exchange=OMFE">STL2L155</a></td>
+<td>American call</td>
+<td align="right">155.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">9.00</td>
+<td align="right">9.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L140&exchange=OMFE">STL2L140</a></td>
+<td>American call</td>
+<td align="right">140.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">17.00</td>
+<td align="right">18.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2L145&exchange=OMFE">STL2L145</a></td>
+<td>American call</td>
+<td align="right">145.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">13.75</td>
+<td align="right">14.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2L145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">American put</th>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N175&exchange=OMFE">STL2N175</a></td>
+<td>American put</td>
+<td align="right">175.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">24.75</td>
+<td align="right">27.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N170&exchange=OMFE">STL2N170</a></td>
+<td>American put</td>
+<td align="right">170.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">20.00</td>
+<td align="right">23.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N120&exchange=OMFE">STL2N120</a></td>
+<td>American put</td>
+<td align="right">120.00</td>
+<td align="right">16/02-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N125&exchange=OMFE">STL2N125</a></td>
+<td>American put</td>
+<td align="right">125.00</td>
+<td align="right">16/02-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N165&exchange=OMFE">STL2N165</a></td>
+<td>American put</td>
+<td align="right">165.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">15.25</td>
+<td align="right">17.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N160&exchange=OMFE">STL2N160</a></td>
+<td>American put</td>
+<td align="right">160.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">10.50</td>
+<td align="right">12.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N155&exchange=OMFE">STL2N155</a></td>
+<td>American put</td>
+<td align="right">155.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">6.80</td>
+<td align="right">8.00</td>
+<td align="right">7.00</td>
+<td align="right">10</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N150&exchange=OMFE">STL2N150</a></td>
+<td>American put</td>
+<td align="right">150.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">3.75</td>
+<td align="right">4.60</td>
+<td align="right">4.00</td>
+<td align="right">10</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N145&exchange=OMFE">STL2N145</a></td>
+<td>American put</td>
+<td align="right">145.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">2.00</td>
+<td align="right">2.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N130&exchange=OMFE">STL2N130</a></td>
+<td>American put</td>
+<td align="right">130.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">0.05</td>
+<td align="right">0.60</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N135&exchange=OMFE">STL2N135</a></td>
+<td>American put</td>
+<td align="right">135.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">0.25</td>
+<td align="right">0.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N140&exchange=OMFE">STL2N140</a></td>
+<td>American put</td>
+<td align="right">140.00</td>
+<td align="right">16/02-2012</td>
+<td align="right">0.90</td>
+<td align="right">1.35</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O175&exchange=OMFE">STL2O175</a></td>
+<td>American put</td>
+<td align="right">175.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">24.75</td>
+<td align="right">27.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O170&exchange=OMFE">STL2O170</a></td>
+<td>American put</td>
+<td align="right">170.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">20.00</td>
+<td align="right">23.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O165&exchange=OMFE">STL2O165</a></td>
+<td>American put</td>
+<td align="right">165.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">15.25</td>
+<td align="right">17.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O160&exchange=OMFE">STL2O160</a></td>
+<td>American put</td>
+<td align="right">160.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">11.25</td>
+<td align="right">13.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O155&exchange=OMFE">STL2O155</a></td>
+<td>American put</td>
+<td align="right">155.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">8.00</td>
+<td align="right">9.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O150&exchange=OMFE">STL2O150</a></td>
+<td>American put</td>
+<td align="right">150.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">5.20</td>
+<td align="right">5.90</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O145&exchange=OMFE">STL2O145</a></td>
+<td>American put</td>
+<td align="right">145.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">3.15</td>
+<td align="right">3.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O140&exchange=OMFE">STL2O140</a></td>
+<td>American put</td>
+<td align="right">140.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">2.00</td>
+<td align="right">2.40</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O135&exchange=OMFE">STL2O135</a></td>
+<td>American put</td>
+<td align="right">135.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">1.15</td>
+<td align="right">1.60</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O130&exchange=OMFE">STL2O130</a></td>
+<td>American put</td>
+<td align="right">130.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">0.60</td>
+<td align="right">1.10</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O125&exchange=OMFE">STL2O125</a></td>
+<td>American put</td>
+<td align="right">125.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">0.25</td>
+<td align="right">0.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O120&exchange=OMFE">STL2O120</a></td>
+<td>American put</td>
+<td align="right">120.00</td>
+<td align="right">15/03-2012</td>
+<td align="right">0.05</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O115&exchange=OMFE">STL2O115</a></td>
+<td>American put</td>
+<td align="right">115.00</td>
+<td align="right">15/03-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O115.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O110&exchange=OMFE">STL2O110</a></td>
+<td>American put</td>
+<td align="right">110.00</td>
+<td align="right">15/03-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O110.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O105&exchange=OMFE">STL2O105</a></td>
+<td>American put</td>
+<td align="right">105.00</td>
+<td align="right">15/03-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O105.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O100&exchange=OMFE">STL2O100</a></td>
+<td>American put</td>
+<td align="right">100.00</td>
+<td align="right">15/03-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O100.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P130&exchange=OMFE">STL2P130</a></td>
+<td>American put</td>
+<td align="right">130.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">1.10</td>
+<td align="right">1.85</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P135&exchange=OMFE">STL2P135</a></td>
+<td>American put</td>
+<td align="right">135.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">2.00</td>
+<td align="right">2.40</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P140&exchange=OMFE">STL2P140</a></td>
+<td>American put</td>
+<td align="right">140.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">2.85</td>
+<td align="right">3.45</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P145&exchange=OMFE">STL2P145</a></td>
+<td>American put</td>
+<td align="right">145.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">4.30</td>
+<td align="right">5.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P150&exchange=OMFE">STL2P150</a></td>
+<td>American put</td>
+<td align="right">150.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">6.40</td>
+<td align="right">7.10</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P165&exchange=OMFE">STL2P165</a></td>
+<td>American put</td>
+<td align="right">165.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">15.75</td>
+<td align="right">17.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P160&exchange=OMFE">STL2P160</a></td>
+<td>American put</td>
+<td align="right">160.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">12.00</td>
+<td align="right">14.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P155&exchange=OMFE">STL2P155</a></td>
+<td>American put</td>
+<td align="right">155.00</td>
+<td align="right">19/04-2012</td>
+<td align="right">9.00</td>
+<td align="right">10.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R175&exchange=OMFE">STL2R175</a></td>
+<td>American put</td>
+<td align="right">175.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">30.00</td>
+<td align="right">33.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R170&exchange=OMFE">STL2R170</a></td>
+<td>American put</td>
+<td align="right">170.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">24.75</td>
+<td align="right">27.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R165&exchange=OMFE">STL2R165</a></td>
+<td>American put</td>
+<td align="right">165.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">20.25</td>
+<td align="right">23.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R160&exchange=OMFE">STL2R160</a></td>
+<td>American put</td>
+<td align="right">160.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">17.25</td>
+<td align="right">19.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R155&exchange=OMFE">STL2R155</a></td>
+<td>American put</td>
+<td align="right">155.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">14.00</td>
+<td align="right">15.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R150&exchange=OMFE">STL2R150</a></td>
+<td>American put</td>
+<td align="right">150.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">11.00</td>
+<td align="right">12.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R145&exchange=OMFE">STL2R145</a></td>
+<td>American put</td>
+<td align="right">145.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">8.50</td>
+<td align="right">9.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R140&exchange=OMFE">STL2R140</a></td>
+<td>American put</td>
+<td align="right">140.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">6.20</td>
+<td align="right">7.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R135&exchange=OMFE">STL2R135</a></td>
+<td>American put</td>
+<td align="right">135.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">4.60</td>
+<td align="right">5.20</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R130&exchange=OMFE">STL2R130</a></td>
+<td>American put</td>
+<td align="right">130.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">3.35</td>
+<td align="right">3.95</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R125&exchange=OMFE">STL2R125</a></td>
+<td>American put</td>
+<td align="right">125.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">2.00</td>
+<td align="right">3.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R120&exchange=OMFE">STL2R120</a></td>
+<td>American put</td>
+<td align="right">120.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">1.60</td>
+<td align="right">2.35</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R115&exchange=OMFE">STL2R115</a></td>
+<td>American put</td>
+<td align="right">115.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">1.00</td>
+<td align="right">1.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R115.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R110&exchange=OMFE">STL2R110</a></td>
+<td>American put</td>
+<td align="right">110.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">0.55</td>
+<td align="right">1.30</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R110.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R105&exchange=OMFE">STL2R105</a></td>
+<td>American put</td>
+<td align="right">105.00</td>
+<td align="right">21/06-2012</td>
+<td align="right">0.20</td>
+<td align="right">0.95</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R105.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R100&exchange=OMFE">STL2R100</a></td>
+<td>American put</td>
+<td align="right">100.00</td>
+<td align="right">21/06-2012</td>
+<td>&nbsp;</td>
+<td align="right">0.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R100.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U175&exchange=OMFE">STL2U175</a></td>
+<td>American put</td>
+<td align="right">175.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">30.00</td>
+<td align="right">33.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U170&exchange=OMFE">STL2U170</a></td>
+<td>American put</td>
+<td align="right">170.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">25.25</td>
+<td align="right">28.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U165&exchange=OMFE">STL2U165</a></td>
+<td>American put</td>
+<td align="right">165.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">21.50</td>
+<td align="right">24.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U160&exchange=OMFE">STL2U160</a></td>
+<td>American put</td>
+<td align="right">160.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">19.00</td>
+<td align="right">20.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U155&exchange=OMFE">STL2U155</a></td>
+<td>American put</td>
+<td align="right">155.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">16.00</td>
+<td align="right">17.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U150&exchange=OMFE">STL2U150</a></td>
+<td>American put</td>
+<td align="right">150.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">13.00</td>
+<td align="right">14.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U145&exchange=OMFE">STL2U145</a></td>
+<td>American put</td>
+<td align="right">145.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">10.50</td>
+<td align="right">11.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U140&exchange=OMFE">STL2U140</a></td>
+<td>American put</td>
+<td align="right">140.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">8.25</td>
+<td align="right">9.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U135&exchange=OMFE">STL2U135</a></td>
+<td>American put</td>
+<td align="right">135.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">6.70</td>
+<td align="right">7.30</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U130&exchange=OMFE">STL2U130</a></td>
+<td>American put</td>
+<td align="right">130.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">5.20</td>
+<td align="right">5.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U125&exchange=OMFE">STL2U125</a></td>
+<td>American put</td>
+<td align="right">125.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">3.30</td>
+<td align="right">4.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U125.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U120&exchange=OMFE">STL2U120</a></td>
+<td>American put</td>
+<td align="right">120.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">2.40</td>
+<td align="right">3.90</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U120.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U115&exchange=OMFE">STL2U115</a></td>
+<td>American put</td>
+<td align="right">115.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">2.00</td>
+<td align="right">3.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U115.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U110&exchange=OMFE">STL2U110</a></td>
+<td>American put</td>
+<td align="right">110.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">1.70</td>
+<td align="right">2.45</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U110.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U105&exchange=OMFE">STL2U105</a></td>
+<td>American put</td>
+<td align="right">105.00</td>
+<td align="right">20/09-2012</td>
+<td align="right">1.20</td>
+<td align="right">1.95</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U105.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X175&exchange=OMFE">STL2X175</a></td>
+<td>American put</td>
+<td align="right">175.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">30.25</td>
+<td align="right">34.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X175.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X130&exchange=OMFE">STL2X130</a></td>
+<td>American put</td>
+<td align="right">130.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">7.00</td>
+<td align="right">7.90</td>
+<td align="right">7.20</td>
+<td align="right">90</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X130.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X135&exchange=OMFE">STL2X135</a></td>
+<td>American put</td>
+<td align="right">135.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">8.50</td>
+<td align="right">9.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X135.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X170&exchange=OMFE">STL2X170</a></td>
+<td>American put</td>
+<td align="right">170.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">25.75</td>
+<td align="right">28.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X170.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X165&exchange=OMFE">STL2X165</a></td>
+<td>American put</td>
+<td align="right">165.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">23.00</td>
+<td align="right">25.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X165.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X160&exchange=OMFE">STL2X160</a></td>
+<td>American put</td>
+<td align="right">160.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">20.00</td>
+<td align="right">21.75</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X160.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X155&exchange=OMFE">STL2X155</a></td>
+<td>American put</td>
+<td align="right">155.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">17.50</td>
+<td align="right">18.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X155.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X140&exchange=OMFE">STL2X140</a></td>
+<td>American put</td>
+<td align="right">140.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">10.25</td>
+<td align="right">11.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X140.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X145&exchange=OMFE">STL2X145</a></td>
+<td>American put</td>
+<td align="right">145.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">12.25</td>
+<td align="right">13.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X145.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X150&exchange=OMFE">STL2X150</a></td>
+<td>American put</td>
+<td align="right">150.00</td>
+<td align="right">20/12-2012</td>
+<td align="right">14.75</td>
+<td align="right">15.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X150.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Exchange traded notes</th>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=BULL-STL-HA&exchange=OSE">BULL-STL-HA</a></td>
+<td>Exchange traded notes</td>
+<td>&nbsp;</td>
+<td align="right">07/09-2019</td>
+<td align="right">63.15</td>
+<td align="right">63.25</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=BULL-STL-HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=BEAR-STL-HA&exchange=OSE">BEAR-STL-HA</a></td>
+<td>Exchange traded notes</td>
+<td>&nbsp;</td>
+<td align="right">07/09-2019</td>
+<td align="right">22.05</td>
+<td align="right">22.10</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=BEAR-STL-HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Futures</th>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLFUT2N&exchange=OMFE">STLFUT2N</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">16/02-2012</td>
+<td align="right">148.40</td>
+<td align="right">149.80</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLFUT2N.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2N&exchange=OMFE">STL2N</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">16/02-2012</td>
+<td align="right">148.40</td>
+<td align="right">149.80</td>
+<td align="right">148.20</td>
+<td align="right">50</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2N.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLFUT2O&exchange=OMFE">STLFUT2O</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">15/03-2012</td>
+<td align="right">148.70</td>
+<td align="right">150.00</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLFUT2O.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2O&exchange=OMFE">STL2O</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">15/03-2012</td>
+<td align="right">148.80</td>
+<td align="right">150.00</td>
+<td align="right">148.70</td>
+<td align="right">200</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2O.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLFUT2P&exchange=OMFE">STLFUT2P</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">19/04-2012</td>
+<td align="right">149.00</td>
+<td align="right">150.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLFUT2P.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2P&exchange=OMFE">STL2P</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">19/04-2012</td>
+<td align="right">149.10</td>
+<td align="right">150.50</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2P.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLFUT2R&exchange=OMFE">STLFUT2R</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">21/06-2012</td>
+<td align="right">143.60</td>
+<td align="right">145.10</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLFUT2R.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2R&exchange=OMFE">STL2R</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">21/06-2012</td>
+<td align="right">144.40</td>
+<td align="right">145.20</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2R.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLFUT2U&exchange=OMFE">STLFUT2U</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">20/09-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLFUT2U.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2U&exchange=OMFE">STL2U</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">20/09-2012</td>
+<td align="right">145.20</td>
+<td align="right">146.30</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2U.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLFUT2X&exchange=OMFE">STLFUT2X</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLFUT2X.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STL2X&exchange=OMFE">STL2X</a></td>
+<td>Futures</td>
+<td>&nbsp;</td>
+<td align="right">20/12-2012</td>
+<td align="right">146.10</td>
+<td align="right">147.60</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STL2X.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Warrants</th>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11K160DNM&exchange=OSE">STLW11K160DNM</a></td>
+<td>Warrants</td>
+<td align="right">160.00</td>
+<td align="right">11/11-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11K160DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11K145DNM&exchange=OSE">STLW11K145DNM</a></td>
+<td>Warrants</td>
+<td align="right">145.00</td>
+<td align="right">11/11-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11K145DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11W105HA&exchange=OSE">STLW11W105HA</a></td>
+<td>Warrants</td>
+<td align="right">105.00</td>
+<td align="right">18/11-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11W105HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11K140HA&exchange=OSE">STLW11K140HA</a></td>
+<td>Warrants</td>
+<td align="right">140.00</td>
+<td align="right">18/11-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11K140HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11K120HA&exchange=OSE">STLW11K120HA</a></td>
+<td>Warrants</td>
+<td align="right">120.00</td>
+<td align="right">18/11-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11K120HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11X130DNM&exchange=OSE">STLW11X130DNM</a></td>
+<td>Warrants</td>
+<td align="right">130.00</td>
+<td align="right">09/12-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11X130DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW11L150DNM&exchange=OSE">STLW11L150DNM</a></td>
+<td>Warrants</td>
+<td align="right">150.00</td>
+<td align="right">09/12-2011</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW11L150DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12M110DNM&exchange=OSE">STLW12M110DNM</a></td>
+<td>Warrants</td>
+<td align="right">110.00</td>
+<td align="right">13/01-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12M110DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12A150DNM&exchange=OSE">STLW12A150DNM</a></td>
+<td>Warrants</td>
+<td align="right">150.00</td>
+<td align="right">13/01-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12A150DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12A200HA&exchange=OSE">STLW12A200HA</a></td>
+<td>Warrants</td>
+<td align="right">200.00</td>
+<td align="right">20/01-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12A200HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12A160HA&exchange=OSE">STLW12A160HA</a></td>
+<td>Warrants</td>
+<td align="right">160.00</td>
+<td align="right">20/01-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12A160HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12A140HA&exchange=OSE">STLW12A140HA</a></td>
+<td>Warrants</td>
+<td align="right">140.00</td>
+<td align="right">20/01-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12A140HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12N125HA&exchange=OSE">STLW12N125HA</a></td>
+<td>Warrants</td>
+<td align="right">125.00</td>
+<td align="right">17/02-2012</td>
+<td align="right">0.02</td>
+<td align="right">0.03</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12N125HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12N110HA&exchange=OSE">STLW12N110HA</a></td>
+<td>Warrants</td>
+<td align="right">110.00</td>
+<td align="right">17/02-2012</td>
+<td align="right">0.01</td>
+<td align="right">0.02</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12N110HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12B160HA&exchange=OSE">STLW12B160HA</a></td>
+<td>Warrants</td>
+<td align="right">160.00</td>
+<td align="right">17/02-2012</td>
+<td align="right">0.13</td>
+<td align="right">0.14</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12B160HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12O110DNM&exchange=OSE">STLW12O110DNM</a></td>
+<td>Warrants</td>
+<td align="right">110.00</td>
+<td align="right">09/03-2012</td>
+<td align="right">0.01</td>
+<td align="right">0.02</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12O110DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12C160DNM&exchange=OSE">STLW12C160DNM</a></td>
+<td>Warrants</td>
+<td align="right">160.00</td>
+<td align="right">09/03-2012</td>
+<td align="right">0.24</td>
+<td align="right">0.25</td>
+<td align="right">0.24</td>
+<td align="right">11 000</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12C160DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12C140DNM&exchange=OSE">STLW12C140DNM</a></td>
+<td>Warrants</td>
+<td align="right">140.00</td>
+<td align="right">09/03-2012</td>
+<td align="right">1.19</td>
+<td align="right">1.21</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12C140DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12P130DNM&exchange=OSE">STLW12P130DNM</a></td>
+<td>Warrants</td>
+<td align="right">130.00</td>
+<td align="right">13/04-2012</td>
+<td align="right">0.22</td>
+<td align="right">0.24</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12P130DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12D170DNM&exchange=OSE">STLW12D170DNM</a></td>
+<td>Warrants</td>
+<td align="right">170.00</td>
+<td align="right">13/04-2012</td>
+<td align="right">0.21</td>
+<td align="right">0.22</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12D170DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12E180DNM&exchange=OSE">STLW12E180DNM</a></td>
+<td>Warrants</td>
+<td align="right">180.00</td>
+<td align="right">11/05-2012</td>
+<td align="right">0.19</td>
+<td align="right">0.20</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12E180DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12E160DNM&exchange=OSE">STLW12E160DNM</a></td>
+<td>Warrants</td>
+<td align="right">160.00</td>
+<td align="right">11/05-2012</td>
+<td align="right">0.64</td>
+<td align="right">0.65</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12E160DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12E140DNM&exchange=OSE">STLW12E140DNM</a></td>
+<td>Warrants</td>
+<td align="right">140.00</td>
+<td align="right">11/05-2012</td>
+<td align="right">1.60</td>
+<td align="right">1.62</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12E140DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12Q130HA&exchange=OSE">STLW12Q130HA</a></td>
+<td>Warrants</td>
+<td align="right">130.00</td>
+<td align="right">18/05-2012</td>
+<td align="right">0.44</td>
+<td align="right">0.45</td>
+<td align="right">0.45</td>
+<td align="right">5 000</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12Q130HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12E170HA&exchange=OSE">STLW12E170HA</a></td>
+<td>Warrants</td>
+<td align="right">170.00</td>
+<td align="right">18/05-2012</td>
+<td align="right">0.47</td>
+<td align="right">0.48</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12E170HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12E150HA&exchange=OSE">STLW12E150HA</a></td>
+<td>Warrants</td>
+<td align="right">150.00</td>
+<td align="right">18/05-2012</td>
+<td align="right">1.13</td>
+<td align="right">1.14</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12E150HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12R130DNM&exchange=OSE">STLW12R130DNM</a></td>
+<td>Warrants</td>
+<td align="right">130.00</td>
+<td align="right">15/06-2012</td>
+<td align="right">0.59</td>
+<td align="right">0.60</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12R130DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12F170DNM&exchange=OSE">STLW12F170DNM</a></td>
+<td>Warrants</td>
+<td align="right">170.00</td>
+<td align="right">15/06-2012</td>
+<td align="right">0.33</td>
+<td align="right">0.34</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12F170DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td><a href="ppaper.php?paper=STLW12L200HA&exchange=OSE">STLW12L200HA</a></td>
+<td>Warrants</td>
+<td align="right">200.00</td>
+<td align="right">21/12-2012</td>
+<td align="right">0.51</td>
+<td align="right">0.52</td>
+<td>&nbsp;</td>
+<td align="right">&nbsp;</td>
+<td><a href="https://bang.netfonds.no/order.php?paper=STLW12L200HA.OSE">Handle</a></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+</td>
+<td></td>
+</tr>
+<tr>
+<td class=bottomside><div></div></td>
+<td class=maincolumn>
+
+<div class="hend">
+<table class="bottomtable">
+<tr>
+<td>
+<span class="hbottommenu">
+<a href="layout.php">Utforming</a>&nbsp;|&nbsp;
+<a href="http://hopey.netfonds.no/derivative.php?underlying_paper=STL&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;help=t">Hjelp</a>&nbsp;|&nbsp;
+<a href="http://hopey.netfonds.no/derivative.php?underlying_paper=STL&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;layout=print">Utskrift</a> 
+</span>
+</td>
+<td class="hbottomlinestop">
+<span class="hbottomlinestop">
+&nbsp;�pne markeder: <a href="market.php?exchange=OSE">Oslo B�rs</a>, <a href="market.php?exchange=ST">Stockholm</a>, <a href="market.php?exchange=CPH">K�benhavn fondsb�rs</a>, <a href="market.php?exchange=O">Nasdaq</a>, <a href="market.php?exchange=N">Nyse</a>, <a href="market.php?exchange=A">Amex</a>, <a href="market.php?exchange=OTC">Unoterte Norge</a></span>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</td>
+<td class=bottomside><div></div></td>
+</tr>
+
+<tr>
+<td class=mainside></td>
+<td class=maincolumn>
+<div class="end-comstock">
+</div>
+</td>
+<td class=mainside></td>
+</tr>
+
+</table>
+
+
+</body>
+</html>
+
+<script language="JavaScript" type="text/javascript">decorateSearch("papersearch");</script>

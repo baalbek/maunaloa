@@ -52,15 +52,16 @@
         <dependency>
             <groupId>rcstadheim</groupId>
             <artifactId>oahu</artifactId>
-            <version>${oahu.version}</version>
         </dependency>
         -->
 
+
+        <!--
         <dependency>
             <groupId>rcstadheim</groupId>
             <artifactId>maunakea</artifactId>
         </dependency>
-
+        -->
 
         <!--****************************************************************
         ****************************** junit **************************

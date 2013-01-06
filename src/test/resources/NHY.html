@@ -1,0 +1,1271 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Netfonds -- Derivater for Norsk Hydro</title>
+<link href="http://www.netfonds.no/static/css/netfonds.css?ts=1352478641" rel="stylesheet"  type="text/css">
+<link rel="SHORTCUT ICON" href="http://www.netfonds.no/static/bits/favicon.ico">
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" /> 
+</head>
+<body class="hbody">
+<table class=twholepage>
+<tr>
+<td class=logoside><span width="1px"></span></td>
+<td class="maincolumn">
+<form action="meta-paper.php" method=get name="gototick" class=hsearch autocomplete=off>
+<div class="hlogostrip"><table class="hlogostrip"><tr>
+<td class="hlogo"><div class="hlogo"><a href="http://www.netfonds.no/"><img src="http://www.netfonds.no/static/bits/horizontal_logo_white1_small.png" alt="Netfonds Bank ASA" title="Netfonds Bank ASA" width=129 height=25 border=0></a></div>
+</td>
+<td class="hunlogo">&nbsp;<a class="login" href="https://www.netfonds.no/account/login.php">Logg inn</a>&nbsp;|&nbsp;<a href="/derivative.php?underlying_paper=NHY&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;help=t">Hjelp</a><span style="display: none; cursor: pointer;" id="topupdate" value="&nbsp;|&nbsp;Stopp oppdatering">&nbsp;|&nbsp;Start oppdatering</span>&nbsp;<input type="hidden" name="exchange" value="OSE" />
+<input class="pinput" id=papersearch type=text name="paper" size=6>&nbsp;<input type=submit class=hsearch value="Søk"><span class="middle">
+&nbsp;&nbsp;<a href="setlanguage.php?language=en_GB&originating_page=http://hopey.netfonds.no/derivative.php?underlying_paper=NHY&amp;underlying_exchange=OSE&amp;exchange=OMFE"><img src="http://www.netfonds.no/static/bits/flag_gb_24.png" alt=""  border="0" /></a></span>
+</td>
+</tr>
+</table>
+</div>
+
+</form>
+</td>
+<td class=logoside><span width="1px"></span></td>
+</tr>
+
+<tr>
+<td class=menutopside></td>
+<td class="maincolumn">
+
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td nowrap>
+<a href="http://www.netfonds.no/index.php">Netfonds</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/registrering.php">Bli kunde</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/login.php">Min konto</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/handel.php">Handel</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/investeringskonto.php">Livkonto</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/managed-intro.php">Aktiv forvaltning</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/port/port.php">Verktøy</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/quotes/funds-main.php">Fondsmarked</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/quotes/certificate-main.php">NDX</a>&nbsp;|&nbsp;<span class="htopselected"><a href="http://www.netfonds.no/quotes/market.php">Marked</a></span></td><td class=htime nowrap>
+<span id=toptime>søndag 06/01-2013 15:46:47</span></td></tr></table></div>
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td class=hmarket>
+<a href="https://www.netfonds.no/quotes/live.php">Live</a>&nbsp;|&nbsp;<span class="htopselected"><a href="market.php">Norge</a></span>&nbsp;|&nbsp;<a href="market.php?exchange=ST">Sverige</a>&nbsp;|&nbsp;<a href="market.php?exchange=CPH">Danmark</a>&nbsp;|&nbsp;<a href="market.php?exchange=ICEX">Island</a>&nbsp;|&nbsp;<a href="market.php?exchange=O">USA</a>&nbsp;|&nbsp;<a href="market.php?exchange=BTSE&types=LSE">Europa</a>&nbsp;|&nbsp;<a href="funds-main.php">Fond</a>&nbsp;|&nbsp;<a href="currencies.php?exchange=FXSB">Valuta</a>&nbsp;|&nbsp;<a href="market.php?exchange=ICEU&types=FU">Råvarer</a>&nbsp;|&nbsp;<a href="nbb-main.php">Gråmarked</a></td><td nowrap class=hdelay><span id=menuupdate data="box.box_menu_updated_line,exchange.OMFE">Forsinkede kurser. Sist oppdatert: søndag 6. januar</span></td></tr></table>
+</div>
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td class=hmarket>
+<a href="market.php?exchange=OSE">Oslo Børs</a>
+&nbsp;|&nbsp;<a href="market.php?exchange=OAX">Oslo Axess</a>
+&nbsp;|&nbsp;<span class="htopselected"><a href="market.php?exchange=OMFE">Opsjoner</a></span>
+&nbsp;|&nbsp;<a href="market.php?exchange=OTC">Unoterte</a>
+&nbsp;|&nbsp;<a href="market.php?exchange=OSE&amp;types=B">Obligasjoner</a>
+</td></tr></table>
+</div>
+</td>
+<td class=menutopside></td>
+</tr>
+<tr>
+<td></td>
+<td class="maincolumn">
+<table class=homaintable><tr valign=top><td class="hsidetd">
+<table class="hsidetable">
+<tr><td><a href="market.php?exchange=OMFE">Oversikt</a></td></tr>
+<tr><td><a href="kurs.php?exchange=OMFE">Kursliste</a></td></tr>
+<tr><td><a href="kurs.php?exchange=OMFE&sec_types=FU">Futures</a></td></tr>
+<tr><td><a href="largest.php?exchange=OMFE">Største handler</a></td></tr>
+<tr><td><a href="derivatives.php">Underliggende</a></td></tr>
+</table>
+</td><td class="hcontent"><div class="hcontent"><script type="text/javascript" src="http://www.netfonds.no/static/js/general-min-gen.js?ts=1356713595"></script><script type="text/javascript" src="http://www.netfonds.no/static/js/paper-search-min-gen.js?ts=1356713607"></script><script  language="JavaScript" type="text/javascript">paperSearchBaseUrl = "";</script>
+<script  language="JavaScript" type="text/javascript">var imgUrl = "http://www.netfonds.no/static/";
+</script>
+<div><table id="updatetable1" width="" class="qbox" data="box.box_quote_line,paper.NHY,exchange.OSE,underlyingp.Y" callback="" updated=""><tr>
+<th class="top" colspan="12">Kurs i underliggende papir NHY (Norsk Hydro)</th>
+</tr>
+<tr>
+<th>Siste</th>
+<th>Endring</th>
+<th>Endr%</th>
+<th>Kjøper</th>
+<th>Selger</th>
+<th>Åpning</th>
+<th>Høy</th>
+<th>Lav</th>
+<th>Forrige</th>
+<th>Volum</th>
+<th>Verdi</th>
+<th>Handler</th>
+</tr>
+<tr>
+<td name="ju.l" id="ju.l">28.80</td><td class="down" name="ju.c">-0.29</td>
+<td class="down" name="ju.cp">-1.00%</td>
+<td class="right" id="ju.b.NHY.OSE" name="ju.b.NHY.OSE"><a href="https://www.netfonds.no/account/order.php?paper=NHY&amp;exchange=OSE&amp;type=S&amp;slimit=28.76&amp;suggest_number=0&amp;skind=limit">28.76</a></td>
+<td class="right" id="ju.o.NHY.OSE" name="ju.o.NHY.OSE"><a href="https://www.netfonds.no/account/order.php?paper=NHY&amp;exchange=OSE&amp;type=B&amp;blimit=28.80&amp;suggest_number=0&amp;bkind=limit">28.80</a></td>
+<td name="ju.op">28.89</td><td name="ju.h">28.93</td><td name="ju.lo">28.60</td><td name="ju.pr" id="ju.pr">29.09</td><td name="ju.vo">4 015 862</td><td name="ju.va">115 609 815</td><td name="ju.t">3 455</td></tr>
+</table>
+</div>
+<table class="com topmargin"><tr>
+<th class="top" colspan="9">Derivater</th>
+</tr>
+<tr>
+<th>Ticker</th>
+<th>Type</th>
+<th>Innløsningskurs</th>
+<th>Bortfall</th>
+<th>Kjøper</th>
+<th>Selger</th>
+<th>Siste</th>
+<th>Volum</th>
+<th>&nbsp;</th>
+</tr>
+<tr>
+<th class="top" colspan="9">American call</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A38&exchange=OMFE">NHY3A38</a></td>
+<td class="left">American call</td>
+<td>38.00</td><td>17/01-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A20&exchange=OMFE">NHY3A20</a></td>
+<td class="left">American call</td>
+<td>20.00</td><td>17/01-2013</td>
+<td>8.00</td><td>9.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A23&exchange=OMFE">NHY3A23</a></td>
+<td class="left">American call</td>
+<td>23.00</td><td>17/01-2013</td>
+<td>5.10</td><td>6.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A26&exchange=OMFE">NHY3A26</a></td>
+<td class="left">American call</td>
+<td>26.00</td><td>17/01-2013</td>
+<td>2.10</td><td>3.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A35&exchange=OMFE">NHY3A35</a></td>
+<td class="left">American call</td>
+<td>35.00</td><td>17/01-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A32&exchange=OMFE">NHY3A32</a></td>
+<td class="left">American call</td>
+<td>32.00</td><td>17/01-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A29&exchange=OMFE">NHY3A29</a></td>
+<td class="left">American call</td>
+<td>29.00</td><td>17/01-2013</td>
+<td>0.40</td><td>0.55</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3A19&exchange=OMFE">NHY3A19</a></td>
+<td class="left">American call</td>
+<td>19.00</td><td>17/01-2013</td>
+<td>9.00</td><td>10.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3A19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B38&exchange=OMFE">NHY3B38</a></td>
+<td class="left">American call</td>
+<td>38.00</td><td>21/02-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B19&exchange=OMFE">NHY3B19</a></td>
+<td class="left">American call</td>
+<td>19.00</td><td>21/02-2013</td>
+<td>9.00</td><td>10.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B20&exchange=OMFE">NHY3B20</a></td>
+<td class="left">American call</td>
+<td>20.00</td><td>21/02-2013</td>
+<td>8.00</td><td>9.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B23&exchange=OMFE">NHY3B23</a></td>
+<td class="left">American call</td>
+<td>23.00</td><td>21/02-2013</td>
+<td>5.30</td><td>6.60</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B26&exchange=OMFE">NHY3B26</a></td>
+<td class="left">American call</td>
+<td>26.00</td><td>21/02-2013</td>
+<td>2.50</td><td>3.85</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B35&exchange=OMFE">NHY3B35</a></td>
+<td class="left">American call</td>
+<td>35.00</td><td>21/02-2013</td>
+<td>0.05</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B32&exchange=OMFE">NHY3B32</a></td>
+<td class="left">American call</td>
+<td>32.00</td><td>21/02-2013</td>
+<td>0.20</td><td>0.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3B29&exchange=OMFE">NHY3B29</a></td>
+<td class="left">American call</td>
+<td>29.00</td><td>21/02-2013</td>
+<td>1.00</td><td>1.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3B29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C18&exchange=OMFE">NHY3C18</a></td>
+<td class="left">American call</td>
+<td>18.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C18.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C41&exchange=OMFE">NHY3C41</a></td>
+<td class="left">American call</td>
+<td>41.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C41.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C38&exchange=OMFE">NHY3C38</a></td>
+<td class="left">American call</td>
+<td>38.00</td><td>21/03-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C35&exchange=OMFE">NHY3C35</a></td>
+<td class="left">American call</td>
+<td>35.00</td><td>21/03-2013</td>
+<td>0.05</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C32&exchange=OMFE">NHY3C32</a></td>
+<td class="left">American call</td>
+<td>32.00</td><td>21/03-2013</td>
+<td>0.35</td><td>0.60</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C29&exchange=OMFE">NHY3C29</a></td>
+<td class="left">American call</td>
+<td>29.00</td><td>21/03-2013</td>
+<td>1.40</td><td>1.55</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C26&exchange=OMFE">NHY3C26</a></td>
+<td class="left">American call</td>
+<td>26.00</td><td>21/03-2013</td>
+<td>2.80</td><td>3.60</td><td>3.50</td><td>1 000</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C23&exchange=OMFE">NHY3C23</a></td>
+<td class="left">American call</td>
+<td>23.00</td><td>21/03-2013</td>
+<td>5.30</td><td>6.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C20&exchange=OMFE">NHY3C20</a></td>
+<td class="left">American call</td>
+<td>20.00</td><td>21/03-2013</td>
+<td>8.25</td><td>9.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3C19&exchange=OMFE">NHY3C19</a></td>
+<td class="left">American call</td>
+<td>19.00</td><td>21/03-2013</td>
+<td>9.25</td><td>10.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3C19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F18&exchange=OMFE">NHY3F18</a></td>
+<td class="left">American call</td>
+<td>18.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F18.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F38&exchange=OMFE">NHY3F38</a></td>
+<td class="left">American call</td>
+<td>38.00</td><td>20/06-2013</td>
+<td>0.07</td><td>0.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F19&exchange=OMFE">NHY3F19</a></td>
+<td class="left">American call</td>
+<td>19.00</td><td>20/06-2013</td>
+<td>9.25</td><td>10.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F20&exchange=OMFE">NHY3F20</a></td>
+<td class="left">American call</td>
+<td>20.00</td><td>20/06-2013</td>
+<td>8.25</td><td>9.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F23&exchange=OMFE">NHY3F23</a></td>
+<td class="left">American call</td>
+<td>23.00</td><td>20/06-2013</td>
+<td>5.60</td><td>7.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F26&exchange=OMFE">NHY3F26</a></td>
+<td class="left">American call</td>
+<td>26.00</td><td>20/06-2013</td>
+<td>3.20</td><td>4.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F35&exchange=OMFE">NHY3F35</a></td>
+<td class="left">American call</td>
+<td>35.00</td><td>20/06-2013</td>
+<td>0.30</td><td>0.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F32&exchange=OMFE">NHY3F32</a></td>
+<td class="left">American call</td>
+<td>32.00</td><td>20/06-2013</td>
+<td>0.90</td><td>1.10</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3F29&exchange=OMFE">NHY3F29</a></td>
+<td class="left">American call</td>
+<td>29.00</td><td>20/06-2013</td>
+<td>2.00</td><td>2.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3F29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I19&exchange=OMFE">NHY3I19</a></td>
+<td class="left">American call</td>
+<td>19.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I20&exchange=OMFE">NHY3I20</a></td>
+<td class="left">American call</td>
+<td>20.00</td><td>19/09-2013</td>
+<td>8.50</td><td>10.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I23&exchange=OMFE">NHY3I23</a></td>
+<td class="left">American call</td>
+<td>23.00</td><td>19/09-2013</td>
+<td>5.90</td><td>7.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I26&exchange=OMFE">NHY3I26</a></td>
+<td class="left">American call</td>
+<td>26.00</td><td>19/09-2013</td>
+<td>3.70</td><td>5.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I38&exchange=OMFE">NHY3I38</a></td>
+<td class="left">American call</td>
+<td>38.00</td><td>19/09-2013</td>
+<td>0.30</td><td>0.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I35&exchange=OMFE">NHY3I35</a></td>
+<td class="left">American call</td>
+<td>35.00</td><td>19/09-2013</td>
+<td>0.70</td><td>0.90</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I32&exchange=OMFE">NHY3I32</a></td>
+<td class="left">American call</td>
+<td>32.00</td><td>19/09-2013</td>
+<td>1.40</td><td>1.60</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3I29&exchange=OMFE">NHY3I29</a></td>
+<td class="left">American call</td>
+<td>29.00</td><td>19/09-2013</td>
+<td>2.60</td><td>2.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3I29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L20&exchange=OMFE">NHY3L20</a></td>
+<td class="left">American call</td>
+<td>20.00</td><td>19/12-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L23&exchange=OMFE">NHY3L23</a></td>
+<td class="left">American call</td>
+<td>23.00</td><td>19/12-2013</td>
+<td>6.30</td><td>7.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L26&exchange=OMFE">NHY3L26</a></td>
+<td class="left">American call</td>
+<td>26.00</td><td>19/12-2013</td>
+<td>4.20</td><td>5.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L38&exchange=OMFE">NHY3L38</a></td>
+<td class="left">American call</td>
+<td>38.00</td><td>19/12-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L35&exchange=OMFE">NHY3L35</a></td>
+<td class="left">American call</td>
+<td>35.00</td><td>19/12-2013</td>
+<td>1.15</td><td>1.35</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L32&exchange=OMFE">NHY3L32</a></td>
+<td class="left">American call</td>
+<td>32.00</td><td>19/12-2013</td>
+<td>1.95</td><td>2.15</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3L29&exchange=OMFE">NHY3L29</a></td>
+<td class="left">American call</td>
+<td>29.00</td><td>19/12-2013</td>
+<td>3.15</td><td>3.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3L29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">American put</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M38&exchange=OMFE">NHY3M38</a></td>
+<td class="left">American put</td>
+<td>38.00</td><td>17/01-2013</td>
+<td>8.50</td><td>10.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M23&exchange=OMFE">NHY3M23</a></td>
+<td class="left">American put</td>
+<td>23.00</td><td>17/01-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M26&exchange=OMFE">NHY3M26</a></td>
+<td class="left">American put</td>
+<td>26.00</td><td>17/01-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M35&exchange=OMFE">NHY3M35</a></td>
+<td class="left">American put</td>
+<td>35.00</td><td>17/01-2013</td>
+<td>5.50</td><td>6.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M32&exchange=OMFE">NHY3M32</a></td>
+<td class="left">American put</td>
+<td>32.00</td><td>17/01-2013</td>
+<td>2.55</td><td>3.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M29&exchange=OMFE">NHY3M29</a></td>
+<td class="left">American put</td>
+<td>29.00</td><td>17/01-2013</td>
+<td>0.55</td><td>0.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M19&exchange=OMFE">NHY3M19</a></td>
+<td class="left">American put</td>
+<td>19.00</td><td>17/01-2013</td>
+<td>&nbsp;</td>
+<td>0.01</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M20&exchange=OMFE">NHY3M20</a></td>
+<td class="left">American put</td>
+<td>20.00</td><td>17/01-2013</td>
+<td>&nbsp;</td>
+<td>0.01</td><td>0.01</td><td>50</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N38&exchange=OMFE">NHY3N38</a></td>
+<td class="left">American put</td>
+<td>38.00</td><td>21/02-2013</td>
+<td>8.50</td><td>10.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N19&exchange=OMFE">NHY3N19</a></td>
+<td class="left">American put</td>
+<td>19.00</td><td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N20&exchange=OMFE">NHY3N20</a></td>
+<td class="left">American put</td>
+<td>20.00</td><td>21/02-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N23&exchange=OMFE">NHY3N23</a></td>
+<td class="left">American put</td>
+<td>23.00</td><td>21/02-2013</td>
+<td>0.05</td><td>0.15</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N26&exchange=OMFE">NHY3N26</a></td>
+<td class="left">American put</td>
+<td>26.00</td><td>21/02-2013</td>
+<td>0.25</td><td>0.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N35&exchange=OMFE">NHY3N35</a></td>
+<td class="left">American put</td>
+<td>35.00</td><td>21/02-2013</td>
+<td>5.60</td><td>7.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N32&exchange=OMFE">NHY3N32</a></td>
+<td class="left">American put</td>
+<td>32.00</td><td>21/02-2013</td>
+<td>2.80</td><td>4.10</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N29&exchange=OMFE">NHY3N29</a></td>
+<td class="left">American put</td>
+<td>29.00</td><td>21/02-2013</td>
+<td>1.20</td><td>1.45</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O18&exchange=OMFE">NHY3O18</a></td>
+<td class="left">American put</td>
+<td>18.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O18.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O41&exchange=OMFE">NHY3O41</a></td>
+<td class="left">American put</td>
+<td>41.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O41.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O38&exchange=OMFE">NHY3O38</a></td>
+<td class="left">American put</td>
+<td>38.00</td><td>21/03-2013</td>
+<td>8.50</td><td>10.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O35&exchange=OMFE">NHY3O35</a></td>
+<td class="left">American put</td>
+<td>35.00</td><td>21/03-2013</td>
+<td>5.70</td><td>7.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O32&exchange=OMFE">NHY3O32</a></td>
+<td class="left">American put</td>
+<td>32.00</td><td>21/03-2013</td>
+<td>3.00</td><td>4.30</td><td>3.50</td><td>1 000</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O29&exchange=OMFE">NHY3O29</a></td>
+<td class="left">American put</td>
+<td>29.00</td><td>21/03-2013</td>
+<td>1.45</td><td>1.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O26&exchange=OMFE">NHY3O26</a></td>
+<td class="left">American put</td>
+<td>26.00</td><td>21/03-2013</td>
+<td>0.40</td><td>0.65</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O23&exchange=OMFE">NHY3O23</a></td>
+<td class="left">American put</td>
+<td>23.00</td><td>21/03-2013</td>
+<td>0.09</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O20&exchange=OMFE">NHY3O20</a></td>
+<td class="left">American put</td>
+<td>20.00</td><td>21/03-2013</td>
+<td>0.01</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O19&exchange=OMFE">NHY3O19</a></td>
+<td class="left">American put</td>
+<td>19.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R18&exchange=OMFE">NHY3R18</a></td>
+<td class="left">American put</td>
+<td>18.00</td><td>20/06-2013</td>
+<td>0.02</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R18.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R38&exchange=OMFE">NHY3R38</a></td>
+<td class="left">American put</td>
+<td>38.00</td><td>20/06-2013</td>
+<td>8.50</td><td>10.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R19&exchange=OMFE">NHY3R19</a></td>
+<td class="left">American put</td>
+<td>19.00</td><td>20/06-2013</td>
+<td>0.05</td><td>0.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R20&exchange=OMFE">NHY3R20</a></td>
+<td class="left">American put</td>
+<td>20.00</td><td>20/06-2013</td>
+<td>0.07</td><td>0.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R23&exchange=OMFE">NHY3R23</a></td>
+<td class="left">American put</td>
+<td>23.00</td><td>20/06-2013</td>
+<td>0.35</td><td>0.55</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R26&exchange=OMFE">NHY3R26</a></td>
+<td class="left">American put</td>
+<td>26.00</td><td>20/06-2013</td>
+<td>1.05</td><td>1.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R35&exchange=OMFE">NHY3R35</a></td>
+<td class="left">American put</td>
+<td>35.00</td><td>20/06-2013</td>
+<td>6.10</td><td>7.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R32&exchange=OMFE">NHY3R32</a></td>
+<td class="left">American put</td>
+<td>32.00</td><td>20/06-2013</td>
+<td>4.00</td><td>4.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R29&exchange=OMFE">NHY3R29</a></td>
+<td class="left">American put</td>
+<td>29.00</td><td>20/06-2013</td>
+<td>2.25</td><td>2.45</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U19&exchange=OMFE">NHY3U19</a></td>
+<td class="left">American put</td>
+<td>19.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>0.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U19.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U20&exchange=OMFE">NHY3U20</a></td>
+<td class="left">American put</td>
+<td>20.00</td><td>19/09-2013</td>
+<td>0.25</td><td>0.45</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U23&exchange=OMFE">NHY3U23</a></td>
+<td class="left">American put</td>
+<td>23.00</td><td>19/09-2013</td>
+<td>0.70</td><td>0.90</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U26&exchange=OMFE">NHY3U26</a></td>
+<td class="left">American put</td>
+<td>26.00</td><td>19/09-2013</td>
+<td>1.45</td><td>1.65</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U38&exchange=OMFE">NHY3U38</a></td>
+<td class="left">American put</td>
+<td>38.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U35&exchange=OMFE">NHY3U35</a></td>
+<td class="left">American put</td>
+<td>35.00</td><td>19/09-2013</td>
+<td>6.20</td><td>7.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U32&exchange=OMFE">NHY3U32</a></td>
+<td class="left">American put</td>
+<td>32.00</td><td>19/09-2013</td>
+<td>4.40</td><td>4.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U29&exchange=OMFE">NHY3U29</a></td>
+<td class="left">American put</td>
+<td>29.00</td><td>19/09-2013</td>
+<td>2.75</td><td>2.95</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X20&exchange=OMFE">NHY3X20</a></td>
+<td class="left">American put</td>
+<td>20.00</td><td>19/12-2013</td>
+<td>0.40</td><td>0.65</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X20.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X23&exchange=OMFE">NHY3X23</a></td>
+<td class="left">American put</td>
+<td>23.00</td><td>19/12-2013</td>
+<td>1.00</td><td>1.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X23.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X26&exchange=OMFE">NHY3X26</a></td>
+<td class="left">American put</td>
+<td>26.00</td><td>19/12-2013</td>
+<td>1.85</td><td>2.05</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X26.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X38&exchange=OMFE">NHY3X38</a></td>
+<td class="left">American put</td>
+<td>38.00</td><td>19/12-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X38.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X35&exchange=OMFE">NHY3X35</a></td>
+<td class="left">American put</td>
+<td>35.00</td><td>19/12-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X35.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X32&exchange=OMFE">NHY3X32</a></td>
+<td class="left">American put</td>
+<td>32.00</td><td>19/12-2013</td>
+<td>4.80</td><td>5.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X32.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X29&exchange=OMFE">NHY3X29</a></td>
+<td class="left">American put</td>
+<td>29.00</td><td>19/12-2013</td>
+<td>3.15</td><td>3.35</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X29.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Exchange traded notes</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BULL-NHY-HA&exchange=OSE">BULL-NHY-HA</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>16/05-2040</td>
+<td>18.00</td><td>18.10</td><td>18.05</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BULL-NHY-HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BEAR-NHY-HA&exchange=OSE">BEAR-NHY-HA</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>16/05-2040</td>
+<td>57.70</td><td>58.05</td><td>57.88</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BEAR-NHY-HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BULL-NHY-DNM&exchange=OSE">BULL-NHY-DNM</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>14/02-2041</td>
+<td>8.40</td><td>8.45</td><td>8.43</td><td>46 500</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BULL-NHY-DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BEAR-NHY-DNM&exchange=OSE">BEAR-NHY-DNM</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>14/02-2041</td>
+<td>28.75</td><td>28.95</td><td>28.85</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BEAR-NHY-DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Futures</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3M&exchange=OMFE">NHY3M</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>17/01-2013</td>
+<td>28.30</td><td>29.10</td><td>28.85</td><td>200</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3M.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYFUT3M&exchange=OMFE">NHYFUT3M</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>17/01-2013</td>
+<td>28.60</td><td>29.05</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYFUT3M.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3N&exchange=OMFE">NHY3N</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/02-2013</td>
+<td>28.35</td><td>29.35</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3N.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYFUT3N&exchange=OMFE">NHYFUT3N</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/02-2013</td>
+<td>28.65</td><td>29.35</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYFUT3N.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYFUT3O&exchange=OMFE">NHYFUT3O</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/03-2013</td>
+<td>28.70</td><td>29.15</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYFUT3O.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3O&exchange=OMFE">NHY3O</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/03-2013</td>
+<td>28.40</td><td>29.40</td><td>29.00</td><td>400</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3O.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3R&exchange=OMFE">NHY3R</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>20/06-2013</td>
+<td>27.85</td><td>28.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3R.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYFUT3R&exchange=OMFE">NHYFUT3R</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>20/06-2013</td>
+<td>28.25</td><td>29.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYFUT3R.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3U&exchange=OMFE">NHY3U</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3U.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYFUT3U&exchange=OMFE">NHYFUT3U</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYFUT3U.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHY3X&exchange=OMFE">NHY3X</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>19/12-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHY3X.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYFUT3X&exchange=OMFE">NHYFUT3X</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>19/12-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYFUT3X.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Warrants</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW12R27DNM&exchange=OSE">NHYW12R27DNM</a></td>
+<td class="left">Warrants</td>
+<td>27.00</td><td>15/06-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW12R27DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW12F32DNM&exchange=OSE">NHYW12F32DNM</a></td>
+<td class="left">Warrants</td>
+<td>32.00</td><td>15/06-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW12F32DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW12G35DNM&exchange=OSE">NHYW12G35DNM</a></td>
+<td class="left">Warrants</td>
+<td>35.00</td><td>13/07-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW12G35DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13A30DNM&exchange=OSE">NHYW13A30DNM</a></td>
+<td class="left">Warrants</td>
+<td>30.00</td><td>11/01-2013</td>
+<td>0.01</td><td>0.02</td><td>0.02</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13A30DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13N24HA&exchange=OSE">NHYW13N24HA</a></td>
+<td class="left">Warrants</td>
+<td>24.00</td><td>15/02-2013</td>
+<td>0.02</td><td>0.03</td><td>0.03</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13N24HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13B26HA&exchange=OSE">NHYW13B26HA</a></td>
+<td class="left">Warrants</td>
+<td>26.00</td><td>15/02-2013</td>
+<td>0.63</td><td>0.65</td><td>0.64</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13B26HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13N28HA&exchange=OSE">NHYW13N28HA</a></td>
+<td class="left">Warrants</td>
+<td>28.00</td><td>15/02-2013</td>
+<td>0.19</td><td>0.20</td><td>0.20</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13N28HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13B40HA&exchange=OSE">NHYW13B40HA</a></td>
+<td class="left">Warrants</td>
+<td>40.00</td><td>15/02-2013</td>
+<td>0.02</td><td>0.03</td><td>0.03</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13B40HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13B30HA&exchange=OSE">NHYW13B30HA</a></td>
+<td class="left">Warrants</td>
+<td>30.00</td><td>15/02-2013</td>
+<td>0.16</td><td>0.18</td><td>0.17</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13B30HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13C32DNM&exchange=OSE">NHYW13C32DNM</a></td>
+<td class="left">Warrants</td>
+<td>32.00</td><td>15/03-2013</td>
+<td>0.08</td><td>0.10</td><td>0.09</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13C32DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13Q23HA&exchange=OSE">NHYW13Q23HA</a></td>
+<td class="left">Warrants</td>
+<td>23.00</td><td>16/05-2013</td>
+<td>0.12</td><td>0.13</td><td>0.13</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13Q23HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13E30HA&exchange=OSE">NHYW13E30HA</a></td>
+<td class="left">Warrants</td>
+<td>30.00</td><td>16/05-2013</td>
+<td>0.41</td><td>0.43</td><td>0.42</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13E30HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13E25HA&exchange=OSE">NHYW13E25HA</a></td>
+<td class="left">Warrants</td>
+<td>25.00</td><td>16/05-2013</td>
+<td>0.97</td><td>0.99</td><td>0.98</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13E25HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13E40HA&exchange=OSE">NHYW13E40HA</a></td>
+<td class="left">Warrants</td>
+<td>40.00</td><td>16/05-2013</td>
+<td>0.04</td><td>0.05</td><td>0.05</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13E40HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13E35HA&exchange=OSE">NHYW13E35HA</a></td>
+<td class="left">Warrants</td>
+<td>35.00</td><td>16/05-2013</td>
+<td>0.14</td><td>0.15</td><td>0.15</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13E35HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13H32HA&exchange=OSE">NHYW13H32HA</a></td>
+<td class="left">Warrants</td>
+<td>32.00</td><td>16/08-2013</td>
+<td>0.44</td><td>0.45</td><td>0.45</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13H32HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=NHYW13H28HA&exchange=OSE">NHYW13H28HA</a></td>
+<td class="left">Warrants</td>
+<td>28.00</td><td>16/08-2013</td>
+<td>0.77</td><td>0.78</td><td>0.78</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=NHYW13H28HA.OSE">Handle</a></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+</td>
+<td></td>
+</tr>
+<tr>
+<td class=bottomside><div></div></td>
+<td class=maincolumn>
+
+<div class="hend">
+<table class="bottomtable">
+<tr>
+<td>
+<span class="hbottommenu">
+<a href="layout.php">Utforming</a>&nbsp;|&nbsp;
+<a href="http://hopey.netfonds.no/derivative.php?underlying_paper=NHY&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;help=t">Hjelp</a>&nbsp;|&nbsp;
+<a href="http://hopey.netfonds.no/derivative.php?underlying_paper=NHY&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;layout=print">Utskrift</a> 
+&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/auth.php?goto=http%3A%2F%2Fhopey.netfonds.no%2Fderivative.php%3Funderlying_paper%3DNHY%26amp%3Bunderlying_exchange%3DOSE%26amp%3Bexchange%3DOMFE">Bytt til sanntid</a></span>
+</td>
+<td class="hbottomlinestop">
+<span class="hbottomlinestop">
+Ingen åpne markeder</span>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</td>
+<td class=bottomside><div></div></td>
+</tr>
+
+<tr>
+<td class=mainside></td>
+<td class=maincolumn>
+<div class="end-comstock">
+</div>
+</td>
+<td class=mainside></td>
+</tr>
+
+</table>
+
+
+</body>
+</html>
+
+<script  language="JavaScript" type="text/javascript">decorateSearch("papersearch");</script>

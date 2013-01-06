@@ -26,6 +26,7 @@ import oahu.models.MaunaloaFacade;
 import oahu.views.MaunaloaChart;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -234,7 +235,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
     @Override
-    public List<StockBean> stockPrices(int period) {
+    public Collection<StockBean> stockPrices(int period) {
         return facade.stockPrices(ticker, defaultStartDate, period);
     }
 }

@@ -1,0 +1,1866 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Netfonds -- Derivater for Yara International</title>
+<link href="http://www.netfonds.no/static/css/netfonds.css?ts=1352478641" rel="stylesheet"  type="text/css">
+<link rel="SHORTCUT ICON" href="http://www.netfonds.no/static/bits/favicon.ico">
+<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" /> 
+</head>
+<body class="hbody">
+<table class=twholepage>
+<tr>
+<td class=logoside><span width="1px"></span></td>
+<td class="maincolumn">
+<form action="meta-paper.php" method=get name="gototick" class=hsearch autocomplete=off>
+<div class="hlogostrip"><table class="hlogostrip"><tr>
+<td class="hlogo"><div class="hlogo"><a href="http://www.netfonds.no/"><img src="http://www.netfonds.no/static/bits/horizontal_logo_white1_small.png" alt="Netfonds Bank ASA" title="Netfonds Bank ASA" width=129 height=25 border=0></a></div>
+</td>
+<td class="hunlogo">&nbsp;<a class="logout" href="https://www.netfonds.no/account/logout.php">Logg ut</a>&nbsp;|&nbsp;<a href="/derivative.php?underlying_paper=YAR&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;help=t">Hjelp</a><span style="display: none; cursor: pointer;" id="topupdate" value="&nbsp;|&nbsp;Stopp oppdatering">&nbsp;|&nbsp;Start oppdatering</span>&nbsp;<input type="hidden" name="exchange" value="OSE" />
+<input class="pinput" id=papersearch type=text name="paper" size=6>&nbsp;<input type=submit class=hsearch value="Søk"><span class="middle">
+&nbsp;&nbsp;<a href="setlanguage.php?language=en_GB&originating_page=http://hopey.netfonds.no/derivative.php?underlying_paper=YAR&amp;underlying_exchange=OSE&amp;exchange=OMFE"><img src="http://www.netfonds.no/static/bits/flag_gb_24.png" alt=""  border="0" /></a></span>
+</td>
+</tr>
+</table>
+</div>
+
+</form>
+</td>
+<td class=logoside><span width="1px"></span></td>
+</tr>
+
+<tr>
+<td class=menutopside></td>
+<td class="maincolumn">
+
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td nowrap>
+<a href="http://www.netfonds.no/index.php">Netfonds</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/registrering.php">Bli kunde</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/login.php">Min konto</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/handel.php">Handel</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/investeringskonto.php">Livkonto</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/account/managed-intro.php">Aktiv forvaltning</a>&nbsp;|&nbsp;<a href="https://www.netfonds.no/port/port.php">Verktøy</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/quotes/funds-main.php">Fondsmarked</a>&nbsp;|&nbsp;<a href="http://www.netfonds.no/quotes/certificate-main.php">NDX</a>&nbsp;|&nbsp;<span class="htopselected"><a href="http://www.netfonds.no/quotes/market.php">Marked</a></span></td><td class=htime nowrap>
+<span id=toptime>tirsdag 11/12-2012 21:59:58</span></td></tr></table></div>
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td class=hmarket>
+<a href="https://www.netfonds.no/quotes/live.php">Live</a>&nbsp;|&nbsp;<span class="htopselected"><a href="market.php">Norge</a></span>&nbsp;|&nbsp;<a href="market.php?exchange=ST">Sverige</a>&nbsp;|&nbsp;<a href="market.php?exchange=CPH">Danmark</a>&nbsp;|&nbsp;<a href="market.php?exchange=ICEX">Island</a>&nbsp;|&nbsp;<a href="market.php?exchange=O">USA</a>&nbsp;|&nbsp;<a href="market.php?exchange=BTSE&types=LSE">Europa</a>&nbsp;|&nbsp;<a href="funds-main.php">Fond</a>&nbsp;|&nbsp;<a href="currencies.php?exchange=FXSB">Valuta</a>&nbsp;|&nbsp;<a href="market.php?exchange=ICEU&types=FU">Råvarer</a>&nbsp;|&nbsp;<a href="nbb-main.php">Gråmarked</a></td><td nowrap class=hdelay><span id=menuupdate data="box.box_menu_updated_line,exchange.OMFE">Kurser i sanntid. Sist oppdatert: tirsdag 11. desember</span></td></tr></table>
+</div>
+<div class="hmenustrip">
+<table class=hmenustrip><tr><td class=hmarket>
+<a href="market.php?exchange=OSE">Oslo Børs</a>
+&nbsp;|&nbsp;<a href="market.php?exchange=OAX">Oslo Axess</a>
+&nbsp;|&nbsp;<span class="htopselected"><a href="market.php?exchange=OMFE">Opsjoner</a></span>
+&nbsp;|&nbsp;<a href="market.php?exchange=OTC">Unoterte</a>
+&nbsp;|&nbsp;<a href="market.php?exchange=OSE&amp;types=B">Obligasjoner</a>
+</td></tr></table>
+</div>
+</td>
+<td class=menutopside></td>
+</tr>
+<tr>
+<td></td>
+<td class="maincolumn">
+<table class=homaintable><tr valign=top><td class="hsidetd">
+<table class="hsidetable">
+<tr><td><a href="market.php?exchange=OMFE">Oversikt</a></td></tr>
+<tr><td><a href="kurs.php?exchange=OMFE">Kursliste</a></td></tr>
+<tr><td><a href="kurs.php?exchange=OMFE&sec_types=FU">Futures</a></td></tr>
+<tr><td><a href="largest.php?exchange=OMFE">Største handler</a></td></tr>
+<tr><td><a href="derivatives.php">Underliggende</a></td></tr>
+</table>
+</td><td class="hcontent"><div class="hcontent"><script type="text/javascript" src="http://www.netfonds.no/static/js/general-min-gen.js?ts=1355019180"></script><script type="text/javascript" src="http://www.netfonds.no/static/js/paper-search-min-gen.js?ts=1355019192"></script><script  language="JavaScript" type="text/javascript">paperSearchBaseUrl = "";</script>
+<script  language="JavaScript" type="text/javascript">var imgUrl = "http://www.netfonds.no/static/";
+</script>
+<div><table id="updatetable1" width="" class="qbox" data="box.box_quote_line,paper.YAR,exchange.OSE,underlyingp.Y" callback="" updated=""><tr>
+<th class="top" colspan="12">Kurs i underliggende papir YAR (Yara International)</th>
+</tr>
+<tr>
+<th>Siste</th>
+<th>Endring</th>
+<th>Endr%</th>
+<th>Kjøper</th>
+<th>Selger</th>
+<th>Åpning</th>
+<th>Høy</th>
+<th>Lav</th>
+<th>Forrige</th>
+<th>Volum</th>
+<th>Verdi</th>
+<th>Handler</th>
+</tr>
+<tr>
+<td name="ju.l" id="ju.l">284.80</td><td class="up" name="ju.c">3.80</td>
+<td class="up" name="ju.cp">1.35%</td>
+<td class="right" id="ju.b.YAR.OSE" name="ju.b.YAR.OSE"><a href="https://www.netfonds.no/account/order.php?paper=YAR&amp;exchange=OSE&amp;type=S&amp;slimit=284.60&amp;suggest_number=0&amp;skind=limit">284.60</a></td>
+<td class="right" id="ju.o.YAR.OSE" name="ju.o.YAR.OSE"><a href="https://www.netfonds.no/account/order.php?paper=YAR&amp;exchange=OSE&amp;type=B&amp;blimit=284.80&amp;suggest_number=0&amp;bkind=limit">284.80</a></td>
+<td name="ju.op">279.70</td><td name="ju.h">285.30</td><td name="ju.lo">278.90</td><td name="ju.pr" id="ju.pr">281.00</td><td name="ju.vo">790 910</td><td name="ju.va">223 675 375</td><td name="ju.t">4 065</td></tr>
+</table>
+</div>
+<table class="com topmargin"><tr>
+<th class="top" colspan="9">Derivater</th>
+</tr>
+<tr>
+<th>Ticker</th>
+<th>Type</th>
+<th>Innløsningskurs</th>
+<th>Bortfall</th>
+<th>Kjøper</th>
+<th>Selger</th>
+<th>Siste</th>
+<th>Volum</th>
+<th>&nbsp;</th>
+</tr>
+<tr>
+<th class="top" colspan="9">American call</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L330&exchange=OMFE">YAR2L330</a></td>
+<td class="left">American call</td>
+<td>330.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>0.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L320&exchange=OMFE">YAR2L320</a></td>
+<td class="left">American call</td>
+<td>320.00</td><td>20/12-2012</td>
+<td>0.02</td><td>0.35</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L310&exchange=OMFE">YAR2L310</a></td>
+<td class="left">American call</td>
+<td>310.00</td><td>20/12-2012</td>
+<td>0.02</td><td>0.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L300&exchange=OMFE">YAR2L300</a></td>
+<td class="left">American call</td>
+<td>300.00</td><td>20/12-2012</td>
+<td>0.09</td><td>0.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L290&exchange=OMFE">YAR2L290</a></td>
+<td class="left">American call</td>
+<td>290.00</td><td>20/12-2012</td>
+<td>1.65</td><td>2.35</td><td>2.00</td><td>20</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L280&exchange=OMFE">YAR2L280</a></td>
+<td class="left">American call</td>
+<td>280.00</td><td>20/12-2012</td>
+<td>6.00</td><td>7.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L270&exchange=OMFE">YAR2L270</a></td>
+<td class="left">American call</td>
+<td>270.00</td><td>20/12-2012</td>
+<td>13.50</td><td>15.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L260&exchange=OMFE">YAR2L260</a></td>
+<td class="left">American call</td>
+<td>260.00</td><td>20/12-2012</td>
+<td>22.75</td><td>25.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L250&exchange=OMFE">YAR2L250</a></td>
+<td class="left">American call</td>
+<td>250.00</td><td>20/12-2012</td>
+<td>32.25</td><td>36.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L240&exchange=OMFE">YAR2L240</a></td>
+<td class="left">American call</td>
+<td>240.00</td><td>20/12-2012</td>
+<td>42.25</td><td>46.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L230&exchange=OMFE">YAR2L230</a></td>
+<td class="left">American call</td>
+<td>230.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L220&exchange=OMFE">YAR2L220</a></td>
+<td class="left">American call</td>
+<td>220.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L210&exchange=OMFE">YAR2L210</a></td>
+<td class="left">American call</td>
+<td>210.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L210.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L200&exchange=OMFE">YAR2L200</a></td>
+<td class="left">American call</td>
+<td>200.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L200.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2L190&exchange=OMFE">YAR2L190</a></td>
+<td class="left">American call</td>
+<td>190.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2L190.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A220&exchange=OMFE">YAR3A220</a></td>
+<td class="left">American call</td>
+<td>220.00</td><td>17/01-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A230&exchange=OMFE">YAR3A230</a></td>
+<td class="left">American call</td>
+<td>230.00</td><td>17/01-2013</td>
+<td>52.50</td><td>56.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A240&exchange=OMFE">YAR3A240</a></td>
+<td class="left">American call</td>
+<td>240.00</td><td>17/01-2013</td>
+<td>42.75</td><td>46.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A250&exchange=OMFE">YAR3A250</a></td>
+<td class="left">American call</td>
+<td>250.00</td><td>17/01-2013</td>
+<td>33.25</td><td>37.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A260&exchange=OMFE">YAR3A260</a></td>
+<td class="left">American call</td>
+<td>260.00</td><td>17/01-2013</td>
+<td>24.50</td><td>27.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A270&exchange=OMFE">YAR3A270</a></td>
+<td class="left">American call</td>
+<td>270.00</td><td>17/01-2013</td>
+<td>16.75</td><td>19.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A280&exchange=OMFE">YAR3A280</a></td>
+<td class="left">American call</td>
+<td>280.00</td><td>17/01-2013</td>
+<td>10.25</td><td>12.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A320&exchange=OMFE">YAR3A320</a></td>
+<td class="left">American call</td>
+<td>320.00</td><td>17/01-2013</td>
+<td>0.10</td><td>0.60</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A310&exchange=OMFE">YAR3A310</a></td>
+<td class="left">American call</td>
+<td>310.00</td><td>17/01-2013</td>
+<td>0.90</td><td>1.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A300&exchange=OMFE">YAR3A300</a></td>
+<td class="left">American call</td>
+<td>300.00</td><td>17/01-2013</td>
+<td>2.20</td><td>3.40</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3A290&exchange=OMFE">YAR3A290</a></td>
+<td class="left">American call</td>
+<td>290.00</td><td>17/01-2013</td>
+<td>5.50</td><td>6.70</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3A290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B310&exchange=OMFE">YAR3B310</a></td>
+<td class="left">American call</td>
+<td>310.00</td><td>21/02-2013</td>
+<td>3.50</td><td>5.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B300&exchange=OMFE">YAR3B300</a></td>
+<td class="left">American call</td>
+<td>300.00</td><td>21/02-2013</td>
+<td>6.50</td><td>8.00</td><td>7.10</td><td>30</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B290&exchange=OMFE">YAR3B290</a></td>
+<td class="left">American call</td>
+<td>290.00</td><td>21/02-2013</td>
+<td>10.25</td><td>12.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B220&exchange=OMFE">YAR3B220</a></td>
+<td class="left">American call</td>
+<td>220.00</td><td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B230&exchange=OMFE">YAR3B230</a></td>
+<td class="left">American call</td>
+<td>230.00</td><td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B240&exchange=OMFE">YAR3B240</a></td>
+<td class="left">American call</td>
+<td>240.00</td><td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B250&exchange=OMFE">YAR3B250</a></td>
+<td class="left">American call</td>
+<td>250.00</td><td>21/02-2013</td>
+<td>35.50</td><td>40.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B280&exchange=OMFE">YAR3B280</a></td>
+<td class="left">American call</td>
+<td>280.00</td><td>21/02-2013</td>
+<td>15.25</td><td>17.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B270&exchange=OMFE">YAR3B270</a></td>
+<td class="left">American call</td>
+<td>270.00</td><td>21/02-2013</td>
+<td>21.25</td><td>24.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3B260&exchange=OMFE">YAR3B260</a></td>
+<td class="left">American call</td>
+<td>260.00</td><td>21/02-2013</td>
+<td>27.25</td><td>33.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3B260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C330&exchange=OMFE">YAR3C330</a></td>
+<td class="left">American call</td>
+<td>330.00</td><td>21/03-2013</td>
+<td>2.00</td><td>2.65</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C320&exchange=OMFE">YAR3C320</a></td>
+<td class="left">American call</td>
+<td>320.00</td><td>21/03-2013</td>
+<td>3.40</td><td>4.60</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C310&exchange=OMFE">YAR3C310</a></td>
+<td class="left">American call</td>
+<td>310.00</td><td>21/03-2013</td>
+<td>6.00</td><td>7.00</td><td>5.80</td><td>1 000</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C300&exchange=OMFE">YAR3C300</a></td>
+<td class="left">American call</td>
+<td>300.00</td><td>21/03-2013</td>
+<td>9.00</td><td>10.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C290&exchange=OMFE">YAR3C290</a></td>
+<td class="left">American call</td>
+<td>290.00</td><td>21/03-2013</td>
+<td>13.00</td><td>14.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C280&exchange=OMFE">YAR3C280</a></td>
+<td class="left">American call</td>
+<td>280.00</td><td>21/03-2013</td>
+<td>18.25</td><td>20.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C270&exchange=OMFE">YAR3C270</a></td>
+<td class="left">American call</td>
+<td>270.00</td><td>21/03-2013</td>
+<td>23.75</td><td>26.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C260&exchange=OMFE">YAR3C260</a></td>
+<td class="left">American call</td>
+<td>260.00</td><td>21/03-2013</td>
+<td>30.25</td><td>34.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C250&exchange=OMFE">YAR3C250</a></td>
+<td class="left">American call</td>
+<td>250.00</td><td>21/03-2013</td>
+<td>38.00</td><td>41.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C240&exchange=OMFE">YAR3C240</a></td>
+<td class="left">American call</td>
+<td>240.00</td><td>21/03-2013</td>
+<td>46.50</td><td>50.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C230&exchange=OMFE">YAR3C230</a></td>
+<td class="left">American call</td>
+<td>230.00</td><td>21/03-2013</td>
+<td>55.25</td><td>59.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C220&exchange=OMFE">YAR3C220</a></td>
+<td class="left">American call</td>
+<td>220.00</td><td>21/03-2013</td>
+<td>64.50</td><td>68.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C210&exchange=OMFE">YAR3C210</a></td>
+<td class="left">American call</td>
+<td>210.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C210.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3C200&exchange=OMFE">YAR3C200</a></td>
+<td class="left">American call</td>
+<td>200.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3C200.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F330&exchange=OMFE">YAR3F330</a></td>
+<td class="left">American call</td>
+<td>330.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F320&exchange=OMFE">YAR3F320</a></td>
+<td class="left">American call</td>
+<td>320.00</td><td>20/06-2013</td>
+<td>7.00</td><td>8.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F310&exchange=OMFE">YAR3F310</a></td>
+<td class="left">American call</td>
+<td>310.00</td><td>20/06-2013</td>
+<td>9.00</td><td>12.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F300&exchange=OMFE">YAR3F300</a></td>
+<td class="left">American call</td>
+<td>300.00</td><td>20/06-2013</td>
+<td>13.00</td><td>15.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F290&exchange=OMFE">YAR3F290</a></td>
+<td class="left">American call</td>
+<td>290.00</td><td>20/06-2013</td>
+<td>17.50</td><td>19.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F280&exchange=OMFE">YAR3F280</a></td>
+<td class="left">American call</td>
+<td>280.00</td><td>20/06-2013</td>
+<td>22.25</td><td>25.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F200&exchange=OMFE">YAR3F200</a></td>
+<td class="left">American call</td>
+<td>200.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F200.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F210&exchange=OMFE">YAR3F210</a></td>
+<td class="left">American call</td>
+<td>210.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F210.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F220&exchange=OMFE">YAR3F220</a></td>
+<td class="left">American call</td>
+<td>220.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F230&exchange=OMFE">YAR3F230</a></td>
+<td class="left">American call</td>
+<td>230.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F270&exchange=OMFE">YAR3F270</a></td>
+<td class="left">American call</td>
+<td>270.00</td><td>20/06-2013</td>
+<td>28.25</td><td>31.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F260&exchange=OMFE">YAR3F260</a></td>
+<td class="left">American call</td>
+<td>260.00</td><td>20/06-2013</td>
+<td>33.00</td><td>39.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F250&exchange=OMFE">YAR3F250</a></td>
+<td class="left">American call</td>
+<td>250.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3F240&exchange=OMFE">YAR3F240</a></td>
+<td class="left">American call</td>
+<td>240.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3F240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I220&exchange=OMFE">YAR3I220</a></td>
+<td class="left">American call</td>
+<td>220.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I230&exchange=OMFE">YAR3I230</a></td>
+<td class="left">American call</td>
+<td>230.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I240&exchange=OMFE">YAR3I240</a></td>
+<td class="left">American call</td>
+<td>240.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I250&exchange=OMFE">YAR3I250</a></td>
+<td class="left">American call</td>
+<td>250.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I260&exchange=OMFE">YAR3I260</a></td>
+<td class="left">American call</td>
+<td>260.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I330&exchange=OMFE">YAR3I330</a></td>
+<td class="left">American call</td>
+<td>330.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I320&exchange=OMFE">YAR3I320</a></td>
+<td class="left">American call</td>
+<td>320.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I310&exchange=OMFE">YAR3I310</a></td>
+<td class="left">American call</td>
+<td>310.00</td><td>19/09-2013</td>
+<td>14.00</td><td>16.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I270&exchange=OMFE">YAR3I270</a></td>
+<td class="left">American call</td>
+<td>270.00</td><td>19/09-2013</td>
+<td>31.50</td><td>35.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I280&exchange=OMFE">YAR3I280</a></td>
+<td class="left">American call</td>
+<td>280.00</td><td>19/09-2013</td>
+<td>26.25</td><td>29.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I290&exchange=OMFE">YAR3I290</a></td>
+<td class="left">American call</td>
+<td>290.00</td><td>19/09-2013</td>
+<td>21.50</td><td>24.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3I300&exchange=OMFE">YAR3I300</a></td>
+<td class="left">American call</td>
+<td>300.00</td><td>19/09-2013</td>
+<td>17.50</td><td>19.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3I300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">American put</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X330&exchange=OMFE">YAR2X330</a></td>
+<td class="left">American put</td>
+<td>330.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X320&exchange=OMFE">YAR2X320</a></td>
+<td class="left">American put</td>
+<td>320.00</td><td>20/12-2012</td>
+<td>34.25</td><td>38.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X310&exchange=OMFE">YAR2X310</a></td>
+<td class="left">American put</td>
+<td>310.00</td><td>20/12-2012</td>
+<td>24.50</td><td>27.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X300&exchange=OMFE">YAR2X300</a></td>
+<td class="left">American put</td>
+<td>300.00</td><td>20/12-2012</td>
+<td>15.25</td><td>17.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X290&exchange=OMFE">YAR2X290</a></td>
+<td class="left">American put</td>
+<td>290.00</td><td>20/12-2012</td>
+<td>7.20</td><td>8.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X280&exchange=OMFE">YAR2X280</a></td>
+<td class="left">American put</td>
+<td>280.00</td><td>20/12-2012</td>
+<td>2.10</td><td>3.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X270&exchange=OMFE">YAR2X270</a></td>
+<td class="left">American put</td>
+<td>270.00</td><td>20/12-2012</td>
+<td>0.30</td><td>0.95</td><td>0.90</td><td>3</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X260&exchange=OMFE">YAR2X260</a></td>
+<td class="left">American put</td>
+<td>260.00</td><td>20/12-2012</td>
+<td>0.05</td><td>0.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X250&exchange=OMFE">YAR2X250</a></td>
+<td class="left">American put</td>
+<td>250.00</td><td>20/12-2012</td>
+<td>0.01</td><td>0.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X240&exchange=OMFE">YAR2X240</a></td>
+<td class="left">American put</td>
+<td>240.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>0.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X230&exchange=OMFE">YAR2X230</a></td>
+<td class="left">American put</td>
+<td>230.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>0.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X220&exchange=OMFE">YAR2X220</a></td>
+<td class="left">American put</td>
+<td>220.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X210&exchange=OMFE">YAR2X210</a></td>
+<td class="left">American put</td>
+<td>210.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X210.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X200&exchange=OMFE">YAR2X200</a></td>
+<td class="left">American put</td>
+<td>200.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X200.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X190&exchange=OMFE">YAR2X190</a></td>
+<td class="left">American put</td>
+<td>190.00</td><td>20/12-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X190.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M220&exchange=OMFE">YAR3M220</a></td>
+<td class="left">American put</td>
+<td>220.00</td><td>17/01-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M230&exchange=OMFE">YAR3M230</a></td>
+<td class="left">American put</td>
+<td>230.00</td><td>17/01-2013</td>
+<td>0.05</td><td>0.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M240&exchange=OMFE">YAR3M240</a></td>
+<td class="left">American put</td>
+<td>240.00</td><td>17/01-2013</td>
+<td>0.30</td><td>0.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M250&exchange=OMFE">YAR3M250</a></td>
+<td class="left">American put</td>
+<td>250.00</td><td>17/01-2013</td>
+<td>0.60</td><td>1.05</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M260&exchange=OMFE">YAR3M260</a></td>
+<td class="left">American put</td>
+<td>260.00</td><td>17/01-2013</td>
+<td>1.50</td><td>1.95</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M270&exchange=OMFE">YAR3M270</a></td>
+<td class="left">American put</td>
+<td>270.00</td><td>17/01-2013</td>
+<td>2.85</td><td>4.20</td><td>3.50</td><td>20</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M280&exchange=OMFE">YAR3M280</a></td>
+<td class="left">American put</td>
+<td>280.00</td><td>17/01-2013</td>
+<td>6.20</td><td>7.20</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M320&exchange=OMFE">YAR3M320</a></td>
+<td class="left">American put</td>
+<td>320.00</td><td>17/01-2013</td>
+<td>34.50</td><td>38.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M310&exchange=OMFE">YAR3M310</a></td>
+<td class="left">American put</td>
+<td>310.00</td><td>17/01-2013</td>
+<td>25.75</td><td>28.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M300&exchange=OMFE">YAR3M300</a></td>
+<td class="left">American put</td>
+<td>300.00</td><td>17/01-2013</td>
+<td>17.75</td><td>20.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M290&exchange=OMFE">YAR3M290</a></td>
+<td class="left">American put</td>
+<td>290.00</td><td>17/01-2013</td>
+<td>10.75</td><td>12.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N310&exchange=OMFE">YAR3N310</a></td>
+<td class="left">American put</td>
+<td>310.00</td><td>21/02-2013</td>
+<td>27.00</td><td>32.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N300&exchange=OMFE">YAR3N300</a></td>
+<td class="left">American put</td>
+<td>300.00</td><td>21/02-2013</td>
+<td>20.50</td><td>23.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N290&exchange=OMFE">YAR3N290</a></td>
+<td class="left">American put</td>
+<td>290.00</td><td>21/02-2013</td>
+<td>15.00</td><td>17.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N220&exchange=OMFE">YAR3N220</a></td>
+<td class="left">American put</td>
+<td>220.00</td><td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N230&exchange=OMFE">YAR3N230</a></td>
+<td class="left">American put</td>
+<td>230.00</td><td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N240&exchange=OMFE">YAR3N240</a></td>
+<td class="left">American put</td>
+<td>240.00</td><td>21/02-2013</td>
+<td>1.55</td><td>2.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N250&exchange=OMFE">YAR3N250</a></td>
+<td class="left">American put</td>
+<td>250.00</td><td>21/02-2013</td>
+<td>2.45</td><td>3.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N280&exchange=OMFE">YAR3N280</a></td>
+<td class="left">American put</td>
+<td>280.00</td><td>21/02-2013</td>
+<td>10.25</td><td>12.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N270&exchange=OMFE">YAR3N270</a></td>
+<td class="left">American put</td>
+<td>270.00</td><td>21/02-2013</td>
+<td>6.80</td><td>8.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N260&exchange=OMFE">YAR3N260</a></td>
+<td class="left">American put</td>
+<td>260.00</td><td>21/02-2013</td>
+<td>4.30</td><td>5.80</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O330&exchange=OMFE">YAR3O330</a></td>
+<td class="left">American put</td>
+<td>330.00</td><td>21/03-2013</td>
+<td>46.00</td><td>49.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O320&exchange=OMFE">YAR3O320</a></td>
+<td class="left">American put</td>
+<td>320.00</td><td>21/03-2013</td>
+<td>37.50</td><td>40.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O310&exchange=OMFE">YAR3O310</a></td>
+<td class="left">American put</td>
+<td>310.00</td><td>21/03-2013</td>
+<td>30.00</td><td>33.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O300&exchange=OMFE">YAR3O300</a></td>
+<td class="left">American put</td>
+<td>300.00</td><td>21/03-2013</td>
+<td>23.00</td><td>25.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O290&exchange=OMFE">YAR3O290</a></td>
+<td class="left">American put</td>
+<td>290.00</td><td>21/03-2013</td>
+<td>17.50</td><td>19.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O280&exchange=OMFE">YAR3O280</a></td>
+<td class="left">American put</td>
+<td>280.00</td><td>21/03-2013</td>
+<td>12.50</td><td>14.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O270&exchange=OMFE">YAR3O270</a></td>
+<td class="left">American put</td>
+<td>270.00</td><td>21/03-2013</td>
+<td>9.00</td><td>10.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O260&exchange=OMFE">YAR3O260</a></td>
+<td class="left">American put</td>
+<td>260.00</td><td>21/03-2013</td>
+<td>6.00</td><td>7.10</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O250&exchange=OMFE">YAR3O250</a></td>
+<td class="left">American put</td>
+<td>250.00</td><td>21/03-2013</td>
+<td>3.75</td><td>5.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O240&exchange=OMFE">YAR3O240</a></td>
+<td class="left">American put</td>
+<td>240.00</td><td>21/03-2013</td>
+<td>2.30</td><td>3.45</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O230&exchange=OMFE">YAR3O230</a></td>
+<td class="left">American put</td>
+<td>230.00</td><td>21/03-2013</td>
+<td>1.15</td><td>1.90</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O220&exchange=OMFE">YAR3O220</a></td>
+<td class="left">American put</td>
+<td>220.00</td><td>21/03-2013</td>
+<td>0.55</td><td>1.30</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O210&exchange=OMFE">YAR3O210</a></td>
+<td class="left">American put</td>
+<td>210.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O210.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O200&exchange=OMFE">YAR3O200</a></td>
+<td class="left">American put</td>
+<td>200.00</td><td>21/03-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O200.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R330&exchange=OMFE">YAR3R330</a></td>
+<td class="left">American put</td>
+<td>330.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R320&exchange=OMFE">YAR3R320</a></td>
+<td class="left">American put</td>
+<td>320.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R310&exchange=OMFE">YAR3R310</a></td>
+<td class="left">American put</td>
+<td>310.00</td><td>20/06-2013</td>
+<td>37.25</td><td>43.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R300&exchange=OMFE">YAR3R300</a></td>
+<td class="left">American put</td>
+<td>300.00</td><td>20/06-2013</td>
+<td>31.50</td><td>35.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R290&exchange=OMFE">YAR3R290</a></td>
+<td class="left">American put</td>
+<td>290.00</td><td>20/06-2013</td>
+<td>26.00</td><td>29.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R280&exchange=OMFE">YAR3R280</a></td>
+<td class="left">American put</td>
+<td>280.00</td><td>20/06-2013</td>
+<td>20.50</td><td>23.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R200&exchange=OMFE">YAR3R200</a></td>
+<td class="left">American put</td>
+<td>200.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R200.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R210&exchange=OMFE">YAR3R210</a></td>
+<td class="left">American put</td>
+<td>210.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R210.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R220&exchange=OMFE">YAR3R220</a></td>
+<td class="left">American put</td>
+<td>220.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R230&exchange=OMFE">YAR3R230</a></td>
+<td class="left">American put</td>
+<td>230.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R270&exchange=OMFE">YAR3R270</a></td>
+<td class="left">American put</td>
+<td>270.00</td><td>20/06-2013</td>
+<td>16.25</td><td>18.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R260&exchange=OMFE">YAR3R260</a></td>
+<td class="left">American put</td>
+<td>260.00</td><td>20/06-2013</td>
+<td>12.25</td><td>15.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R250&exchange=OMFE">YAR3R250</a></td>
+<td class="left">American put</td>
+<td>250.00</td><td>20/06-2013</td>
+<td>9.50</td><td>11.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R240&exchange=OMFE">YAR3R240</a></td>
+<td class="left">American put</td>
+<td>240.00</td><td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U220&exchange=OMFE">YAR3U220</a></td>
+<td class="left">American put</td>
+<td>220.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U220.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U230&exchange=OMFE">YAR3U230</a></td>
+<td class="left">American put</td>
+<td>230.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U230.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U240&exchange=OMFE">YAR3U240</a></td>
+<td class="left">American put</td>
+<td>240.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U240.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U250&exchange=OMFE">YAR3U250</a></td>
+<td class="left">American put</td>
+<td>250.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U250.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U260&exchange=OMFE">YAR3U260</a></td>
+<td class="left">American put</td>
+<td>260.00</td><td>19/09-2013</td>
+<td>16.75</td><td>19.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U260.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U330&exchange=OMFE">YAR3U330</a></td>
+<td class="left">American put</td>
+<td>330.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U330.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U320&exchange=OMFE">YAR3U320</a></td>
+<td class="left">American put</td>
+<td>320.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U320.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U310&exchange=OMFE">YAR3U310</a></td>
+<td class="left">American put</td>
+<td>310.00</td><td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U310.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U270&exchange=OMFE">YAR3U270</a></td>
+<td class="left">American put</td>
+<td>270.00</td><td>19/09-2013</td>
+<td>20.00</td><td>23.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U270.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U280&exchange=OMFE">YAR3U280</a></td>
+<td class="left">American put</td>
+<td>280.00</td><td>19/09-2013</td>
+<td>25.00</td><td>28.00</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U280.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U290&exchange=OMFE">YAR3U290</a></td>
+<td class="left">American put</td>
+<td>290.00</td><td>19/09-2013</td>
+<td>30.00</td><td>33.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U290.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U300&exchange=OMFE">YAR3U300</a></td>
+<td class="left">American put</td>
+<td>300.00</td><td>19/09-2013</td>
+<td>35.75</td><td>39.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U300.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Exchange traded notes</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BULL-YARA-HA&exchange=OSE">BULL-YARA-HA</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>07/09-2019</td>
+<td>79.50</td><td>80.60</td><td>80.05</td><td>50</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BULL-YARA-HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BEAR-YARA-HA&exchange=OSE">BEAR-YARA-HA</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>07/09-2019</td>
+<td>5.00</td><td>5.06</td><td>5.03</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BEAR-YARA-HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BULL-YAR-DNM&exchange=OSE">BULL-YAR-DNM</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>14/02-2041</td>
+<td>15.35</td><td>15.55</td><td>15.45</td><td>11 000</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BULL-YAR-DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BEAR-YAR-DNM&exchange=OSE">BEAR-YAR-DNM</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>14/02-2041</td>
+<td>15.95</td><td>16.15</td><td>16.05</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BEAR-YAR-DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BULL-YAR-X3-DNM&exchange=OSE">BULL-YAR-X3-DNM</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>29/08-2041</td>
+<td>17.15</td><td>17.45</td><td>17.30</td><td>79 100</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BULL-YAR-X3-DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=BEAR-YAR-X3-DNM&exchange=OSE">BEAR-YAR-X3-DNM</a></td>
+<td class="left">Exchange traded notes</td>
+<td>&nbsp;</td>
+<td>29/08-2041</td>
+<td>8.14</td><td>8.28</td><td>8.21</td><td>8 500</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=BEAR-YAR-X3-DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Futures</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARFUT2X&exchange=OMFE">YARFUT2X</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>20/12-2012</td>
+<td>283.50</td><td>285.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARFUT2X.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR2X&exchange=OMFE">YAR2X</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>20/12-2012</td>
+<td>282.00</td><td>286.00</td><td>284.25</td><td>330</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR2X.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3M&exchange=OMFE">YAR3M</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>17/01-2013</td>
+<td>282.50</td><td>286.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3M.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARFUT3M&exchange=OMFE">YARFUT3M</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>17/01-2013</td>
+<td>283.75</td><td>285.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARFUT3M.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3N&exchange=OMFE">YAR3N</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/02-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3N.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARFUT3N&exchange=OMFE">YARFUT3N</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/02-2013</td>
+<td>284.25</td><td>286.25</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARFUT3N.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARFUT3O&exchange=OMFE">YARFUT3O</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/03-2013</td>
+<td>284.75</td><td>286.75</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARFUT3O.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3O&exchange=OMFE">YAR3O</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>21/03-2013</td>
+<td>283.50</td><td>287.50</td><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3O.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3R&exchange=OMFE">YAR3R</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3R.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARFUT3R&exchange=OMFE">YARFUT3R</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>20/06-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARFUT3R.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YAR3U&exchange=OMFE">YAR3U</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YAR3U.OMFE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARFUT3U&exchange=OMFE">YARFUT3U</a></td>
+<td class="left">Futures</td>
+<td>&nbsp;</td>
+<td>19/09-2013</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARFUT3U.OMFE">Handle</a></td>
+</tr>
+<tr>
+<th class="top" colspan="9">Warrants</th>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12R220DNM&exchange=OSE">YARW12R220DNM</a></td>
+<td class="left">Warrants</td>
+<td>220.00</td><td>15/06-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12R220DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12F330DNM&exchange=OSE">YARW12F330DNM</a></td>
+<td class="left">Warrants</td>
+<td>330.00</td><td>15/06-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12F330DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12F300DNM&exchange=OSE">YARW12F300DNM</a></td>
+<td class="left">Warrants</td>
+<td>300.00</td><td>15/06-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12F300DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12F270DNM&exchange=OSE">YARW12F270DNM</a></td>
+<td class="left">Warrants</td>
+<td>270.00</td><td>15/06-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12F270DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12S250DNM&exchange=OSE">YARW12S250DNM</a></td>
+<td class="left">Warrants</td>
+<td>250.00</td><td>13/07-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12S250DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12S240DNM&exchange=OSE">YARW12S240DNM</a></td>
+<td class="left">Warrants</td>
+<td>240.00</td><td>13/07-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12S240DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12G340DNM&exchange=OSE">YARW12G340DNM</a></td>
+<td class="left">Warrants</td>
+<td>340.00</td><td>13/07-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12G340DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12G300DNM&exchange=OSE">YARW12G300DNM</a></td>
+<td class="left">Warrants</td>
+<td>300.00</td><td>13/07-2012</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12G300DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12X250DNM&exchange=OSE">YARW12X250DNM</a></td>
+<td class="left">Warrants</td>
+<td>250.00</td><td>14/12-2012</td>
+<td>0.01</td><td>0.02</td><td>0.02</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12X250DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12L320DNM&exchange=OSE">YARW12L320DNM</a></td>
+<td class="left">Warrants</td>
+<td>320.00</td><td>14/12-2012</td>
+<td>0.01</td><td>0.02</td><td>0.02</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12L320DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12L305DNM&exchange=OSE">YARW12L305DNM</a></td>
+<td class="left">Warrants</td>
+<td>305.00</td><td>14/12-2012</td>
+<td>0.01</td><td>0.02</td><td>0.02</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12L305DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12X235HA&exchange=OSE">YARW12X235HA</a></td>
+<td class="left">Warrants</td>
+<td>235.00</td><td>21/12-2012</td>
+<td>0.01</td><td>0.02</td><td>0.02</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12X235HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12L260HA&exchange=OSE">YARW12L260HA</a></td>
+<td class="left">Warrants</td>
+<td>260.00</td><td>21/12-2012</td>
+<td>1.16</td><td>1.22</td><td>1.19</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12L260HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW12L290HA&exchange=OSE">YARW12L290HA</a></td>
+<td class="left">Warrants</td>
+<td>290.00</td><td>21/12-2012</td>
+<td>0.11</td><td>0.13</td><td>0.12</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW12L290HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13A325DNM&exchange=OSE">YARW13A325DNM</a></td>
+<td class="left">Warrants</td>
+<td>325.00</td><td>11/01-2013</td>
+<td>0.07</td><td>0.08</td><td>0.08</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13A325DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13A310DNM&exchange=OSE">YARW13A310DNM</a></td>
+<td class="left">Warrants</td>
+<td>310.00</td><td>11/01-2013</td>
+<td>0.21</td><td>0.23</td><td>0.22</td><td>20 000</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13A310DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13N250HA&exchange=OSE">YARW13N250HA</a></td>
+<td class="left">Warrants</td>
+<td>250.00</td><td>15/02-2013</td>
+<td>0.42</td><td>0.44</td><td>0.43</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13N250HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13B300HA&exchange=OSE">YARW13B300HA</a></td>
+<td class="left">Warrants</td>
+<td>300.00</td><td>15/02-2013</td>
+<td>0.77</td><td>0.80</td><td>0.79</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13B300HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13N220HA&exchange=OSE">YARW13N220HA</a></td>
+<td class="left">Warrants</td>
+<td>220.00</td><td>15/02-2013</td>
+<td>0.13</td><td>0.15</td><td>0.14</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13N220HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13B270HA&exchange=OSE">YARW13B270HA</a></td>
+<td class="left">Warrants</td>
+<td>270.00</td><td>15/02-2013</td>
+<td>1.49</td><td>1.54</td><td>1.52</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13B270HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13B240HA&exchange=OSE">YARW13B240HA</a></td>
+<td class="left">Warrants</td>
+<td>240.00</td><td>15/02-2013</td>
+<td>2.49</td><td>2.55</td><td>2.52</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13B240HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13C330DNM&exchange=OSE">YARW13C330DNM</a></td>
+<td class="left">Warrants</td>
+<td>330.00</td><td>15/03-2013</td>
+<td>0.78</td><td>0.80</td><td>0.79</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13C330DNM.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13Q230HA&exchange=OSE">YARW13Q230HA</a></td>
+<td class="left">Warrants</td>
+<td>230.00</td><td>16/05-2013</td>
+<td>0.63</td><td>0.65</td><td>0.64</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13Q230HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13E320HA&exchange=OSE">YARW13E320HA</a></td>
+<td class="left">Warrants</td>
+<td>320.00</td><td>16/05-2013</td>
+<td>1.01</td><td>1.05</td><td>1.03</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13E320HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13E260HA&exchange=OSE">YARW13E260HA</a></td>
+<td class="left">Warrants</td>
+<td>260.00</td><td>16/05-2013</td>
+<td>2.25</td><td>2.30</td><td>2.28</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13E260HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13H330HA&exchange=OSE">YARW13H330HA</a></td>
+<td class="left">Warrants</td>
+<td>330.00</td><td>16/08-2013</td>
+<td>1.28</td><td>1.31</td><td>1.30</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13H330HA.OSE">Handle</a></td>
+</tr>
+<tr>
+<td class="left"><a href="ppaper.php?paper=YARW13H300HA&exchange=OSE">YARW13H300HA</a></td>
+<td class="left">Warrants</td>
+<td>300.00</td><td>16/08-2013</td>
+<td>1.77</td><td>1.81</td><td>1.79</td><td>&nbsp;</td>
+<td class="left"><a href="https://www.netfonds.no/account/order.php?paper=YARW13H300HA.OSE">Handle</a></td>
+</tr>
+</table>
+</div>
+</td>
+</tr>
+</table>
+
+</td>
+<td></td>
+</tr>
+<tr>
+<td class=bottomside><div></div></td>
+<td class=maincolumn>
+
+<div class="hend">
+<table class="bottomtable">
+<tr>
+<td>
+<span class="hbottommenu">
+<a href="layout.php">Utforming</a>&nbsp;|&nbsp;
+<a href="http://hopey.netfonds.no/derivative.php?underlying_paper=YAR&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;help=t">Hjelp</a>&nbsp;|&nbsp;
+<a href="http://hopey.netfonds.no/derivative.php?underlying_paper=YAR&amp;underlying_exchange=OSE&amp;exchange=OMFE&amp;layout=print">Utskrift</a> 
+</span>
+</td>
+<td class="hbottomlinestop">
+<span class="hbottomlinestop">
+&nbsp;Åpne markeder: <a href="market.php?exchange=O">Nasdaq</a>, <a href="market.php?exchange=N">Nyse</a>, <a href="market.php?exchange=A">Amex</a></span>
+</td>
+</tr>
+
+</table>
+
+</div>
+
+</td>
+<td class=bottomside><div></div></td>
+</tr>
+
+<tr>
+<td class=mainside></td>
+<td class=maincolumn>
+<div class="end-comstock">
+</div>
+</td>
+<td class=mainside></td>
+</tr>
+
+</table>
+
+
+</body>
+</html>
+
+<script  language="JavaScript" type="text/javascript">decorateSearch("papersearch");</script>
+
