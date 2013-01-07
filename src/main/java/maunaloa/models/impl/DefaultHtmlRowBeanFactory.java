@@ -2,6 +2,7 @@ package maunaloa.models.impl;
 
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import maunakea.util.Conversions;
+import maunaloa.beans.CalculatedDerivativeBean;
 import oahu.financial.HtmlRowBeanFactory;
 import oahu.financial.OptionCalculator;
 import oahu.financial.beans.DerivativeBean;
@@ -32,13 +33,15 @@ public class DefaultHtmlRowBeanFactory implements HtmlRowBeanFactory {
             return null;
         }
 
-        return new DerivativeBean(Conversions.c2s(cells, NAME),
-                curOpType,
-                Conversions.c2f(cells, X),
-                Conversions.c2f(cells, BUY),
-                Conversions.c2f(cells, SELL),
-                Conversions.c2d(cells, EXPIRY),
-                parent);
+        return new CalculatedDerivativeBean
+            (Conversions.c2s(cells, NAME),
+            curOpType,
+            Conversions.c2f(cells, X),
+            Conversions.c2f(cells, BUY),
+            Conversions.c2f(cells, SELL),
+            Conversions.c2d(cells, EXPIRY),
+            parent,
+            calculator);
     }
 
     private static int parseOpType(List<HtmlTableCell> cells, int index) {
