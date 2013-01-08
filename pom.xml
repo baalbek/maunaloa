@@ -141,6 +141,14 @@
             <artifactId>postgresql</artifactId>
         </dependency>
 
+        <!--****************************************************************
+        ****************************** Colt ****************************
+        ********************************************************************-->
+        <dependency>
+            <groupId>colt</groupId>
+            <artifactId>colt</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -160,6 +168,7 @@
                         </goals>
                     </execution>
 
+                    <!--
                     <execution>
                         <id>test-clojure</id>
                         <phase>test</phase>
@@ -167,7 +176,7 @@
                             <goal>test</goal>
                         </goals>
                     </execution>
-
+                    -->
                 </executions>
                 <configuration>
                     <testScript>src/test/clojure/test.clj</testScript>
