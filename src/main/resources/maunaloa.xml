@@ -4,6 +4,16 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
+    <bean id="kalihiwai-helper"
+          class="kalihiwai.financial.impl.SimpleBinarySearch">
+        <constructor-arg value="50" />
+    </bean>
+
+    <bean id="kalihiwai-calc"
+          class="kalihiwai.financial.impl.BlackScholesCalculator">
+        <constructor-arg ref="kalihiwai-helper" />
+        <constructor-arg value="0.01" />
+    </bean>
 
     <!--
     <bean id="chart" class="manualoa.views.graphics.impl.DemoChart"></bean>
@@ -13,7 +23,10 @@
     <!--
     <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader" />
     -->
-    <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator" />
+    <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator">
+        <constructor-arg ref="kalihiwai-calc" />
+    </bean>
+
     <bean id="bean-factory" class="maunaloa.models.impl.DefaultHtmlRowBeanFactory" />
     <bean id="downloader" class="maunaloa.dummy.Downloader" />
     <bean id="derivative-parser" class="maunakea.financial.impl.DefaultDerivativeParser">

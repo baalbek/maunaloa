@@ -39,6 +39,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colBuy;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colIvBuy;
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colDays;
 
     @FXML private ToggleGroup rgDerivatives;
 
@@ -78,6 +79,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         colBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("buy"));
 
         colIvBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivBuy"));
+        colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
 
         //System.out.println(rgDerivatives.getSelectedToggle().getUserData());
 
