@@ -2,6 +2,7 @@ package maunaloa.beans;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import maunaloa.utils.DateUtils;
 import oahu.financial.OptionCalculator;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
@@ -28,26 +29,34 @@ public class CalculatedDerivativeBean extends DerivativeBean {
         this.calculator = calculator;
     }
 
-
+    //--------------------------------------------------
+    //------------- days
+    //--------------------------------------------------
+    private SimpleDoubleProperty days;
+    public DoubleProperty daysProperty() {
+        if (days == null) {
+            days = new SimpleDoubleProperty(DateUtils.diffDays(getExpiry()));
+        }
+        return days;
+    }
     //--------------------------------------------------
     //------------- ivBuy
     //--------------------------------------------------
     private SimpleDoubleProperty ivBuy;
-    public double getIvBuy() {
-        if (ivBuy == null) {
-            ivBuy = new SimpleDoubleProperty(0.35);
-        }
-        return ivBuy.get();
-    }
-    public void setIvBuy(double value) {
-        if (ivBuy == null) {
-            ivBuy = new SimpleDoubleProperty(value);
-        }
-        else {
-            ivBuy.set(value);
-        }
-    }
     public DoubleProperty ivBuyProperty() {
+        if (ivBuy == null) {
+            ivBuy = new SimpleDoubleProperty(calculator.iv(this,DerivativeBean.BUY));
+        }
         return ivBuy;
+    }
+    //--------------------------------------------------
+    //------------- ivSell
+    //--------------------------------------------------
+    private SimpleDoubleProperty ivSell;
+    public DoubleProperty ivSellProperty() {
+        if (ivSell == null) {
+            ivSell = new SimpleDoubleProperty(calculator.iv(this,DerivativeBean.SELL));
+        }
+        return ivSell;
     }
 }

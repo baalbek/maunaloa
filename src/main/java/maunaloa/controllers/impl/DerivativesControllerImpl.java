@@ -1,11 +1,5 @@
 package maunaloa.controllers.impl;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ObjectPropertyBase;
-import javafx.scene.control.*;
-import maunaloa.controllers.DerivativesController;
-import maunaloa.utils.DateUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,16 +7,19 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import maunaloa.beans.CalculatedDerivativeBean;
+import maunaloa.controllers.DerivativesController;
+import maunaloa.utils.DateUtils;
 import oahu.controllers.ChartViewModel;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.models.MaunaloaFacade;
 import oahu.views.MaunaloaChart;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +36,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private TableColumn<DerivativeBean, String> colOpName;
     @FXML private TableColumn<DerivativeBean, Boolean> colSelected;
     @FXML private TableColumn<DerivativeBean, Date> colExpiry;
+
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colBuy;
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colIvBuy;
+
     @FXML private ToggleGroup rgDerivatives;
 
 
@@ -73,6 +74,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                     }
                 });
         colExpiry.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Date>("expiry"));
+
+        colBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("buy"));
+
+        colIvBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivBuy"));
 
         //System.out.println(rgDerivatives.getSelectedToggle().getUserData());
 

@@ -1,7 +1,7 @@
 package maunaloa.models.impl;
 
-import oahu.financial.Derivative;
 import oahu.financial.OptionCalculator;
+import oahu.financial.beans.DerivativeBean;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,28 +10,32 @@ import oahu.financial.OptionCalculator;
  * Time: 3:32 PM
  */
 public class BlackScholesCalculator implements OptionCalculator {
+
     @Override
-    public double delta(Derivative d) {
+    public double delta(DerivativeBean d) {
         return 0.0;
     }
 
     @Override
-    public double spread(Derivative d) {
+    public double spread(DerivativeBean d) {
         return 0.0;
     }
 
     @Override
-    public double breakEven(Derivative d) {
+    public double breakEven(DerivativeBean d) {
         return 0.0;
     }
 
     @Override
-    public double stockPriceFor(double optionPrice, Derivative o, int priceType) {
+    public double stockPriceFor(double optionPrice, DerivativeBean o, int priceType) {
+        double price = priceType == DerivativeBean.BUY ? o.getBuy() : o.getSell();
+
+
         return 100.0;
     }
 
     @Override
-    public double iv(Derivative d, int priceType) {
+    public double iv(DerivativeBean d, int priceType) {
         return 0.24;
     }
 }
