@@ -24,32 +24,30 @@ public class BlackScholesCalculator implements OptionCalculator {
 
     @Override
     public double delta(DerivativeBean d) {
-        /*
-        double newSpot = d.getParent().getValue() + 1.0;
-        double newPrice = d.getOpType() == Derivative.CALL ?
-                _helper.callPrice(newSpot, d.getX(), 0.05, yearsToExpiry(d), d.ivSell()) :
-                _helper.putPrice(newSpot, d.getX(), 0.05, yearsToExpiry(d), d.ivSell());
-        return newPrice - d.getSell();
-        */
-        return 0.0;
+        CalculatedDerivativeBean cd = (CalculatedDerivativeBean)d;
+        double newSpot = cd.getParent().getValue() + 1.0;
+        double newPrice = cd.getOpType() == DerivativeBean.CALL ?
+                _helper.callPrice(newSpot, cd.getX(), 0.05, yearsToExpiry(cd), cd.getIvSell()) :
+                _helper.putPrice(newSpot, cd.getX(), 0.05, yearsToExpiry(cd), cd.getIvSell());
+        return newPrice - cd.getSell();
+
     }
 
     @Override
     public double spread(DerivativeBean d) {
-        //return d.getSell() - d.getBuy();
-        return 0.0;
+        return d.getSell() - d.getBuy();
     }
 
     @Override
     public double breakEven(DerivativeBean d) {
-        //return _helper.stockPrice(d.getSell(), d.getOpType(), d.getX(), 0.05, yearsToExpiry(d), d.ivBuy(), -1.0);
-        return 0.0;
+        CalculatedDerivativeBean cd = (CalculatedDerivativeBean)d;
+        return _helper.stockPrice(d.getSell(), cd.getOpType(), cd.getX(), 0.05, yearsToExpiry(cd), cd.getIvBuy(), -1.0);
     }
 
     @Override
-    public double stockPriceFor(double optionPrice, DerivativeBean o, int priceType) {
-        //return _helper.stockPrice(optionPrice, d.getOpType(), d.getX(), 0.05, yearsToExpiry(d), d.ivBuy(), -1.0);
-        return 100.0;
+    public double stockPriceFor(double optionPrice, DerivativeBean d, int priceType) {
+        CalculatedDerivativeBean cd = (CalculatedDerivativeBean)d;
+        return _helper.stockPrice(optionPrice, cd.getOpType(), cd.getX(), 0.05, yearsToExpiry(cd), cd.getIvBuy(), -1.0);
     }
 
     @Override

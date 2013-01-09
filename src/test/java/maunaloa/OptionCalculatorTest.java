@@ -42,5 +42,10 @@ public class OptionCalculatorTest {
         assertEquals(0.49,bean.getIvSell(),0.1);
 
         //System.out.println("Days: " + bean.daysProperty().get() + ", Iv sell: " + bean.getIvSell());
+
+        //assertEquals(0.49,bean.getDelta(),0.1);
+        System.out.println("Delta: " + bean.getDelta());
+        System.out.println("Breakeven: " + bean.getBreakeven());
+        System.out.println("Spread: " + bean.getSpread());
     }
 }

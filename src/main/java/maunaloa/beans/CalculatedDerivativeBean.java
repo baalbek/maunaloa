@@ -65,4 +65,45 @@ public class CalculatedDerivativeBean extends DerivativeBean {
     public double getIvSell() {
         return ivSellProperty().get();
     }
+    //--------------------------------------------------
+    //------------- Delta
+    //--------------------------------------------------
+    private SimpleDoubleProperty delta;
+    public DoubleProperty deltaProperty() {
+        if (delta == null) {
+            delta = new SimpleDoubleProperty(calculator.delta(this));
+        }
+        return delta;
+    }
+    public double getDelta() {
+        return deltaProperty().get();
+    }
+
+    //--------------------------------------------------
+    //------------- Break-even
+    //--------------------------------------------------
+    private SimpleDoubleProperty breakeven;
+    public DoubleProperty breakevenProperty() {
+        if (breakeven == null) {
+            breakeven = new SimpleDoubleProperty(calculator.breakEven(this));
+        }
+        return breakeven;
+    }
+    public double getBreakeven() {
+        return breakevenProperty().get();
+    }
+
+    //--------------------------------------------------
+    //------------- Spread
+    //--------------------------------------------------
+    private SimpleDoubleProperty spread;
+    public DoubleProperty spreadProperty() {
+        if (spread == null) {
+            spread = new SimpleDoubleProperty(calculator.spread(this));
+        }
+        return spread;
+    }
+    public double getSpread() {
+        return spreadProperty().get();
+    }
 }
