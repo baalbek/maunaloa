@@ -10,6 +10,7 @@ import oahu.models.MaunaloaFacade;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.ibatis.session.SqlSession;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,15 @@ public class FacadeImpl implements MaunaloaFacade {
     @Override
     public Collection<DerivativeBean> calls(String ticker) {
         return etrade.getCalls(ticker);
+
+        /*
+        Collection<DerivativeBean> tmpResult = etrade.getCalls(ticker);
+
+        Collection<DerivativeBean> result = new ArrayList<>();
+
+
+        return null;
+        */
     }
 
     @Override

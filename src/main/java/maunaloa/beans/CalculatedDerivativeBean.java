@@ -112,7 +112,7 @@ public class CalculatedDerivativeBean extends DerivativeBean {
     //--------------------------------------------------
     public boolean isCalculable() {
         if (getParent()== null) return false;
-        if (daysProperty().get() < 2) return false;
+        if (daysProperty().get() < 10) return false;
         return true;
     }
 }

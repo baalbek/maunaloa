@@ -26,10 +26,14 @@ public class BlackScholesCalculator implements OptionCalculator {
     public double delta(DerivativeBean d) {
         CalculatedDerivativeBean cd = (CalculatedDerivativeBean)d;
         if (!cd.isCalculable()) return -1.0;
+        double iv = cd.getIvSell();
+
+        if (iv < 0.0) return cd.getOpType() == DerivativeBean.CALL ? -1.0 : 1.0;
+
         double newSpot = cd.getParent().getValue() + 1.0;
         double newPrice = cd.getOpType() == DerivativeBean.CALL ?
-                _helper.callPrice(newSpot, cd.getX(), 0.05, yearsToExpiry(cd), cd.getIvSell()) :
-                _helper.putPrice(newSpot, cd.getX(), 0.05, yearsToExpiry(cd), cd.getIvSell());
+                _helper.callPrice(newSpot, cd.getX(), 0.05, yearsToExpiry(cd), iv) :
+                _helper.putPrice(newSpot, cd.getX(), 0.05, yearsToExpiry(cd), iv);
         return newPrice - cd.getSell();
 
     }
