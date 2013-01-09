@@ -25,19 +25,22 @@ public class OptionCalculatorTest {
     public void testBlackScholesCalculator() {
         final XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("/test-maunaloa.xml"));
 
-        BlackScholesCalculator calc = (BlackScholesCalculator) factory.getBean("kalihiwai-calc");
+        BlackScholesCalculator calc = (BlackScholesCalculator) factory.getBean("calculator");
         assertNotNull(calc);
 
         StockBean sbean = new StockBean(100,120,90,98,1000);
-        sbean.setDx(new Date());
+        sbean.setDx(DateUtils.createDate(2013,1,1));
         CalculatedDerivativeBean bean = new CalculatedDerivativeBean("TEST",
                 DerivativeBean.CALL,
                 100,
                 10,
                 12,
-                DateUtils.createDate(2013,3,1),
+                DateUtils.createDate(2013,6,1),
                 sbean,
                 calc);
 
+        assertEquals(0.49,bean.getIvSell(),0.1);
+
+        //System.out.println("Days: " + bean.daysProperty().get() + ", Iv sell: " + bean.getIvSell());
     }
 }

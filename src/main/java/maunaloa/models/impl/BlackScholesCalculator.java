@@ -54,12 +54,9 @@ public class BlackScholesCalculator implements OptionCalculator {
 
     @Override
     public double iv(DerivativeBean d, int priceType) {
-        /*
         double price = priceType == DerivativeBean.BUY ? d.getBuy() : d.getSell();
         return d.getOpType() == DerivativeBean.CALL ?
                 _helper.ivCall(price, d.getParent().getValue(), d.getX(), 0.05, yearsToExpiry((CalculatedDerivativeBean)d)) :
                 _helper.ivPut(price, d.getParent().getValue(), d.getX(), 0.05, yearsToExpiry((CalculatedDerivativeBean)d));
-        */
-        return 0.45;
     }
 }

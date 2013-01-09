@@ -49,6 +49,9 @@ public class CalculatedDerivativeBean extends DerivativeBean {
         }
         return ivBuy;
     }
+    public double getIvBuy() {
+        return ivBuyProperty().get();
+    }
     //--------------------------------------------------
     //------------- ivSell
     //--------------------------------------------------
@@ -58,5 +61,8 @@ public class CalculatedDerivativeBean extends DerivativeBean {
             ivSell = new SimpleDoubleProperty(calculator.iv(this,DerivativeBean.SELL));
         }
         return ivSell;
+    }
+    public double getIvSell() {
+        return ivSellProperty().get();
     }
 }
