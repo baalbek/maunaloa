@@ -1,5 +1,7 @@
 package maunaloa.controllers.impl;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,6 +12,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import maunaloa.beans.CalculatedDerivativeBean;
 import maunaloa.controllers.DerivativesController;
@@ -48,6 +51,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
 
     @FXML private ChoiceBox cbTickers;
+    @FXML private VBox vboxCandlesticks;
     @FXML private Canvas myCanvas;
 
     private MaunaloaChart chart;
@@ -91,9 +95,8 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
         //derivativesTableView.getItems().setAll(derivatives());
 
-        /*
-        myCanvas.widthProperty().bind(myVbox.widthProperty());
-        myCanvas.heightProperty().bind(myVbox.heightProperty());
+        myCanvas.widthProperty().bind(vboxCandlesticks.widthProperty());
+        myCanvas.heightProperty().bind(vboxCandlesticks.heightProperty());
                 InvalidationListener listener =     new InvalidationListener() {
             @Override
             public void invalidated(Observable arg0) {
@@ -103,7 +106,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
-        */
 
         final ObservableList<String> cbitems = FXCollections.observableArrayList();
         for (String s : getTickers()) {
