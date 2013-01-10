@@ -29,7 +29,7 @@
 
     <bean id="bean-factory" class="maunaloa.models.impl.DefaultHtmlRowBeanFactory" />
     <bean id="downloader" class="maunaloa.dummy.Downloader" />
-    <bean id="derivative-parser" class="maunakea.financial.impl.DefaultDerivativeParser">
+    <bean id="derivative-parser" class="maunaloa.models.impl.FilteredDerivativeParser">
         <constructor-arg ref="calculator" />
         <constructor-arg ref="bean-factory" />
     </bean>
