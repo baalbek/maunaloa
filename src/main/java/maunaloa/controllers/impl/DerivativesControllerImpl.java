@@ -91,10 +91,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         colSpread.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("spread"));
         colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
 
-        //System.out.println(rgDerivatives.getSelectedToggle().getUserData());
-
-        //derivativesTableView.getItems().setAll(derivatives());
-
         myCanvas.widthProperty().bind(vboxCandlesticks.widthProperty());
         myCanvas.heightProperty().bind(vboxCandlesticks.heightProperty());
                 InvalidationListener listener =     new InvalidationListener() {
@@ -142,13 +138,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             b.setIsChecked(false);
         }
     }
-    /*
-    public ObjectProperty<ObservableList<DerivativeBean>> derivativesProperty() {
-
-        if (ticker == null) return null;
-        return FXCollections.observableArrayList(facade.calls(ticker));
-    }
-    */
 
     public ObservableList<DerivativeBean> derivatives() {
         if (ticker == null) return null;
