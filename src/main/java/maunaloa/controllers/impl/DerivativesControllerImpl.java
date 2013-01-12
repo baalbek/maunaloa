@@ -22,7 +22,6 @@ import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.models.MaunaloaFacade;
 import oahu.views.MaunaloaChart;
-import org.apache.commons.lang.NotImplementedException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -35,6 +34,8 @@ import java.util.List;
  * Time: 08:48
  */
 public class DerivativesControllerImpl implements DerivativesController, ChartViewModel {
+
+    //region Init
     @FXML private TableView<DerivativeBean> derivativesTableView;
 
     @FXML private TableColumn<DerivativeBean, String> colOpName;
@@ -72,6 +73,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         this.facade = facade;
     }
 
+
     public void initialize() {
         initChoiceBoxTickers();
         initGrid();
@@ -102,6 +104,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         });
     }
+    //endregion
+
+    //region Public Methods
 
     public void editBean(ActionEvent event) {
         DerivativeBean bean = beans.get(0);
@@ -124,23 +129,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         }
     }
 
-    private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
-        Collection<DerivativeBean> result = null;
-        switch (optionType) {
-            case "calls": {
-                result = facade.calls(ticker);
-                break;
-            }
-            case "puts": {
-                result = facade.puts(ticker);
-                break;
-            }
-            default: {
-                result = facade.callsAndPuts(ticker);
-            }
-        }
-        return FXCollections.observableArrayList(result);
-    }
+
 
     public ObservableList<DerivativeBean> derivatives() {
         if (ticker == null) return null;
@@ -181,12 +170,29 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         }
         draw();
     }
+    //endregion
 
+    //region Private Methods
+    private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
+        Collection<DerivativeBean> result = null;
+        switch (optionType) {
+            case "calls": {
+                result = facade.calls(ticker);
+                break;
+            }
+            case "puts": {
+                result = facade.puts(ticker);
+                break;
+            }
+            default: {
+                result = facade.callsAndPuts(ticker);
+            }
+        }
+        return FXCollections.observableArrayList(result);
+    }
+    //endregion
 
-
-    //--------------------------------------------------------------
-    //----------------- Interface methods --------------------------
-    //--------------------------------------------------------------
+    //region Interface methods
 
     @Override
     public void draw() {
@@ -198,10 +204,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public Collection<StockBean> stockPrices(int period) {
         return facade.stockPrices(ticker, defaultStartDate, period);
     }
+    //endregion
 
-    //--------------------------------------------------------------
-    //------------------------ Properties --------------------------
-    //--------------------------------------------------------------
+    //region Properties
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
         this.chart.setViewModel(this);
@@ -214,10 +219,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public void setTickers(List<String> tickers) {
         this.tickers = tickers;
     }
+    //endregion
 
-    //--------------------------------------------------------------
-    //----------------- Initialization methods ---------------------
-    //--------------------------------------------------------------
+    //region Initialization methods
     private void initChoiceBoxTickers() {
         final ObservableList<String> cbitems = FXCollections.observableArrayList();
         for (String s : getTickers()) {
@@ -269,4 +273,5 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
     }
+    //endregion
 }
