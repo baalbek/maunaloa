@@ -22,6 +22,7 @@ import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.models.MaunaloaFacade;
 import oahu.views.MaunaloaChart;
+import org.apache.commons.lang.NotImplementedException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -49,10 +50,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     @FXML private ToggleGroup rgDerivatives;
 
-
     @FXML private ChoiceBox cbTickers;
     @FXML private VBox vboxCandlesticks;
     @FXML private Canvas myCanvas;
+    @FXML private CheckBox cxLoadOptionsHtml;
 
     private MaunaloaChart chart;
 
@@ -72,50 +73,34 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
     public void initialize() {
-        colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeBean, String>("ticker"));
-        colSelected.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Boolean>("isChecked"));
-        colSelected.setCellFactory(
-                new Callback<TableColumn<DerivativeBean, Boolean>, TableCell<DerivativeBean, Boolean>>() {
-                    @Override
-                    public TableCell<DerivativeBean, Boolean> call(TableColumn<DerivativeBean, Boolean> p) {
-                        return new CheckBoxTableCell<>();
-                    }
-                });
-        colExpiry.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Date>("expiry"));
+        initChoiceBoxTickers();
+        initGrid();
+        initMyCanvas();
 
-        colBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("buy"));
-
-        colIvBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivBuy"));
-        colIvSell.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivSell"));
-        colDelta.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("delta"));
-        colSpread.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("spread"));
-        colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
-
-        myCanvas.widthProperty().bind(vboxCandlesticks.widthProperty());
-        myCanvas.heightProperty().bind(vboxCandlesticks.heightProperty());
-                InvalidationListener listener =     new InvalidationListener() {
+        cxLoadOptionsHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void invalidated(Observable arg0) {
-                draw();
-            }
-        };
-
-        myCanvas.widthProperty().addListener(listener);
-        myCanvas.heightProperty().addListener(listener);
-
-        final ObservableList<String> cbitems = FXCollections.observableArrayList();
-        for (String s : getTickers()) {
-            cbitems.add(s);
-        }
-        cbTickers.getItems().addAll(cbitems);
-        cbTickers.getSelectionModel().selectedIndexProperty().addListener(
-                new ChangeListener<Number>() {
-                    @Override
-                    public void changed(ObservableValue<? extends Number> observableValue, Number value, Number newValue) {
-                        setTicker(cbitems.get(newValue.intValue()));
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+                if (cxLoadOptionsHtml.isSelected()) {
+                    System.out.println("yep " + cbTickers.valueProperty().get());
+                    ObservableList<DerivativeBean> items = derivatives();
+                    if (items != null) {
+                        derivativesTableView.getItems().setAll(items);
                     }
                 }
-        );
+            }
+        });
+
+        rgDerivatives.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue,
+                                                          Toggle toggle,
+                                                          Toggle toggle2) {
+                String ticker = cbTickers.valueProperty().get().toString();
+                String opType = observableValue.getValue().getUserData().toString();
+                ObservableList<DerivativeBean> items = fetchDerivativesForTicker(ticker,opType);
+                derivativesTableView.getItems().setAll(items);
+            }
+        });
     }
 
     public void editBean(ActionEvent event) {
@@ -139,12 +124,33 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         }
     }
 
+    private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
+        Collection<DerivativeBean> result = null;
+        switch (optionType) {
+            case "calls": {
+                result = facade.calls(ticker);
+                break;
+            }
+            case "puts": {
+                result = facade.puts(ticker);
+                break;
+            }
+            default: {
+                result = facade.callsAndPuts(ticker);
+            }
+        }
+        return FXCollections.observableArrayList(result);
+    }
+
     public ObservableList<DerivativeBean> derivatives() {
         if (ticker == null) return null;
 
-        Collection<DerivativeBean> result = null;
-
         String userData = rgDerivatives.getSelectedToggle().getUserData().toString();
+
+        return fetchDerivativesForTicker(ticker,userData);
+
+        /*
+        Collection<DerivativeBean> result = null;
 
         System.out.println("User data: " + userData);
         switch (userData) {
@@ -161,19 +167,22 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         }
         return FXCollections.observableArrayList(result);
+        */
+
     }
-
-
-
 
     public void setTicker(String ticker) {
         this.ticker = ticker;
-        ObservableList<DerivativeBean> items = derivatives();
-        if (items != null) {
-            derivativesTableView.getItems().setAll(items);
+        if (cxLoadOptionsHtml.isSelected()) {
+            ObservableList<DerivativeBean> items = derivatives();
+            if (items != null) {
+                derivativesTableView.getItems().setAll(items);
+            }
         }
         draw();
     }
+
+
 
     //--------------------------------------------------------------
     //----------------- Interface methods --------------------------
@@ -204,5 +213,60 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     public void setTickers(List<String> tickers) {
         this.tickers = tickers;
+    }
+
+    //--------------------------------------------------------------
+    //----------------- Initialization methods ---------------------
+    //--------------------------------------------------------------
+    private void initChoiceBoxTickers() {
+        final ObservableList<String> cbitems = FXCollections.observableArrayList();
+        for (String s : getTickers()) {
+            cbitems.add(s);
+        }
+        cbTickers.getItems().addAll(cbitems);
+        cbTickers.getSelectionModel().selectedIndexProperty().addListener(
+                new ChangeListener<Number>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Number> observableValue, Number value, Number newValue) {
+                        setTicker(cbitems.get(newValue.intValue()));
+                    }
+                }
+        );
+    }
+
+    private void initGrid() {
+        colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeBean, String>("ticker"));
+        colSelected.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Boolean>("isChecked"));
+        colSelected.setCellFactory(
+                new Callback<TableColumn<DerivativeBean, Boolean>, TableCell<DerivativeBean, Boolean>>() {
+                    @Override
+                    public TableCell<DerivativeBean, Boolean> call(TableColumn<DerivativeBean, Boolean> p) {
+                        return new CheckBoxTableCell<>();
+                    }
+                });
+        colExpiry.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Date>("expiry"));
+
+        colBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("buy"));
+
+        colIvBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivBuy"));
+        colIvSell.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivSell"));
+        colDelta.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("delta"));
+        colSpread.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("spread"));
+        colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
+    }
+
+    private void initMyCanvas() {
+        myCanvas.widthProperty().bind(vboxCandlesticks.widthProperty());
+        myCanvas.heightProperty().bind(vboxCandlesticks.heightProperty());
+
+        InvalidationListener listener =     new InvalidationListener() {
+            @Override
+            public void invalidated(Observable arg0) {
+                draw();
+            }
+        };
+
+        myCanvas.widthProperty().addListener(listener);
+        myCanvas.heightProperty().addListener(listener);
     }
 }
