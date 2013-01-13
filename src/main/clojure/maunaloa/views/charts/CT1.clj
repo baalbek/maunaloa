@@ -54,7 +54,9 @@
         num-items 90
         cndl-plotter (CNDL/candlestick-plotter (take num-items (rseq beans)))
         itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
-                                                     :add-plotters [cndl-plotter]})]
+                                                     :add-plotters [cndl-plotter]})
+        cc-block (CB/cybercycle-block prices dx 0.5 {:num-items num-items})
+        ]
     (doto gc
       (.setFill Color/WHITE)
       (.fillRect 0 0 w h)
@@ -62,13 +64,13 @@
         (- w (+ mleft mright))
         (- h (+ mtop mbtm))))
     (let [qsx (B/block-chain
-      :qs [itrend-block]
-      :h (- h mtop mbtm)
-      :x0 mleft
-      :x1 (- w mright)
-      :y0 mtop)]
+              :qs [itrend-block cc-block]
+              :h (- h mtop mbtm)
+              :x0 mleft
+              :x1 (- w mright)
+              :y0 mtop)]
       (loop [i 0 q qsx]
         (when (seq q)
-          (Q/plot-quadrant gc (first q)))))))
+            (Q/plot-quadrant gc (first q)))))))
 
 
