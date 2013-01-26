@@ -26,6 +26,7 @@ src/main/clojure/dbcp.properties
 src/main/clojure/haleakala.xml
 src/main/clojure/log4j.properties
 src/main/clojure/mybatis.conf.xml
+*.log*
 
 
 

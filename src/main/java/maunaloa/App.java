@@ -7,8 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.net.URL;
 import java.util.Locale;
@@ -21,13 +21,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        final XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("/maunaloa.xml"));
+
+
+        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
 
         URL url = this.getClass().getResource("/MainFrame.fxml");
 
         FXMLLoader loader = new FXMLLoader(url);
 
-        final DerivativesController controller = (DerivativesController)factory.getBean("derivatives-controller");
+        final DerivativesController controller = factory.getBean("derivatives-controller",DerivativesController.class);
 
         loader.setController(controller);
 
