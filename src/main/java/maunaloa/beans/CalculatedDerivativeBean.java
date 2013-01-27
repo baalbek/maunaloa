@@ -107,6 +107,42 @@ public class CalculatedDerivativeBean extends DerivativeBean {
         return spreadProperty().get();
     }
 
+
+    //--------------------------------------------------
+    //------------- Risk
+    //--------------------------------------------------
+    private DoubleProperty risk; // = new SimpleDoubleProperty(0.0);
+    public double getRisk() {
+        return riskProperty().get();
+    }
+
+    public void setRisk(double value) {
+        riskProperty().set(value);
+        stockPriceRiskProperty().set(calculator.stockPriceFor(getSell() - value,this,0));
+    }
+    public DoubleProperty riskProperty() {
+        if (risk == null) {
+            risk = new SimpleDoubleProperty(0.0);
+        }
+        return risk;
+    }
+    //--------------------------------------------------
+    //------------- Stock Price Risk
+    //--------------------------------------------------
+    private DoubleProperty stockPriceRisk;
+    public double getStockPriceRisk() {
+        return stockPriceRiskProperty().get();
+    }
+
+    public void setStockPriceRisk(double value) {
+        stockPriceRiskProperty().set(value);
+    }
+    public DoubleProperty stockPriceRiskProperty() {
+        if (stockPriceRisk == null) {
+            stockPriceRisk = new SimpleDoubleProperty(0.0);
+        }
+        return stockPriceRisk;
+    }
     //--------------------------------------------------
     //------------- Is Calculable
     //--------------------------------------------------

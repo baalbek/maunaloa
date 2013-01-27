@@ -48,6 +48,8 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colSpread;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colDelta;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colDays;
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colRisc;
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colSpRisc;
 
     @FXML private ToggleGroup rgDerivatives;
 
@@ -103,26 +105,55 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 derivativesTableView.getItems().setAll(items);
             }
         });
+
+        /*
+        txRisk.textProperty().addListener(
+                new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
+                        System.out.println("textField old val: " + arg1);
+                        System.out.println("textField new val: " + arg2);
+                        System.out.println();
+                    }
+                });
+         */
+
+        /*
+        final DoubleProperty a = new SimpleDoubleProperty(1);
+        final DoubleProperty b = new SimpleDoubleProperty(2);
+        final DoubleProperty c = new SimpleDoubleProperty(3);
+        final DoubleProperty d = new SimpleDoubleProperty(4);
+
+        DoubleBinding db = new DoubleBinding() {
+
+            {
+                super.bind(a, b, c, d);
+            }
+
+            @Override
+            protected double computeValue() {
+                return (a.get() * b.get()) + (c.get() * d.get());
+            }
+        };
+        */
+
     }
     //endregion
 
     //region Public Methods
 
-    public void editBean(ActionEvent event) {
-        DerivativeBean bean = beans.get(0);
-        bean.tickerProperty().set("Changed!");
-        bean.setTicker("Changed again!!!!!");
-        System.out.println("Changed bean: " + bean);
+    public void calcRisk(ActionEvent event) {
+        String txVal = ((TextField)event.getSource()).textProperty().get();
+        double risk = Double.parseDouble(txVal);
 
-        for (DerivativeBean b : derivatives()) {
-            System.out.println(b.tickerProperty().get() + " is checked: " + b.isCheckedProperty().get());
+        for (DerivativeBean b : derivativesTableView.getItems()) {
+            CalculatedDerivativeBean cb = (CalculatedDerivativeBean)b;
+            if (cb.getIsChecked()) {
+                cb.setRisk(risk);
+            }
         }
-
-        for (StockBean b : stockPrices(1)) {
-            System.out.println(b.getTicker() + " " + b.getCls());
-        }
-
     }
+
     public void unCheckBeans(ActionEvent event) {
         for (DerivativeBean b : derivatives()) {
             b.setIsChecked(false);
@@ -257,6 +288,8 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         colDelta.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("delta"));
         colSpread.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("spread"));
         colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
+        colRisc.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("risk"));
+        colSpRisc.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("stockPriceRisk"));
     }
 
     private void initMyCanvas() {

@@ -32,9 +32,26 @@
                     <TableColumn prefWidth="75.0" text="Rating" fx:id="colRating" />
                     <TableColumn prefWidth="75.0" text="Break Even" fx:id="colBreakEven" />
                     <TableColumn prefWidth="75.0" text="Risc" fx:id="colRisc" />
+                    <TableColumn prefWidth="75.0" text="Stockprice Risc" fx:id="colSpRisc" />
                   </columns>
                 </TableView>
               </center>
+              <top>
+                <HBox prefHeight="-1.0" prefWidth="200.0">
+                  <children>
+                    <Label text="Risk:">
+                      <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                      </HBox.margin>
+                    </Label>
+                    <TextField fx:id="txRisk" alignment="CENTER_RIGHT" onAction="#calcRisk" prefWidth="75.0" promptText="">
+                      <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                      </HBox.margin>
+                    </TextField>
+                  </children>
+                </HBox>
+              </top>
             </BorderPane>
           </content>
         </Tab>
