@@ -7,11 +7,8 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-    <bean id="loggerAspect" class="maunaloa.aspects.TraceAspect" />
-
     <!--
-    <aop:aspectj-autoproxy>
-        <aop:include name="loggerAspect" />
-    </aop:aspectj-autoproxy>
+    <bean id="loggerAspect" class="maunaloa.aspects.TraceAspect" />
     -->
+
 </beans>
