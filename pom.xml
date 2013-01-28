@@ -17,10 +17,20 @@
     </parent>
 
     <dependencies>
-        <!-- JavaFX -->
+        <!--****************************************************************
+        ******************************** JAvaFX ****************************
+        ********************************************************************-->
         <dependency>
             <groupId>com.oracle.javafx</groupId>
             <artifactId>javafx</artifactId>
+        </dependency>
+
+        <!--****************************************************************
+        ******************************** Log4j ****************************
+        ********************************************************************-->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
         </dependency>
 
         <!--****************************************************************
@@ -37,6 +47,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
+        </dependency>
+
+        <!--****************************************************************
+        ******************************** AOP *******************************
+        ********************************************************************-->
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
+        <!-- Cglib -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
         </dependency>
 
         <!--****************************************************************
