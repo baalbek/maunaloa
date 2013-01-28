@@ -168,27 +168,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         String userData = rgDerivatives.getSelectedToggle().getUserData().toString();
 
         return fetchDerivativesForTicker(ticker,userData);
-
-        /*
-        Collection<DerivativeBean> result = null;
-
-        System.out.println("User data: " + userData);
-        switch (userData) {
-            case "calls": {
-                result = facade.calls(ticker);
-                break;
-            }
-            case "puts": {
-                result = facade.puts(ticker);
-                break;
-            }
-            default: {
-                result = facade.callsAndPuts(ticker);
-            }
-        }
-        return FXCollections.observableArrayList(result);
-        */
-
     }
 
     public void setTicker(String ticker) {
@@ -200,6 +179,14 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         }
         draw();
+    }
+
+    public void selectAllDerivatives(ActionEvent event)  {
+        toggleAllDerivatives(true);
+    }
+
+    public void unSelectAllDerivatives(ActionEvent event)  {
+        toggleAllDerivatives(false);
     }
     //endregion
 
@@ -220,6 +207,11 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         }
         return FXCollections.observableArrayList(result);
+    }
+    private void toggleAllDerivatives(boolean value) {
+        for (DerivativeBean b : derivatives()) {
+            b.setIsChecked(value);
+        }
     }
     //endregion
 

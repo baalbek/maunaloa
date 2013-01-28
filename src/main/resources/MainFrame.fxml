@@ -68,33 +68,57 @@
     </TabPane>
   </center>
   <top>
-    <HBox prefHeight="-1.0" prefWidth="-1.0">
+    <VBox prefHeight="-1.0" prefWidth="100.0">
       <children>
-        <RadioButton fx:id="rgCalls" mnemonicParsing="false" selected="true" text="Calls" userData="calls">
-          <toggleGroup>
-            <ToggleGroup fx:id="rgDerivatives" />
-          </toggleGroup>
-          <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
-          </HBox.margin>
-        </RadioButton>
-        <RadioButton fx:id="rgPuts" mnemonicParsing="false" text="Puts" toggleGroup="$rgDerivatives" userData="puts">
-          <HBox.margin>
-            <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" fx:id="x1" />
-          </HBox.margin>
-        </RadioButton>
-        <RadioButton fx:id="rgCallsAndPuts" mnemonicParsing="false" text="All" toggleGroup="$rgDerivatives" userData="all" HBox.margin="$x1" />
-        <ChoiceBox fx:id="cbTickers">
-          <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-          </HBox.margin>
-        </ChoiceBox>
-        <CheckBox fx:id="cxLoadOptionsHtml" mnemonicParsing="false" selected="true" text="Load Derivatives">
-          <HBox.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-          </HBox.margin>
-        </CheckBox>
+        <MenuBar>
+          <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Close" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#selectAllDerivatives" text="Select All Derivatives" />
+                <MenuItem mnemonicParsing="false" onAction="#unSelectAllDerivatives" text="Un-Select All Derivatives" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About" />
+              </items>
+            </Menu>
+          </menus>
+        </MenuBar>
+        <HBox prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <RadioButton fx:id="rgCalls" mnemonicParsing="false" selected="true" text="Calls" userData="calls">
+              <toggleGroup>
+                <ToggleGroup fx:id="rgDerivatives" />
+              </toggleGroup>
+              <HBox.margin>
+                <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+              </HBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="rgPuts" mnemonicParsing="false" text="Puts" toggleGroup="$rgDerivatives" userData="puts">
+              <HBox.margin>
+                <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" fx:id="x1" />
+              </HBox.margin>
+            </RadioButton>
+            <RadioButton fx:id="rgCallsAndPuts" mnemonicParsing="false" text="All" toggleGroup="$rgDerivatives" userData="all" HBox.margin="$x1" />
+            <ChoiceBox fx:id="cbTickers">
+              <HBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+              </HBox.margin>
+            </ChoiceBox>
+            <CheckBox fx:id="cxLoadOptionsHtml" mnemonicParsing="false" selected="true" text="Load Derivatives">
+              <HBox.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+              </HBox.margin>
+            </CheckBox>
+          </children>
+        </HBox>
       </children>
-    </HBox>
+    </VBox>
   </top>
 </BorderPane>
