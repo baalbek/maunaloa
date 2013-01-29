@@ -64,6 +64,8 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     private String ticker = null;
     private List<String> tickers;
 
+    private StockBean stock;
+
     private MaunaloaFacade facade;
 
     private Date defaultStartDate = DateUtils.createDate(2012,1,1);
@@ -105,6 +107,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 derivativesTableView.getItems().setAll(items);
             }
         });
+
+        stock = new StockBean();
+
 
         /*
         txRisk.textProperty().addListener(
@@ -177,6 +182,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             if (items != null) {
                 derivativesTableView.getItems().setAll(items);
             }
+            //StockBean stock = facade.spot(ticker);
         }
         draw();
     }

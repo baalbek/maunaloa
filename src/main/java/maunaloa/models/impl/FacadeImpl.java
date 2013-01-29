@@ -45,7 +45,7 @@ public class FacadeImpl implements MaunaloaFacade {
 
     @Override
     public StockBean spot(String ticker) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return etrade.getSpot(ticker);
     }
 
     @Override
