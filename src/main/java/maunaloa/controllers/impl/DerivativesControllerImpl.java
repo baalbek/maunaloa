@@ -2,6 +2,9 @@ package maunaloa.controllers.impl;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -16,6 +19,8 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
 import maunaloa.beans.CalculatedDerivativeBean;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.utils.DateUtils;
@@ -68,7 +73,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     private String ticker = null;
     private List<String> tickers;
 
-    //private StockBean stock;
+    private StockBean stock;
 
     private MaunaloaFacade facade;
 
@@ -112,38 +117,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         });
 
-        txSpot.textProperty().bind(spotProperty());
-
-        /*
-        txRisk.textProperty().addListener(
-                new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
-                        System.out.println("textField old val: " + arg1);
-                        System.out.println("textField new val: " + arg2);
-                        System.out.println();
-                    }
-                });
-         */
-
-        /*
-        final DoubleProperty a = new SimpleDoubleProperty(1);
-        final DoubleProperty b = new SimpleDoubleProperty(2);
-        final DoubleProperty c = new SimpleDoubleProperty(3);
-        final DoubleProperty d = new SimpleDoubleProperty(4);
-
-        DoubleBinding db = new DoubleBinding() {
-
-            {
-                super.bind(a, b, c, d);
-            }
-
-            @Override
-            protected double computeValue() {
-                return (a.get() * b.get()) + (c.get() * d.get());
-            }
-        };
-        */
+        stock = new StockBean();
+        StringConverter<? extends Number> converter =  new DoubleStringConverter();
+        Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(),  (StringConverter<Number>)converter);
 
     }
     //endregion Init
@@ -187,8 +163,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 derivativesTableView.getItems().setAll(items);
             }
         }
-        StockBean stock = facade.spot(ticker);
-        spotProperty().set(String.valueOf(stock.getValue()));
+        stock.assign(facade.spot(ticker));
         draw();
     }
 
@@ -241,11 +216,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     //endregion  Interface methods
 
     //region Properties
-
-    private StringProperty spot = new SimpleStringProperty("0.0");
-    private StringProperty spotProperty()  {
-        return spot;
-    }
 
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
