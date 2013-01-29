@@ -2,6 +2,8 @@ package maunaloa.controllers.impl;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -58,13 +60,15 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private Canvas myCanvas;
     @FXML private CheckBox cxLoadOptionsHtml;
 
+    @FXML private TextField txSpot;
+
     private MaunaloaChart chart;
 
     private ObservableList<DerivativeBean> beans;
     private String ticker = null;
     private List<String> tickers;
 
-    private StockBean stock;
+    //private StockBean stock;
 
     private MaunaloaFacade facade;
 
@@ -108,8 +112,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         });
 
-        stock = new StockBean();
-
+        txSpot.textProperty().bind(spotProperty());
 
         /*
         txRisk.textProperty().addListener(
@@ -143,9 +146,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         */
 
     }
-    //endregion
+    //endregion Init
 
     //region Public Methods
+
 
     public void calcRisk(ActionEvent event) {
         String txVal = ((TextField)event.getSource()).textProperty().get();
@@ -182,8 +186,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             if (items != null) {
                 derivativesTableView.getItems().setAll(items);
             }
-            //StockBean stock = facade.spot(ticker);
         }
+        StockBean stock = facade.spot(ticker);
+        spotProperty().set(String.valueOf(stock.getValue()));
         draw();
     }
 
@@ -194,7 +199,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public void unSelectAllDerivatives(ActionEvent event)  {
         toggleAllDerivatives(false);
     }
-    //endregion
+    //endregion  Public Methods
 
     //region Private Methods
     private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
@@ -219,7 +224,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             b.setIsChecked(value);
         }
     }
-    //endregion
+    //endregion Private Methods
 
     //region Interface methods
 
@@ -233,9 +238,15 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public Collection<StockBean> stockPrices(int period) {
         return facade.stockPrices(ticker, defaultStartDate, period);
     }
-    //endregion
+    //endregion  Interface methods
 
     //region Properties
+
+    private StringProperty spot = new SimpleStringProperty("0.0");
+    private StringProperty spotProperty()  {
+        return spot;
+    }
+
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
         this.chart.setViewModel(this);
@@ -304,5 +315,5 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
     }
-    //endregion
+    //endregion  Initialization methods
 }

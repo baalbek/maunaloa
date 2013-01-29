@@ -46,9 +46,15 @@
                     </Label>
                     <TextField fx:id="txRisk" alignment="CENTER_RIGHT" onAction="#calcRisk" prefWidth="75.0" promptText="">
                       <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" fx:id="x2" />
                       </HBox.margin>
                     </TextField>
+                    <Label text="Spot:">
+                      <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" top="10.0" />
+                      </HBox.margin>
+                    </Label>
+                    <TextField id="txRisk" fx:id="txSpot" alignment="CENTER_RIGHT" onAction="#calcRisk" prefWidth="75.0" promptText="" HBox.margin="$x2" />
                   </children>
                 </HBox>
               </top>
