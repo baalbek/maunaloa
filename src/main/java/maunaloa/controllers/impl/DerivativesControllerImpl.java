@@ -66,6 +66,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private CheckBox cxLoadOptionsHtml;
 
     @FXML private TextField txSpot;
+    @FXML private TextField txOpen;
+    @FXML private TextField txHi;
+    @FXML private TextField txLo;
 
     private MaunaloaChart chart;
 
@@ -120,6 +123,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         stock = new StockBean();
         StringConverter<? extends Number> converter =  new DoubleStringConverter();
         Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txOpen.textProperty(), stock.opnProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txHi.textProperty(), stock.hiProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txLo.textProperty(), stock.loProperty(),  (StringConverter<Number>)converter);
 
     }
     //endregion Init

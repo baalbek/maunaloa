@@ -49,12 +49,36 @@
                         <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" fx:id="x2" />
                       </HBox.margin>
                     </TextField>
-                    <Label text="Spot:">
+
+                    <Label text="Open:">
                       <HBox.margin>
                         <Insets bottom="10.0" left="10.0" top="10.0" />
                       </HBox.margin>
                     </Label>
-                    <TextField id="txRisk" fx:id="txSpot" alignment="CENTER_RIGHT" onAction="#calcRisk" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+                    <TextField fx:id="txOpen" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+
+                      <Label text="Hi:">
+                          <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" top="10.0" />
+                          </HBox.margin>
+                      </Label>
+                    <TextField fx:id="txHi" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+
+                      <Label text="Lo:">
+                          <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" top="10.0" />
+                          </HBox.margin>
+                      </Label>
+                    <TextField fx:id="txLo" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+
+                      <Label text="Spot:">
+                          <HBox.margin>
+                              <Insets bottom="10.0" left="10.0" top="10.0" />
+                          </HBox.margin>
+                      </Label>
+                    <TextField fx:id="txSpot" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+
+
                   </children>
                 </HBox>
               </top>
