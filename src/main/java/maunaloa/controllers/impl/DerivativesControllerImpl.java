@@ -64,6 +64,8 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private VBox vboxCandlesticks;
     @FXML private Canvas myCanvas;
     @FXML private CheckBox cxLoadOptionsHtml;
+    @FXML private CheckBox cxLoadStockHtml;
+
 
     @FXML private TextField txSpot;
     @FXML private TextField txOpen;
@@ -169,7 +171,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 derivativesTableView.getItems().setAll(items);
             }
         }
-        stock.assign(facade.spot(ticker));
+        if (cxLoadStockHtml.isSelected()) {
+            stock.assign(facade.spot(ticker));
+        }
         draw();
     }
 
