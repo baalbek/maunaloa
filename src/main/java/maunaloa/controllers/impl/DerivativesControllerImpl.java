@@ -100,13 +100,20 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         cxLoadOptionsHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
-                if (cxLoadOptionsHtml.isSelected()) {
-                    System.out.println("yep " + cbTickers.valueProperty().get());
-                    ObservableList<DerivativeBean> items = derivatives();
-                    if (items != null) {
-                        derivativesTableView.getItems().setAll(items);
-                    }
+            if (cxLoadOptionsHtml.isSelected()) {
+                ObservableList<DerivativeBean> items = derivatives();
+                if (items != null) {
+                    derivativesTableView.getItems().setAll(items);
                 }
+            }
+            }
+        });
+        cxLoadStockHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+            if (cxLoadStockHtml.isSelected()) {
+                stock.assign(facade.spot(ticker));
+            }
             }
         });
 
@@ -121,6 +128,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 derivativesTableView.getItems().setAll(items);
             }
         });
+
 
         stock = new StockBean();
         StringConverter<? extends Number> converter =  new DoubleStringConverter();
