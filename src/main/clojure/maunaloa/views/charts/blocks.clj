@@ -11,18 +11,11 @@
       [cc :as CC]
       [itrend :as ITR])))
 
-(defn create-itrends-freqs [data-values freqs num-items]
-  (map
-    #(take num-items
-      (rseq
-        (ITR/calc-itrend data-values %))) freqs))
-
-(defn create-cc-freqs [data-values freqs num-items]
+(defn create-freqs [f data-values freqs num-items]
   (map
     #(take num-items
        (rseq
-         (CC/cybercycle data-values %))) freqs))
-
+         (f data-values %))) freqs))
 
 (defn itrend-block [data-values data-dx pct
                     & [{:keys [
@@ -36,7 +29,7 @@
                           freqs [10 50 200]
                           legend :true}}]]
   (let [dx (take num-items (rseq data-dx))
-        itrends (create-itrends-freqs data-values freqs num-items)
+        itrends (create-freqs ITR/calc-itrend data-values freqs num-items)
         itrend-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  itrends freqs)
         [data-min data-max] (U/find-min-max itrends)]
     (B/foundation
@@ -58,7 +51,7 @@
                             freqs [10 50 200]
                             legend :true}}]]
   (let [dx (take num-items (rseq data-dx))
-        cybercycles (map #(U/norm-v %) (create-cc-freqs data-values freqs num-items))
+        cybercycles (map #(U/norm-v %) (create-freqs CC/cybercycle data-values freqs num-items))
         cc-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  cybercycles freqs)]
     (B/foundation
       {
