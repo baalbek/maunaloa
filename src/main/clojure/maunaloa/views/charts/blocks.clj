@@ -25,7 +25,7 @@
 
 
 (defn itrend-block [data-values data-dx pct
-                     {:keys [
+                    & [{:keys [
                              num-items
                              add-plotters
                              freqs
@@ -34,7 +34,7 @@
                           num-items 90
                           add-plotters (LP/single-line-plotter data-values data-dx (:stockprice VC/colors))
                           freqs [10 50 200]
-                          legend :true}}]
+                          legend :true}}]]
   (let [dx (take num-items (rseq data-dx))
         itrends (create-itrends-freqs data-values freqs num-items)
         itrend-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  itrends freqs)
@@ -51,12 +51,12 @@
       })))
 
 (defn cybercycle-block [data-values data-dx pct
-                       {:keys [num-items
+                       & [{:keys [num-items
                                freqs
                                legend]
                        :or {num-items 90
                             freqs [10 50 200]
-                            legend :true}}]
+                            legend :true}}]]
   (let [dx (take num-items (rseq data-dx))
         cybercycles (map #(U/norm-v %) (create-cc-freqs data-values freqs num-items))
         cc-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  cybercycles freqs)]
@@ -70,4 +70,21 @@
         :legend legend
         :plotters cc-plotters})))
 
+(defn volume-block [data-values data-dx pct
+                    & [{:keys [num-items
+                            legend]
+                     :or {num-items 90
+                          legend :true}}]]
+  (let [dx (take num-items (rseq data-dx))
+        volume (U/norm-v (take num-items (rseq data-values)))
+        plotters [(LP/volume-plotter volume dx (VC/get-color "volume"))]]
+    (B/foundation
+      {
+        :data-min 0.0
+        :data-max 1.0
+        :start-date (last dx)
+        :end-date (first dx)
+        :pct pct
+        :legend legend
+        :plotters plotters})))
 
