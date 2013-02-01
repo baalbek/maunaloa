@@ -50,10 +50,13 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private TableColumn<DerivativeBean, Date> colExpiry;
 
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colBuy;
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colSell;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colIvBuy;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colIvSell;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colSpread;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colDelta;
+    @FXML private TableColumn<CalculatedDerivativeBean, Double> colBreakEven;
+
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colDays;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colRisc;
     @FXML private TableColumn<CalculatedDerivativeBean, Double> colSpRisc;
@@ -279,10 +282,12 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         colExpiry.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Date>("expiry"));
 
         colBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("buy"));
+        colSell.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("sell"));
 
         colIvBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivBuy"));
         colIvSell.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivSell"));
         colDelta.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("delta"));
+        colBreakEven.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("breakeven"));
         colSpread.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("spread"));
         colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
         colRisc.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("risk"));
