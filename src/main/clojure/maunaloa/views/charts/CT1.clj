@@ -54,8 +54,10 @@
         num-items 90
         cndl-plotter (CNDL/candlestick-plotter (take num-items (rseq beans)))
         itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
-                                                     :add-plotters [cndl-plotter]})
-        cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items})
+                                                     :add-plotters [cndl-plotter]
+                                                     :legend false})
+        cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items
+                                                      :legend false})
         volume-items (vec-map-beans .getVolume beans)
         vol-block (CB/volume-block volume-items dx 0.25)
         ]
