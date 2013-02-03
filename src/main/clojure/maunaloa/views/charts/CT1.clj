@@ -16,14 +16,11 @@
     (waimea.blocks
       [block :as B]
       [quadrant :as Q])
+    [maunaloa.utils.commonutils :as U]
     [maunaloa.views.charts.blocks :as CB]))
 
 
-;;------------------------------------------------------------------------
-;;------------------------------- Macros ---------------------------------
-;;------------------------------------------------------------------------
-(defmacro vec-map-beans [map-fn beans]
-  `(vec (map #(~map-fn ^StockBean %) ~beans)))
+
 
 ;;------------------------------------------------------------------------
 ;;---------------------------- Java methods ------------------------------
@@ -49,8 +46,8 @@
         mright 10
         mbtm 30
         beans (vec (.stockPrices vm 1))
-        prices (vec-map-beans .getValue beans)
-        dx (vec-map-beans .getDx beans)
+        prices (U/vec-map-beans .getValue beans)
+        dx (U/vec-map-beans .getDx beans)
         num-items 90
         cndl-plotter (CNDL/candlestick-plotter (take num-items (rseq beans)))
         itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
@@ -58,7 +55,7 @@
                                                      :legend false})
         cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items
                                                       :legend false})
-        volume-items (vec-map-beans .getVolume beans)
+        volume-items (U/vec-map-beans .getVolume beans)
         vol-block (CB/volume-block volume-items dx 0.25)
         ]
     (doto gc

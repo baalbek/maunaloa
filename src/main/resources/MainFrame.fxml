@@ -88,6 +88,15 @@
             </VBox>
           </content>
         </Tab>
+          <Tab text="Weeks">
+              <content>
+                  <VBox fx:id="vboxWeeks" prefHeight="-1.0" prefWidth="-1.0">
+                      <children>
+                          <Canvas fx:id="myCanvas2" focusTraversable="false" height="600.0" opacity="1.0" pickOnBounds="true" scaleX="1.0" scaleY="1.0" translateX="0.0" translateY="0.0" width="1200.0" />
+                      </children>
+                  </VBox>
+              </content>
+          </Tab>
       </tabs>
     </TabPane>
   </center>

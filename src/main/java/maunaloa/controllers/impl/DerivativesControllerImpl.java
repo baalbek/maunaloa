@@ -66,6 +66,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private ChoiceBox cbTickers;
     @FXML private VBox vboxCandlesticks;
     @FXML private Canvas myCanvas;
+    @FXML private Canvas myCanvas2;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
 
@@ -76,6 +77,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private TextField txLo;
 
     private MaunaloaChart chart;
+    private MaunaloaChart chart2;
 
     private ObservableList<DerivativeBean> beans;
     private String ticker = null;
@@ -228,6 +230,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public void draw() {
         if (ticker == null) return;
         chart.draw(myCanvas);
+        chart2.draw(myCanvas2);
     }
 
     @Override
@@ -241,6 +244,12 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
         this.chart.setViewModel(this);
+    }
+
+
+    public void setChart2(MaunaloaChart chart2) {
+        this.chart2 = chart2;
+        this.chart2.setViewModel(this);
     }
 
     public List<String> getTickers() {
@@ -308,5 +317,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
     }
+
     //endregion  Initialization methods
 }

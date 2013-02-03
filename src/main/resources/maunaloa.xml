@@ -13,6 +13,7 @@
     <bean id="chart" class="manualoa.views.graphics.impl.DemoChart"></bean>
     -->
     <bean id="chart" class="maunaloa.views.charts.CT1" />
+    <bean id="chart2" class="maunaloa.views.charts.CT2" />
 
 
     <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator">
@@ -51,6 +52,7 @@
           class="maunaloa.controllers.impl.DerivativesControllerImpl">
         <constructor-arg ref="facade" />
         <property name="chart" ref="chart"/>
+        <property name="chart2" ref="chart2"/>
         <property name="tickers">
             <list>
                 <value>STL</value>
