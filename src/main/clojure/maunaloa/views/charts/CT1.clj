@@ -61,6 +61,7 @@
     (doto gc
       (.setFill Color/WHITE)
       (.fillRect 0 0 w h)
+      (.setStroke Color/BLACK)
       (.strokeRect (+ mleft 0.5) (+ mtop 0.5)
         (- w (+ mleft mright))
         (- h (+ mtop mbtm))))

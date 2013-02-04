@@ -40,7 +40,7 @@ import java.util.List;
  * Date: 15.11.12
  * Time: 08:48
  */
-public class DerivativesControllerImpl implements ChartViewModel {
+public class DerivativesControllerImpl implements DerivativesController, ChartViewModel {
 
     //region Init
     @FXML private TableView<DerivativeBean> derivativesTableView;
@@ -65,6 +65,7 @@ public class DerivativesControllerImpl implements ChartViewModel {
 
     @FXML private ChoiceBox cbTickers;
     @FXML private VBox vboxCandlesticks;
+    @FXML private VBox vboxWeeks;
     @FXML private Canvas myCanvas;
     @FXML private Canvas myCanvas2;
     @FXML private CheckBox cxLoadOptionsHtml;
@@ -223,15 +224,19 @@ public class DerivativesControllerImpl implements ChartViewModel {
             b.setIsChecked(value);
         }
     }
-    private void draw() {
+
+    //endregion Private Methods
+
+    //region Interface methods
+
+
+    @Override
+    public  void draw() {
         if (ticker == null) return;
         chart.draw(myCanvas);
         chart2.draw(myCanvas2);
     }
 
-    //endregion Private Methods
-
-    //region Interface methods
 
     @Override
     public Collection<StockBean> stockPrices(int period) {
@@ -308,18 +313,29 @@ public class DerivativesControllerImpl implements ChartViewModel {
         InvalidationListener listener =     new InvalidationListener() {
             @Override
             public void invalidated(Observable arg0) {
-                draw();
+                if (ticker == null) return;
+                chart.draw(myCanvas);
+            }
+        };
+        InvalidationListener listener2 =     new InvalidationListener() {
+            @Override
+            public void invalidated(Observable arg0) {
+                if (ticker == null) return;
+                chart2.draw(myCanvas2);
             }
         };
 
         myCanvas.widthProperty().bind(vboxCandlesticks.widthProperty());
         myCanvas.heightProperty().bind(vboxCandlesticks.heightProperty());
 
-        myCanvas2.widthProperty().bind(vboxCandlesticks.widthProperty());
-        myCanvas2.heightProperty().bind(vboxCandlesticks.heightProperty());
+        myCanvas2.widthProperty().bind(vboxWeeks.widthProperty());
+        myCanvas2.heightProperty().bind(vboxWeeks.heightProperty());
 
         myCanvas.widthProperty().addListener(listener);
-        //myCanvas.heightProperty().addListener(listener);
+        myCanvas.heightProperty().addListener(listener);
+        myCanvas2.widthProperty().addListener(listener2);
+        myCanvas2.heightProperty().addListener(listener2);
+
     }
 
     //endregion  Initialization methods
