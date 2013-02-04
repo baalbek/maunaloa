@@ -49,9 +49,13 @@
         mbtm 30
         beans (vec (.stockPrices vm 1))
         dx (U/vec-map-beans .getDx beans)
-        num-items 90
-        volume-items (U/vec-map-beans .getVolume beans)
-        vol-block (CB/volume-block volume-items dx 0.25)
+        prices (U/vec-map-beans .getValue beans)
+        num-items 400
+        ;volume-items (U/vec-map-beans .getVolume beans)
+        ;vol-block (CB/volume-block volume-items dx 0.25)
+        itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
+                                                     :legend true
+                                                     :freqs [50 200]})
         ]
     (doto gc
       (.setFill Color/WHITE)
@@ -61,7 +65,7 @@
         (- w (+ mleft mright))
         (- h (+ mtop mbtm))))
     (let [qsx (B/block-chain
-      :qs [vol-block]
+      :qs [itrend-block]
       :h (- h mtop mbtm)
       :x0 mleft
       :x1 (- w mright)

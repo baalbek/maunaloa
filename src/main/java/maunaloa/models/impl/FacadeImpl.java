@@ -8,7 +8,6 @@ import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.financial.Etrade;
 import oahu.models.MaunaloaFacade;
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.*;
@@ -27,7 +26,7 @@ public class FacadeImpl implements MaunaloaFacade {
     Map<String, Collection<StockBean>> stockBeansMap = new HashMap<>();
 
     public FacadeImpl()  {
-        setDefaultStartDate(DateUtils.createDate(2012, 1, 1));
+        setDefaultStartDate(DateUtils.createDate(2010, 1, 1));
     }
 
     //region Interface Methods

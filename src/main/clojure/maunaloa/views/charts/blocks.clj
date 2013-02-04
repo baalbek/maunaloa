@@ -25,13 +25,24 @@
                              legend]
                       :or {
                           num-items 90
-                          add-plotters (LP/single-line-plotter data-values data-dx (:stockprice VC/colors))
+                          ;add-plotters [(LP/single-line-plotter
+                          ;                (take num-items (rseq data-values))
+                          ;                (take num-items (rseq data-dx))
+                          ;                (:stockprice VC/colors))]
+                          add-plotters nil
                           freqs [10 50 200]
-                          legend :true}}]]
+                          legend true}}]]
   (let [dx (take num-items (rseq data-dx))
         itrends (create-freqs ITR/calc-itrend data-values freqs num-items)
         itrend-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  itrends freqs)
-        [data-min data-max] (U/find-min-max itrends)]
+        [data-min data-max] (U/find-min-max itrends)
+        cur-add-plotters (if (nil? add-plotters)
+                            [(LP/single-line-plotter
+                              (take num-items (rseq data-values))
+                              (take num-items (rseq data-dx))
+                              (:stockprice VC/colors))]
+                            add-plotters)
+                        ]
     (B/foundation
       {
         :data-min (/ data-min 1.1)
@@ -40,7 +51,7 @@
         :end-date (first dx)
         :pct pct
         :legend legend
-        :plotters (concat itrend-plotters add-plotters)
+        :plotters (concat itrend-plotters cur-add-plotters)
       })))
 
 (defn cybercycle-block [data-values data-dx pct
@@ -49,7 +60,7 @@
                                legend]
                        :or {num-items 90
                             freqs [10 50 200]
-                            legend :true}}]]
+                            legend true}}]]
   (let [dx (take num-items (rseq data-dx))
         cybercycles (map #(U/norm-v %) (create-freqs CC/cybercycle data-values freqs num-items))
         cc-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  cybercycles freqs)]
@@ -67,7 +78,7 @@
                     & [{:keys [num-items
                             legend]
                      :or {num-items 90
-                          legend :true}}]]
+                          legend true}}]]
   (let [dx (take num-items (rseq data-dx))
         volume (U/norm-v (take num-items (rseq data-values)))
         plotters [(LP/volume-plotter volume dx (VC/get-color "volume"))]]
