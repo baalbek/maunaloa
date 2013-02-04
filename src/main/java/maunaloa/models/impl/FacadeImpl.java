@@ -2,6 +2,7 @@ package maunaloa.models.impl;
 
 import maunaloa.models.NetfondsModel;
 import maunaloa.models.mybatis.StockMapper;
+import maunaloa.utils.DateUtils;
 import maunaloa.utils.MyBatisUtils;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
@@ -10,10 +11,7 @@ import oahu.models.MaunaloaFacade;
 import org.apache.commons.lang.NotImplementedException;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,13 +20,17 @@ import java.util.List;
  * Time: 6:46 PM
  */
 public class FacadeImpl implements MaunaloaFacade {
-    private final NetfondsModel netfondsModel;
-    private final Etrade etrade;
-    public FacadeImpl(NetfondsModel netfondsModel,
-                      Etrade etrade) {
-        this.netfondsModel = netfondsModel;
-        this.etrade = etrade;
+    private NetfondsModel netfondsModel;
+    private Etrade etrade;
+    private Date defaultStartDate;
+
+    Map<String, Collection<StockBean>> stockBeansMap = new HashMap<>();
+
+    public FacadeImpl()  {
+        setDefaultStartDate(DateUtils.createDate(2012, 1, 1));
     }
+
+    //region Interface Methods
     @Override
     public Collection<StockBean> stockPrices(String ticker, Date fromDx, int period) {
         SqlSession session = MyBatisUtils.getSession();
@@ -44,31 +46,62 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
+    public Collection<StockBean> stockPrices(String ticker, int period) {
+        if (stockBeansMap.containsKey(ticker)) {
+            return stockBeansMap.get(ticker);
+        }
+        else {
+            Collection<StockBean> beans = stockPrices(ticker, getDefaultStartDate(), period);
+            stockBeansMap.put(ticker,beans);
+            return beans;
+        }
+    }
+
+    @Override
     public StockBean spot(String ticker) {
-        return etrade.getSpot(ticker);
+        return getEtrade().getSpot(ticker);
     }
 
     @Override
     public Collection<DerivativeBean> calls(String ticker) {
-        return etrade.getCalls(ticker);
-
-        /*
-        Collection<DerivativeBean> tmpResult = etrade.getCalls(ticker);
-
-        Collection<DerivativeBean> result = new ArrayList<>();
-
-
-        return null;
-        */
+        return getEtrade().getCalls(ticker);
     }
 
     @Override
     public Collection<DerivativeBean> puts(String ticker) {
-        return etrade.getPuts(ticker);
+        return getEtrade().getPuts(ticker);
     }
 
     @Override
     public Collection<DerivativeBean> callsAndPuts(String ticker) {
         return calls(ticker);
     }
+    //endregion Interface Methods
+
+
+    //region Properties
+    public NetfondsModel getNetfondsModel() {
+        return netfondsModel;
+    }
+
+    public void setNetfondsModel(NetfondsModel netfondsModel) {
+        this.netfondsModel = netfondsModel;
+    }
+
+    public Etrade getEtrade() {
+        return etrade;
+    }
+
+    public void setEtrade(Etrade etrade) {
+        this.etrade = etrade;
+    }
+
+    public Date getDefaultStartDate() {
+        return defaultStartDate;
+    }
+
+    public void setDefaultStartDate(Date defaultStartDate) {
+        this.defaultStartDate = defaultStartDate;
+    }
+    //endregion Properties
 }

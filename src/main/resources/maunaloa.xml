@@ -44,8 +44,8 @@
     <bean id="netfonds-model" class="maunaloa.models.NetfondsModel" />
 
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
-        <constructor-arg ref="netfonds-model" />
-        <constructor-arg ref="etrade" />
+        <property name="netfondsModel" ref="netfonds-model" />
+        <property name="etrade" ref="etrade" />
     </bean>
 
     <bean id="derivatives-controller"

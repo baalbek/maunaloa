@@ -88,8 +88,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     private MaunaloaFacade facade;
 
-    private Date defaultStartDate = DateUtils.createDate(2012,1,1);
-    private Date defaultStartDate2 = DateUtils.createDate(2010,1,1);
 
     public DerivativesControllerImpl() {
     }
@@ -240,8 +238,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     @Override
     public Collection<StockBean> stockPrices(int period) {
-        Date curDate = (period == 1) ? defaultStartDate : defaultStartDate2;
-        return facade.stockPrices(ticker, curDate, period);
+        return facade.stockPrices(ticker, period);
     }
     //endregion  Interface methods
 
