@@ -240,6 +240,11 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public Collection<StockBean> stockPrices(int period) {
         return facade.stockPrices(ticker, period);
     }
+
+    @Override
+    public String getTicker() {
+        return ticker;
+    }
     //endregion  Interface methods
 
     //region Properties

@@ -4,10 +4,10 @@
     :init init
     :state state
     :implements [oahu.views.MaunaloaChart])
-  (:import [oahu.views MaunaloaChart])
   (:import
     [oahu.controllers ChartViewModel]
     (oahu.financial.beans StockBean)
+    [oahu.views MaunaloaChart]
     [javafx.scene.paint Color]
     [javafx.scene.canvas Canvas GraphicsContext])
   (:require
