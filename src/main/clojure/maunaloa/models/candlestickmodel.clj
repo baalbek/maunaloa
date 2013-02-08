@@ -1,7 +1,9 @@
 (ns maunaloa.models.candlestickmodel
   (:import
     [oahu.financial.beans StockBean]
-    [java.util Calendar GregorianCalendar]))
+    [java.util Calendar GregorianCalendar])
+  (:require
+    [waimea.utils.commonutils :as U]))
 
 (def cal (GregorianCalendar.))
 
@@ -46,3 +48,7 @@
         p-years (map #(get-year beans %) years)]
     (reduce concat () (map #(candlestick-weeks-helper %) p-years))))
 
+(def candlestick-weeks-mem
+  (U/memoize-arg0 
+    (fn [ticker beans]
+      (candlestick-weeks beans))))

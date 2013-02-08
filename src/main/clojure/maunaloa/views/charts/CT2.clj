@@ -17,11 +17,16 @@
       [block :as B]
       [quadrant :as Q])
     [maunaloa.utils.commonutils :as U]
+    [maunaloa.models.candlestickmodel :as CM]
     [maunaloa.views.charts.blocks :as CB]))
 
 
 ;;------------------------------------------------------------------------
 ;;------------------------------- Macros ---------------------------------
+;;------------------------------------------------------------------------
+
+;;------------------------------------------------------------------------
+;;--------------------------- Clojure functions --------------------------
 ;;------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------
@@ -47,12 +52,12 @@
         mtop 10
         mright 10
         mbtm 30
-        beans (vec (.stockPrices vm 1))
+        beans (CM/candlestick-weeks-mem 
+                (.getTicker vm) 
+                (vec (.stockPrices vm 1)))
         dx (U/vec-map-beans .getDx beans)
         prices (U/vec-map-beans .getValue beans)
-        num-items 400
-        ;volume-items (U/vec-map-beans .getVolume beans)
-        ;vol-block (CB/volume-block volume-items dx 0.25)
+        num-items 150
         itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
                                                      :legend true
                                                      :freqs [50 200]})
