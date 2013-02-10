@@ -52,15 +52,21 @@
         mtop 10
         mright 10
         mbtm 30
-        beans (CM/candlestick-weeks-mem 
+        beans (CM/candlestick-weeks-mem
                 (.getTicker vm) 
                 (vec (.stockPrices vm 1)))
         dx (U/vec-map-beans .getDx beans)
+
         prices (U/vec-map-beans .getValue beans)
-        num-items 150
+        num-items (- (count beans) 20)
+        cndl-plotter (CNDL/candlestick-plotter (take num-items (rseq (vec beans))))
         itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
+                                                     :add-plotters [cndl-plotter]
                                                      :legend true
                                                      :freqs [50 200]})
+
+        ;cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items :legend false})
+
         ]
     (doto gc
       (.setFill Color/WHITE)
