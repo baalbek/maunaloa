@@ -69,7 +69,7 @@
                                                       :legend true
                                                       :freqs [50 200]})
         volume-items (U/vec-map-beans .getVolume beans)
-        vol-block (CB/volume-block volume-items dx 0.25)
+        vol-block (CB/volume-block volume-items dx 0.25  {:num-items num-items})
 
         ]
     (doto gc
