@@ -68,6 +68,8 @@
         cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items
                                                       :legend true
                                                       :freqs [50 200]})
+        volume-items (U/vec-map-beans .getVolume beans)
+        vol-block (CB/volume-block volume-items dx 0.25)
 
         ]
     (doto gc
@@ -78,7 +80,7 @@
         (- w (+ mleft mright))
         (- h (+ mtop mbtm))))
     (let [qsx (B/block-chain
-      :qs [itrend-block cc-block]
+      :qs [itrend-block cc-block vol-block]
       :h (- h mtop mbtm)
       :x0 mleft
       :x1 (- w mright)
