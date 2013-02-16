@@ -40,7 +40,7 @@ public class App extends Application {
 
         Parent parent = (Parent)loader.load();
 
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("Maunaloa!");
         stage.setScene(new Scene(parent));
         stage.show();
 
