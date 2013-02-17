@@ -45,8 +45,8 @@
                         ]
     (B/foundation
       {
-        :data-min (/ data-min 1.1)
-        :data-max (* data-max 1.1)
+        :data-min (/ data-min 1.02)
+        :data-max (* data-max 1.02)
         :start-date (last dx)
         :end-date (first dx)
         :pct pct
