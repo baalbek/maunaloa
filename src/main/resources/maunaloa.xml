@@ -21,11 +21,19 @@
     </bean>
 
     <bean id="bean-factory" class="maunaloa.models.impl.DefaultHtmlRowBeanFactory" />
+
+
+    <bean id="janitor" class="maunaloa.utils.NetfondsJanitor">
+        <property name="storePath" value="/home/rcs/opt/java/maunaloa/html" />
+    </bean>
+
+
     <!--
         <bean id="downloader" class="maunaloa.dummy.Downloader" />
-
     -->
-    <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader" />
+    <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader">
+        <property name="janitor" ref="janitor" />
+    </bean>
 
     <bean id="derivative-parser" class="maunaloa.models.impl.FilteredDerivativeParser">
         <constructor-arg ref="calculator" />

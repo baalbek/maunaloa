@@ -63,11 +63,11 @@
         itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
                                                      :add-plotters [cndl-plotter]
                                                      :legend true
-                                                     :freqs [50 200]})
+                                                     :freqs [50 10]})
 
         cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items
                                                       :legend true
-                                                      :freqs [50 200]})
+                                                      :freqs [50 10]})
         volume-items (U/vec-map-beans .getVolume beans)
         vol-block (CB/volume-block volume-items dx 0.25  {:num-items num-items})
 
