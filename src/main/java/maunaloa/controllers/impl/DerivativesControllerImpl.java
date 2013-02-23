@@ -190,6 +190,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         draw();
     }
 
+    public void close(ActionEvent event)  {
+        System.exit(0);
+    }
+
     public void selectAllDerivatives(ActionEvent event)  {
         toggleAllDerivatives(true);
     }

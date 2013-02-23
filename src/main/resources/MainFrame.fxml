@@ -107,12 +107,12 @@
           <menus>
             <Menu mnemonicParsing="false" text="File">
               <items>
-                <MenuItem mnemonicParsing="false" text="Close" />
+                <MenuItem mnemonicParsing="false" text="Close" onAction="#close" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#selectAllDerivatives" text="Select All Derivatives" />
+                <MenuItem mnemonicParsing="false"  text="Select All Derivatives" />
                 <MenuItem mnemonicParsing="false" onAction="#unSelectAllDerivatives" text="Un-Select All Derivatives" />
               </items>
             </Menu>
