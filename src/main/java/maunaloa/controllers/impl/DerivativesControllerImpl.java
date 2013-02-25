@@ -236,7 +236,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public  void draw() {
         if (ticker == null) return;
         chart.draw(myCanvas);
-        chart2.draw(myCanvas2);
+        //chart2.draw(myCanvas2);
     }
 
 
@@ -323,11 +323,12 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 chart.draw(myCanvas);
             }
         };
+
         InvalidationListener listener2 =     new InvalidationListener() {
             @Override
             public void invalidated(Observable arg0) {
                 if (ticker == null) return;
-                chart2.draw(myCanvas2);
+                //chart2.draw(myCanvas2);
             }
         };
 
