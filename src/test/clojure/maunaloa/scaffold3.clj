@@ -107,6 +107,8 @@
   (eval `(Howdy. ~@(take 2 v))))
 
 
+
+
 (defmacro foo []
   `(println ~'x))
 
@@ -146,4 +148,6 @@
   (let [kw (filter keyword? args)]
     (deflate-map kw m)))
 
-(defmacro t9 [clazz])
+(defn eval-howdy2 [clazz v]
+  (let [ctr (symbol (str clazz "."))]
+    (eval `(~ctr ~@v))))
