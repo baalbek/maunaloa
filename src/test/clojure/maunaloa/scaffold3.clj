@@ -31,11 +31,7 @@
                 ks1*ks2)))))
 
 
-(defn deflate-map [kw m]
-  (loop [yx kw mx m]
-    (if-not (seq yx)                            
-      mx                                        
-      (recur (rest yx) (dissoc mx (first yx))))))
+
 
 (defmacro jax2 [clazz & args]
     (let [constructor (symbol (str clazz "."))
@@ -140,14 +136,35 @@
         fix-vals (map helper args)]
     `(Howdy. ~@fix-vals)))
 
-(defn get-fix-vals [m & args]
+(defn gfv [m & args]
   (let [helper (fn [v] (if (keyword? v) (v m) v))]
     (map helper args)))
 
-(defn get-defl-map [m & args]
+(defn gdm [m & args]
   (let [kw (filter keyword? args)]
     (deflate-map kw m)))
 
-(defn eval-howdy2 [clazz v]
+(defn eval-howdy2 [clazz v m]
   (let [ctr (symbol (str clazz "."))]
-    (eval `(~ctr ~@v))))
+    (eval `(~ctr ~@v {} ~m))))
+
+
+(def m {:a 1 :b 2 :c 3 :e 4 :f 5})
+(def v [3 2 4 5 :a :c])
+
+;(def my-howdy (eval-howdy2 'Howdy (get-fix-vals m 2 3 :c) (get-defl-map m 2 3 :c)))
+
+
+(defn deflate-map [kw m]
+  (loop [yx kw mx m]
+    (if-not (seq yx)
+      mx
+      (recur (rest yx) (dissoc mx (first yx))))))
+
+(defn create-record-with-map [clazz m & args]
+  (let [ctr (symbol (str clazz "."))
+        helper (fn [v] (if (keyword? v) (v m) v))
+        fix-vals (map helper args)
+        kw (filter keyword? args)
+        rest-map (deflate-map kw m)]
+  (eval `(~ctr ~@fix-vals {} ~rest-map))))
