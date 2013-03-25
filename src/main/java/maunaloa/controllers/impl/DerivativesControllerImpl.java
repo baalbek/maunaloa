@@ -29,10 +29,9 @@ import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.models.MaunaloaFacade;
 import oahu.views.MaunaloaChart;
+import oahu.views.chart.IRuler;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -249,6 +248,18 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public String getTicker() {
         return ticker;
     }
+
+    private Map<Integer,IRuler> _rulerMap = new HashMap<>();
+    @Override
+    public IRuler getRuler(int id) {
+        return _rulerMap.get(id);
+    }
+
+    @Override
+    public void setRuler(int id, IRuler ruler) {
+        _rulerMap.put(id, ruler);
+    }
+
     //endregion  Interface methods
 
     //region Properties

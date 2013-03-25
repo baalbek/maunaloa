@@ -85,5 +85,6 @@
       :x0 mleft
       :x1 (- w mright)
       :y0 mtop)]
+
       (doseq [q qsx]
         (Q/plot-quadrant gc q)))))
