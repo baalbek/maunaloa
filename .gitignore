@@ -21,6 +21,7 @@ src/test/clojure/taharoa/models
 src/test/clojure/waimea
 oahu
 maunakea
+src/main/java/waimea
 src/main/clojure/Stock.xml
 src/main/clojure/dbcp.properties
 src/main/clojure/haleakala.xml

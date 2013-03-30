@@ -88,15 +88,15 @@
             </VBox>
           </content>
         </Tab>
-          <Tab text="Weeks">
-              <content>
-                  <VBox fx:id="vboxWeeks" prefHeight="-1.0" prefWidth="-1.0">
-                      <children>
-                          <Canvas fx:id="myCanvas2" focusTraversable="false" height="600.0" opacity="1.0" pickOnBounds="true" scaleX="1.0" scaleY="1.0" translateX="0.0" translateY="0.0" width="1200.0" />
-                      </children>
-                  </VBox>
-              </content>
-          </Tab>
+        <Tab text="Weeks">
+          <content>
+            <VBox fx:id="vboxWeeks" prefHeight="-1.0" prefWidth="-1.0">
+              <children>
+                <Canvas fx:id="myCanvas2" focusTraversable="false" height="600.0" opacity="1.0" pickOnBounds="true" scaleX="1.0" scaleY="1.0" translateX="0.0" translateY="0.0" width="1200.0" />
+              </children>
+            </VBox>
+          </content>
+        </Tab>
       </tabs>
     </TabPane>
   </center>
@@ -107,18 +107,18 @@
           <menus>
             <Menu mnemonicParsing="false" text="File">
               <items>
-                <MenuItem mnemonicParsing="false" text="Close" onAction="#close" />
+                <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false"  text="Select All Derivatives" />
+                <MenuItem mnemonicParsing="false" text="Select All Derivatives" />
                 <MenuItem mnemonicParsing="false" onAction="#unSelectAllDerivatives" text="Un-Select All Derivatives" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu mnemonicParsing="false" text="Fibonacci">
               <items>
-                <MenuItem mnemonicParsing="false" text="About" />
+                <MenuItem mnemonicParsing="false" text="Fib 1" />
               </items>
             </Menu>
           </menus>
