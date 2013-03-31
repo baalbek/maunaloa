@@ -3,24 +3,30 @@ package maunaloa.controllers.impl;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import maunaloa.beans.CalculatedDerivativeBean;
 import maunaloa.controllers.DerivativesController;
+import maunaloa.views.FibonacciDraggableLine;
 import oahu.controllers.ChartViewModel;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
@@ -85,6 +91,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     private MaunaloaFacade facade;
 
+    final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
 
     public DerivativesControllerImpl() {
     }
@@ -98,6 +105,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         initChoiceBoxTickers();
         initGrid();
         initMyCanvas();
+        initPanes();
 
         cxLoadOptionsHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -330,7 +338,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             public void invalidated(Observable arg0) {
                 if (ticker == null) return;
                 chart.draw(myCanvas);
-                System.out.println("What happened to redraw?");
             }
         };
 
@@ -353,6 +360,40 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         myCanvas2.widthProperty().addListener(listener2);
         myCanvas2.heightProperty().addListener(listener2);
 
+    }
+
+    private void initPanes() {
+        paneCandlesticks.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX();
+                double y = event.getY();
+                Line line = new Line(x, y, x, y);
+                paneCandlesticks.getChildren().add(line);
+                lineA.set(line);
+            }
+        });
+        paneCandlesticks.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Line line = lineA.get();
+                if (line != null) {
+                    line.setEndX(event.getX());
+                    line.setEndY(event.getY());
+                }
+            }
+        });
+        paneCandlesticks.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Line line = lineA.get();
+                if (line != null) {
+                    paneCandlesticks.getChildren().remove(line);
+                    paneCandlesticks.getChildren().add(new FibonacciDraggableLine(line).view());
+                }
+                lineA.set(null);
+            }
+        });
     }
 
     //endregion  Initialization methods
