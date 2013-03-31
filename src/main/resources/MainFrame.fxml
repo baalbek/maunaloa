@@ -81,12 +81,11 @@
         </Tab>
         <Tab text="Candlesticks">
           <content>
-            <VBox fx:id="containerCandlesticks"  xmlns:fx="http://javafx.com/fxml">
+            <VBox fx:id="containerCandlesticks">
               <children>
                 <Pane fx:id="paneCandlesticks" maxHeight="-Infinity"
                           maxWidth="-Infinity" minHeight="-Infinity"
-                          minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0"
-                          xmlns:fx="http://javafx.com/fxml" >
+                          minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" >
                   <children>
                       <Canvas fx:id="myCanvas" focusTraversable="false" height="600.0" opacity="1.0" pickOnBounds="true" scaleX="1.0" scaleY="1.0" translateX="0.0" translateY="0.0" width="1200.0" />
                   </children>

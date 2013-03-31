@@ -65,11 +65,11 @@ public class FibonacciDraggableLine extends DraggableLine {
             }
         };
 
-        group.getChildren().add(createFibLine(y50, Color.GREEN));
+        group.getChildren().add(createFibLine(y50, Color.BLACK));
 
-        group.getChildren().add(createFibLine(y618,Color.BLANCHEDALMOND));
+        group.getChildren().add(createFibLine(y618,Color.BLACK));
 
-        group.getChildren().add(createFibLine(y382,Color.CYAN));
+        group.getChildren().add(createFibLine(y382,Color.BLACK));
     }
     //endregion
 
