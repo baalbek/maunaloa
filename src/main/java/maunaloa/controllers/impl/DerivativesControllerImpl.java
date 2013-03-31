@@ -3,10 +3,6 @@ package maunaloa.controllers.impl;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -17,13 +13,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import maunaloa.beans.CalculatedDerivativeBean;
 import maunaloa.controllers.DerivativesController;
-import maunaloa.utils.DateUtils;
 import oahu.controllers.ChartViewModel;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
@@ -63,8 +60,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private ToggleGroup rgDerivatives;
 
     @FXML private ChoiceBox cbTickers;
-    @FXML private VBox vboxCandlesticks;
-    @FXML private VBox vboxWeeks;
+    @FXML private Pane paneCandlesticks;
+    @FXML private VBox containerCandlesticks;
+    @FXML private VBox containerWeeks;
     @FXML private Canvas myCanvas;
     @FXML private Canvas myCanvas2;
     @FXML private CheckBox cxLoadOptionsHtml;
@@ -332,6 +330,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             public void invalidated(Observable arg0) {
                 if (ticker == null) return;
                 chart.draw(myCanvas);
+                System.out.println("What happened to redraw?");
             }
         };
 
@@ -343,11 +342,11 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         };
 
-        myCanvas.widthProperty().bind(vboxCandlesticks.widthProperty());
-        myCanvas.heightProperty().bind(vboxCandlesticks.heightProperty());
+        myCanvas.widthProperty().bind(containerCandlesticks.widthProperty());
+        myCanvas.heightProperty().bind(containerCandlesticks.heightProperty());
 
-        myCanvas2.widthProperty().bind(vboxWeeks.widthProperty());
-        myCanvas2.heightProperty().bind(vboxWeeks.heightProperty());
+        myCanvas2.widthProperty().bind(containerWeeks.widthProperty());
+        myCanvas2.heightProperty().bind(containerWeeks.heightProperty());
 
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
