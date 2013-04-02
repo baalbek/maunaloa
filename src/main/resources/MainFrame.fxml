@@ -131,7 +131,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Fibonacci">
               <items>
-                <MenuItem mnemonicParsing="false" text="Fib 1" />
+                <MenuItem mnemonicParsing="false" text="Activate Fib A" onAction="#activateFibA"/>
+                <MenuItem mnemonicParsing="false" text="Deactivate Fib A" onAction="#deactivateFibA"/>
+                <MenuItem mnemonicParsing="false" text="Clear Fib A" onAction="#clearFibA"/>
               </items>
             </Menu>
           </menus>

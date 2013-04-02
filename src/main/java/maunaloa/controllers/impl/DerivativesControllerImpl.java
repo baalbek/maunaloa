@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -101,53 +102,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
 
-    public void initialize() {
-        initChoiceBoxTickers();
-        initGrid();
-        initMyCanvas();
-        initPanes();
 
-        cxLoadOptionsHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
-            if (cxLoadOptionsHtml.isSelected()) {
-                ObservableList<DerivativeBean> items = derivatives();
-                if (items != null) {
-                    derivativesTableView.getItems().setAll(items);
-                }
-            }
-            }
-        });
-        cxLoadStockHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
-            if (cxLoadStockHtml.isSelected()) {
-                stock.assign(facade.spot(ticker));
-            }
-            }
-        });
-
-        rgDerivatives.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableValue,
-                                                          Toggle toggle,
-                                                          Toggle toggle2) {
-                String ticker = cbTickers.valueProperty().get().toString();
-                String opType = observableValue.getValue().getUserData().toString();
-                ObservableList<DerivativeBean> items = fetchDerivativesForTicker(ticker,opType);
-                derivativesTableView.getItems().setAll(items);
-            }
-        });
-
-
-        stock = new StockBean();
-        StringConverter<? extends Number> converter =  new DoubleStringConverter();
-        Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(),  (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(txOpen.textProperty(), stock.opnProperty(),  (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(txHi.textProperty(), stock.hiProperty(),  (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(txLo.textProperty(), stock.loProperty(),  (StringConverter<Number>)converter);
-
-    }
     //endregion Init
 
     //region Public Methods
@@ -170,8 +125,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             b.setIsChecked(false);
         }
     }
-
-
 
     public ObservableList<DerivativeBean> derivatives() {
         if (ticker == null) return null;
@@ -206,6 +159,54 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public void unSelectAllDerivatives(ActionEvent event)  {
         toggleAllDerivatives(false);
     }
+
+    //region Fibonacci
+    public void activateFibA() {
+        paneCandlesticks.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX();
+                double y = event.getY();
+                Line line = new Line(x, y, x, y);
+                paneCandlesticks.getChildren().add(line);
+                lineA.set(line);
+            }
+        });
+        paneCandlesticks.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Line line = lineA.get();
+                if (line != null) {
+                    line.setEndX(event.getX());
+                    line.setEndY(event.getY());
+                }
+            }
+        });
+        paneCandlesticks.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Line line = lineA.get();
+                if (line != null) {
+                    paneCandlesticks.getChildren().remove(line);
+
+                    paneCandlesticks.getChildren().add(new FibonacciDraggableLine(line).view());
+                }
+                lineA.set(null);
+            }
+        });
+    }
+    public void deactivateFibA() {
+        paneCandlesticks.setOnMousePressed(null);
+        paneCandlesticks.setOnMouseDragged(null);
+        paneCandlesticks.setOnMouseReleased(null);
+    }
+    public void clearFibA() {
+        for (Node n : paneCandlesticks.getChildren()) {
+            if (n instanceof Canvas) continue;
+            paneCandlesticks.getChildren().remove(n);
+        }
+    }
+    //endregion Fibonacci
     //endregion  Public Methods
 
     //region Private Methods
@@ -291,6 +292,53 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     //endregion
 
     //region Initialization methods
+    public void initialize() {
+        initChoiceBoxTickers();
+        initGrid();
+        initMyCanvas();
+
+        cxLoadOptionsHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+                if (cxLoadOptionsHtml.isSelected()) {
+                    ObservableList<DerivativeBean> items = derivatives();
+                    if (items != null) {
+                        derivativesTableView.getItems().setAll(items);
+                    }
+                }
+            }
+        });
+        cxLoadStockHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+                if (cxLoadStockHtml.isSelected()) {
+                    stock.assign(facade.spot(ticker));
+                }
+            }
+        });
+
+        rgDerivatives.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue,
+                                Toggle toggle,
+                                Toggle toggle2) {
+                String ticker = cbTickers.valueProperty().get().toString();
+                String opType = observableValue.getValue().getUserData().toString();
+                ObservableList<DerivativeBean> items = fetchDerivativesForTicker(ticker,opType);
+                derivativesTableView.getItems().setAll(items);
+            }
+        });
+
+
+        stock = new StockBean();
+        StringConverter<? extends Number> converter =  new DoubleStringConverter();
+        Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txOpen.textProperty(), stock.opnProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txHi.textProperty(), stock.hiProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txLo.textProperty(), stock.loProperty(),  (StringConverter<Number>)converter);
+
+    }
+
     private void initChoiceBoxTickers() {
         final ObservableList<String> cbitems = FXCollections.observableArrayList();
         for (String s : getTickers()) {
@@ -362,39 +410,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     }
 
-    private void initPanes() {
-        paneCandlesticks.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                double x = event.getX();
-                double y = event.getY();
-                Line line = new Line(x, y, x, y);
-                paneCandlesticks.getChildren().add(line);
-                lineA.set(line);
-            }
-        });
-        paneCandlesticks.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Line line = lineA.get();
-                if (line != null) {
-                    line.setEndX(event.getX());
-                    line.setEndY(event.getY());
-                }
-            }
-        });
-        paneCandlesticks.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                Line line = lineA.get();
-                if (line != null) {
-                    paneCandlesticks.getChildren().remove(line);
-                    paneCandlesticks.getChildren().add(new FibonacciDraggableLine(line).view());
-                }
-                lineA.set(null);
-            }
-        });
-    }
+
 
     //endregion  Initialization methods
 }
