@@ -4,6 +4,8 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import oahu.views.chart.IBoundaryRuler;
+import oahu.views.chart.IRuler;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,16 +22,23 @@ public class FibonacciDraggableLine extends DraggableLine {
 
     static double PHI = 0.618034;
 
-    public FibonacciDraggableLine(Line line) {
-        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7);
+    private IBoundaryRuler vruler;
+
+    public FibonacciDraggableLine(Line line, IRuler vruler) {
+        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, vruler);
     }
 
     public FibonacciDraggableLine(double startX,
                                   double startY,
                                   double endX,
                                   double endY,
-                                  double anchorRadius) {
+                                  double anchorRadius,
+                                  IRuler vruler) {
+
+
         super(startX, startY, endX, endY, anchorRadius);
+
+        this.vruler = (IBoundaryRuler)vruler;
 
         double x = Math.max(startX, endX);
 
@@ -77,7 +86,7 @@ public class FibonacciDraggableLine extends DraggableLine {
     private Line createFibLine(DoubleBinding db, Color color) {
         Line newLine = new Line();
         newLine.setStroke(color);
-        newLine.setEndX(line.getEndX() + 300);
+        newLine.setEndX(vruler.getLowerRight().getX());
         newLine.startYProperty().bind(db);
         newLine.endYProperty().bind(db);
         newLine.startXProperty().bind(line.endXProperty());

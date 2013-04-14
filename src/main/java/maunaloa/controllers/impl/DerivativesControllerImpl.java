@@ -27,6 +27,7 @@ import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import maunaloa.beans.CalculatedDerivativeBean;
 import maunaloa.controllers.DerivativesController;
+import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
 import oahu.controllers.ChartViewModel;
 import oahu.financial.beans.DerivativeBean;
@@ -46,6 +47,7 @@ import java.util.*;
 public class DerivativesControllerImpl implements DerivativesController, ChartViewModel {
 
     //region Init
+    //region FXML
     @FXML private TableView<DerivativeBean> derivativesTableView;
 
     @FXML private TableColumn<DerivativeBean, String> colOpName;
@@ -80,6 +82,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private TextField txOpen;
     @FXML private TextField txHi;
     @FXML private TextField txLo;
+    //endregion FXML
+
+    List<DraggableLine> paneCandlesticksLines = new ArrayList<>();
 
     private MaunaloaChart chart;
     private MaunaloaChart chart2;
@@ -188,8 +193,9 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                 Line line = lineA.get();
                 if (line != null) {
                     paneCandlesticks.getChildren().remove(line);
-
-                    paneCandlesticks.getChildren().add(new FibonacciDraggableLine(line).view());
+                    DraggableLine fibLine = new FibonacciDraggableLine(line,getRuler(ChartViewModel.CHART_A1_VRULER));
+                    paneCandlesticksLines.add(fibLine);
+                    paneCandlesticks.getChildren().add(fibLine.view());
                 }
                 lineA.set(null);
             }
@@ -201,10 +207,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         paneCandlesticks.setOnMouseReleased(null);
     }
     public void clearFibA() {
-        for (Node n : paneCandlesticks.getChildren()) {
-            if (n instanceof Canvas) continue;
-            paneCandlesticks.getChildren().remove(n);
+        for (DraggableLine l : paneCandlesticksLines) {
+            paneCandlesticks.getChildren().remove(l.view());
         }
+        paneCandlesticksLines.clear();
     }
     //endregion Fibonacci
     //endregion  Public Methods
