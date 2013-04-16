@@ -45,8 +45,6 @@ import java.util.*;
  * Time: 08:48
  */
 public class DerivativesControllerImpl implements DerivativesController, ChartViewModel {
-
-    //region Init
     //region FXML
     @FXML private TableView<DerivativeBean> derivativesTableView;
 
@@ -71,6 +69,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private ChoiceBox cbTickers;
     @FXML private Pane paneCandlesticks;
     @FXML private VBox containerCandlesticks;
+    @FXML private Pane paneWeeks;
     @FXML private VBox containerWeeks;
     @FXML private Canvas myCanvas;
     @FXML private Canvas myCanvas2;
@@ -84,7 +83,11 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     @FXML private TextField txLo;
     //endregion FXML
 
+
+    //region Init
+
     List<DraggableLine> paneCandlesticksLines = new ArrayList<>();
+    List<DraggableLine> paneWeeksLines = new ArrayList<>();
 
     private MaunaloaChart chart;
     private MaunaloaChart chart2;
@@ -212,6 +215,52 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         }
         paneCandlesticksLines.clear();
     }
+    public void activateFibB() {
+        paneWeeks.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                double x = event.getX();
+                double y = event.getY();
+                Line line = new Line(x, y, x, y);
+                paneWeeks.getChildren().add(line);
+                lineA.set(line);
+            }
+        });
+        paneWeeks.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Line line = lineA.get();
+                if (line != null) {
+                    line.setEndX(event.getX());
+                    line.setEndY(event.getY());
+                }
+            }
+        });
+        paneWeeks.setOnMouseReleased(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Line line = lineA.get();
+                if (line != null) {
+                    paneWeeks.getChildren().remove(line);
+                    DraggableLine fibLine = new FibonacciDraggableLine(line,getRuler(ChartViewModel.CHART_A1_VRULER));
+                    paneWeeksLines.add(fibLine);
+                    paneWeeks.getChildren().add(fibLine.view());
+                }
+                lineA.set(null);
+            }
+        });
+    }
+    public void deactivateFibB() {
+        paneWeeks.setOnMousePressed(null);
+        paneWeeks.setOnMouseDragged(null);
+        paneWeeks.setOnMouseReleased(null);
+    }
+    public void clearFibB() {
+        for (DraggableLine l : paneWeeksLines) {
+            paneWeeks.getChildren().remove(l.view());
+        }
+        paneWeeksLines.clear();
+    }
     //endregion Fibonacci
     //endregion  Public Methods
 
@@ -248,7 +297,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     public  void draw() {
         if (ticker == null) return;
         chart.draw(myCanvas);
-        //chart2.draw(myCanvas2);
+        chart2.draw(myCanvas2);
     }
 
 
@@ -399,7 +448,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             @Override
             public void invalidated(Observable arg0) {
                 if (ticker == null) return;
-                //chart2.draw(myCanvas2);
+                chart2.draw(myCanvas2);
             }
         };
 
