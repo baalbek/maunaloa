@@ -99,13 +99,12 @@ public class FibonacciDraggableLine extends DraggableLine {
 
     @Override
     protected void onMouseReleased(MouseEvent event) {
-        System.out.println("Ok, whatever!");
+        setAnchorsVisible(true);
     }
 
     @Override
     protected void onMouseDragged(MouseEvent event) {
-        //System.out.println("Ok, dragged! Whatever! " + event.getX() + ", " + event.getY());
-        //System.out.println("Number of fib lines: " + group.getChildren().size());
+        setAnchorsVisible(false);
     }
 
     //endregion
