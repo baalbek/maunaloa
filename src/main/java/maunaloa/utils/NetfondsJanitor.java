@@ -1,5 +1,6 @@
 package maunaloa.utils;
 
+import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import oahu.financial.DownloaderJanitor;
 
@@ -23,17 +24,17 @@ public class NetfondsJanitor implements DownloaderJanitor {
 
 
     @Override
-    public void storeLoginPage(HtmlPage page) {
+    public void storeLoginPage(Page page) {
 
     }
 
     @Override
-    public void storeLogoutPage(HtmlPage page) {
+    public void storeLogoutPage(Page page) {
 
     }
 
     @Override
-    public void storeDerivativePage(HtmlPage page, String ticker) {
+    public void storeDerivativePage(Page page, String ticker) {
         File out = new File(String.format("%s/%s.html", storePath, ticker));
         try (FileOutputStream fop = new FileOutputStream(out)) {
 
@@ -44,7 +45,7 @@ public class NetfondsJanitor implements DownloaderJanitor {
 
             // get the content in bytes
 
-            byte[] contentInBytes = page.asXml().getBytes();
+            byte[] contentInBytes = ((HtmlPage)page).asXml().getBytes();
 
             fop.write(contentInBytes);
             fop.flush();
@@ -56,7 +57,7 @@ public class NetfondsJanitor implements DownloaderJanitor {
     }
 
     @Override
-    public void storeIndexPage(HtmlPage page, String ticker) {
+    public void storeIndexPage(Page page, String ticker) {
 
     }
 

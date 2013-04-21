@@ -28,6 +28,8 @@ public class App extends Application {
 
         initLog4j();
 
+
+
         ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
 
         URL url = this.getClass().getResource("/MainFrame.fxml");
