@@ -6,8 +6,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
 import maunaloa.beans.CalculatedDerivativeBean;
 import oahu.beans.Tuple;
-import oahu.financial.EtradeDerivativeParser;
-import oahu.financial.HtmlRowBeanFactory;
+import oahu.financial.EtradeHtmlParser;
 import oahu.financial.OptionCalculator;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
@@ -16,6 +15,7 @@ import org.apache.commons.lang.NotImplementedException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,17 +23,19 @@ import java.util.List;
  * Date: 1/10/13
  * Time: 12:43 AM
  */
-public class FilteredDerivativeParser implements EtradeDerivativeParser {
-    private final OptionCalculator calculator;
-    private final HtmlRowBeanFactory factory;
+public class FilteredDerivativeParser implements EtradeHtmlParser {
+    //private final OptionCalculator calculator;
+    //private final HtmlRowBeanFactory factory;
 
 
 
+    /*
     public FilteredDerivativeParser(OptionCalculator calculator,
                                    HtmlRowBeanFactory factory) {
         this.calculator = calculator;
         this.factory = factory;
     }
+    */
 
     @Override
     public Collection<DerivativeBean> parseDerivatives(HtmlPage page) {
@@ -52,6 +54,8 @@ public class FilteredDerivativeParser implements EtradeDerivativeParser {
 
     @Override
     public Tuple<Collection<DerivativeBean>> parseDerivativesTuple(HtmlPage page, StockBean parent) {
+        return null;
+        /*
         Collection<DerivativeBean> calls = new ArrayList<>();
         Collection<DerivativeBean> puts = new ArrayList<>();
 
@@ -61,14 +65,7 @@ public class FilteredDerivativeParser implements EtradeDerivativeParser {
             List<HtmlTableCell> cells = row.getCells();
             if (cells.size() == 9) {
 
-                //DerivativeBean d = FinancialUtils.derivativeBeanFromHtml(cells, parent, calculator);
-
                 DerivativeBean d = factory.create(cells, parent, calculator);
-
-
-
-                //System.out.println("derivative bean: " + d);
-
 
                 if (d != null) {
                     CalculatedDerivativeBean cd = (CalculatedDerivativeBean)d;
@@ -88,5 +85,16 @@ public class FilteredDerivativeParser implements EtradeDerivativeParser {
         }
 
         return  new Tuple<>(calls,puts);
+        */
+    }
+
+    @Override
+    public StockBean parseSpot(HtmlPage page) {
+        throw new oahu.exceptions.NotImplementedException();
+    }
+
+    @Override
+    public Map<String, StockBean> parseSpots(HtmlPage page) {
+        throw new oahu.exceptions.NotImplementedException();
     }
 }

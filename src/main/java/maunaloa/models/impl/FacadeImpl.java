@@ -39,7 +39,7 @@ public class FacadeImpl implements MaunaloaFacade {
         try {
             StockMapper mapper = session.getMapper(StockMapper.class);
 
-            result = mapper.selectTicker(ticker, fromDx);
+            result = mapper.selectStocks(3, fromDx);
 
         }
         finally {

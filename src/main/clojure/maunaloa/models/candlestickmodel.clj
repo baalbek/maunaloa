@@ -38,7 +38,7 @@
         hi (apply max (map #(.getCls %) w))
         lo (apply min (map #(.getCls %) w))
         vol (apply + (map #(.getVolume %) w))]
-        (StockBean. opn hi lo cls vol dx)))
+        (StockBean. dx opn hi lo cls vol)))
     ;(MyStockprice. dx opn hi lo cls 0)))
 
 (defn candlestick-weeks-helper [prices-year]

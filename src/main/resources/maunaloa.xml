@@ -20,34 +20,34 @@
         <constructor-arg ref="kalihiwai-calc" />
     </bean>
 
-    <bean id="bean-factory" class="maunaloa.models.impl.DefaultHtmlRowBeanFactory" />
 
-
-    <bean id="janitor" class="maunaloa.utils.NetfondsJanitor">
-        <property name="storePath" value="/home/rcs/opt/java/maunaloa/html" />
-    </bean>
 
 
     <!--
         <bean id="downloader" class="maunaloa.dummy.Downloader" />
     -->
     <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader">
-        <property name="janitor" ref="janitor" />
     </bean>
 
-    <bean id="derivative-parser" class="maunaloa.models.impl.FilteredDerivativeParser">
-        <constructor-arg ref="calculator" />
-        <constructor-arg ref="bean-factory" />
+
+
+    <bean id="html-stock-factory" class="maunakea.financial.impl.DefaultHtmlStockBeanFactory"></bean>
+    <bean id="html-derivative-factory" class="maunakea.financial.impl.HtmlCalculatedDerivativeBeanFactory" ></bean>
+
+    <bean id="html-parser" class="maunakea.financial.impl.DefaultHtmlParser">
+        <property name="derivativeFactory" ref="html-derivative-factory" />
+        <property name="stockBeanFactory" ref="html-stock-factory" />
+        <property name="calculator" ref="calculator" />
     </bean>
 
-    <bean id="stock-parser" class="maunakea.financial.impl.DefaultStockParser" />
+
 
     <bean id="etrade" class="maunakea.financial.impl.Netfonds">
         <property name="downloader" ref="downloader" />
-        <property name="derivativeParser" ref="derivative-parser" />
-        <property name="stockParser" ref="stock-parser" />
+        <property name="htmlParser" ref="html-parser" />
         <property name="caching" value="true" />
     </bean>
+
 
     <bean id="netfonds-model" class="maunaloa.models.NetfondsModel" />
 

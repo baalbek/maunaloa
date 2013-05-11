@@ -1,13 +1,10 @@
 package maunaloa.models.impl;
 
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
-import maunakea.util.Conversions;
-import maunaloa.beans.CalculatedDerivativeBean;
-import oahu.financial.HtmlRowBeanFactory;
+import oahu.financial.HtmlDerivativeBeanFactory;
 import oahu.financial.OptionCalculator;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
-import org.apache.commons.lang.NotImplementedException;
 
 import java.util.List;
 
@@ -17,7 +14,7 @@ import java.util.List;
  * Date: 1/6/13
  * Time: 10:46 PM
  */
-public class DefaultHtmlRowBeanFactory implements HtmlRowBeanFactory {
+public class DefaultHtmlRowBeanFactory implements HtmlDerivativeBeanFactory {
     static int NAME = 0;
     static int OPTYPE = 1;
     static int X = 2;
@@ -25,7 +22,13 @@ public class DefaultHtmlRowBeanFactory implements HtmlRowBeanFactory {
     static int BUY = 4;
     static int SELL = 5;
 
+    @Override
+    public DerivativeBean createDerivative(List<HtmlTableCell> cells, StockBean parent, OptionCalculator calculator) {
+        throw new oahu.exceptions.NotImplementedException();
+    }
 
+
+    /*
     @Override
     public DerivativeBean create(List<HtmlTableCell> cells, StockBean parent, OptionCalculator calculator) {
         int curOpType = parseOpType(cells, OPTYPE);
@@ -55,4 +58,5 @@ public class DefaultHtmlRowBeanFactory implements HtmlRowBeanFactory {
             return DerivativeBean.OPTYPE_UNDEF;
         }
     }
+    */
 }

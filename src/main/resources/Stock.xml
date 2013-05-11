@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="maunaloa.models.mybatis.StockMapper">
-    <select id="selectStock" parameterType="int" resultType="oahu.financial.beans.StockBean">
-        select * from trader.stockprice where oid = #{id}
-    </select>
 
     <!--
     oid    | integer | not null default nextval('stockprice_oid_seq'::regclass)
@@ -17,7 +14,10 @@
     vol    | volume
     -->
 
-    <resultMap id="stockResultMap" type="oahu.financial.beans.StockBean">
+    <resultMap id="stockResultMap"
+               type="oahu.financial.beans.StockBean">
+        <id column="oid" property="id" jdbcType="INTEGER" />
+        <result column="ticker_id" property="tickerId"/>
         <result column="dx" property="dx"/>
         <result column="opn" property="opn"/>
         <result column="hi" property="hi"/>
@@ -26,26 +26,29 @@
         <result column="vol" property="volume"/>
     </resultMap>
 
-    <select id="selectTickerAll" parameterType="string" resultMap="stockResultMap">
-        select * from trader.stockprice where ticker = #{id} order by dx
+    <select id="selectStocks" parameterType="map" resultMap="stockResultMap">
+        select * from stockmarket.stockprice where ticker_id = #{tickerId} and dx &gt;= #{fromDx} order by dx
     </select>
 
-    <select id="selectTicker2" parameterType="map" resultMap="stockResultMap">
-        select * from trader.stockprice where ticker = #{ticker} and dx &gt;= #{fromDx} and dx &lt;= #{toDx} order by dx
-    </select>
-
-    <select id="selectTicker" parameterType="map" resultMap="stockResultMap">
-        select * from trader.stockprice where ticker = #{ticker} and dx &gt;= #{fromDx} order by dx
-    </select>
-
-    <select id="selectTickerWeek" parameterType="map" resultMap="stockResultMap">
-        select * from trader.stockprice_week where ticker = #{ticker} and dx &gt;= #{fromDx} order by dx
-    </select>
 
     <!--
-    <insert id="insertStockPrice" parameterType="maunakea.financial.impl.StockImpl">
-        insert into trader.stockprice_week (ticker, opn, hi, lo, cls, vol)
-        values (#{ticker}, #{opn}, #{hi}, #{lo}, #{cls}, #{volume})
-    </insert>
-    -->
+oid | ticker | company_name | status
+
+1 | NHY    | Norsk hydro  |      1
+2 | STL    | StatoilHydro |      1
+
+-->
+
+    <resultMap id="stockTickerResultMap"
+               type="oahu.financial.beans.StockTickerBean">
+        <id column="oid" property="id" jdbcType="INTEGER" />
+        <result column="ticker" property="ticker"/>
+        <result column="company_name" property="companyName"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <select id="selectTickers" parameterType="map" resultMap="stockTickerResultMap">
+        select * from stockmarket.stocktickers where status=1 order by ticker
+    </select>
+
 </mapper>
