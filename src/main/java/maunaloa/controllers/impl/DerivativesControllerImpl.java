@@ -198,7 +198,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     //endregion Private Methods
 
-s    //region Fibonacci
+    //region Fibonacci
     public void activateFibA() {
         paneCandlesticks.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
