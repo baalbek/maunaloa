@@ -168,7 +168,37 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         toggleAllDerivatives(false);
     }
 
-    //region Fibonacci
+
+
+    //endregion  Public Methods
+
+    //region Private Methods
+    private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
+        Collection<DerivativeBean> result = null;
+        switch (optionType) {
+            case "calls": {
+                result = facade.calls(ticker);
+                break;
+            }
+            case "puts": {
+                result = facade.puts(ticker);
+                break;
+            }
+            default: {
+                result = facade.callsAndPuts(ticker);
+            }
+        }
+        return FXCollections.observableArrayList(result);
+    }
+    private void toggleAllDerivatives(boolean value) {
+        for (DerivativeBean b : derivatives()) {
+            b.setIsChecked(value);
+        }
+    }
+
+    //endregion Private Methods
+
+s    //region Fibonacci
     public void activateFibA() {
         paneCandlesticks.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
@@ -262,33 +292,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         paneWeeksLines.clear();
     }
     //endregion Fibonacci
-    //endregion  Public Methods
-
-    //region Private Methods
-    private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
-        Collection<DerivativeBean> result = null;
-        switch (optionType) {
-            case "calls": {
-                result = facade.calls(ticker);
-                break;
-            }
-            case "puts": {
-                result = facade.puts(ticker);
-                break;
-            }
-            default: {
-                result = facade.callsAndPuts(ticker);
-            }
-        }
-        return FXCollections.observableArrayList(result);
-    }
-    private void toggleAllDerivatives(boolean value) {
-        for (DerivativeBean b : derivatives()) {
-            b.setIsChecked(value);
-        }
-    }
-
-    //endregion Private Methods
 
     //region Interface methods
 
