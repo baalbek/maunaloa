@@ -92,7 +92,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     private MaunaloaChart chart;
     private MaunaloaChart chart2;
-
+    private StockTicker stockTicker;
 
     private ObservableList<DerivativeBean> beans;
     private String ticker = null;
@@ -329,27 +329,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     //endregion  Interface methods
 
-    //region Properties
 
-    public void setChart(MaunaloaChart chart) {
-        this.chart = chart;
-        this.chart.setViewModel(this);
-    }
-
-
-    public void setChart2(MaunaloaChart chart2) {
-        this.chart2 = chart2;
-        this.chart2.setViewModel(this);
-    }
-
-    public List<String> getTickers() {
-        return tickers;
-    }
-
-    public void setTickers(List<String> tickers) {
-        this.tickers = tickers;
-    }
-    //endregion
 
     //region Initialization methods
     public void initialize() {
@@ -377,14 +357,14 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             }
         });
 
-        rgDerivatives.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
+        rgDerivatives.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observableValue,
                                 Toggle toggle,
                                 Toggle toggle2) {
                 String ticker = cbTickers.valueProperty().get().toString();
                 String opType = observableValue.getValue().getUserData().toString();
-                ObservableList<DerivativeBean> items = fetchDerivativesForTicker(ticker,opType);
+                ObservableList<DerivativeBean> items = fetchDerivativesForTicker(ticker, opType);
                 derivativesTableView.getItems().setAll(items);
             }
         });
@@ -392,10 +372,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
         stock = new StockBean();
         StringConverter<? extends Number> converter =  new DoubleStringConverter();
-        Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(),  (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(txOpen.textProperty(), stock.opnProperty(),  (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(txHi.textProperty(), stock.hiProperty(),  (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(txLo.textProperty(), stock.loProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(), (StringConverter<Number>) converter);
+        Bindings.bindBidirectional(txOpen.textProperty(), stock.opnProperty(), (StringConverter<Number>) converter);
+        Bindings.bindBidirectional(txHi.textProperty(), stock.hiProperty(), (StringConverter<Number>) converter);
+        Bindings.bindBidirectional(txLo.textProperty(), stock.loProperty(), (StringConverter<Number>) converter);
 
     }
 
@@ -471,5 +451,40 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
 
+
+
     //endregion  Initialization methods
+
+    //region Properties
+
+    public void setChart(MaunaloaChart chart) {
+        this.chart = chart;
+        this.chart.setViewModel(this);
+    }
+
+
+    public void setChart2(MaunaloaChart chart2) {
+        this.chart2 = chart2;
+        this.chart2.setViewModel(this);
+    }
+
+    public List<String> getTickers() {
+
+        return stockTicker != null ?
+                stockTicker.getTickers() :
+                tickers;
+    }
+
+    public void setTickers(List<String> tickers) {
+        this.tickers = tickers;
+    }
+
+    public StockTicker getStockTicker() {
+        return stockTicker;
+    }
+
+    public void setStockTicker(StockTicker stockTicker) {
+        this.stockTicker = stockTicker;
+    }
+    //endregion
 }
