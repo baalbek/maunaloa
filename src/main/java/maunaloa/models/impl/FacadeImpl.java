@@ -6,6 +6,7 @@ import maunaloa.models.mybatis.StockMapper;
 import maunaloa.utils.DateUtils;
 import maunaloa.utils.MyBatisUtils;
 import oahu.exceptions.NotImplementedException;
+import oahu.financial.StockTicker;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.financial.Etrade;
@@ -24,6 +25,7 @@ public class FacadeImpl implements MaunaloaFacade {
     private NetfondsModel netfondsModel;
     private Etrade etrade;
     private Date defaultStartDate;
+    private StockTicker stockTicker;
 
     Map<String, Collection<StockBean>> stockBeansMap = new HashMap<>();
 
@@ -39,7 +41,7 @@ public class FacadeImpl implements MaunaloaFacade {
         try {
             StockMapper mapper = session.getMapper(StockMapper.class);
 
-            result = mapper.selectStocks(3, fromDx);
+            result = mapper.selectStocks(stockTicker.findId(ticker), fromDx);
 
         }
         finally {
@@ -116,5 +118,14 @@ public class FacadeImpl implements MaunaloaFacade {
     public void setDefaultStartDate(Date defaultStartDate) {
         this.defaultStartDate = defaultStartDate;
     }
+
+    public StockTicker getStockTicker() {
+        return stockTicker;
+    }
+
+    public void setStockTicker(StockTicker stockTicker) {
+        this.stockTicker = stockTicker;
+    }
+
     //endregion Properties
 }

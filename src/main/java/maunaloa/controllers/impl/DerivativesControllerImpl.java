@@ -30,6 +30,7 @@ import maunaloa.controllers.DerivativesController;
 import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
 import oahu.controllers.ChartViewModel;
+import oahu.financial.StockTicker;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import oahu.models.MaunaloaFacade;
@@ -91,6 +92,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     private MaunaloaChart chart;
     private MaunaloaChart chart2;
+
 
     private ObservableList<DerivativeBean> beans;
     private String ticker = null;
@@ -467,7 +469,6 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         myCanvas2.heightProperty().addListener(listener2);
 
     }
-
 
 
     //endregion  Initialization methods

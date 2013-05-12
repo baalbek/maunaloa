@@ -29,6 +29,7 @@
     <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader">
     </bean>
 
+    <bean id="stockticker" class="maunaloa.models.impl.StockTickerImpl" ></bean>
 
 
     <bean id="html-stock-factory" class="maunakea.financial.impl.DefaultHtmlStockBeanFactory"></bean>
@@ -54,6 +55,7 @@
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
         <property name="netfondsModel" ref="netfonds-model" />
         <property name="etrade" ref="etrade" />
+        <property name="stockTicker" ref="stockticker"/>
     </bean>
 
     <bean id="derivatives-controller"
@@ -61,6 +63,8 @@
         <constructor-arg ref="facade" />
         <property name="chart" ref="chart"/>
         <property name="chart2" ref="chart2"/>
+
+
         <property name="tickers">
             <list>
                 <value>STL</value>
