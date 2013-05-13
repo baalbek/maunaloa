@@ -27,8 +27,12 @@
         <constructor-arg ref="kalihiwai-calc" />
     </bean>
 
-    <bean id="bean-factory" class="maunaloa.models.impl.DefaultHtmlRowBeanFactory" />
-    <bean id="downloader" class="maunaloa.dummy.Downloader" />
+    <bean id="bean-factory" class="maunakea.models.impl.DefaultHtmlRowBeanFactory" />
+
+    <bean id="downloader" class="maunaloa.dummy.Downloader">
+        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
+    </bean>
+
     <bean id="derivative-parser" class="maunakea.financial.impl.DefaultDerivativeParser">
         <constructor-arg ref="calculator" />
         <constructor-arg ref="bean-factory" />

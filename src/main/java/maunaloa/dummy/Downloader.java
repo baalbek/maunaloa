@@ -6,6 +6,7 @@ import oahu.financial.EtradeDownloader;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -15,9 +16,12 @@ import java.net.URL;
  * Time: 7:51 PM
  */
 public class Downloader implements EtradeDownloader {
+
+    private String htmlPath;
+
     @Override
     public HtmlPage downloadDerivatives(String ticker) throws IOException {
-        URL url = this.getClass().getResource("/" + ticker + ".html");
+        URL url = getUrl(ticker);
 
         System.out.println("URL: " + url.toString());
 
@@ -26,12 +30,15 @@ public class Downloader implements EtradeDownloader {
         return webClient.getPage(url);
     }
 
+    private URL getUrl(String ticker) throws MalformedURLException {
+        return new URL(String.format("%s/%s.html", getHtmlPath(),ticker));
+    }
+
     @Override
     public HtmlPage downloadIndex(String stockIndex) throws IOException {
-        URL url = this.getClass().getResource("/" + stockIndex + ".html");
         WebClient webClient = new WebClient();
 
-        return webClient.getPage(url);
+        return webClient.getPage(getUrl(stockIndex));
     }
 
     @Override
@@ -62,5 +69,13 @@ public class Downloader implements EtradeDownloader {
     public HtmlPage getLogoutPage() {
         //return null;//To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();
+    }
+
+    public String getHtmlPath() {
+        return htmlPath;
+    }
+
+    public void setHtmlPath(String htmlPath) {
+        this.htmlPath = htmlPath;
     }
 }

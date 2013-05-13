@@ -1,20 +1,13 @@
 package maunaloa.models.impl;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-import maunaloa.beans.CalculatedDerivativeBean;
 import oahu.beans.Tuple;
 import oahu.financial.EtradeHtmlParser;
-import oahu.financial.OptionCalculator;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
 import org.apache.commons.lang.NotImplementedException;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**

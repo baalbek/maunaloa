@@ -1,20 +1,15 @@
 package maunaloa;
 
-import kalihiwai.financial.OptionCalculator;
-import maunaloa.beans.CalculatedDerivativeBean;
 import maunaloa.models.impl.BlackScholesCalculator;
 import maunaloa.utils.DateUtils;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
-import org.junit.After;
+
 import static org.junit.Assert.*;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
-
-import java.net.URL;
-import java.util.Date;
 
 public class OptionCalculatorTest {
     public OptionCalculatorTest() {

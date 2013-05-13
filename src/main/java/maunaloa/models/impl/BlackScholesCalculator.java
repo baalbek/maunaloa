@@ -1,6 +1,6 @@
 package maunaloa.models.impl;
 
-import maunaloa.beans.CalculatedDerivativeBean;
+import maunakea.financial.beans.CalculatedDerivativeBean;
 import oahu.financial.OptionCalculator;
 import oahu.financial.beans.DerivativeBean;
 
