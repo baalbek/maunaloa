@@ -22,6 +22,10 @@ import java.util.Collection;
 public class ValidateBeansAspect {
     Logger log = Logger.getLogger(getClass().getPackage().getName());
 
+    private Double spreadLimit = null;
+    private Integer daysLimit = 0;
+
+
     @Pointcut("execution(* oahu.financial.Etrade.getCalls(String))")
     public void getCallsPointcut() {
     }
@@ -81,9 +85,8 @@ public class ValidateBeansAspect {
             return false;
         }
 
-
-        if (cb.daysProperty().get() < 0) {
-            log.info(String.format("%s has expired",ticker));
+        if (cb.daysProperty().get() < daysLimit) {
+            log.info(String.format("%s has expired within %d days",ticker,daysLimit));
             return false;
         }
 
@@ -92,17 +95,45 @@ public class ValidateBeansAspect {
             return false;
         }
 
-
         if (cb.sellProperty().get() <= 0) {
             log.info(String.format("%s: sell <= 0.0",ticker));
             return false;
         }
 
-        if (cb.getIvSell() < 0 || cb.getIvBuy() < 0) {
-            log.info(String.format("%s: iv not valid",ticker));
+        if (spreadLimit != null) {
+            double spread = cb.getSell() - cb.getBuy();
+            if (spread > spreadLimit.doubleValue()) {
+                log.info(String.format("%s: spread (%.2f) larger than allowed (%.2f)",ticker,spread,spreadLimit));
+                return false;
+            }
+        }
+
+        if (cb.getIvSell() <= 0) {
+            log.info(String.format("%s: ivSell <= 0.0",ticker));
+            return false;
+        }
+
+        if (cb.getIvBuy() <= 0) {
+            log.info(String.format("%s: ivBuy <= 0.0",ticker));
             return false;
         }
         return true;
+    }
+
+    public Double getSpreadLimit() {
+        return spreadLimit;
+    }
+
+    public void setSpreadLimit(Double spreadLimit) {
+        this.spreadLimit = spreadLimit;
+    }
+
+    public Integer getDaysLimit() {
+        return daysLimit;
+    }
+
+    public void setDaysLimit(Integer daysLimit) {
+        this.daysLimit = daysLimit;
     }
 
 
