@@ -57,7 +57,7 @@ public class App extends Application {
     private void initLog4j() {
         Properties props = new Properties();
         try {
-            props.load(getClass().getResourceAsStream("/log4j.properties"));
+            props.load(getClass().getResourceAsStream("/log4j.xml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
