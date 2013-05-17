@@ -21,6 +21,9 @@
   (let [f ^ClassPathXmlApplicationContext (ClassPathXmlApplicationContext. "maunaloa.xml")]
     f))
 
+(defn etrade []
+  (.getBean (sf) "etrade"))
+
 (def week-stix 
   (U/memoize-arg0 
     (fn [ticker beans]

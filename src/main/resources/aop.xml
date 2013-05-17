@@ -7,7 +7,9 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
+    <!--
     <bean id="traceAspect" class="maunaloa.aspects.TraceAspect" />
+    -->
 
     <bean id="validateBeansAspect" class="maunaloa.aspects.ValidateBeansAspect" />
 
