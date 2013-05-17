@@ -23,7 +23,7 @@
     <!--
     <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader" />
     -->
-    <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator">
+    <bean id="calculator" class="maunaloa.models.impl.KalihiwaiBlackScholesCalculator">
         <constructor-arg ref="kalihiwai-calc" />
     </bean>
 

@@ -1,6 +1,6 @@
 package maunaloa;
 
-import maunaloa.models.impl.BlackScholesCalculator;
+import maunaloa.models.impl.KalihiwaiBlackScholesCalculator;
 import maunaloa.utils.DateUtils;
 import oahu.financial.beans.DerivativeBean;
 import oahu.financial.beans.StockBean;
@@ -20,7 +20,7 @@ public class OptionCalculatorTest {
     public void testBlackScholesCalculator() {
         final XmlBeanFactory factory = new XmlBeanFactory(new ClassPathResource("/test-maunaloa.xml"));
 
-        BlackScholesCalculator calc = (BlackScholesCalculator) factory.getBean("calculator");
+        KalihiwaiBlackScholesCalculator calc = (KalihiwaiBlackScholesCalculator) factory.getBean("calculator");
         assertNotNull(calc);
 
         StockBean sbean = new StockBean(100,120,90,98,1000);
