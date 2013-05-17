@@ -7,17 +7,16 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
+    <bean id="traceAspect" class="maunaloa.aspects.TraceAspect" />
+
+    <bean id="validateBeansAspect" class="maunaloa.aspects.ValidateBeansAspect" />
+
     <!--
-    <bean id="loggerAspect" class="maunaloa.aspects.TraceAspect" />
-
-    <bean id="validateBeansAspect" class="netfondsjanitor.aspects.ValidateBeansAspect" />
-    -->
-
 
     <bean id="downloadMaintenanceAspect" class="maunaloa.aspects.DownloadMaintenanceAspect">
         <property name="fileStoreDir" value="/home/rcs/opt/java/maunaloa/html" />
-        <property name="fileStoreFormat" value="xml" />
+        <property name="fileStoreFormat" value="html" />
     </bean>
-
+    -->
 
 </beans>

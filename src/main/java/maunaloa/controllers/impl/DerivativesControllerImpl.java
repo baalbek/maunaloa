@@ -298,9 +298,11 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     @Override
     public  void draw() {
+        /*
         if (ticker == null) return;
         chart.draw(myCanvas);
         chart2.draw(myCanvas2);
+        //*/
     }
 
 

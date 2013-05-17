@@ -37,6 +37,8 @@ public class DownloadMaintenanceAspect {
     }
     */
 
+    //@Around("@annotation(com.x.y.MethodExecutionTime)")
+
     @Around("downloadPointcut()")
     public Object tracePointcutMethod(ProceedingJoinPoint jp) throws Throwable {
         Object result = jp.proceed();
@@ -56,13 +58,25 @@ public class DownloadMaintenanceAspect {
             }
 
             // get the content in bytes
-            byte[] contentInBytes = "xml".equals(getFileStoreFormat()) ?
-                                    pg.asXml().getBytes() :
-                                    pg.asText().getBytes();
+            byte[] contentInBytes = null;
 
-            fop.write(contentInBytes);
-            fop.flush();
-            fop.close();
+            switch (getFileStoreFormat()) {
+                case "html": contentInBytes = pg.getWebResponse().getContentAsString().getBytes();
+                    break;
+                case "xml": contentInBytes = pg.asXml().getBytes();
+                    break;
+                case "txt": contentInBytes = pg.asText().getBytes();
+                    break;
+            }
+
+            if (contentInBytes == null) {
+                log.warn(String.format("Could not get bytes from %s with the %s extension",pg.getUrl(),getFileStoreFormat()));
+            }
+            else {
+                fop.write(contentInBytes);
+                fop.flush();
+                fop.close();
+            }
         }
         catch (IOException e) {
             log.warn(String.format("Could not save: %s", fn));
@@ -74,7 +88,7 @@ public class DownloadMaintenanceAspect {
     //region Private Methods
     private String fileNameFor(ProceedingJoinPoint jp) {
         Object[] args = jp.getArgs();
-        return String.format("%s/%sx.%s", getFileStoreDir(), args[0], getFileStoreFormat());
+        return String.format("%s/%sy.%s", getFileStoreDir(), args[0], getFileStoreFormat());
     }
     //endregion Private Methods
 

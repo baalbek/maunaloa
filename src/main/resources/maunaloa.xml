@@ -5,7 +5,10 @@
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
     <import resource="classpath:aop.xml"  />
 
+
+    <!--
     <import resource="classpath:kalihiwai.xml" />
+    -->
 
     <!--
     <bean id="chart" class="manualoa.views.graphics.impl.DemoChart"></bean>
@@ -15,7 +18,6 @@
     <bean id="chart2" class="maunaloa.views.charts.CT2" />
 
     <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator">
-        <constructor-arg ref="kalihiwai-calc" />
     </bean>
 
 
@@ -34,7 +36,10 @@
     <bean id="stockticker" class="maunaloa.models.impl.StockTickerImpl" ></bean>
 
 
-    <bean id="html-stock-factory" class="maunakea.financial.impl.DefaultHtmlStockBeanFactory"></bean>
+    <bean id="html-stock-factory" class="maunakea.financial.impl.DefaultHtmlStockBeanFactory">
+        <property name="stockTicker" ref="stockticker" />
+    </bean>
+
     <bean id="html-derivative-factory" class="maunakea.financial.impl.HtmlCalculatedDerivativeBeanFactory" ></bean>
 
     <bean id="html-parser" class="maunakea.financial.impl.DefaultHtmlParser">
@@ -48,6 +53,7 @@
     <bean id="etrade" class="maunakea.financial.impl.Netfonds">
         <property name="downloader" ref="downloader" />
         <property name="htmlParser" ref="html-parser" />
+        <property name="stockTicker" ref="stockticker"/>
         <property name="caching" value="true" />
     </bean>
 
