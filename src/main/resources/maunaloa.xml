@@ -17,8 +17,10 @@
 
     <bean id="chart2" class="maunaloa.views.charts.CT2" />
 
+    <!--
     <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator">
-    </bean>
+    -->
+    <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
 
 
