@@ -10,7 +10,6 @@
     diff))
 
 (comment
-
 (deftest call-put-1 []
   (let [spot 100
         x 100
@@ -37,8 +36,6 @@
     (is (<= (calc-diff 0.0 B/put-price spot x t (- sigma 0.15)) 0.01) "Put otm 2")
     (is (<= (calc-diff 13.3617 B/put-price spot x t (+ sigma 0.55)) 0.183) "Put otm 3")
     ))
-  )
-
 
 (deftest call-put-3 []
   (let [spot 80
@@ -52,4 +49,6 @@
     (is (<= (calc-diff 20.0 B/put-price spot x t (- sigma 0.15)) 2.47) "Put itm 2")
     (is (<= (calc-diff 29.0415 B/put-price spot x t (+ sigma 0.55)) 0.469) "Put itm 3")
     ))
+
+  )
 
