@@ -45,8 +45,8 @@
     (is (<= (calc-diff 0.4594 B/call-price spot x t sigma) 0.01) "Call otm 1")
     (is (<= (calc-diff 0.0 B/call-price spot x t (- sigma 0.15)) 0.01) "Call otm 2")
     (is (<= (calc-diff 11.0684 B/call-price spot x t (+ sigma 0.55)) 0.034) "Call otm 3")
-    (is (<= (calc-diff 20.0 B/put-price spot x t sigma) 2.1) "Put itm 1")
-    (is (<= (calc-diff 20.0 B/put-price spot x t (- sigma 0.15)) 2.47) "Put itm 2")
+    (is (<= (calc-diff 20.0 B/put-price spot x t sigma) 0.1) "Put itm 1")
+    (is (<= (calc-diff 20.0 B/put-price spot x t (- sigma 0.15)) 0.1) "Put itm 2")
     (is (<= (calc-diff 29.0415 B/put-price spot x t (+ sigma 0.55)) 0.469) "Put itm 3")
     ))
 
@@ -127,12 +127,14 @@
     (is (=z (B/binary-search f 0.4 0.0 0.001) 0.05 0.011) "put iv binary search 5")
     (is (=z (B/binary-search f 0.4 13.36 tol) 0.75 tol) "put iv binary search 6")))
 
-(comment binary-search-iv-puts-itm []
+
+(deftest binary-search-iv-puts-itm []
   (let [tol 0.01
         spot 80.0
         x 100.0
         t 0.5
         f (partial B/put-price spot x t)]
-    (is (=z (B/binary-search f 0.4 0.5 tol) 0.2 tol) "put iv binary search 7")
-    (is (=z (B/binary-search f 0.4 0.0 0.001) 0.05 0.011) "put iv binary search 8")
-    (is (=z (B/binary-search f 0.4 13.36 tol) 0.75 tol) "put iv binary search 9")))
+    (is (=z (B/binary-search f 0.4 20.0 tol) 0.2 tol) "put iv binary search 7")
+    ;(is (=z (B/binary-search f 0.4 0.0 01.001) 0.05 0.011) "put iv binary search 8")
+    (is (=z (B/binary-search f 0.4 29.0415 tol) 0.77 tol) "put iv binary search 9")
+    ))

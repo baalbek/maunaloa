@@ -5,6 +5,7 @@
     [cern.jet.random Normal]
     [cern.jet.random.engine MersenneTwister]
     [oahu.financial.beans DerivativeBean]
+    [oahu.exceptions BinarySearchException]
     [maunakea.financial.beans CalculatedDerivativeBean]))
 
 (def norm (Normal. 0.0 1.0 (MersenneTwister.)))
@@ -64,7 +65,7 @@
         a (* spot cdf1)
         b (* x xp cdf2)]
 
-    (- b a)))
+    (max (- x spot) (- b a))))
 
 (defn find-bounds [f start-val target]
   (let [r (f start-val)
@@ -86,15 +87,18 @@
 (defn binary-search-run [f bounds target tolerance]
   (let [cmp (if (= (:fcat bounds) :incr) < >)]
     (loop [lo (:start bounds)
-           hi (:end bounds)]
-      (prn lo hi)
+           hi (:end bounds)
+           counter 0]
+      ;(prn lo hi)
+      (if counter > 1000
+        (throw (BinarySearchException. (str "Maximum iterations (" 1000 ") reached!"))))
       (let [mid (/ (+ hi lo) 2.0)
             mid-v (f mid)]
         (if (is-within-tolerance mid-v target tolerance)
           mid
           (if (cmp mid-v target)
-            (recur mid hi)
-            (recur lo mid)))))))
+            (recur mid hi (inc counter))
+            (recur lo mid (inc counter))))))))
 
 (defn binary-search [f start-val target tolerance]
   (let [bounds (find-bounds f start-val target)]
