@@ -34,16 +34,15 @@
 
 ;  (S * norm.cdf(d1)) - (X * Math.exp(-r * T) * norm.cdf(d2))
 ;  (X * Math.exp(-r * T) * norm.cdf(-d2)) - (S * norm.cdf(-d1))
-(defn #^{:fcat :incr}
-      call-price [^double spot
+(defn call-price [^double spot
                   ^double x
                   ^double t
                   ^double sigma]
   (let [
         d1 (calc-D1 spot x t sigma)
         d2 (calc-D2 d1 t sigma)
-        cdf1 (.cdf norm d1)
-        cdf2 (.cdf norm d2)
+        cdf1 (.cdf ^Normal norm d1)
+        cdf2 (.cdf ^Normal norm d2)
         xp (Math/exp
             (* t
               (- interest-rate)))
@@ -51,15 +50,14 @@
         b (* x xp cdf2)]
     (- a b)))
 
-(defn #^{:fcat :decr}
-      put-price [^double spot
+(defn put-price [^double spot
                   ^double x
                   ^double t
                   ^double sigma]
   (let [d1 (calc-D1 spot x t sigma)
         d2 (calc-D2 d1 t sigma)
-        cdf1 (.cdf norm (- d1))
-        cdf2 (.cdf norm (- d2))
+        cdf1 (.cdf ^Normal norm (- d1))
+        cdf2 (.cdf ^Normal norm (- d2))
         xp (Math/exp
             (* t
               (- interest-rate)))
@@ -67,9 +65,6 @@
         b (* x xp cdf2)]
 
     (- b a)))
-
-
-;(defmacro get-meta [fx] `(meta (var ~fx)))
 
 (defn find-bounds [f start-val target]
   (let [r (f start-val)
@@ -83,30 +78,7 @@
           (if (cmp-2 r2 target)
             {:start start-val :end s :end-res r2 :fcat fcat}
             (recur (* s 2.0)))))
-      [:start 0.0 :end start-val :end-res r :fcat fcat])))
-
-(comment
-(defn find-bounds-dec [f start-val target]
-  (let [r (f start-val)]
-    (if (> r target)
-      (loop [s (* start-val 2.0)]
-        (let [r2 (f s)]
-          (if (<= r2 target)
-            [start-val s r2]
-            (recur (* s 2.0)))))
-      [0.0 start-val r])))
-
-(defmacro find-bounds [f start-val target]
-  (println (f 10))
-  `(let [r# (~f ~start-val)]
-    (if (< r# ~target)
-      (loop [s# (* ~start-val 2.0)]
-        (let [r2# (~f s#)]
-          (if (>= r2# ~target)
-            [~start-val s# r2#]
-            (recur (* s# 2.0)))))
-      [0.0 ~start-val r#])))
-  )
+      {:start 0.0 :end start-val :end-res r :fcat fcat})))
 
 (defn is-within-tolerance [v target tolerance]
   (< (Math/abs (- v target)) tolerance))
@@ -125,11 +97,7 @@
             (recur lo mid)))))))
 
 (defn binary-search [f start-val target tolerance]
-  (let [bounds (find-bounds f start-val target)
-        ;search-fn (if (= (:fcat bounds) :incr)
-        ;            binary-search-inc
-        ;            binary-search-dec)
-        ]
+  (let [bounds (find-bounds f start-val target)]
     (if (is-within-tolerance (:end-res bounds) target tolerance)
       (:end bounds)
       (binary-search-run f bounds target tolerance))))
