@@ -85,13 +85,14 @@
   (< (Math/abs (- v target)) tolerance))
 
 (defn binary-search-run [f bounds target tolerance]
-  (let [cmp (if (= (:fcat bounds) :incr) < >)]
+  (let [cmp (if (= (:fcat bounds) :incr) < >)
+        max-iter 100]
     (loop [lo (:start bounds)
            hi (:end bounds)
            counter 0]
       ;(prn lo hi)
-      (if counter > 1000
-        (throw (BinarySearchException. (str "Maximum iterations (" 1000 ") reached!"))))
+      (if (> counter max-iter)
+        (throw (BinarySearchException. (str "Max iterations (" max-iter ") reached"))))
       (let [mid (/ (+ hi lo) 2.0)
             mid-v (f mid)]
         (if (is-within-tolerance mid-v target tolerance)
@@ -111,7 +112,9 @@
 ;;------------------------------------------------------------------------
 
 (defn -delta [this, ^DerivativeBean bean]
-  0.0)
+  (let [ calc-bean ^CalculatedDerivativeBean bean]
+
+  0.0))
 
 
 (defn -spread [this, ^DerivativeBean bean]
@@ -134,6 +137,17 @@
           ^DerivativeBean bean
           priceType]
   (let [ calc-bean ^CalculatedDerivativeBean bean
-         price (if (= DerivativeBean/BUY priceType) (.getBuy bean) (.getSell bean))]
-
-    0.0))
+         price (if (= DerivativeBean/BUY priceType)
+                     (.getBuy bean)
+                     (.getSell bean))
+         opx-f (let [fx (if (= (.getOpType bean) DerivativeBean/CALL)
+                          call-price
+                          put-price)]
+                  (partial fx
+                    (-> bean .getParent .getCls)
+                    (.getX bean)
+                    (/ (.getDays bean) 365.0)
+                    ))
+           ]
+    (binary-search opx-f 0.4 price 0.01)
+  ))
