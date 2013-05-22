@@ -107,47 +107,54 @@
       (:end bounds)
       (binary-search-run f bounds target tolerance))))
 
+(defn price-fn [^DerivativeBean deriv]
+  (if (= DerivativeBean/CALL (.getOpType deriv))
+        call-price
+        put-price))
 ;;------------------------------------------------------------------------
 ;;-------------------------- Interface methods ---------------------------
 ;;------------------------------------------------------------------------
 
-(defn -delta [this, ^DerivativeBean bean]
-  (let [ calc-bean ^CalculatedDerivativeBean bean]
+(defn -delta [this, ^DerivativeBean deriv]
+  (let [ cb ^CalculatedDerivativeBean deriv
+         iv (.getIvSell cb)
+         new-spot (+ 1.0 (-> cb .getParent .getValue))
+         new-price ((price-fn deriv)
+                     new-spot
+                     (.getX cb)
+                     (.getYears cb)
+                     iv)]
+    (- new-price (.getSell deriv))))
 
-  0.0))
 
-
-(defn -spread [this, ^DerivativeBean bean]
+(defn -spread [this, ^DerivativeBean deriv]
   0.0)
 
 
-(defn -breakEven [this, ^DerivativeBean bean]
+(defn -breakEven [this, ^DerivativeBean deriv]
   0.0)
 
 
 
 (defn -stockPriceFor [this
                     ^double optionPrice
-                    ^DerivativeBean bean
+                    ^DerivativeBean deriv
                     priceType]
   0.0)
 
 
 (defn -iv [this
-          ^DerivativeBean bean
+          ^DerivativeBean deriv
           priceType]
-  (let [ calc-bean ^CalculatedDerivativeBean bean
+  (let [ cb ^CalculatedDerivativeBean deriv
          price (if (= DerivativeBean/BUY priceType)
-                     (.getBuy bean)
-                     (.getSell bean))
-         opx-f (let [fx (if (= (.getOpType bean) DerivativeBean/CALL)
-                          call-price
-                          put-price)]
-                  (partial fx
-                    (-> bean .getParent .getCls)
-                    (.getX bean)
-                    (/ (.getDays bean) 365.0)
-                    ))
+                     (.getBuy cb)
+                     (.getSell cb))
+         opx-f (partial
+                 (price-fn cb)
+                  (-> cb .getParent .getCls)
+                  (.getX cb)
+                  (/ (.getDays cb) 365.0))
            ]
     (binary-search opx-f 0.4 price 0.01)
   ))

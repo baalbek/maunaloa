@@ -17,8 +17,6 @@
   (let [diff (Math/abs (- a b))]
     (<= diff delta)))
 
-(comment
-
 
 (deftest call-put-1 []
   (let [spot 100
@@ -139,7 +137,6 @@
     (is (=z (B/binary-search f 0.4 29.0415 tol) 0.77 tol) "put iv binary search 9")
     ))
 
-  )
 
 (defn cr-d [op-type spot x buy sell]
   (let [dx (.toDate (.plusDays (DateMidnight.) 183))
@@ -152,7 +149,7 @@
                 1000000)
         derivative (CalculatedDerivativeBean.
                      (str "TEST " op-type)
-                     DerivativeBean/CALL
+                     op-type
                      x
                      buy
                      sell
@@ -164,6 +161,11 @@
 (deftest calc-bean-iv []
   (let [call-1 (cr-d DerivativeBean/CALL 100.0 100.0 12.0 14.5)]
     (is (=z (B/-iv nil call-1 DerivativeBean/SELL) 0.478 0.01))
-    (is (=z (B/-delta nil call-1) 0.478 0.01))
     ))
 
+
+
+(comment calc-bean-delta []
+  (let [call-1 (cr-d DerivativeBean/CALL 100.0 100.0 12.0 14.5)]
+    (is (=z (B/-delta nil call-1) 0.478 0.01))
+  ))
