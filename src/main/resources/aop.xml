@@ -12,7 +12,7 @@
     -->
 
     <bean id="validateBeansAspect" class="maunaloa.aspects.ValidateBeansAspect">
-        <property name="spreadLimit" value="2.0" />
+        <property name="spreadLimit" value="5.0" />
         <property name="daysLimit" value="10" />
     </bean>
 

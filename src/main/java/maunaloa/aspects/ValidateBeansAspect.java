@@ -1,6 +1,7 @@
 package maunaloa.aspects;
 
 import maunakea.financial.beans.CalculatedDerivativeBean;
+import oahu.exceptions.BinarySearchException;
 import oahu.financial.beans.DerivativeBean;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -108,13 +109,19 @@ public class ValidateBeansAspect {
             }
         }
 
-        if (cb.getIvSell() <= 0) {
-            log.info(String.format("%s: ivSell <= 0.0",ticker));
-            return false;
-        }
+        try {
+            if (cb.getIvSell() <= 0) {
+                log.info(String.format("%s: ivSell <= 0.0",ticker));
+                return false;
+            }
 
-        if (cb.getIvBuy() <= 0) {
-            log.info(String.format("%s: ivBuy <= 0.0",ticker));
+            if (cb.getIvBuy() <= 0) {
+                log.info(String.format("%s: ivBuy <= 0.0",ticker));
+                return false;
+            }
+        }
+        catch (BinarySearchException ex) {
+            log.warn(String.format("%s: %s",ticker,ex.getMessage()));
             return false;
         }
         return true;
