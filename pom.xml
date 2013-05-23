@@ -200,6 +200,7 @@
                         </goals>
                     </execution>
 
+                    <!--
                     <execution>
                         <id>test-clojure</id>
                         <phase>test</phase>
@@ -207,6 +208,7 @@
                             <goal>test</goal>
                         </goals>
                     </execution>
+                    -->
                 </executions>
                 <configuration>
                     <testScript>src/test/clojure/maunaloa/test1.clj</testScript>
@@ -231,7 +233,7 @@
                             <!--
                             <outputDirectory>${project.build.directory}</outputDirectory>
                             -->
-                            <outputDirectory>/home/rcs/opt/java/haleakala/target</outputDirectory>
+                            <outputDirectory>/home/rcs/opt/java/maunaloa/target</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>

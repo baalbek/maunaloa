@@ -86,7 +86,7 @@
 
 (defn binary-search-run [f bounds target tolerance]
   (let [cmp (if (= (:fcat bounds) :incr) < >)
-        max-iter 100]
+        max-iter 25]
     (loop [lo (:start bounds)
            hi (:end bounds)
            counter 0]
@@ -111,6 +111,16 @@
   (if (= DerivativeBean/CALL (.getOpType deriv))
         call-price
         put-price))
+
+
+(defn spot-finder [^DerivativeBean d]
+  (let [f (price-fn d)
+        x (.getX d)
+        t (.getYears d)
+        sigma (.getIvBuy d)]
+    (fn [spot]
+      (f spot x t sigma))))
+
 ;;------------------------------------------------------------------------
 ;;-------------------------- Interface methods ---------------------------
 ;;------------------------------------------------------------------------
@@ -138,9 +148,10 @@
 
 (defn -stockPriceFor [this
                     ^double optionPrice
-                    ^DerivativeBean deriv
-                    priceType]
-  0.0)
+                    ^DerivativeBean deriv]
+  (let [f (spot-finder deriv)
+        start-val (-> deriv .getParent .getCls)]
+    (binary-search f start-val optionPrice 0.1)))
 
 
 (defn -iv [this
