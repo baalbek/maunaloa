@@ -1,8 +1,7 @@
 package maunaloa.aspects;
 
-import maunakea.financial.beans.CalculatedDerivativeBean;
 import oahu.exceptions.BinarySearchException;
-import oahu.financial.beans.DerivativeBean;
+import oahu.financial.Derivative;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -39,34 +38,37 @@ public class ValidateBeansAspect {
 
 
     @Around("getPutsPointcut()")
-    public Collection<DerivativeBean> getPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
+    public Collection<Derivative> getPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
 
-        Collection<DerivativeBean> tmp = (Collection<DerivativeBean>)jp.proceed();
+        Collection<Derivative> tmp = (Collection<Derivative>)jp.proceed();
 
-        Collection<DerivativeBean> result = new ArrayList<>();
+        Collection<Derivative> result = new ArrayList<>();
 
         log.info(String.format("%s\nNumber of puts: %d",jp.toString(),tmp.size()));
 
-        for (DerivativeBean bean : tmp) {
+        /*
+        for (Derivative bean : tmp) {
             CalculatedDerivativeBean cb = (CalculatedDerivativeBean)bean;
 
             if (isOk(cb) == false) continue;
 
             result.add(cb);
         }
+        //*/
 
         return result;
     }
 
     @Around("getCallsPointcut()")
-    public Collection<DerivativeBean> getCallsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
+    public Collection<Derivative> getCallsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
 
-        Collection<DerivativeBean> tmp = (Collection<DerivativeBean>)jp.proceed();
+        Collection<Derivative> tmp = (Collection<Derivative>)jp.proceed();
 
-        Collection<DerivativeBean> result = new ArrayList<>();
+        Collection<Derivative> result = new ArrayList<>();
 
         log.info(String.format("%s\nNumber of calls: %d",jp.toString(),tmp.size()));
 
+        /*
         for (DerivativeBean bean : tmp) {
             CalculatedDerivativeBean cb = (CalculatedDerivativeBean)bean;
 
@@ -74,10 +76,11 @@ public class ValidateBeansAspect {
 
             result.add(cb);
         }
-
+        //*/
         return result;
     }
 
+    /*
     private boolean isOk(CalculatedDerivativeBean cb) {
         String ticker = cb.getTicker();
 
@@ -126,6 +129,7 @@ public class ValidateBeansAspect {
         }
         return true;
     }
+    //*/
 
     public Double getSpreadLimit() {
         return spreadLimit;

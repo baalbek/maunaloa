@@ -23,17 +23,10 @@ import javafx.scene.shape.Line;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
-import maunakea.financial.beans.CalculatedDerivativeBean;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
-import oahu.controllers.ChartViewModel;
-import oahu.financial.StockTicker;
-import oahu.financial.beans.DerivativeBean;
-import oahu.financial.beans.StockBean;
-import oahu.models.MaunaloaFacade;
-import oahu.views.MaunaloaChart;
-import oahu.views.chart.IRuler;
+import oahux.chart.MaunaloaChart;
 
 import java.util.*;
 

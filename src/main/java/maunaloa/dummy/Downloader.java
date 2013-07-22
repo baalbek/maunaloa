@@ -2,7 +2,7 @@ package maunaloa.dummy;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import oahu.financial.EtradeDownloader;
+import oahu.financial.html.EtradeDownloader;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.io.IOException;

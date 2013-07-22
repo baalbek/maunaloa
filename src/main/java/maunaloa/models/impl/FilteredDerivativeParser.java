@@ -2,6 +2,10 @@ package maunaloa.models.impl;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import oahu.beans.Tuple;
+import oahu.financial.Derivative;
+import oahu.financial.Stock;
+import oahu.financial.StockPrice;
+import oahu.financial.html.EtradeHtmlParser;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.util.Collection;
@@ -28,63 +32,32 @@ public class FilteredDerivativeParser implements EtradeHtmlParser {
     */
 
     @Override
-    public Collection<DerivativeBean> parseDerivatives(HtmlPage page) {
+    public Collection<Derivative> parseDerivatives(HtmlPage page) {
         throw new NotImplementedException();
     }
 
     @Override
-    public Collection<DerivativeBean> parseDerivatives(HtmlPage page, StockBean parent) {
+    public Collection<Derivative> parseDerivatives(HtmlPage page, Stock parent) {
         throw new NotImplementedException();
     }
 
     @Override
-    public Tuple<Collection<DerivativeBean>> parseDerivativesTuple(HtmlPage page) {
+    public Tuple<Collection<Derivative>> parseDerivativesTuple(HtmlPage page) {
         return parseDerivativesTuple(page,null);
     }
 
     @Override
-    public Tuple<Collection<DerivativeBean>> parseDerivativesTuple(HtmlPage page, StockBean parent) {
-        return null;
-        /*
-        Collection<DerivativeBean> calls = new ArrayList<>();
-        Collection<DerivativeBean> puts = new ArrayList<>();
-
-        HtmlTable table = page.getFirstByXPath("//table[@class='com topmargin']");
-
-        for (final HtmlTableRow row : table.getRows()) {
-            List<HtmlTableCell> cells = row.getCells();
-            if (cells.size() == 9) {
-
-                DerivativeBean d = factory.create(cells, parent, calculator);
-
-                if (d != null) {
-                    CalculatedDerivativeBean cd = (CalculatedDerivativeBean)d;
-
-                    if (cd.isCalculable() == false)  continue;
-
-                    if (cd.getIvSell() < 0.0) continue;
-
-                    //System.out.println("\toptype: " + d.getOpType());
-                    if (d.getOpType() == DerivativeBean.CALL) {
-                        calls.add(d);
-                    } else if (d.getOpType() == DerivativeBean.PUT) {
-                        puts.add(d);
-                    }
-                }
-            }
-        }
-
-        return  new Tuple<>(calls,puts);
-        */
-    }
-
-    @Override
-    public StockBean parseSpot(HtmlPage page) {
+    public Tuple<Collection<Derivative>> parseDerivativesTuple(HtmlPage htmlPage, StockPrice stockPrice) {
         throw new oahu.exceptions.NotImplementedException();
     }
 
     @Override
-    public Map<String, StockBean> parseSpots(HtmlPage page) {
+    public StockPrice parseSpot(HtmlPage htmlPage, String s) {
+        throw new oahu.exceptions.NotImplementedException();
+    }
+
+    @Override
+    public Map<String, StockPrice> parseSpots(HtmlPage page) {
         throw new oahu.exceptions.NotImplementedException();
     }
 }

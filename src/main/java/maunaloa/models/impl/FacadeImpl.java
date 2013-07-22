@@ -3,15 +3,10 @@ package maunaloa.models.impl;
 import javafx.scene.Node;
 import maunaloa.utils.DateUtils;
 import oahu.exceptions.NotImplementedException;
-<<<<<<< HEAD
-import oahu.financial.Etrade;
-import org.apache.ibatis.session.SqlSession;
-=======
 import oahu.financial.Derivative;
 import oahu.financial.Etrade;
 import oahu.financial.Stock;
 import oahux.models.MaunaloaFacade;
->>>>>>> ec9d0c4d7fd664b80fbe10bebd11dcb3757fd64b
 
 import java.util.*;
 
