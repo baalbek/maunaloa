@@ -14,7 +14,6 @@ import java.util.logging.Logger;
  * User: rcs
  * Date: 23.11.12
  * Time: 09:45
- * To change this template use File | Settings | File Templates.
  */
 public class DateUtils {
     private static final DateFormat _formatter = new SimpleDateFormat("yyyy-MM-dd");

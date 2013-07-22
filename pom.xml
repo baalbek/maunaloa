@@ -85,20 +85,22 @@
         <!--****************************************************************
         ****************************** rcstadheim **************************
         ********************************************************************-->
-        <!--
+
         <dependency>
             <groupId>rcstadheim</groupId>
             <artifactId>oahu</artifactId>
         </dependency>
-        -->
 
+        <dependency>
+            <groupId>rcstadheim</groupId>
+            <artifactId>oahux</artifactId>
+        </dependency>
 
-        <!--
         <dependency>
             <groupId>rcstadheim</groupId>
             <artifactId>maunakea</artifactId>
         </dependency>
-        -->
+
 
         <!--****************************************************************
         ****************************** Joda Time ***************************

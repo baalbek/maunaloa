@@ -4,8 +4,8 @@ import javafx.beans.binding.DoubleBinding;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import oahu.views.chart.IBoundaryRuler;
-import oahu.views.chart.IRuler;
+import oahux.chart.IBoundaryRuler;
+import oahux.chart.IRuler;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,6 +23,7 @@ public class FibonacciDraggableLine extends DraggableLine {
     static double PHI = 0.618034;
 
     private IBoundaryRuler vruler;
+
 
     public FibonacciDraggableLine(Line line, IRuler vruler) {
         this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, vruler);
