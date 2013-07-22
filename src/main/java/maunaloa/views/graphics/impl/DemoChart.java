@@ -3,8 +3,8 @@ package maunaloa.views.graphics.impl;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import oahu.controllers.ChartViewModel;
-import oahu.views.MaunaloaChart;
+import oahux.controllers.ChartViewModel;
+import oahux.chart.MaunaloaChart;
 
 /**
  * Created with IntelliJ IDEA.

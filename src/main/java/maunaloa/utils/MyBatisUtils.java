@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  * User: rcs
  * Date: 22.11.12
  * Time: 13:30
- * To change this template use File | Settings | File Templates.
  */
 public class MyBatisUtils {
 

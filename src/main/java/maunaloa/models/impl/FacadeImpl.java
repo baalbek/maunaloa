@@ -1,17 +1,12 @@
 package maunaloa.models.impl;
 
 import javafx.scene.Node;
-import maunaloa.models.NetfondsModel;
-import maunaloa.models.mybatis.StockMapper;
 import maunaloa.utils.DateUtils;
-import maunaloa.utils.MyBatisUtils;
 import oahu.exceptions.NotImplementedException;
-import oahu.financial.StockTicker;
-import oahu.financial.beans.DerivativeBean;
-import oahu.financial.beans.StockBean;
+import oahu.financial.Derivative;
 import oahu.financial.Etrade;
-import oahu.models.MaunaloaFacade;
-import org.apache.ibatis.session.SqlSession;
+import oahu.financial.Stock;
+import oahux.models.MaunaloaFacade;
 
 import java.util.*;
 
@@ -22,12 +17,10 @@ import java.util.*;
  * Time: 6:46 PM
  */
 public class FacadeImpl implements MaunaloaFacade {
-    private NetfondsModel netfondsModel;
     private Etrade etrade;
     private Date defaultStartDate;
-    private StockTicker stockTicker;
 
-    Map<String, Collection<StockBean>> stockBeansMap = new HashMap<>();
+    Map<String, Collection<Stock>> stockBeansMap = new HashMap<>();
 
     public FacadeImpl()  {
         setDefaultStartDate(DateUtils.createDate(2010, 1, 1));
@@ -35,7 +28,8 @@ public class FacadeImpl implements MaunaloaFacade {
 
     //region Interface Methods
     @Override
-    public Collection<StockBean> stockPrices(String ticker, Date fromDx, int period) {
+    public Collection<Stock> stockPrices(String ticker, Date fromDx, int period) {
+        /*
         SqlSession session = MyBatisUtils.getSession();
         List<StockBean> result = null;
         try {
@@ -48,10 +42,13 @@ public class FacadeImpl implements MaunaloaFacade {
             session.close();
         }
         return result;
+        //*/
+        return null;
     }
 
     @Override
-    public Collection<StockBean> stockPrices(String ticker, int period) {
+    public Collection<Stock> stockPrices(String ticker, int period) {
+        /*
         if (stockBeansMap.containsKey(ticker)) {
             return stockBeansMap.get(ticker);
         }
@@ -60,26 +57,28 @@ public class FacadeImpl implements MaunaloaFacade {
             stockBeansMap.put(ticker,beans);
             return beans;
         }
+        //*/
+        return null;
     }
 
     @Override
-    public StockBean spot(String ticker) {
-        return getEtrade().getSpot(ticker);
+    public Stock spot(String ticker) {
+        return null;  //return getEtrade().getSpot(ticker);
     }
 
     @Override
-    public Collection<DerivativeBean> calls(String ticker) {
-        return getEtrade().getCalls(ticker);
+    public Collection<Derivative> calls(String ticker) {
+        return null; //getEtrade().getCalls(ticker);
     }
 
     @Override
-    public Collection<DerivativeBean> puts(String ticker) {
-        return getEtrade().getPuts(ticker);
+    public Collection<Derivative> puts(String ticker) {
+        return null; //getEtrade().getPuts(ticker);
     }
 
     @Override
-    public Collection<DerivativeBean> callsAndPuts(String ticker) {
-        return calls(ticker);
+    public Collection<Derivative> callsAndPuts(String ticker) {
+        return null; //calls(ticker);
     }
 
     @Override
@@ -95,13 +94,6 @@ public class FacadeImpl implements MaunaloaFacade {
 
 
     //region Properties
-    public NetfondsModel getNetfondsModel() {
-        return netfondsModel;
-    }
-
-    public void setNetfondsModel(NetfondsModel netfondsModel) {
-        this.netfondsModel = netfondsModel;
-    }
 
     public Etrade getEtrade() {
         return etrade;
@@ -119,6 +111,7 @@ public class FacadeImpl implements MaunaloaFacade {
         this.defaultStartDate = defaultStartDate;
     }
 
+    /*
     public StockTicker getStockTicker() {
         return stockTicker;
     }
@@ -126,6 +119,7 @@ public class FacadeImpl implements MaunaloaFacade {
     public void setStockTicker(StockTicker stockTicker) {
         this.stockTicker = stockTicker;
     }
+    //*/
 
     //endregion Properties
 }

@@ -2,9 +2,6 @@ package maunaloa.models.impl;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import oahu.beans.Tuple;
-import oahu.financial.EtradeHtmlParser;
-import oahu.financial.beans.DerivativeBean;
-import oahu.financial.beans.StockBean;
 import org.apache.commons.lang.NotImplementedException;
 
 import java.util.Collection;
