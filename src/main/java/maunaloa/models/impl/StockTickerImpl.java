@@ -2,8 +2,9 @@ package maunaloa.models.impl;
 
 import maunakea.util.MyBatisUtils;
 import maunaloa.models.mybatis.StockMapper;
-import oahu.financial.StockTicker;
-import oahu.financial.beans.StockTickerBean;
+import oahu.exceptions.NotImplementedException;
+import oahu.financial.Stock;
+import oahu.financial.StockLocator;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import java.util.List;
  * Date: 5/12/13
  * Time: 3:37 PM
  */
-public class StockTickerImpl implements StockTicker {
+public class StockTickerImpl implements StockLocator {
     private HashMap<Integer,String> id2ticker;
     private HashMap<String,Integer> ticker2id;
     private List<String> tickers;
@@ -46,6 +47,16 @@ public class StockTickerImpl implements StockTicker {
             populate();
         }
         return tickers;
+    }
+
+    @Override
+    public Stock locateStock(String ticker) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Stock locateStock(int tickerId) {
+        throw new NotImplementedException();
     }
 
     private void populate() {

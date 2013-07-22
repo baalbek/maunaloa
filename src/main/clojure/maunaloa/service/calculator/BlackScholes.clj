@@ -113,7 +113,7 @@
         put-price))
 
 
-(defn spot-finder [^DerivativeBean d]
+(defn spot-finder [^CalculatedDerivativeBean d]
   (let [f (price-fn d)
         x (.getX d)
         t (.getYears d)

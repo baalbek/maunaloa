@@ -6,11 +6,7 @@ import maunaloa.models.mybatis.StockMapper;
 import maunaloa.utils.DateUtils;
 import maunaloa.utils.MyBatisUtils;
 import oahu.exceptions.NotImplementedException;
-import oahu.financial.StockTicker;
-import oahu.financial.beans.DerivativeBean;
-import oahu.financial.beans.StockBean;
 import oahu.financial.Etrade;
-import oahu.models.MaunaloaFacade;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.*;
@@ -82,12 +78,10 @@ public class FacadeImpl implements MaunaloaFacade {
         return calls(ticker);
     }
 
-    @Override
     public Collection<Node> fibLines(String ticker) {
         throw new NotImplementedException();
     }
 
-    @Override
     public void addFibLine(String ticker, Node line) {
         throw new NotImplementedException();
     }
