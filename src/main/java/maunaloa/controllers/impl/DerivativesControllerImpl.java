@@ -28,6 +28,7 @@ import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
 import oahu.financial.Derivative;
 import oahu.financial.Stock;
+import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.ChartViewModel;
@@ -311,7 +312,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
 
     @Override
-    public Collection<Stock> stockPrices(int period) {
+    public Collection<StockPrice> stockPrices(int period) {
         return facade.stockPrices(ticker, period);
     }
 
