@@ -1,8 +1,7 @@
 (ns maunaloa.app
   (:import
     [org.springframework.context.support ClassPathXmlApplicationContext]
-    [oahu.models MaunaloaFacade]
-    [oahu.financial.beans StockBean]
+    [oahux.models MaunaloaFacade]
     [maunaloa.utils DateUtils]
     [java.util Calendar GregorianCalendar])
   (:require

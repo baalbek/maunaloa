@@ -1,9 +1,9 @@
 (ns maunaloa.utils.commonutils
   (:import
-    [oahu.financial.beans StockBean]))
+    [oahu.financial StockPrice]))
 
 ;;------------------------------------------------------------------------
 ;;------------------------------- Macros ---------------------------------
 ;;------------------------------------------------------------------------
 (defmacro vec-map-beans [map-fn beans]
-  `(vec (map #(~map-fn ^StockBean %) ~beans)))
+  `(vec (map #(~map-fn ^StockPrice %) ~beans)))

@@ -3,11 +3,10 @@
     :prefix ct2-
     :init init
     :state state
-    :implements [oahu.views.MaunaloaChart])
+    :implements [oahux.chart.MaunaloaChart])
   (:import
-    [oahu.controllers ChartViewModel]
-    (oahu.financial.beans StockBean)
-    [oahu.views MaunaloaChart]
+    [oahux.controllers ChartViewModel]
+    [oahux.chart MaunaloaChart]
     [javafx.scene.paint Color]
     [javafx.scene.canvas Canvas GraphicsContext])
   (:require

@@ -4,28 +4,52 @@
    <property name="src.java" value="src/main/java" />
    <property name="src.clojure" value="src/main/clojure" />
     <property name="waimea.local" value="${src.clojure}/waimea/" />
+    <property name="waimea.local2" value="${src.java}/waimea/" />
     <property name="waimea.project" value="../waimea/src/main/clojure/waimea/" />
+    <property name="waimea.project2" value="../waimea/src/main/java/waimea/" />
    <property name="maunakea.local" value="${src.java}/maunakea/" />
    <property name="maunakea.project" value="../maunakea/src/main/java/maunakea/" />
    <property name="oahu.local" value="${src.java}/oahu/" />
    <property name="oahu.project" value="../oahu/src/main/java/oahu/" />
 
+    <target name="copy-waimea">
+        <copy todir="${waimea.local}">
+            <fileset dir="${waimea.project}">
+                <include name="**/*.clj" />
+            </fileset>
+        </copy>
+        <copy todir="${waimea.local2}">
+            <fileset dir="${waimea.project2}">
+                <include name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="copy-2-waimea">
+        <copy todir="${waimea.project}">
+            <fileset dir="${waimea.local}">
+                <include name="**/*.clj" />
+            </fileset>
+        </copy>
+        <copy todir="${waimea.project2}">
+            <fileset dir="${waimea.local2}">
+                <include name="**/*.java" />
+            </fileset>
+        </copy>
+    </target>
+
     <target name="copy-from">
         <copy todir="${oahu.local}">
             <fileset dir="${oahu.project}">
-                <!-- exclude name="**/*.java"/ -->
                 <include name="**/*.java" />
             </fileset>
         </copy>
         <copy todir="${maunakea.local}">
             <fileset dir="${maunakea.project}">
-                <!-- exclude name="**/*.java"/ -->
                 <include name="**/*.java" />
             </fileset>
         </copy>
         <copy todir="${waimea.local}">
             <fileset dir="${waimea.project}">
-                <!-- exclude name="**/*.java"/ -->
                 <include name="**/*.clj" />
             </fileset>
         </copy>
@@ -34,19 +58,16 @@
     <target name="copy-to">
         <copy todir="${oahu.project}">
             <fileset dir="${oahu.local}">
-                <!-- exclude name="**/*.java"/ -->
                 <include name="**/*.java" />
             </fileset>
         </copy>
         <copy todir="${maunakea.project}">
             <fileset dir="${maunakea.local}">
-                <!-- exclude name="**/*.java"/ -->
                 <include name="**/*.java" />
             </fileset>
         </copy>
         <copy todir="${waimea.project}">
             <fileset dir="${waimea.local}">
-                <!-- exclude name="**/*.java"/ -->
                 <include name="**/*.clj" />
             </fileset>
         </copy>

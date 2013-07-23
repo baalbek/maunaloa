@@ -26,7 +26,12 @@ import javafx.util.converter.DoubleStringConverter;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
+import oahu.financial.Derivative;
+import oahu.financial.Stock;
+import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
+import oahux.controllers.ChartViewModel;
+import oahux.models.MaunaloaFacade;
 
 import java.util.*;
 
@@ -38,23 +43,23 @@ import java.util.*;
  */
 public class DerivativesControllerImpl implements DerivativesController, ChartViewModel {
     //region FXML
-    @FXML private TableView<DerivativeBean> derivativesTableView;
+    @FXML private TableView<Derivative> derivativesTableView;
 
-    @FXML private TableColumn<DerivativeBean, String> colOpName;
-    @FXML private TableColumn<DerivativeBean, Boolean> colSelected;
-    @FXML private TableColumn<DerivativeBean, Date> colExpiry;
+    @FXML private TableColumn<Derivative, String> colOpName;
+    @FXML private TableColumn<Derivative, Boolean> colSelected;
+    @FXML private TableColumn<Derivative, Date> colExpiry;
 
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colBuy;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colSell;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colIvBuy;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colIvSell;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colSpread;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colDelta;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colBreakEven;
+    @FXML private TableColumn<Derivative, Double> colBuy;
+    @FXML private TableColumn<Derivative, Double> colSell;
+    @FXML private TableColumn<Derivative, Double> colIvBuy;
+    @FXML private TableColumn<Derivative, Double> colIvSell;
+    @FXML private TableColumn<Derivative, Double> colSpread;
+    @FXML private TableColumn<Derivative, Double> colDelta;
+    @FXML private TableColumn<Derivative, Double> colBreakEven;
 
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colDays;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colRisc;
-    @FXML private TableColumn<CalculatedDerivativeBean, Double> colSpRisc;
+    @FXML private TableColumn<Derivative, Double> colDays;
+    @FXML private TableColumn<Derivative, Double> colRisc;
+    @FXML private TableColumn<Derivative, Double> colSpRisc;
 
     @FXML private ToggleGroup rgDerivatives;
 
@@ -83,13 +88,13 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     private MaunaloaChart chart;
     private MaunaloaChart chart2;
-    private StockTicker stockTicker;
+    //private StockTicker stockTicker;
 
-    private ObservableList<DerivativeBean> beans;
+    private ObservableList<Derivative> beans;
     private String ticker = null;
     private List<String> tickers;
 
-    private StockBean stock;
+    private Stock stock;
 
     private MaunaloaFacade facade;
 
@@ -110,24 +115,28 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
 
     public void calcRisk(ActionEvent event) {
+        /*
         String txVal = ((TextField)event.getSource()).textProperty().get();
         double risk = Double.parseDouble(txVal);
 
-        for (DerivativeBean b : derivativesTableView.getItems()) {
-            CalculatedDerivativeBean cb = (CalculatedDerivativeBean)b;
+        for (Derivative b : derivativesTableView.getItems()) {
+            Derivative cb = (Derivative)b;
             if (cb.getIsChecked()) {
                 cb.setRisk(risk);
             }
         }
+        */
     }
 
     public void unCheckBeans(ActionEvent event) {
-        for (DerivativeBean b : derivatives()) {
+        /*
+        for (Derivative b : derivatives()) {
             b.setIsChecked(false);
         }
+        */
     }
 
-    public ObservableList<DerivativeBean> derivatives() {
+    public ObservableList<Derivative> derivatives() {
         if (ticker == null) return null;
 
         String userData = rgDerivatives.getSelectedToggle().getUserData().toString();
@@ -136,9 +145,10 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
     public void setTicker(String ticker) {
+        /*
         this.ticker = ticker;
         if (cxLoadOptionsHtml.isSelected()) {
-            ObservableList<DerivativeBean> items = derivatives();
+            ObservableList<Derivative> items = derivatives();
             if (items != null) {
                 derivativesTableView.getItems().setAll(items);
             }
@@ -147,6 +157,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             stock.assign(facade.spot(ticker));
         }
         draw();
+        */
     }
 
     public void close(ActionEvent event)  {
@@ -166,8 +177,8 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     //endregion  Public Methods
 
     //region Private Methods
-    private ObservableList<DerivativeBean> fetchDerivativesForTicker(String ticker, String optionType) {
-        Collection<DerivativeBean> result = null;
+    private ObservableList<Derivative> fetchDerivativesForTicker(String ticker, String optionType) {
+        Collection<Derivative> result = null;
         switch (optionType) {
             case "calls": {
                 result = facade.calls(ticker);
@@ -184,9 +195,11 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
         return FXCollections.observableArrayList(result);
     }
     private void toggleAllDerivatives(boolean value) {
-        for (DerivativeBean b : derivatives()) {
+        /*
+        for (Derivative b : derivatives()) {
             b.setIsChecked(value);
         }
+        */
     }
 
     //endregion Private Methods
@@ -298,7 +311,7 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
 
     @Override
-    public Collection<StockBean> stockPrices(int period) {
+    public Collection<Stock> stockPrices(int period) {
         return facade.stockPrices(ticker, period);
     }
 
@@ -332,13 +345,14 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
                 if (cxLoadOptionsHtml.isSelected()) {
-                    ObservableList<DerivativeBean> items = derivatives();
+                    ObservableList<Derivative> items = derivatives();
                     if (items != null) {
                         derivativesTableView.getItems().setAll(items);
                     }
                 }
             }
         });
+        /*
         cxLoadStockHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
@@ -355,18 +369,19 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
                                 Toggle toggle2) {
                 String ticker = cbTickers.valueProperty().get().toString();
                 String opType = observableValue.getValue().getUserData().toString();
-                ObservableList<DerivativeBean> items = fetchDerivativesForTicker(ticker, opType);
+                ObservableList<Derivative> items = fetchDerivativesForTicker(ticker, opType);
                 derivativesTableView.getItems().setAll(items);
             }
         });
 
 
-        stock = new StockBean();
+        stock = new Stock();
         StringConverter<? extends Number> converter =  new DoubleStringConverter();
         Bindings.bindBidirectional(txSpot.textProperty(), stock.clsProperty(), (StringConverter<Number>) converter);
         Bindings.bindBidirectional(txOpen.textProperty(), stock.opnProperty(), (StringConverter<Number>) converter);
         Bindings.bindBidirectional(txHi.textProperty(), stock.hiProperty(), (StringConverter<Number>) converter);
         Bindings.bindBidirectional(txLo.textProperty(), stock.loProperty(), (StringConverter<Number>) converter);
+        */
 
     }
 
@@ -387,28 +402,28 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
     }
 
     private void initGrid() {
-        colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeBean, String>("ticker"));
-        colSelected.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Boolean>("isChecked"));
+        colOpName.setCellValueFactory(new PropertyValueFactory<Derivative, String>("ticker"));
+        colSelected.setCellValueFactory(new PropertyValueFactory<Derivative, Boolean>("isChecked"));
         colSelected.setCellFactory(
-                new Callback<TableColumn<DerivativeBean, Boolean>, TableCell<DerivativeBean, Boolean>>() {
+                new Callback<TableColumn<Derivative, Boolean>, TableCell<Derivative, Boolean>>() {
                     @Override
-                    public TableCell<DerivativeBean, Boolean> call(TableColumn<DerivativeBean, Boolean> p) {
+                    public TableCell<Derivative, Boolean> call(TableColumn<Derivative, Boolean> p) {
                         return new CheckBoxTableCell<>();
                     }
                 });
-        colExpiry.setCellValueFactory(new PropertyValueFactory<DerivativeBean, Date>("expiry"));
+        colExpiry.setCellValueFactory(new PropertyValueFactory<Derivative, Date>("expiry"));
 
-        colBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("buy"));
-        colSell.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("sell"));
+        colBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("buy"));
+        colSell.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("sell"));
 
-        colIvBuy.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivBuy"));
-        colIvSell.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("ivSell"));
-        colDelta.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("delta"));
-        colBreakEven.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("breakeven"));
-        colSpread.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("spread"));
-        colDays.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("days"));
-        colRisc.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("risk"));
-        colSpRisc.setCellValueFactory(new PropertyValueFactory<CalculatedDerivativeBean, Double>("stockPriceRisk"));
+        colIvBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("ivBuy"));
+        colIvSell.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("ivSell"));
+        colDelta.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("delta"));
+        colBreakEven.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("breakeven"));
+        colSpread.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("spread"));
+        colDays.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("days"));
+        colRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("risk"));
+        colSpRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("stockPriceRisk"));
     }
 
     private void initMyCanvas() {
@@ -461,21 +476,17 @@ public class DerivativesControllerImpl implements DerivativesController, ChartVi
 
     public List<String> getTickers() {
 
+        /*
         return stockTicker != null ?
                 stockTicker.getTickers() :
                 tickers;
+        */
+        return null;
     }
 
     public void setTickers(List<String> tickers) {
         this.tickers = tickers;
     }
 
-    public StockTicker getStockTicker() {
-        return stockTicker;
-    }
-
-    public void setStockTicker(StockTicker stockTicker) {
-        this.stockTicker = stockTicker;
-    }
     //endregion
 }

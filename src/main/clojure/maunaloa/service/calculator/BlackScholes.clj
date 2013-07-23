@@ -4,9 +4,8 @@
   (:import
     [cern.jet.random Normal]
     [cern.jet.random.engine MersenneTwister]
-    [oahu.financial.beans DerivativeBean]
-    [oahu.exceptions BinarySearchException]
-    [maunakea.financial.beans CalculatedDerivativeBean]))
+    [oahu.financial Derivative]
+    [oahu.exceptions BinarySearchException]))
 
 (def norm (Normal. 0.0 1.0 (MersenneTwister.)))
 
@@ -107,13 +106,13 @@
       (:end bounds)
       (binary-search-run f bounds target tolerance))))
 
-(defn price-fn [^DerivativeBean deriv]
-  (if (= DerivativeBean/CALL (.getOpType deriv))
+(defn price-fn [^Derivative deriv]
+  (if (= Derivative/CALL (.getOpType deriv))
         call-price
         put-price))
 
 
-(defn spot-finder [^CalculatedDerivativeBean d]
+(defn spot-finder [^Derivative d]
   (let [f (price-fn d)
         x (.getX d)
         t (.getYears d)
@@ -125,8 +124,8 @@
 ;;-------------------------- Interface methods ---------------------------
 ;;------------------------------------------------------------------------
 
-(defn -delta [this, ^DerivativeBean deriv]
-  (let [ cb ^CalculatedDerivativeBean deriv
+(defn -delta [this, ^Derivative deriv]
+  (let [ cb ^Derivative deriv
          iv (.getIvSell cb)
          new-spot (+ 1.0 (-> cb .getParent .getValue))
          new-price ((price-fn deriv)
@@ -137,28 +136,28 @@
     (- new-price (.getSell deriv))))
 
 
-(defn -spread [this, ^DerivativeBean deriv]
+(defn -spread [this, ^Derivative deriv]
   0.0)
 
 
-(defn -breakEven [this, ^DerivativeBean deriv]
+(defn -breakEven [this, ^Derivative deriv]
   0.0)
 
 
 
 (defn -stockPriceFor [this
                     ^double optionPrice
-                    ^DerivativeBean deriv]
+                    ^Derivative deriv]
   (let [f (spot-finder deriv)
         start-val (-> deriv .getParent .getCls)]
     (binary-search f start-val optionPrice 0.1)))
 
 
 (defn -iv [this
-          ^DerivativeBean deriv
+          ^Derivative deriv
           priceType]
-  (let [ cb ^CalculatedDerivativeBean deriv
-         price (if (= DerivativeBean/BUY priceType)
+  (let [ cb ^Derivative deriv
+         price (if (= Derivative/BUY priceType)
                      (.getBuy cb)
                      (.getSell cb))
          opx-f (partial

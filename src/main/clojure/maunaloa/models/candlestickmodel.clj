@@ -1,6 +1,6 @@
 (ns maunaloa.models.candlestickmodel
   (:import
-    [oahu.financial.beans StockBean]
+    [ranoraraku.beans StockPriceBean]
     [java.util Calendar GregorianCalendar])
   (:require
     [waimea.utils.commonutils :as U]))
@@ -38,7 +38,7 @@
         hi (apply max (map #(.getCls %) w))
         lo (apply min (map #(.getCls %) w))
         vol (apply + (map #(.getVolume %) w))]
-        (StockBean. dx opn hi lo cls vol)))
+        (StockPriceBean. dx opn hi lo cls vol)))
     ;(MyStockprice. dx opn hi lo cls 0)))
 
 (defn candlestick-weeks-helper [prices-year]
