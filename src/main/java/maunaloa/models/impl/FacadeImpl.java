@@ -6,6 +6,7 @@ import oahu.exceptions.NotImplementedException;
 import oahu.financial.Derivative;
 import oahu.financial.Etrade;
 import oahu.financial.Stock;
+import oahu.financial.StockPrice;
 import oahux.models.MaunaloaFacade;
 
 import java.util.*;
@@ -28,7 +29,7 @@ public class FacadeImpl implements MaunaloaFacade {
 
     //region Interface Methods
     @Override
-    public Collection<Stock> stockPrices(String ticker, Date fromDx, int period) {
+    public Collection<StockPrice> stockPrices(String ticker, Date fromDx, int period) {
         /*
         SqlSession session = MyBatisUtils.getSession();
         List<StockBean> result = null;
@@ -47,7 +48,7 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
-    public Collection<Stock> stockPrices(String ticker, int period) {
+    public Collection<StockPrice> stockPrices(String ticker, int period) {
         /*
         if (stockBeansMap.containsKey(ticker)) {
             return stockBeansMap.get(ticker);
@@ -62,7 +63,7 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
-    public Stock spot(String ticker) {
+    public StockPrice spot(String ticker) {
         return null;  //return getEtrade().getSpot(ticker);
     }
 

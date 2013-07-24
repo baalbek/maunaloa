@@ -30,9 +30,9 @@ public class App extends Application {
 
 
 
-        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
+        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa2.xml");
 
-        URL url = this.getClass().getResource("/MainFrame.fxml");
+        URL url = this.getClass().getResource("/MainFrame2.fxml");
 
         FXMLLoader loader = new FXMLLoader(url);
 

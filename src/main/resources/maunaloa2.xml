@@ -3,87 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-    <import resource="classpath:aop.xml"  />
-
-
-    <!--
-    <import resource="classpath:kalihiwai.xml" />
-    -->
-
-    <!--
-    <bean id="chart" class="manualoa.views.graphics.impl.DemoChart"></bean>
-    -->
-    <bean id="chart" class="maunaloa.views.charts.CT1" />
-
-    <bean id="chart2" class="maunaloa.views.charts.CT2" />
-
-    <!--
-    <bean id="calculator" class="maunaloa.models.impl.BlackScholesCalculator">
-    -->
-    <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
-
-
-
-
-    <bean id="downloader" class="maunaloa.dummy.Downloader">
-        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
-    </bean>
-    <!--
-
-    <bean id="downloader" class="maunakea.financial.impl.NetfondsDownloader">
-    </bean>
-    -->
-
-
-    <bean id="stockticker" class="maunaloa.models.impl.StockTickerImpl" ></bean>
-
-
-    <bean id="html-stock-factory" class="maunakea.financial.impl.DefaultHtmlStockBeanFactory">
-        <property name="stockTicker" ref="stockticker" />
-    </bean>
-
-    <bean id="html-derivative-factory" class="maunakea.financial.impl.HtmlCalculatedDerivativeBeanFactory" ></bean>
-
-    <bean id="html-parser" class="maunakea.financial.impl.DefaultHtmlParser">
-        <property name="derivativeFactory" ref="html-derivative-factory" />
-        <property name="stockBeanFactory" ref="html-stock-factory" />
-        <property name="calculator" ref="calculator" />
-    </bean>
-
-
-
-    <bean id="etrade" class="maunakea.financial.impl.Netfonds">
-        <property name="downloader" ref="downloader" />
-        <property name="htmlParser" ref="html-parser" />
-        <property name="stockTicker" ref="stockticker"/>
-        <property name="caching" value="true" />
-    </bean>
-
-
-    <bean id="netfonds-model" class="maunaloa.models.NetfondsModel" />
-
-    <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
-        <property name="netfondsModel" ref="netfonds-model" />
-        <property name="etrade" ref="etrade" />
-        <property name="stockTicker" ref="stockticker"/>
-    </bean>
 
     <bean id="derivatives-controller"
-          class="maunaloa.controllers.impl.DerivativesControllerImpl">
-        <constructor-arg ref="facade" />
-        <property name="chart" ref="chart"/>
-        <property name="chart2" ref="chart2"/>
-
-        <property name="stockTicker" ref="stockticker"/>
-
-        <property name="tickers">
-            <list>
-                <value>STL</value>
-                <value>YAR</value>
-                <value>NHY</value>
-                <value>ORK</value>
-            </list>
-        </property>
+          class="maunaloa.controllers.impl.DerivativesControllerImpl2">
     </bean>
 </beans>
 

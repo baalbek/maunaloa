@@ -1,5 +1,6 @@
 package maunaloa.controllers.impl;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
@@ -23,6 +24,9 @@ public class DerivativesControllerImpl2 implements DerivativesController, ChartV
     @FXML private VBox containerCandlesticks;
     @FXML private Canvas myCanvas;
 
+    public void calcRisk(ActionEvent event) {
+        System.out.println("calcRisc fired!");
+    }
     @Override
     public Collection<StockPrice> stockPrices(int i) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
