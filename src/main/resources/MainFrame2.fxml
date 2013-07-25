@@ -81,6 +81,7 @@
           </Tab>
             <Tab text="Candlesticks">
               <content>
+                  <!--
                 <VBox fx:id="containerCandlesticks">
                   <children>
                     <Pane fx:id="paneCandlesticks" maxHeight="-Infinity"
@@ -92,6 +93,8 @@
                   </Pane>
                   </children>
                 </VBox>
+                -->
+                  <fx:include source="Candlesticks.fxml" />
               </content>
             </Tab>
       </tabs>

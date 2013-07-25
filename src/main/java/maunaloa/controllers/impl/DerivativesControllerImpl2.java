@@ -25,7 +25,7 @@ public class DerivativesControllerImpl2 implements DerivativesController, ChartV
     @FXML private Canvas myCanvas;
 
     public void calcRisk(ActionEvent event) {
-        System.out.println("calcRisc fired!");
+        System.out.println("calcRisc fired! " + paneCandlesticks);
     }
     @Override
     public Collection<StockPrice> stockPrices(int i) {
