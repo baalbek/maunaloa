@@ -94,7 +94,7 @@
                   </children>
                 </VBox>
                 -->
-                  <fx:include source="Candlesticks.fxml" />
+                  <fx:include fx:id="cndldialog" source="Candlesticks.fxml" />
               </content>
             </Tab>
       </tabs>

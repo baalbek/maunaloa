@@ -54,6 +54,31 @@ public class App extends Application {
         });
     }
 
+    private Object loadController(String fxmlFile) throws IOException
+    {
+        /*
+        InputStream fxmlStream = null;
+        try
+        {
+            fxmlStream = getClass().getResourceAsStream(url);
+            FXMLLoader loader = new FXMLLoader();
+            loader.load(fxmlStream);
+            return loader.getController();
+        }
+        finally
+        {
+            if (fxmlStream != null)
+            {
+                fxmlStream.close();
+            }
+        }
+        */
+        URL url = this.getClass().getResource(fxmlFile);
+        FXMLLoader loader = new FXMLLoader(url);
+        loader.load();
+        return loader.getController();
+    }
+
     private void initLog4j() {
         Properties props = new Properties();
         try {
