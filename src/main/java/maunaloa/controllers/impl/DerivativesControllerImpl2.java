@@ -3,6 +3,7 @@ package maunaloa.controllers.impl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.controllers.DerivativesController;
@@ -22,14 +23,15 @@ public class DerivativesControllerImpl2 implements DerivativesController, ChartV
     //region FXML
     @FXML private Pane paneCandlesticks;
     @FXML private VBox containerCandlesticks;
-    @FXML private Canvas myCanvas;
+    @FXML public Canvas myCanvas;
+    @FXML public TableView derivativesTableView;
 
 
-    @FXML CndlController cndldialogController;
+    public CndlController cndlController;
 
 
     public void calcRisk(ActionEvent event) {
-        System.out.println("calcRisc fired! " + cndldialogController.paneCandlesticks);
+        System.out.println("calcRisc fired! " + cndlController.paneCandlesticks);
     }
     @Override
     public Collection<StockPrice> stockPrices(int i) {

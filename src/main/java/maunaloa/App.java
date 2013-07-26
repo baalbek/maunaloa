@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import maunaloa.controllers.impl.CndlController;
+import maunaloa.controllers.impl.DerivativesControllerImpl2;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -40,7 +42,20 @@ public class App extends Application {
 
         loader.setController(controller);
 
+
+
+
+        System.out.println("This one before? " + ((DerivativesControllerImpl2)controller).derivativesTableView);
+
         Parent parent = (Parent)loader.load();
+
+        System.out.println("This one after? " + ((DerivativesControllerImpl2)controller).derivativesTableView);
+
+        CndlController cndlController = new CndlController();
+
+        ssetController("/Candlesticks.fxml", cndlController);
+
+        ((DerivativesControllerImpl2)controller).cndlController = cndlController;
 
         stage.setTitle("Maunaloa!");
         stage.setScene(new Scene(parent));
@@ -52,6 +67,23 @@ public class App extends Application {
                 controller.draw();
             }
         });
+    }
+
+
+
+    private void ssetController(String fxmlFile, DerivativesController controller)
+    {
+        try {
+            URL url = this.getClass().getResource(fxmlFile);
+            FXMLLoader loader = new FXMLLoader(url);
+            loader.setController(controller);
+
+            loader.load();
+
+            System.out.println("Now? " + ((CndlController)controller).paneCandlesticks);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     private Object loadController(String fxmlFile) throws IOException
