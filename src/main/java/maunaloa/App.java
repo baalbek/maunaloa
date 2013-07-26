@@ -51,11 +51,11 @@ public class App extends Application {
 
         System.out.println("This one after? " + ((DerivativesControllerImpl2)controller).derivativesTableView);
 
-        CndlController cndlController = new CndlController();
+        //final CndlController cndlController = new CndlController();
+        //ssetController("/Candlesticks.fxml", cndlController);
+        //((DerivativesControllerImpl2)controller).cndlController = cndlController;
 
-        ssetController("/Candlesticks.fxml", cndlController);
-
-        ((DerivativesControllerImpl2)controller).cndlController = cndlController;
+        ((DerivativesControllerImpl2)controller).cndlController = loadController("/Candlesticks.fxml");
 
         stage.setTitle("Maunaloa!");
         stage.setScene(new Scene(parent));
@@ -86,7 +86,7 @@ public class App extends Application {
         }
     }
 
-    private Object loadController(String fxmlFile) throws IOException
+    private CndlController loadController(String fxmlFile) throws IOException
     {
         /*
         InputStream fxmlStream = null;
