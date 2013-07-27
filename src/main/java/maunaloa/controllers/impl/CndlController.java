@@ -24,6 +24,8 @@ public class CndlController implements DerivativesController {
     @FXML public VBox cndldialog;
     @FXML TextField txDraw;
 
+    private String heyHey = "Default";
+
     public void doDraw(ActionEvent event) {
         System.out.println("Trying to draw on " + myCanvas);
         draw();
@@ -45,5 +47,13 @@ public class CndlController implements DerivativesController {
         ctx.closePath();
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
+    }
+
+    public String getHeyHey() {
+        return heyHey;
+    }
+
+    public void setHeyHey(String heyHey) {
+        this.heyHey = heyHey;
     }
 }

@@ -56,6 +56,12 @@ public class App extends Application {
         //((DerivativesControllerImpl2)controller).cndlController = cndlController;
 
         ((DerivativesControllerImpl2)controller).cndlController = loadController("/Candlesticks.fxml");
+        ((DerivativesControllerImpl2)controller).cndlController.setHeyHey("Whohooooo!");
+
+        CndlController cndl2 = loadController("/Candlesticks.fxml");
+        System.out.println("Is " + ((DerivativesControllerImpl2)controller).cndlController + " (" +
+                ((DerivativesControllerImpl2)controller).cndlController.getHeyHey() + ") " +
+                          " = " + cndl2 + " (" + cndl2.getHeyHey() + ") " + "?");
 
         stage.setTitle("Maunaloa!");
         stage.setScene(new Scene(parent));
@@ -107,7 +113,7 @@ public class App extends Application {
         */
         URL url = this.getClass().getResource(fxmlFile);
         FXMLLoader loader = new FXMLLoader(url);
-        loader.load();
+        //loader.load();
         return loader.getController();
     }
 
