@@ -9,7 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<VBox fx:id="containerCandlesticks" xmlns:fx="http://javafx.com/fxml" fx:controller="maunaloa.controllers.impl.CndlController">
+<VBox fx:id="containerCandlesticks"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="maunaloa.controllers.impl.CndlController">
     <children>
         <Label text="Risk:">
             <VBox.margin>

@@ -42,26 +42,7 @@ public class App extends Application {
 
         loader.setController(controller);
 
-
-
-
-        System.out.println("This one before? " + ((DerivativesControllerImpl2)controller).derivativesTableView);
-
         Parent parent = (Parent)loader.load();
-
-        System.out.println("This one after? " + ((DerivativesControllerImpl2)controller).derivativesTableView);
-
-        //final CndlController cndlController = new CndlController();
-        //ssetController("/Candlesticks.fxml", cndlController);
-        //((DerivativesControllerImpl2)controller).cndlController = cndlController;
-
-        ((DerivativesControllerImpl2)controller).cndlController = loadController("/Candlesticks.fxml");
-        ((DerivativesControllerImpl2)controller).cndlController.setHeyHey("Whohooooo!");
-
-        CndlController cndl2 = loadController("/Candlesticks.fxml");
-        System.out.println("Is " + ((DerivativesControllerImpl2)controller).cndlController + " (" +
-                ((DerivativesControllerImpl2)controller).cndlController.getHeyHey() + ") " +
-                          " = " + cndl2 + " (" + cndl2.getHeyHey() + ") " + "?");
 
         stage.setTitle("Maunaloa!");
         stage.setScene(new Scene(parent));
@@ -73,48 +54,6 @@ public class App extends Application {
                 controller.draw();
             }
         });
-    }
-
-
-
-    private void ssetController(String fxmlFile, DerivativesController controller)
-    {
-        try {
-            URL url = this.getClass().getResource(fxmlFile);
-            FXMLLoader loader = new FXMLLoader(url);
-            loader.setController(controller);
-
-            loader.load();
-
-            System.out.println("Now? " + ((CndlController)controller).paneCandlesticks);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-    private CndlController loadController(String fxmlFile) throws IOException
-    {
-        /*
-        InputStream fxmlStream = null;
-        try
-        {
-            fxmlStream = getClass().getResourceAsStream(url);
-            FXMLLoader loader = new FXMLLoader();
-            loader.load(fxmlStream);
-            return loader.getController();
-        }
-        finally
-        {
-            if (fxmlStream != null)
-            {
-                fxmlStream.close();
-            }
-        }
-        */
-        URL url = this.getClass().getResource(fxmlFile);
-        FXMLLoader loader = new FXMLLoader(url);
-        //loader.load();
-        return loader.getController();
     }
 
     private void initLog4j() {

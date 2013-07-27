@@ -27,11 +27,11 @@ public class DerivativesControllerImpl2 implements DerivativesController, ChartV
     @FXML public TableView derivativesTableView;
 
 
-    public CndlController cndlController;
+    public CndlController cndldialogController;
 
 
     public void calcRisk(ActionEvent event) {
-        System.out.println("calcRisc fired! " + cndlController.paneCandlesticks);
+        System.out.println("calcRisc fired! " + cndldialogController.paneCandlesticks);
     }
     @Override
     public Collection<StockPrice> stockPrices(int i) {
