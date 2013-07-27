@@ -11,7 +11,7 @@
 
 <VBox fx:id="containerCandlesticks"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="maunaloa.controllers.impl.CndlController">
+      fx:controller="maunaloa.controllers.impl.ChartCanvasController">
     <children>
         <Label text="Risk:">
             <VBox.margin>

@@ -17,7 +17,7 @@ import oahu.exceptions.NotImplementedException;
  * Date: 7/26/13
  * Time: 12:26 AM
  */
-public class CndlController implements DerivativesController {
+public class ChartCanvasController implements DerivativesController {
     @FXML public Pane paneCandlesticks;
     @FXML public VBox containerCandlesticks;
     @FXML public Canvas myCanvas;
