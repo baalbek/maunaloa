@@ -7,4 +7,5 @@ package maunaloa.controllers;
  * Time: 2:18 PM
  */
 public interface ChartCanvasController {
+    void draw();
 }

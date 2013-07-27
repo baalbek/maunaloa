@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import oahu.exceptions.NotImplementedException;
 
@@ -17,7 +18,7 @@ import oahu.exceptions.NotImplementedException;
  * Date: 7/26/13
  * Time: 12:26 AM
  */
-public class ChartCanvasController implements DerivativesController {
+public class DefaultChartCanvasController implements ChartCanvasController {
     @FXML public Pane paneCandlesticks;
     @FXML public VBox containerCandlesticks;
     @FXML public Canvas myCanvas;
