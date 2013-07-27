@@ -7,8 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import maunaloa.controllers.impl.CndlController;
-import maunaloa.controllers.impl.DerivativesControllerImpl2;
+import maunaloa.controllers.MainFrameController;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -34,11 +33,11 @@ public class App extends Application {
 
         ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa2.xml");
 
-        URL url = this.getClass().getResource("/MainFrame2.fxml");
+        URL url = this.getClass().getResource("/MainFrame.fxml");
 
         FXMLLoader loader = new FXMLLoader(url);
 
-        final DerivativesController controller = factory.getBean("derivatives-controller",DerivativesController.class);
+        final MainFrameController controller = factory.getBean("mainframe-controller",MainFrameController.class);
 
         loader.setController(controller);
 
@@ -48,12 +47,14 @@ public class App extends Application {
         stage.setScene(new Scene(parent));
         stage.show();
 
+        /*
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 controller.draw();
             }
         });
+        //*/
     }
 
     private void initLog4j() {

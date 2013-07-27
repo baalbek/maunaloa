@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+
+<BorderPane prefHeight="-1.0"
+            prefWidth="-1.0"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="maunaloa.controllers.impl.DerivativesControllerImpl">
+  <center>
+    <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="-1.0" prefWidth="-1.0">
+      <columns>
+        <TableColumn prefWidth="75.0" text="Selected" fx:id="colSelected" />
+        <TableColumn editable="true" prefWidth="75.0" text="Option" fx:id="colOpName" />
+        <TableColumn prefWidth="75.0" text="Expiry" fx:id="colExpiry" />
+        <TableColumn prefWidth="75.0" text="Days" fx:id="colDays" />
+        <TableColumn prefWidth="75.0" text="Buy" fx:id="colBuy" />
+        <TableColumn prefWidth="75.0" text="Sell" fx:id="colSell" />
+        <TableColumn prefWidth="75.0" text="Spread" fx:id="colSpread" />
+        <TableColumn prefWidth="75.0" text="Iv Buy" fx:id="colIvBuy" />
+        <TableColumn prefWidth="75.0" text="Iv" fx:id="colIvSell" />
+        <TableColumn prefWidth="75.0" text="Delta" fx:id="colDelta" />
+        <TableColumn prefWidth="75.0" text="Rating" fx:id="colRating" />
+        <TableColumn prefWidth="75.0" text="Break Even" fx:id="colBreakEven" />
+        <TableColumn prefWidth="75.0" text="Risc" fx:id="colRisc" />
+        <TableColumn prefWidth="75.0" text="Stockprice Risc" fx:id="colSpRisc" />
+      </columns>
+    </TableView>
+  </center>
+  <top>
+    <HBox prefHeight="-1.0" prefWidth="200.0">
+      <children>
+        <Label text="Risk:">
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+          </HBox.margin>
+        </Label>
+        <TextField fx:id="txRisk" alignment="CENTER_RIGHT" onAction="#calcRisk" prefWidth="75.0" promptText="">
+          <HBox.margin>
+            <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" fx:id="x2" />
+          </HBox.margin>
+        </TextField>
+        <Label text="Open:">
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+          </HBox.margin>
+        </Label>
+        <TextField fx:id="txOpen" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+        <Label text="Hi:">
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+          </HBox.margin>
+        </Label>
+        <TextField fx:id="txHi" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+        <Label text="Lo:">
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+          </HBox.margin>
+        </Label>
+        <TextField fx:id="txLo" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+        <Label text="Spot:">
+          <HBox.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+          </HBox.margin>
+        </Label>
+        <TextField fx:id="txSpot" alignment="CENTER_RIGHT" prefWidth="75.0" promptText="" HBox.margin="$x2" />
+      </children>
+    </HBox>
+  </top>
+</BorderPane>
+

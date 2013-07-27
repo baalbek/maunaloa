@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-    <bean id="derivatives-controller"
-          class="maunaloa.controllers.impl.DerivativesControllerImpl2">
+    <bean id="mainframe-controller"
+          class="maunaloa.controllers.impl.DefaultMainFrameController">
     </bean>
 </beans>
 

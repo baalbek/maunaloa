@@ -1,16 +1,10 @@
 package maunaloa.controllers.impl;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import maunaloa.controllers.ChartCanvasController;
-import maunaloa.controllers.DerivativesController;
-import oahu.exceptions.NotImplementedException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,18 +13,13 @@ import oahu.exceptions.NotImplementedException;
  * Time: 12:26 AM
  */
 public class DefaultChartCanvasController implements ChartCanvasController {
-    @FXML public Pane paneCandlesticks;
-    @FXML public VBox containerCandlesticks;
-    @FXML public Canvas myCanvas;
-    @FXML public VBox cndldialog;
-    @FXML TextField txDraw;
+    @FXML private Canvas myCanvas;
 
-    private String heyHey = "Default";
+    //region Fibonacci
 
-    public void doDraw(ActionEvent event) {
-        System.out.println("Trying to draw on " + myCanvas);
-        draw();
-    }
+    //endregion Fibonacci
+
+    //region Interface methods
 
     @Override
     public void draw() {
@@ -49,12 +38,5 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
     }
-
-    public String getHeyHey() {
-        return heyHey;
-    }
-
-    public void setHeyHey(String heyHey) {
-        this.heyHey = heyHey;
-    }
+    //endregion  Interface methods
 }

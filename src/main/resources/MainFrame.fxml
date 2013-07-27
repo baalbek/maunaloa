@@ -13,6 +13,11 @@
   <center>
     <TabPane prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
+        <Tab text="Options">
+          <content>
+              <fx:include source="DerivativesTableView.fxml" fx:id="options" ></fx:include>
+          </content>
+        </Tab>
         <Tab text="Candlesticks">
           <content>
               <fx:include source="ChartCanvas.fxml" fx:id="candlesticks" ></fx:include>
