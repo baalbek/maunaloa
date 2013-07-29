@@ -1,5 +1,7 @@
 package maunaloa.controllers;
 
+import oahux.chart.MaunaloaChart;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -8,4 +10,5 @@ package maunaloa.controllers;
  */
 public interface ChartCanvasController {
     void draw();
+    void setChart(MaunaloaChart chart);
 }

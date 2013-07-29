@@ -5,6 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import maunaloa.controllers.ChartCanvasController;
+import oahux.chart.MaunaloaChart;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,6 +15,8 @@ import maunaloa.controllers.ChartCanvasController;
  */
 public class DefaultChartCanvasController implements ChartCanvasController {
     @FXML private Canvas myCanvas;
+
+    private MaunaloaChart chart;
 
     //region Fibonacci
 
@@ -37,6 +40,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         ctx.closePath();
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
+    }
+
+    @Override
+    public void setChart(MaunaloaChart chart) {
+        this.chart = chart;
     }
     //endregion  Interface methods
 }
