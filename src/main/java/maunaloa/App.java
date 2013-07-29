@@ -31,7 +31,7 @@ public class App extends Application {
 
 
 
-        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa2.xml");
+        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
 
         URL url = this.getClass().getResource("/MainFrame.fxml");
 

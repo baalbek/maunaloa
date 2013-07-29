@@ -25,7 +25,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     private MaunaloaChart chart;
     private MaunaloaFacade model;
-
+    private String ticker;
 
     //region Initialization Methods
 
@@ -47,19 +47,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myCanvas.heightProperty().addListener(listener);
     }
 
+
+
     //endregion
 
-    //region Fibonacci
+    //region Private Methods
 
-    //endregion Fibonacci
-
-    //region Interface methods
-
-    @Override
-    public void setTicker(String ticker) {
-    }
-
-    @Override
     public void draw() {
 
         /*
@@ -77,7 +70,22 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
         //*/
+        chart.draw(myCanvas);
     }
+    //endregion
+
+    //region Fibonacci
+
+    //endregion Fibonacci
+
+    //region Interface methods
+
+    @Override
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+        draw();
+    }
+
 
     @Override
     public void setChart(MaunaloaChart chart) {
@@ -101,12 +109,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
-    public IRuler getRuler(int i) {
+    public IRuler getRuler() {
         return null;
     }
 
     @Override
-    public void setRuler(int i, IRuler iRuler) {
+    public void setRuler(IRuler iRuler) {
     }
 
     //endregion  Interface methods

@@ -78,7 +78,7 @@
                 :y0 mtop)]
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
         (println vr)
-        (.setRuler vm MaunaloaChartViewModel/CHART_A1_VRULER vr)
+        (.setRuler vm vr)
         ;(.setRuler vm ChartViewModel/CHART_A1_HRULER hr)
         )
       (doseq [q (rest qsx)]
