@@ -28,7 +28,6 @@ import java.util.List;
  */
 public class DefaultMainFrameController implements MainFrameController {
     //region FXML
-
     @FXML private ChartCanvasController candlesticksController;
     @FXML private ChartCanvasController weeksController;
     @FXML private DerivativesController optionsController;
@@ -40,7 +39,6 @@ public class DefaultMainFrameController implements MainFrameController {
     private MaunaloaFacade facade;
     private MaunaloaChart candlesticksChart;
     private MaunaloaChart weeklyChart;
-    private StockLocator locator;
 
     public DefaultMainFrameController() {
     }
@@ -90,7 +88,7 @@ public class DefaultMainFrameController implements MainFrameController {
 
 
     public List<String> getTickers() {
-        return locator.getTickers();
+        return facade.getTickers();
     }
 
     public void setTicker(String ticker) {
@@ -128,8 +126,6 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     //endregion Private Methods
-
-
 
     //region Initialization methods
     public void initialize() {
@@ -172,13 +168,7 @@ public class DefaultMainFrameController implements MainFrameController {
         this.facade = facade;
     }
 
-    public StockLocator getLocator() {
-        return locator;
-    }
 
-    public void setLocator(StockLocator locator) {
-        this.locator = locator;
-    }
 
 
     //endregion

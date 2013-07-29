@@ -100,12 +100,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public Collection<StockPrice> stockPrices(int i) {
-        return null;
+        return model.stockPrices(getTicker(),-1);
     }
 
     @Override
     public String getTicker() {
-        return null;
+        return ticker;
     }
 
     @Override

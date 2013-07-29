@@ -3,11 +3,12 @@ package maunaloa.models.impl;
 import javafx.scene.Node;
 import maunaloa.utils.DateUtils;
 import oahu.exceptions.NotImplementedException;
-import oahu.financial.Derivative;
-import oahu.financial.Etrade;
-import oahu.financial.Stock;
-import oahu.financial.StockPrice;
+import oahu.financial.*;
 import oahux.models.MaunaloaFacade;
+import org.apache.ibatis.session.SqlSession;
+import ranoraraku.beans.StockPriceBean;
+import ranoraraku.models.mybatis.StockMapper;
+import ranoraraku.utils.MyBatisUtils;
 
 import java.util.*;
 
@@ -22,29 +23,29 @@ public class FacadeImpl implements MaunaloaFacade {
     private Date defaultStartDate;
 
     Map<String, Collection<Stock>> stockBeansMap = new HashMap<>();
+    private StockLocator locator;
 
     public FacadeImpl()  {
-        setDefaultStartDate(DateUtils.createDate(2010, 1, 1));
+       setDefaultStartDate(DateUtils.createDate(2010, 1, 1));
     }
 
     //region Interface Methods
     @Override
     public Collection<StockPrice> stockPrices(String ticker, Date fromDx, int period) {
-        /*
         SqlSession session = MyBatisUtils.getSession();
-        List<StockBean> result = null;
+        List<StockPrice> result = null;
         try {
             StockMapper mapper = session.getMapper(StockMapper.class);
 
-            result = mapper.selectStocks(stockTicker.findId(ticker), fromDx);
+            Stock stock = mapper.selectStockWithPrices(locator.findId(ticker), fromDx);
+
+            result = stock.getPrices();
 
         }
         finally {
             session.close();
         }
         return result;
-        //*/
-        return null;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class FacadeImpl implements MaunaloaFacade {
             return beans;
         }
         //*/
-        return null;
+        return stockPrices(ticker, getDefaultStartDate(), period);
     }
 
     @Override
@@ -89,6 +90,11 @@ public class FacadeImpl implements MaunaloaFacade {
     public void addFibLine(String ticker, Node line) {
         throw new NotImplementedException();
     }
+
+    @Override
+    public List<String> getTickers() {
+        return getLocator().getTickers();
+    }
     //endregion Interface Methods
 
 
@@ -110,6 +116,13 @@ public class FacadeImpl implements MaunaloaFacade {
         this.defaultStartDate = defaultStartDate;
     }
 
+    public StockLocator getLocator() {
+        return locator;
+    }
+
+    public void setLocator(StockLocator locator) {
+        this.locator = locator;
+    }
     /*
     public StockTicker getStockTicker() {
         return stockTicker;
