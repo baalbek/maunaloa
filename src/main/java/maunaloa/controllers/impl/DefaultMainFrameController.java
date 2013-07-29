@@ -9,7 +9,6 @@ import oahu.exceptions.NotImplementedException;
 import oahu.financial.StockPrice;
 import oahux.chart.MaunaloaChart;
 import oahux.chart.IRuler;
-import oahux.controllers.ChartViewModel;
 import oahux.models.MaunaloaFacade;
 
 import java.util.Collection;
@@ -40,14 +39,45 @@ public class DefaultMainFrameController implements MainFrameController {
 
     //endregion Init
 
-    //region Public Methods
+    //region FXML Actions
 
+    public void activateFibA(ActionEvent event)  {
+        candlesticksController.draw();
+    }
+
+    public void deactivateFibA(ActionEvent event)  {
+    }
+
+    public void clearFibA(ActionEvent event)  {
+    }
+
+
+    public void activateFibB(ActionEvent event)  {
+        weeksController.draw();
+    }
+
+    public void deactivateFibB(ActionEvent event)  {
+    }
+
+    public void clearFibB(ActionEvent event)  {
+    }
+
+    public void selectAllDerivatives(ActionEvent event)  {
+    }
+
+    public void unSelectAllDerivatives(ActionEvent event)  {
+    }
+
+
+    public void unCheckBeans(ActionEvent event) {
+
+    }
 
     public void close(ActionEvent event)  {
         System.exit(0);
     }
 
-    //endregion  Public Methods
+    //endregion
 
     //region Private Methods
 
@@ -63,7 +93,10 @@ public class DefaultMainFrameController implements MainFrameController {
         System.out.println("Options: " + optionsController);
 
         candlesticksController.setChart(getCandlesticksChart());
+        candlesticksController.setModel(getFacade());
+
         weeksController.setChart(getWeeklyChart());
+        weeksController.setModel(getFacade());
     }
 
     //endregion  Initialization methods
@@ -94,5 +127,10 @@ public class DefaultMainFrameController implements MainFrameController {
     public void setFacade(MaunaloaFacade facade) {
         this.facade = facade;
     }
+
+
+    //endregion
+
+    //region Interface Methods
     //endregion
 }

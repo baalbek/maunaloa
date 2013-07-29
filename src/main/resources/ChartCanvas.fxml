@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<VBox fx:id="containerCandlesticks"
+<VBox fx:id="myContainer"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="maunaloa.controllers.impl.DefaultChartCanvasController">
     <children>

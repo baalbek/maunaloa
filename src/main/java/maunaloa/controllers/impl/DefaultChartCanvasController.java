@@ -1,11 +1,17 @@
 package maunaloa.controllers.impl;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.VBox;
 import maunaloa.controllers.ChartCanvasController;
+import oahu.financial.StockPrice;
+import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
+import oahux.models.MaunaloaFacade;
+
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,8 +21,33 @@ import oahux.chart.MaunaloaChart;
  */
 public class DefaultChartCanvasController implements ChartCanvasController {
     @FXML private Canvas myCanvas;
+    @FXML private VBox myContainer;
 
     private MaunaloaChart chart;
+    private MaunaloaFacade model;
+
+
+    //region Initialization Methods
+
+    private void initMyCanvas() {
+        InvalidationListener listener =     new InvalidationListener() {
+            @Override
+            public void invalidated(Observable arg0) {
+                //if (ticker == null) return;
+                //chart.draw(myCanvas);
+            }
+        };
+
+        //*
+        myCanvas.widthProperty().bind(myContainer.widthProperty());
+        myCanvas.heightProperty().bind(myContainer.heightProperty());
+        //*/
+
+        myCanvas.widthProperty().addListener(listener);
+        myCanvas.heightProperty().addListener(listener);
+    }
+
+    //endregion
 
     //region Fibonacci
 
@@ -25,8 +56,13 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     //region Interface methods
 
     @Override
+    public void setTicker(String ticker) {
+    }
+
+    @Override
     public void draw() {
 
+        /*
         System.out.println("myCanvas: " + myCanvas +
                             ", h: " + myCanvas.getHeight() +
                             ", w: " + myCanvas.getWidth() +
@@ -40,11 +76,38 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         ctx.closePath();
         ctx.setStroke(Color.BLACK);
         ctx.stroke();
+        //*/
     }
 
     @Override
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
+        this.chart.setViewModel(this);
     }
+
+    @Override
+    public void setModel(MaunaloaFacade model) {
+        this.model = model;
+    }
+
+    @Override
+    public Collection<StockPrice> stockPrices(int i) {
+        return null;
+    }
+
+    @Override
+    public String getTicker() {
+        return null;
+    }
+
+    @Override
+    public IRuler getRuler(int i) {
+        return null;
+    }
+
+    @Override
+    public void setRuler(int i, IRuler iRuler) {
+    }
+
     //endregion  Interface methods
 }

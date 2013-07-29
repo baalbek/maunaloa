@@ -6,7 +6,7 @@
     :implements [oahux.chart.MaunaloaChart])
   (:import [oahux.chart.MaunaloaChart])
   (:import
-    [oahux.controllers ChartViewModel]
+    [oahux.controllers MaunaloaChartViewModel]
     [javafx.scene.paint Color]
     [javafx.scene.input MouseEvent]
     [javafx.scene.canvas Canvas GraphicsContext])
@@ -34,13 +34,13 @@
 ;;------------------------------------------------------------------------
 ;;-------------------------- Interface methods ---------------------------
 ;;------------------------------------------------------------------------
-(defn ct1-setViewModel [this, ^ChartViewModel vm]
+(defn ct1-setViewModel [this, ^MaunaloaChartViewModel vm]
   (let [m (.state this)]
     (reset! m vm)))
 
 
 (defn ct1-draw [this, ^Canvas c]
-  (let [vm ^ChartViewModel @(.state this)
+  (let [vm ^MaunaloaChartViewModel @(.state this)
         w (.getWidth c)
         h (.getHeight c)
         gc ^GraphicsContext (.getGraphicsContext2D c)
@@ -78,7 +78,7 @@
                 :y0 mtop)]
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
         (println vr)
-        (.setRuler vm ChartViewModel/CHART_A1_VRULER vr)
+        (.setRuler vm MaunaloaChartViewModel/CHART_A1_VRULER vr)
         ;(.setRuler vm ChartViewModel/CHART_A1_HRULER hr)
         )
       (doseq [q (rest qsx)]
