@@ -13,13 +13,15 @@
     <top>
         <VBox prefHeight="-1.0" prefWidth="100.0">
             <children>
-                <MenuBar>
+                <MenuBar fx:id="myMenuBar">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                             </items>
                         </Menu>
+                    </menus>
+                    <!--
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="Select All Derivatives" />
@@ -41,6 +43,7 @@
                             </items>
                         </Menu>
                     </menus>
+                    -->
                 </MenuBar>
                 <HBox prefHeight="-1.0" prefWidth="-1.0">
                     <children>

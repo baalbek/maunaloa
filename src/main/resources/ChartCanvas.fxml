@@ -13,7 +13,7 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="maunaloa.controllers.impl.DefaultChartCanvasController">
     <children>
-        <Pane fx:id="paneCandlesticks" maxHeight="-Infinity"
+        <Pane fx:id="myPane" maxHeight="-Infinity"
               maxWidth="-Infinity" minHeight="-Infinity"
               minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0">
             <children>

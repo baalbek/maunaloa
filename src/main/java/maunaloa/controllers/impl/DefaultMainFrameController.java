@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.MenuBar;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
@@ -32,6 +33,7 @@ public class DefaultMainFrameController implements MainFrameController {
     @FXML private ChartCanvasController weeksController;
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
+    @FXML private MenuBar myMenuBar;
     //endregion FXML
 
     //region Init
@@ -47,36 +49,6 @@ public class DefaultMainFrameController implements MainFrameController {
     //endregion Init
 
     //region FXML Actions
-
-    public void activateFibA(ActionEvent event)  {
-    }
-
-    public void deactivateFibA(ActionEvent event)  {
-    }
-
-    public void clearFibA(ActionEvent event)  {
-    }
-
-
-    public void activateFibB(ActionEvent event)  {
-    }
-
-    public void deactivateFibB(ActionEvent event)  {
-    }
-
-    public void clearFibB(ActionEvent event)  {
-    }
-
-    public void selectAllDerivatives(ActionEvent event)  {
-    }
-
-    public void unSelectAllDerivatives(ActionEvent event)  {
-    }
-
-
-    public void unCheckBeans(ActionEvent event) {
-
-    }
 
     public void close(ActionEvent event)  {
         System.exit(0);
@@ -132,11 +104,15 @@ public class DefaultMainFrameController implements MainFrameController {
 
         initChoiceBoxTickers();
 
+        candlesticksController.setName("Candlesticks");
         candlesticksController.setChart(getCandlesticksChart());
         candlesticksController.setModel(getFacade());
+        candlesticksController.setMenuBar(myMenuBar);
 
+        weeksController.setName("Weeks");
         weeksController.setChart(getWeeklyChart());
         weeksController.setModel(getFacade());
+        weeksController.setMenuBar(myMenuBar);
     }
 
     //endregion  Initialization methods
