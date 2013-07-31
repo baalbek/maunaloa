@@ -1,12 +1,18 @@
 package maunaloa.controllers.impl;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import maunaloa.controllers.DerivativesController;
 import oahu.financial.Derivative;
+import oahux.models.MaunaloaFacade;
 
 import java.util.Date;
 
@@ -40,18 +46,17 @@ public class DerivativesControllerImpl implements DerivativesController {
     @FXML private TextField txOpen;
     @FXML private TextField txHi;
     @FXML private TextField txLo;
+    private MaunaloaFacade model;
+    private MenuBar menuBar;
     //endregion FXML
 
     //region Init
 
     public DerivativesControllerImpl() {
     }
-
-
-
     //endregion Init
 
-    //region Public Methods
+    //region FXML Actions
 
     public void calcRisk(ActionEvent event) {
         /*
@@ -68,28 +73,83 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     }
 
-    //endregion  Public Methods
+    //endregion
 
     //region Private Methods
 
 
     //endregion Private Methods
 
-    //region Fibonacci
+    //region Initialization methods
+    public void initialize() {
+        initGrid();
+    }
 
-    //endregion Fibonacci
+    private void initGrid() {
+        colOpName.setCellValueFactory(new PropertyValueFactory<Derivative, String>("ticker"));
+        colSelected.setCellValueFactory(new PropertyValueFactory<Derivative, Boolean>("isChecked"));
+        colSelected.setCellFactory(
+                new Callback<TableColumn<Derivative, Boolean>, TableCell<Derivative, Boolean>>() {
+                    @Override
+                    public TableCell<Derivative, Boolean> call(TableColumn<Derivative, Boolean> p) {
+                        return new CheckBoxTableCell<>();
+                    }
+                });
+        colExpiry.setCellValueFactory(new PropertyValueFactory<Derivative, Date>("expiry"));
+
+        colBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("buy"));
+        colSell.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("sell"));
+
+        colIvBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("ivBuy"));
+        colIvSell.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("ivSell"));
+        colDelta.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("delta"));
+        colBreakEven.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("breakeven"));
+        colSpread.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("spread"));
+        colDays.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("days"));
+        colRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("risk"));
+        colSpRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("stockPriceRisk"));
+    }
+
+    //endregion  Initialization methods
 
     //region Interface methods
 
-    //endregion  Interface methods
-
-    //region Initialization methods
-    public void initialize() {
+    private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<Toggle>();
+    @Override
+    public ObjectProperty<Toggle> selectedDerivativeProperty() {
+        return _selectedDerivativeProperty;
     }
 
 
+    private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
+    @Override
+    public BooleanProperty selectedLoadStockProperty() {
+        return _selectedLoadStockProperty;
+    }
 
-    //endregion  Initialization methods
+    private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
+    @Override
+    public BooleanProperty selectedLoadDerivativesProperty() {
+        return _selectedLoadDerivativesProperty;
+    }
+
+    @Override
+    public void setTicker(String ticker) {
+        System.out.println(_selectedDerivativeProperty.get().getUserData());
+        System.out.println(_selectedLoadStockProperty.get());
+        System.out.println(_selectedLoadDerivativesProperty.get());
+    }
+
+    @Override
+    public void setModel(MaunaloaFacade model) {
+        this.model = model;
+    }
+
+    @Override
+    public void setMenuBar(MenuBar menuBar) {
+        this.menuBar = menuBar;
+    }
+    //endregion  Interface methods
 
     //region Properties
 

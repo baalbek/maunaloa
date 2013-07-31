@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import maunaloa.controllers.MainFrameController;
+import oahux.models.MaunaloaFacade;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,15 +22,25 @@ public class App extends Application {
     public static void main(String[] args) {
 
         Locale.setDefault(Locale.US);
+
+        /*
+        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
+
+        MaunaloaFacade facade = factory.getBean("facade",MaunaloaFacade.class);
+
+        java.util.Collection<oahu.financial.Derivative> calls = facade.calls("YAR");
+
+        for (oahu.financial.Derivative d : calls) {
+            System.out.println(String.format("%s",d.getTicker()));
+        }
+        //*/
+
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
-
         initLog4j();
-
-
 
         ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
 
@@ -46,15 +57,6 @@ public class App extends Application {
         stage.setTitle("Maunaloa!");
         stage.setScene(new Scene(parent));
         stage.show();
-
-        /*
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                controller.draw();
-            }
-        });
-        //*/
     }
 
     private void initLog4j() {

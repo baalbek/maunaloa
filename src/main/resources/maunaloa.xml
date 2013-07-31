@@ -6,14 +6,40 @@
 
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
+
+    <bean id="downloader" class="maunaloa.dummy.Downloader">
+        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
+    </bean>
+
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
 
     <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl" />
 
+    <bean id="stockprice-factory" class="maunakea.financial.DefaultHtmlStockPriceFactory" >
+        <property name="stockLocator"  ref="locator" ></property>
+    </bean>
+
+    <bean id="derivative-factory" class="maunakea.financial.HtmlCalculatedDerivativeBeanFactory">
+    </bean>
+
+    <bean id="html-parser" class="maunakea.financial.DefaultHtmlParser">
+        <property name="derivativeFactory" ref="derivative-factory" ></property>
+        <property name="stockBeanFactory" ref="stockprice-factory" ></property>
+        <property name="calculator" ref="calculator" />
+    </bean>
+
+
+    <bean id="etrade" class="maunakea.financial.Netfonds">
+        <property name="downloader" ref="downloader" />
+        <property name="htmlParser" ref="html-parser" />
+    </bean>
+
+
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
         <property name="locator" ref="locator" />
+        <property name="etrade" ref="etrade" />
         <!-- property name="defaultStartDate" value="2010-1-1" / -->
     </bean>
 

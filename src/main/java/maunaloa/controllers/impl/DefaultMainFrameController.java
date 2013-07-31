@@ -6,19 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.MenuBar;
+import javafx.scene.control.*;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
-import oahu.exceptions.NotImplementedException;
-import oahu.financial.StockLocator;
-import oahu.financial.StockPrice;
+import oahu.financial.Derivative;
 import oahux.chart.MaunaloaChart;
-import oahux.chart.IRuler;
 import oahux.models.MaunaloaFacade;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -34,6 +29,9 @@ public class DefaultMainFrameController implements MainFrameController {
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
     @FXML private MenuBar myMenuBar;
+    @FXML private ToggleGroup rgDerivatives;
+    @FXML private CheckBox cxLoadOptionsHtml;
+    @FXML private CheckBox cxLoadStockHtml;
     //endregion FXML
 
     //region Init
@@ -56,36 +54,27 @@ public class DefaultMainFrameController implements MainFrameController {
 
     //endregion
 
-    //region Private Methods
-
+    //region Initialization methods
 
     public List<String> getTickers() {
         return facade.getTickers();
     }
 
     public void setTicker(String ticker) {
-        candlesticksController.setTicker(ticker);
-        weeksController.setTicker(ticker);
+        //candlesticksController.setTicker(ticker);
+        //weeksController.setTicker(ticker);
+        optionsController.setTicker(ticker);
         /*
-        this.ticker = ticker;
-        if (cxLoadOptionsHtml.isSelected()) {
-            ObservableList<Derivative> items = derivatives();
-            if (items != null) {
-                derivativesTableView.getItems().setAll(items);
-            }
-        }
         if (cxLoadStockHtml.isSelected()) {
             stock.assign(facade.spot(ticker));
         }
         draw();
         */
+        //System.out.println("Optionproperty: " + optionsController.selectedDerivativeProperty().getValue());
     }
 
     private void initChoiceBoxTickers() {
-        final ObservableList<String> cbitems = FXCollections.observableArrayList();
-        for (String s : getTickers()) {
-            cbitems.add(s);
-        }
+        final ObservableList<String> cbitems = FXCollections.observableArrayList(getTickers());
         cbTickers.getItems().addAll(cbitems);
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(
                 new ChangeListener<Number>() {
@@ -97,9 +86,46 @@ public class DefaultMainFrameController implements MainFrameController {
         );
     }
 
-    //endregion Private Methods
+    private void notifyOptionsController() {
+        String ticker = cbTickers.valueProperty().get().toString();
+        optionsController.setTicker(ticker);
+    }
 
-    //region Initialization methods
+    private void initOptionsController() {
+        rgDerivatives.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observableValue,
+                                Toggle toggle,
+                                Toggle toggle2) {
+                notifyOptionsController();
+            }
+        });
+
+        cxLoadOptionsHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+                if (cxLoadOptionsHtml.isSelected()) {
+                    notifyOptionsController();
+                }
+            }
+        });
+
+        cxLoadStockHtml.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+                if (cxLoadStockHtml.isSelected()) {
+                    notifyOptionsController();
+                }
+            }
+        });
+
+        optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
+        optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
+        optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
+        optionsController.setModel(getFacade());
+        optionsController.setMenuBar(myMenuBar);
+    }
+
     public void initialize() {
 
         initChoiceBoxTickers();
@@ -113,6 +139,8 @@ public class DefaultMainFrameController implements MainFrameController {
         weeksController.setChart(getWeeklyChart());
         weeksController.setModel(getFacade());
         weeksController.setMenuBar(myMenuBar);
+
+        initOptionsController();
     }
 
     //endregion  Initialization methods
@@ -143,9 +171,6 @@ public class DefaultMainFrameController implements MainFrameController {
     public void setFacade(MaunaloaFacade facade) {
         this.facade = facade;
     }
-
-
-
 
     //endregion
 

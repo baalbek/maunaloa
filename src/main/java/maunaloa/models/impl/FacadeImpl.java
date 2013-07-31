@@ -65,17 +65,17 @@ public class FacadeImpl implements MaunaloaFacade {
 
     @Override
     public StockPrice spot(String ticker) {
-        return null;  //return getEtrade().getSpot(ticker);
+        return getEtrade().getSpot(ticker);
     }
 
     @Override
     public Collection<Derivative> calls(String ticker) {
-        return null; //getEtrade().getCalls(ticker);
+        return getEtrade().getCalls(ticker);
     }
 
     @Override
     public Collection<Derivative> puts(String ticker) {
-        return null; //getEtrade().getPuts(ticker);
+        return getEtrade().getPuts(ticker);
     }
 
     @Override

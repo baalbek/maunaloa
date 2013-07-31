@@ -13,7 +13,6 @@ import oahux.models.MaunaloaFacade;
  */
 public interface ChartCanvasController extends MaunaloaChartViewModel {
     void setTicker(String ticker);
-    //void draw();
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);
     void setMenuBar(MenuBar menuBar);
