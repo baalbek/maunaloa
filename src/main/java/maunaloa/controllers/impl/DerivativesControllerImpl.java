@@ -4,6 +4,8 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -77,6 +79,20 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     //region Private Methods
 
+    private void loadCalls(String ticker) {
+        if  (_selectedLoadDerivativesProperty.get() == true) {
+            derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.calls(ticker)));
+        }
+        else if (_selectedLoadStockProperty.get() == true) {
+            derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.puts(ticker)));
+        }
+    }
+    private void loadPuts() {
+
+    }
+    private void loadAll() {
+
+    }
 
     //endregion Private Methods
 
@@ -135,9 +151,20 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     @Override
     public void setTicker(String ticker) {
-        System.out.println(_selectedDerivativeProperty.get().getUserData());
-        System.out.println(_selectedLoadStockProperty.get());
-        System.out.println(_selectedLoadDerivativesProperty.get());
+        //System.out.println(_selectedLoadStockProperty.get());
+        //System.out.println(_selectedLoadDerivativesProperty.get());
+
+        switch (_selectedDerivativeProperty.get().getUserData().toString()) {
+            case "calls":
+                loadCalls(ticker);
+                break;
+            case "puts":
+                loadPuts();
+                break;
+            case "all":
+                loadAll();
+                break;
+        }
     }
 
     @Override
