@@ -1,11 +1,10 @@
 package maunaloa.controllers.impl;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.*;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,7 +12,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import maunaloa.controllers.DerivativesController;
-import oahu.financial.Derivative;
+import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 
 import java.util.Date;
@@ -26,23 +25,23 @@ import java.util.Date;
  */
 public class DerivativesControllerImpl implements DerivativesController {
     //region FXML
-    @FXML private TableView<Derivative> derivativesTableView;
+    @FXML private TableView<DerivativeFx> derivativesTableView;
 
-    @FXML private TableColumn<Derivative, String> colOpName;
-    @FXML private TableColumn<Derivative, Boolean> colSelected;
-    @FXML private TableColumn<Derivative, Date> colExpiry;
+    @FXML private TableColumn<DerivativeFx, String> colOpName;
+    @FXML private TableColumn<DerivativeFx, Boolean> colSelected;
+    @FXML private TableColumn<DerivativeFx, Date> colExpiry;
 
-    @FXML private TableColumn<Derivative, Double> colBuy;
-    @FXML private TableColumn<Derivative, Double> colSell;
-    @FXML private TableColumn<Derivative, Double> colIvBuy;
-    @FXML private TableColumn<Derivative, Double> colIvSell;
-    @FXML private TableColumn<Derivative, Double> colSpread;
-    @FXML private TableColumn<Derivative, Double> colDelta;
-    @FXML private TableColumn<Derivative, Double> colBreakEven;
+    @FXML private TableColumn<DerivativeFx, Double> colBuy;
+    @FXML private TableColumn<DerivativeFx, Double> colSell;
+    @FXML private TableColumn<DerivativeFx, Double> colIvBuy;
+    @FXML private TableColumn<DerivativeFx, Double> colIvSell;
+    @FXML private TableColumn<DerivativeFx, Double> colSpread;
+    @FXML private TableColumn<DerivativeFx, Double> colDelta;
+    @FXML private TableColumn<DerivativeFx, Double> colBreakEven;
 
-    @FXML private TableColumn<Derivative, Double> colDays;
-    @FXML private TableColumn<Derivative, Double> colRisc;
-    @FXML private TableColumn<Derivative, Double> colSpRisc;
+    @FXML private TableColumn<DerivativeFx, Double> colDays;
+    @FXML private TableColumn<DerivativeFx, Double> colRisc;
+    @FXML private TableColumn<DerivativeFx, Double> colSpRisc;
 
     @FXML private TextField txSpot;
     @FXML private TextField txOpen;
@@ -84,11 +83,14 @@ public class DerivativesControllerImpl implements DerivativesController {
             derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.calls(ticker)));
         }
         else if (_selectedLoadStockProperty.get() == true) {
-            derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.puts(ticker)));
         }
     }
-    private void loadPuts() {
-
+    private void loadPuts(String ticker) {
+        if  (_selectedLoadDerivativesProperty.get() == true) {
+            derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.puts(ticker)));
+        }
+        else if (_selectedLoadStockProperty.get() == true) {
+        }
     }
     private void loadAll() {
 
@@ -102,15 +104,20 @@ public class DerivativesControllerImpl implements DerivativesController {
     }
 
     private void initGrid() {
-        colOpName.setCellValueFactory(new PropertyValueFactory<Derivative, String>("ticker"));
-        colSelected.setCellValueFactory(new PropertyValueFactory<Derivative, Boolean>("isChecked"));
+        colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeFx, String>("ticker"));
+
+
+        colSelected.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Boolean>("isChecked"));
         colSelected.setCellFactory(
-                new Callback<TableColumn<Derivative, Boolean>, TableCell<Derivative, Boolean>>() {
+                new Callback<TableColumn<DerivativeFx, Boolean>, TableCell<DerivativeFx, Boolean>>() {
                     @Override
-                    public TableCell<Derivative, Boolean> call(TableColumn<Derivative, Boolean> p) {
+                    public TableCell<DerivativeFx, Boolean> call(TableColumn<DerivativeFx, Boolean> p) {
                         return new CheckBoxTableCell<>();
                     }
                 });
+
+
+        /*
         colExpiry.setCellValueFactory(new PropertyValueFactory<Derivative, Date>("expiry"));
 
         colBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("buy"));
@@ -124,6 +131,7 @@ public class DerivativesControllerImpl implements DerivativesController {
         colDays.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("days"));
         colRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("risk"));
         colSpRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("stockPriceRisk"));
+        */
     }
 
     //endregion  Initialization methods
@@ -151,15 +159,12 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     @Override
     public void setTicker(String ticker) {
-        //System.out.println(_selectedLoadStockProperty.get());
-        //System.out.println(_selectedLoadDerivativesProperty.get());
-
         switch (_selectedDerivativeProperty.get().getUserData().toString()) {
             case "calls":
                 loadCalls(ticker);
                 break;
             case "puts":
-                loadPuts();
+                loadPuts(ticker);
                 break;
             case "all":
                 loadAll();

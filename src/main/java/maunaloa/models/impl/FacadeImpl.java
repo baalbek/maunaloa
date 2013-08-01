@@ -1,9 +1,11 @@
 package maunaloa.models.impl;
 
 import javafx.scene.Node;
+import maunaloa.domain.impl.DerivativeFxImpl;
 import maunaloa.utils.DateUtils;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.*;
+import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 import org.apache.ibatis.session.SqlSession;
 import ranoraraku.beans.StockPriceBean;
@@ -69,17 +71,24 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
-    public Collection<Derivative> calls(String ticker) {
-        return getEtrade().getCalls(ticker);
+    public Collection<DerivativeFx> calls(String ticker) {
+        Collection<Derivative> tmp = getEtrade().getCalls(ticker);
+
+        Collection<DerivativeFx> result = new ArrayList<>();
+
+        for (Derivative d : tmp) {
+            result.add(new DerivativeFxImpl(d));
+        }
+        return result;
     }
 
     @Override
-    public Collection<Derivative> puts(String ticker) {
-        return getEtrade().getPuts(ticker);
+    public Collection<DerivativeFx> puts(String ticker) {
+        return null; //getEtrade().getPuts(ticker);
     }
 
     @Override
-    public Collection<Derivative> callsAndPuts(String ticker) {
+    public Collection<DerivativeFx> callsAndPuts(String ticker) {
         return null; //calls(ticker);
     }
 
@@ -96,7 +105,6 @@ public class FacadeImpl implements MaunaloaFacade {
         return getLocator().getTickers();
     }
     //endregion Interface Methods
-
 
     //region Properties
 
@@ -123,15 +131,6 @@ public class FacadeImpl implements MaunaloaFacade {
     public void setLocator(StockLocator locator) {
         this.locator = locator;
     }
-    /*
-    public StockTicker getStockTicker() {
-        return stockTicker;
-    }
-
-    public void setStockTicker(StockTicker stockTicker) {
-        this.stockTicker = stockTicker;
-    }
-    //*/
 
     //endregion Properties
 }
