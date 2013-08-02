@@ -1,8 +1,16 @@
 package maunaloa.domain.impl;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import oahu.exceptions.BinarySearchException;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Derivative;
+import oahu.financial.OptionCalculator;
 import oahu.financial.StockPrice;
 import oahux.domain.DerivativeFx;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
 
@@ -13,21 +21,71 @@ import java.util.Date;
  * Time: 9:21 AM
  */
 public class DerivativeFxImpl implements DerivativeFx {
+
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
+
+    private final OptionCalculator calculator;
     private final Derivative derivative;
 
-    public DerivativeFxImpl(Derivative derivative) {
+    public DerivativeFxImpl(Derivative derivative,
+                            OptionCalculator calculator) {
         this.derivative = derivative;
+        this.calculator = calculator;
+    }
 
+    //--------------------------------------------------
+    //------------- Checked
+    //--------------------------------------------------
+    private BooleanProperty isChecked = new SimpleBooleanProperty(false);
+
+    @Override
+    public BooleanProperty isCheckedProperty() {
+        return isChecked;
+    }
+
+    //--------------------------------------------------
+    //------------- Risk
+    //--------------------------------------------------
+    private void logSetRiskExeption(Exception ex, double value) {
+        log.warn(String.format("(%s) spot: %.2f, sell: %.2f, value: %.2f, exeption: %s",
+                getTicker(),
+                getParent().getValue(),
+                getSell(),
+                value,
+                ex.getMessage()));
+
+    }
+    private DoubleProperty risk = new SimpleDoubleProperty(0.0);
+    @Override
+    public DoubleProperty riskProperty() {
+        return risk;
     }
     @Override
-    public boolean getIsChecked() {
-        return false;
-    }
+    public void setRisk(double value) {
+        risk.set(value);
 
+        try {
+            stockPriceRiskProperty().set(calculator.stockPriceFor(getSell() - value,this));
+        }
+        catch (BinarySearchException bex) {
+            logSetRiskExeption(bex,value);
+            stockPriceRiskProperty().set(-1.0);
+        }
+        catch (Exception ex) {
+            logSetRiskExeption(ex,value);
+            stockPriceRiskProperty().set(-1.0);
+        }
+    }
+    private DoubleProperty stockPriceRisk = new SimpleDoubleProperty(0.0);
     @Override
-    public void setIsChecked(boolean b) {
+    public DoubleProperty stockPriceRiskProperty() {
+        return stockPriceRisk;
     }
 
+
+    //--------------------------------------------------
+    //------------- Parent
+    //--------------------------------------------------
     @Override
     public StockPrice getParent() {
         return derivative.getParent();

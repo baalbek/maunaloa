@@ -23,6 +23,7 @@ import java.util.*;
 public class FacadeImpl implements MaunaloaFacade {
     private Etrade etrade;
     private Date defaultStartDate;
+    private OptionCalculator calculator;
 
     Map<String, Collection<Stock>> stockBeansMap = new HashMap<>();
     private StockLocator locator;
@@ -77,7 +78,7 @@ public class FacadeImpl implements MaunaloaFacade {
         Collection<DerivativeFx> result = new ArrayList<>();
 
         for (Derivative d : tmp) {
-            result.add(new DerivativeFxImpl(d));
+            result.add(new DerivativeFxImpl(d,calculator));
         }
         return result;
     }
@@ -130,6 +131,14 @@ public class FacadeImpl implements MaunaloaFacade {
 
     public void setLocator(StockLocator locator) {
         this.locator = locator;
+    }
+
+    public OptionCalculator getCalculator() {
+        return calculator;
+    }
+
+    public void setCalculator(OptionCalculator calculator) {
+        this.calculator = calculator;
     }
 
     //endregion Properties

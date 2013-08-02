@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+    <import resource="classpath:aop.xml"  />
+
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
 
@@ -40,6 +42,7 @@
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
         <property name="locator" ref="locator" />
         <property name="etrade" ref="etrade" />
+        <property name="calculator" ref="calculator" />
         <!-- property name="defaultStartDate" value="2010-1-1" / -->
     </bean>
 

@@ -71,7 +71,13 @@ public class DerivativesControllerImpl implements DerivativesController {
             }
         }
         */
-
+        String txVal = ((TextField)event.getSource()).textProperty().get();
+        double risk = Double.parseDouble(txVal);
+        for (DerivativeFx fx : derivativesTableView.getItems()) {
+            if (fx.isCheckedProperty().get() == true) {
+                fx.setRisk(risk);
+            }
+        }
     }
 
     //endregion
@@ -116,7 +122,8 @@ public class DerivativesControllerImpl implements DerivativesController {
                     }
                 });
 
-
+        colRisc.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("risk"));
+        colSpRisc.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("stockPriceRisk"));
         /*
         colExpiry.setCellValueFactory(new PropertyValueFactory<Derivative, Date>("expiry"));
 
@@ -129,8 +136,8 @@ public class DerivativesControllerImpl implements DerivativesController {
         colBreakEven.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("breakeven"));
         colSpread.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("spread"));
         colDays.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("days"));
-        colRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("risk"));
-        colSpRisc.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("stockPriceRisk"));
+
+
         */
     }
 

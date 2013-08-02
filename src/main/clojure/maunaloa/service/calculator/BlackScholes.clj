@@ -115,7 +115,7 @@
 (defn spot-finder [^Derivative d]
   (let [f (price-fn d)
         x (.getX d)
-        t (.getYears d)
+        t (/ (.getDays d) 365.0)
         sigma (.getIvBuy d)]
     (fn [spot]
       (f spot x t sigma))))
@@ -131,7 +131,7 @@
          new-price ((price-fn deriv)
                      new-spot
                      (.getX cb)
-                     (.getYears cb)
+                     (/ (.getDays cb) 365.0)
                      iv)]
     (- new-price (.getSell deriv))))
 
