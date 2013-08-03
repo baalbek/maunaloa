@@ -20,7 +20,7 @@
   (let [f ^ClassPathXmlApplicationContext (ClassPathXmlApplicationContext. "maunaloa.xml")]
     f))
 
-(defn etrade []
+(def etrade
   (.getBean (sf) "etrade"))
 
 (def week-stix 

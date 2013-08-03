@@ -46,15 +46,12 @@ public class ValidateBeansAspect {
 
         log.info(String.format("%s\nNumber of puts: %d",jp.toString(),tmp.size()));
 
-        /*
         for (Derivative bean : tmp) {
-            CalculatedDerivativeBean cb = (CalculatedDerivativeBean)bean;
 
-            if (isOk(cb) == false) continue;
+            if (isOk(bean) == false) continue;
 
-            result.add(cb);
+            result.add(bean);
         }
-        //*/
 
         return result;
     }
@@ -68,20 +65,15 @@ public class ValidateBeansAspect {
 
         log.info(String.format("%s\nNumber of calls: %d",jp.toString(),tmp.size()));
 
-        /*
-        for (DerivativeBean bean : tmp) {
-            CalculatedDerivativeBean cb = (CalculatedDerivativeBean)bean;
+        for (Derivative bean : tmp) {
+            if (isOk(bean) == false) continue;
 
-            if (isOk(cb) == false) continue;
-
-            result.add(cb);
+            result.add(bean);
         }
-        //*/
         return result;
     }
 
-    /*
-    private boolean isOk(CalculatedDerivativeBean cb) {
+    private boolean isOk(Derivative cb) {
         String ticker = cb.getTicker();
 
         if (cb.getParent() == null) {
@@ -89,17 +81,17 @@ public class ValidateBeansAspect {
             return false;
         }
 
-        if (cb.daysProperty().get() < daysLimit) {
+        if (cb.getDays() < daysLimit) {
             log.info(String.format("%s has expired within %d days",ticker,daysLimit));
             return false;
         }
 
-        if (cb.buyProperty().get() <= 0) {
+        if (cb.getBuy()<= 0) {
             log.info(String.format("%s: buy <= 0.0",ticker));
             return false;
         }
 
-        if (cb.sellProperty().get() <= 0) {
+        if (cb.getSell() <= 0) {
             log.info(String.format("%s: sell <= 0.0",ticker));
             return false;
         }
@@ -129,7 +121,6 @@ public class ValidateBeansAspect {
         }
         return true;
     }
-    //*/
 
     public Double getSpreadLimit() {
         return spreadLimit;
