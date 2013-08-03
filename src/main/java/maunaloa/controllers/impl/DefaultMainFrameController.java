@@ -61,7 +61,7 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     public void setTicker(String ticker) {
-        //candlesticksController.setTicker(ticker);
+        candlesticksController.setTicker(ticker);
         //weeksController.setTicker(ticker);
         optionsController.setTicker(ticker);
         /*

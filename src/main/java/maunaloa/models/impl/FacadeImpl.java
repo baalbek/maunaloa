@@ -35,6 +35,7 @@ public class FacadeImpl implements MaunaloaFacade {
 
     //region Interface Methods
     @Override
+    @Memoize
     public Collection<StockPrice> stockPrices(String ticker, Date fromDx, int period) {
         SqlSession session = MyBatisUtils.getSession();
         List<StockPrice> result = null;
@@ -53,6 +54,7 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
+    @Memoize
     public Collection<StockPrice> stockPrices(String ticker, int period) {
         /*
         if (stockBeansMap.containsKey(ticker)) {
@@ -68,6 +70,7 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
+    @Memoize
     public StockPrice spot(String ticker) {
         return getEtrade().getSpot(ticker);
     }
@@ -89,6 +92,7 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
+    @Memoize
     public Collection<DerivativeFx> puts(String ticker) {
         return toDerivativeFx(getEtrade().getPuts(ticker));
     }

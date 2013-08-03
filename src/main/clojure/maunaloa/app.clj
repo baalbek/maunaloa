@@ -5,9 +5,15 @@
     [maunaloa.utils DateUtils]
     [java.util Calendar GregorianCalendar])
   (:require
+    [clojure.reflect :as r]
     [waimea.utils.commonutils :as U]
     [maunaloa.views.charts.blocks :as CB]
-    [maunaloa.models.candlestickmodel :as CM]))
+    [maunaloa.models.candlestickmodel :as CM])
+  (:use
+    [clojure.pprint :only [print-table]]))
+
+(defn prnclzz [clazz]
+  (print-table (:members (r/reflect clazz))))
 
 (defn fetch-beans[ticker]
   (let [f ^ClassPathXmlApplicationContext (ClassPathXmlApplicationContext. "maunaloa.xml")
