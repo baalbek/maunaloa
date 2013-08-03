@@ -11,10 +11,15 @@
     <bean id="traceAspect" class="maunaloa.aspects.TraceAspect" />
     -->
 
+
+    <!--
     <bean id="validateBeansAspect" class="maunaloa.aspects.ValidateBeansAspect">
         <property name="spreadLimit" value="5.0" />
         <property name="daysLimit" value="10" />
     </bean>
+    -->
+
+    <bean id="memoizeAspect" class="maunaloa.aspects.MemoizeAspect" />
 
     <!--
 

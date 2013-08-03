@@ -3,6 +3,7 @@ package maunaloa.models.impl;
 import javafx.scene.Node;
 import maunaloa.domain.impl.DerivativeFxImpl;
 import maunaloa.utils.DateUtils;
+import oahu.annotations.Memoize;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.*;
 import oahux.domain.DerivativeFx;
@@ -71,21 +72,25 @@ public class FacadeImpl implements MaunaloaFacade {
         return getEtrade().getSpot(ticker);
     }
 
-    @Override
-    public Collection<DerivativeFx> calls(String ticker) {
-        Collection<Derivative> tmp = getEtrade().getCalls(ticker);
-
+    private Collection<DerivativeFx> toDerivativeFx(Collection<Derivative> derivs) {
         Collection<DerivativeFx> result = new ArrayList<>();
 
-        for (Derivative d : tmp) {
+        for (Derivative d : derivs) {
             result.add(new DerivativeFxImpl(d,calculator));
         }
         return result;
+
+    }
+
+    @Override
+    @Memoize
+    public Collection<DerivativeFx> calls(String ticker) {
+        return toDerivativeFx(getEtrade().getCalls(ticker));
     }
 
     @Override
     public Collection<DerivativeFx> puts(String ticker) {
-        return null; //getEtrade().getPuts(ticker);
+        return toDerivativeFx(getEtrade().getPuts(ticker));
     }
 
     @Override

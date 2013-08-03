@@ -124,18 +124,19 @@ public class DerivativesControllerImpl implements DerivativesController {
 
         colRisc.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("risk"));
         colSpRisc.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("stockPriceRisk"));
+        colExpiry.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Date>("expiry"));
+
+        colBuy.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("buy"));
+        colSell.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("sell"));
+
+        colIvBuy.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("ivBuy"));
+        colIvSell.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("ivSell"));
+        colDays.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("days"));
+
         /*
-        colExpiry.setCellValueFactory(new PropertyValueFactory<Derivative, Date>("expiry"));
-
-        colBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("buy"));
-        colSell.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("sell"));
-
-        colIvBuy.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("ivBuy"));
-        colIvSell.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("ivSell"));
         colDelta.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("delta"));
         colBreakEven.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("breakeven"));
         colSpread.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("spread"));
-        colDays.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("days"));
 
 
         */
