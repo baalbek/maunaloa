@@ -9,7 +9,6 @@ import oahu.financial.*;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 import org.apache.ibatis.session.SqlSession;
-import ranoraraku.beans.StockPriceBean;
 import ranoraraku.models.mybatis.StockMapper;
 import ranoraraku.utils.MyBatisUtils;
 

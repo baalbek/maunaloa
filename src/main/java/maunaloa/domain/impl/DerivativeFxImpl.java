@@ -68,7 +68,7 @@ public class DerivativeFxImpl implements DerivativeFx {
             stockPriceRiskProperty().set(calculator.stockPriceFor(getSell() - value,this));
         }
         catch (BinarySearchException bex) {
-            logSetRiskExeption(bex,value);
+            logSetRiskExeption(bex, value);
             stockPriceRiskProperty().set(-1.0);
         }
         catch (Exception ex) {
@@ -81,6 +81,22 @@ public class DerivativeFxImpl implements DerivativeFx {
     public DoubleProperty stockPriceRiskProperty() {
         return stockPriceRisk;
     }
+
+    @Override
+    public double getDelta() {
+        return 0.75;
+    }
+
+    @Override
+    public double getSpread() {
+        return 2.3;
+    }
+
+    @Override
+    public double getBreakeven() {
+        return 223.0;
+    }
+
 
 
     //--------------------------------------------------

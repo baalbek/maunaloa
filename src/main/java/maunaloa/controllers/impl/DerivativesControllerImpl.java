@@ -133,13 +133,9 @@ public class DerivativesControllerImpl implements DerivativesController {
         colIvSell.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("ivSell"));
         colDays.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("days"));
 
-        /*
-        colDelta.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("delta"));
-        colBreakEven.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("breakeven"));
-        colSpread.setCellValueFactory(new PropertyValueFactory<Derivative, Double>("spread"));
-
-
-        */
+        colDelta.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("delta"));
+        colBreakEven.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("breakeven"));
+        colSpread.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Double>("spread"));
     }
 
     //endregion  Initialization methods
