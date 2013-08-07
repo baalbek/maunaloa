@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.Properties;
 
+import javafx.scene.image.Image;
+
 public class App extends Application {
     public static void main(String[] args) {
 
@@ -42,6 +44,15 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         initLog4j();
 
+        //stage.getIcons().setAll(new Image(getClass().getResourceAsStream( "/cmd.ico" ))); 
+        stage.getIcons().add(new Image(App.class.getResource( "/cmd.png" ).toExternalForm(), 48, 48, false, true)); 
+        // stage.getIcons().setAll(new Image("file://tmp100/msdos/cmd.png")); 
+        /*
+        stage.getIcons().add(
+                new Image(
+                    JavaFXWindow.class.getResource(
+                        "ui/resources/appicon_48x48.png").toExternalForm(), 48, 48, false, true));
+        */ 
         ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
 
         URL url = this.getClass().getResource("/MainFrame.fxml");

@@ -2,6 +2,7 @@ package maunaloa.dummy;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.Page;
 import oahu.financial.html.EtradeDownloader;
 import org.apache.commons.lang.NotImplementedException;
 
@@ -39,6 +40,11 @@ public class Downloader implements EtradeDownloader {
         WebClient webClient = new WebClient();
 
         return webClient.getPage(getUrl(stockIndex));
+    }
+
+    @Override
+    public Page downloadPaperHistory(String ticker) throws IOException {
+        return null;
     }
 
     @Override
