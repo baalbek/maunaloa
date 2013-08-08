@@ -101,6 +101,10 @@
             <artifactId>maunakea</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>rcstadheim</groupId>
+            <artifactId>ranoraraku</artifactId>
+        </dependency>
 
         <!--****************************************************************
         ****************************** Joda Time ***************************
@@ -247,7 +251,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>maunakea.App</mainClass>
+                            <mainClass>maunaloa.App</mainClass>
 
                             <addClasspath>true</addClasspath>
 
