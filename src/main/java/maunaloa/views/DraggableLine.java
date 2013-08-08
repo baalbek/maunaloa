@@ -15,7 +15,7 @@ import javafx.scene.shape.Line;
  * Date: 3/31/13
  * Time: 7:42 PM
  */
-public abstract class DraggableLine {
+public abstract class DraggableLine implements  CanvasLine {
     protected Line line ;
     protected Circle startAnchor ;
     protected Circle endAnchor ;
@@ -41,6 +41,15 @@ public abstract class DraggableLine {
     protected abstract void onMouseDragged(MouseEvent event);
     //endregion
 
+    //region Interface Methods
+    @Override
+    public Node view() {
+        return group ;
+    }
+
+    //endregion
+
+    //region Private Methods
     private Circle createAnchor(DoubleProperty x, DoubleProperty y) {
         final Circle anchor = new Circle();
         anchor.centerXProperty().bindBidirectional(x);
@@ -84,11 +93,10 @@ public abstract class DraggableLine {
         });
         return anchor;
     }
+    //endregion
 
-    public Node view() {
-        return group ;
-    }
 
+    //region Properties
     public DoubleProperty anchorRadiusProperty() {
         return anchorRadius ;
     }
@@ -144,4 +152,5 @@ public abstract class DraggableLine {
     public void setEndY(double y) {
         line.setEndY(y);
     }
+    //endregion
 }

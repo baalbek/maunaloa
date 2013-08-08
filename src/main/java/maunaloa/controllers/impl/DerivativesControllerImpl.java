@@ -60,17 +60,6 @@ public class DerivativesControllerImpl implements DerivativesController {
     //region FXML Actions
 
     public void calcRisk(ActionEvent event) {
-        /*
-        String txVal = ((TextField)event.getSource()).textProperty().get();
-        double risk = Double.parseDouble(txVal);
-
-        for (Derivative b : derivativesTableView.getItems()) {
-            Derivative cb = (Derivative)b;
-            if (cb.getIsChecked()) {
-                cb.setRisk(risk);
-            }
-        }
-        */
         String txVal = ((TextField)event.getSource()).textProperty().get();
         double risk = Double.parseDouble(txVal);
         for (DerivativeFx fx : derivativesTableView.getItems()) {

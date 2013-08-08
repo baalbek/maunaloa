@@ -16,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
+import maunaloa.views.CanvasLine;
 import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
 import oahu.financial.StockPrice;
@@ -41,7 +42,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     private String ticker;
     private String name;
 
-    Map<String,List<DraggableLine>> myPaneLines = new HashMap<>();
+    Map<String,List<CanvasLine>> myPaneLines = new HashMap<>();
 
 
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
@@ -114,7 +115,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 Line line = lineA.get();
                 if (line != null) {
                     myPane.getChildren().remove(line);
-                    DraggableLine fibLine = new FibonacciDraggableLine(line,getRuler());
+                    CanvasLine fibLine = new FibonacciDraggableLine(line,getRuler());
                     updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }
@@ -127,26 +128,37 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMouseDragged(null);
         myPane.setOnMouseReleased(null);
     }
-    private void clearFibonacci() {
-        List<DraggableLine> lines = myPaneLines.get(getTicker());
+    private void deleteFibonacci() {
+        List<CanvasLine> lines = myPaneLines.get(getTicker());
 
         if (lines == null) return;
 
-        for (DraggableLine l : lines) {
+        clearFibonacci();
+
+        lines.clear();
+    }
+
+    private void clearFibonacci() {
+        List<CanvasLine> lines = myPaneLines.get(getTicker());
+
+        if (lines == null) return;
+
+        for (CanvasLine l : lines) {
             myPane.getChildren().remove(l.view());
         }
     }
+
     private void refreshFibonacci() {
-        List<DraggableLine> lines = myPaneLines.get(getTicker());
+        List<CanvasLine> lines = myPaneLines.get(getTicker());
 
         if (lines == null) return;
 
-        for (DraggableLine l : lines) {
+        for (CanvasLine l : lines) {
             myPane.getChildren().add(l.view());
         }
     }
-    private void updateMyPaneLines(DraggableLine line) {
-        List<DraggableLine> lines = myPaneLines.get(getTicker());
+    private void updateMyPaneLines(CanvasLine line) {
+        List<CanvasLine> lines = myPaneLines.get(getTicker());
         if (lines == null) {
             lines = new ArrayList<>();
             myPaneLines.put(getTicker(), lines);
@@ -194,10 +206,10 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 deactivateFibonacci();
             }
         });
-        MenuItem m3 = new MenuItem("Clear");
+        MenuItem m3 = new MenuItem("Delete");
         m3.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                clearFibonacci();
+                deleteFibonacci();
             }
         });
         menu.getItems().addAll(m1,m2,m3);
