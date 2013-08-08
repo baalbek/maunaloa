@@ -23,9 +23,7 @@ import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.models.MaunaloaFacade;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,7 +41,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     private String ticker;
     private String name;
 
-    List<DraggableLine> myPaneLines = new ArrayList<>();
+    Map<String,List<DraggableLine>> myPaneLines = new HashMap<>();
+
+
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
     private IRuler ruler;
 
@@ -78,15 +78,16 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     //endregion
 
-    //region Private Methods
+    //region Public Methods
 
     public void draw() {
         chart.draw(myCanvas);
     }
+
     //endregion
 
     //region Fibonacci
-    public void activateFibonacci() {
+    private void activateFibonacci() {
         myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -114,32 +115,56 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 if (line != null) {
                     myPane.getChildren().remove(line);
                     DraggableLine fibLine = new FibonacciDraggableLine(line,getRuler());
-                    myPaneLines.add(fibLine);
+                    updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }
                 lineA.set(null);
             }
         });
     }
-    public void deactivateFibonacci() {
+    private void deactivateFibonacci() {
         myPane.setOnMousePressed(null);
         myPane.setOnMouseDragged(null);
         myPane.setOnMouseReleased(null);
     }
-    public void clearFibonacci() {
-        for (DraggableLine l : myPaneLines) {
+    private void clearFibonacci() {
+        List<DraggableLine> lines = myPaneLines.get(getTicker());
+
+        if (lines == null) return;
+
+        for (DraggableLine l : lines) {
             myPane.getChildren().remove(l.view());
         }
-        myPaneLines.clear();
     }
+    private void refreshFibonacci() {
+        List<DraggableLine> lines = myPaneLines.get(getTicker());
+
+        if (lines == null) return;
+
+        for (DraggableLine l : lines) {
+            myPane.getChildren().add(l.view());
+        }
+    }
+    private void updateMyPaneLines(DraggableLine line) {
+        List<DraggableLine> lines = myPaneLines.get(getTicker());
+        if (lines == null) {
+            lines = new ArrayList<>();
+            myPaneLines.put(getTicker(), lines);
+        }
+        lines.add(line);
+    }
+
     //endregion Fibonacci
 
     //region Interface methods
 
+
     @Override
     public void setTicker(String ticker) {
+        clearFibonacci();
         this.ticker = ticker;
         draw();
+        refreshFibonacci();
     }
 
 

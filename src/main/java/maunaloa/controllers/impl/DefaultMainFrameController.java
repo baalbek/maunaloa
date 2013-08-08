@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
-import oahu.financial.Derivative;
 import oahux.chart.MaunaloaChart;
 import oahux.models.MaunaloaFacade;
 
@@ -62,7 +61,7 @@ public class DefaultMainFrameController implements MainFrameController {
 
     public void setTicker(String ticker) {
         candlesticksController.setTicker(ticker);
-        //weeksController.setTicker(ticker);
+        weeksController.setTicker(ticker);
         optionsController.setTicker(ticker);
         /*
         if (cxLoadStockHtml.isSelected()) {
@@ -87,7 +86,9 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     private void notifyOptionsController() {
-        String ticker = cbTickers.valueProperty().get().toString();
+        Object prop = cbTickers.valueProperty().get();
+        if (prop == null) return;
+        String ticker = prop.toString();
         optionsController.setTicker(ticker);
     }
 

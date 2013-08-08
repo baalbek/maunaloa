@@ -45,7 +45,11 @@ public class MemoizeAspect {
 
     @Around("memoizePointcut()")
     public Object memoizePointCutMethod(ProceedingJoinPoint jp) throws Throwable {
-        StringBuilder sb = new StringBuilder(jp.toString());
+
+
+        StringBuilder sb = new StringBuilder(jp.getThis().getClass().getName());
+        sb.append(jp.getSignature().getName());
+
         Object[] args = jp.getArgs();
 
         for (int i = 0; i < args.length; ++i) {

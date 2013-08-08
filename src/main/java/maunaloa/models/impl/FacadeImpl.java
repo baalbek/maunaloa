@@ -55,16 +55,6 @@ public class FacadeImpl implements MaunaloaFacade {
     @Override
     @Memoize
     public Collection<StockPrice> stockPrices(String ticker, int period) {
-        /*
-        if (stockBeansMap.containsKey(ticker)) {
-            return stockBeansMap.get(ticker);
-        }
-        else {
-            Collection<StockBean> beans = stockPrices(ticker, getDefaultStartDate(), period);
-            stockBeansMap.put(ticker,beans);
-            return beans;
-        }
-        //*/
         return stockPrices(ticker, getDefaultStartDate(), period);
     }
 

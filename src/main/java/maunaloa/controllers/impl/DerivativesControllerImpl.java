@@ -86,14 +86,15 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     private void loadCalls(String ticker) {
         if  (_selectedLoadDerivativesProperty.get() == true) {
-            derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.calls(ticker)));
+            derivativesTableView.getItems().setAll(FXCollections.observableArrayList(model.calls(ticker)));
         }
         else if (_selectedLoadStockProperty.get() == true) {
         }
     }
     private void loadPuts(String ticker) {
+        if (ticker == null) return;
         if  (_selectedLoadDerivativesProperty.get() == true) {
-            derivativesTableView.getItems().addAll(FXCollections.observableArrayList(model.puts(ticker)));
+            derivativesTableView.getItems().setAll(FXCollections.observableArrayList(model.puts(ticker)));
         }
         else if (_selectedLoadStockProperty.get() == true) {
         }
