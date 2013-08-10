@@ -4,6 +4,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Toggle;
+import maunaloa.events.DerivativesCalculatedListener;
 import oahux.models.MaunaloaFacade;
 
 public interface DerivativesController {
@@ -13,4 +14,5 @@ public interface DerivativesController {
     void setTicker(String ticker);
     void setModel(MaunaloaFacade model);
     void setMenuBar(MenuBar menuBar);
+    void addDerivativesCalculatedListener(DerivativesCalculatedListener listener);
 }

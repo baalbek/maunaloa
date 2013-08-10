@@ -12,10 +12,15 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import maunaloa.controllers.DerivativesController;
+import maunaloa.events.DerivativesCalculatedEvent;
+import maunaloa.events.DerivativesCalculatedListener;
+import oahu.exceptions.NotImplementedException;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,11 +54,13 @@ public class DerivativesControllerImpl implements DerivativesController {
     @FXML private TextField txLo;
     private MaunaloaFacade model;
     private MenuBar menuBar;
+    private List<DerivativesCalculatedListener> calculatedListeners;
     //endregion FXML
 
     //region Init
 
     public DerivativesControllerImpl() {
+        calculatedListeners = new ArrayList<>();
     }
     //endregion Init
 
@@ -62,10 +69,27 @@ public class DerivativesControllerImpl implements DerivativesController {
     public void calcRisk(ActionEvent event) {
         String txVal = ((TextField)event.getSource()).textProperty().get();
         double risk = Double.parseDouble(txVal);
+
+        List<DerivativeFx> calculated = new ArrayList<>();
+
         for (DerivativeFx fx : derivativesTableView.getItems()) {
             if (fx.isCheckedProperty().get() == true) {
                 fx.setRisk(risk);
+                calculated.add(fx);
             }
+        }
+
+        if (calculated.size() > 0) {
+            fireCalculatedEvent(calculated);
+        }
+    }
+
+    private void fireCalculatedEvent(List<DerivativeFx> calculated) {
+        if (calculatedListeners.size() == 0) return;
+
+        DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
+        for (DerivativesCalculatedListener l : calculatedListeners) {
+            l.notifyCalculated(evt);
         }
     }
 
@@ -174,6 +198,11 @@ public class DerivativesControllerImpl implements DerivativesController {
     @Override
     public void setMenuBar(MenuBar menuBar) {
         this.menuBar = menuBar;
+    }
+
+    @Override
+    public void addDerivativesCalculatedListener(DerivativesCalculatedListener listener) {
+        calculatedListeners.add(listener);
     }
     //endregion  Interface methods
 

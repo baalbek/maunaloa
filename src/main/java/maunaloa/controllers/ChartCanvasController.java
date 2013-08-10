@@ -1,6 +1,7 @@
 package maunaloa.controllers;
 
 import javafx.scene.control.MenuBar;
+import maunaloa.events.DerivativesCalculatedListener;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.models.MaunaloaFacade;
@@ -11,7 +12,7 @@ import oahux.models.MaunaloaFacade;
  * Date: 7/27/13
  * Time: 2:18 PM
  */
-public interface ChartCanvasController extends MaunaloaChartViewModel {
+public interface ChartCanvasController extends MaunaloaChartViewModel, DerivativesCalculatedListener {
     void setTicker(String ticker);
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);

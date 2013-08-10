@@ -43,11 +43,6 @@ public class Downloader implements EtradeDownloader {
     }
 
     @Override
-    public Page downloadPaperHistory(String ticker) throws IOException {
-        return null;
-    }
-
-    @Override
     public void login() throws IOException {
         ////To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();

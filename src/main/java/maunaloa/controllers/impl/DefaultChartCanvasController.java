@@ -16,12 +16,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
+import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.views.CanvasLine;
 import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
+import oahu.exceptions.NotImplementedException;
+import oahu.financial.Derivative;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
+import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 
 import java.util.*;
@@ -239,6 +243,13 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     @Override
     public void setRuler(IRuler ruler) {
         this.ruler = ruler;
+    }
+
+    @Override
+    public void notifyCalculated(DerivativesCalculatedEvent event) {
+        for(DerivativeFx d : event.getCalculated()) {
+            System.out.println(d.getTicker());
+        }
     }
 
     //endregion  Interface methods

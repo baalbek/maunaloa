@@ -45,7 +45,7 @@ public class App extends Application {
         initLog4j();
 
         //stage.getIcons().setAll(new Image(getClass().getResourceAsStream( "/cmd.ico" ))); 
-        stage.getIcons().add(new Image(App.class.getResource( "/cmd.png" ).toExternalForm(), 48, 48, false, true)); 
+        //stage.getIcons().add(new Image(App.class.getResource( "/cmd.png" ).toExternalForm(), 48, 48, false, true));
         // stage.getIcons().setAll(new Image("file://tmp100/msdos/cmd.png")); 
         /*
         stage.getIcons().add(

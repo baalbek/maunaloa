@@ -40,6 +40,7 @@ public class DefaultMainFrameController implements MainFrameController {
     private MaunaloaChart weeklyChart;
 
     public DefaultMainFrameController() {
+
     }
 
 
@@ -125,6 +126,8 @@ public class DefaultMainFrameController implements MainFrameController {
         optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
         optionsController.setModel(getFacade());
         optionsController.setMenuBar(myMenuBar);
+        optionsController.addDerivativesCalculatedListener(candlesticksController);
+        optionsController.addDerivativesCalculatedListener(weeksController);
     }
 
     public void initialize() {
