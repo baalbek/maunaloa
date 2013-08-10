@@ -11,5 +11,5 @@ import java.util.List;
  * Time: 1:24 PM
  */
 public interface DerivativesCalculatedListener {
-    void notifyCalculated(DerivativesCalculatedEvent event);
+    void notify(DerivativesCalculatedEvent event);
 }

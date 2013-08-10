@@ -21,29 +21,6 @@
                             </items>
                         </Menu>
                     </menus>
-                    <!--
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Select All Derivatives" />
-                                <MenuItem mnemonicParsing="false" onAction="#unSelectAllDerivatives" text="Un-Select All Derivatives" />
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Fibonacci Candlesticks">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Activate" onAction="#activateFibA"/>
-                                <MenuItem mnemonicParsing="false" text="Deactivate" onAction="#deactivateFibA"/>
-                                <MenuItem mnemonicParsing="false" text="Clear" onAction="#clearFibA"/>
-                            </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="Fibonacci Weeks">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Activate" onAction="#activateFibB"/>
-                                <MenuItem mnemonicParsing="false" text="Deactivate" onAction="#deactivateFibB"/>
-                                <MenuItem mnemonicParsing="false" text="Clear" onAction="#clearFibB"/>
-                            </items>
-                        </Menu>
-                    </menus>
-                    -->
                 </MenuBar>
                 <HBox prefHeight="-1.0" prefWidth="-1.0">
                     <children>

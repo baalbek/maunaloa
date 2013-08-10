@@ -18,10 +18,8 @@ import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.views.CanvasLine;
-import maunaloa.views.DraggableLine;
 import maunaloa.views.FibonacciDraggableLine;
-import oahu.exceptions.NotImplementedException;
-import oahu.financial.Derivative;
+import maunaloa.views.LevelLine;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
@@ -46,7 +44,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     private String ticker;
     private String name;
 
-    Map<String,List<CanvasLine>> myPaneLines = new HashMap<>();
+    Map<String,List<CanvasLine>> fibLines = new HashMap<>();
+    Map<String,List<CanvasLine>> levels = new HashMap<>();
 
 
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
@@ -132,18 +131,18 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMouseDragged(null);
         myPane.setOnMouseReleased(null);
     }
-    private void deleteFibonacci() {
-        List<CanvasLine> lines = myPaneLines.get(getTicker());
+
+    private void deleteLines(Map<String,List<CanvasLine>> linesMap) {
+        List<CanvasLine> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
 
-        clearFibonacci();
+        clearLines(linesMap);
 
         lines.clear();
     }
-
-    private void clearFibonacci() {
-        List<CanvasLine> lines = myPaneLines.get(getTicker());
+    private void clearLines(Map<String,List<CanvasLine>> linesMap) {
+        List<CanvasLine> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
 
@@ -152,8 +151,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
     }
 
-    private void refreshFibonacci() {
-        List<CanvasLine> lines = myPaneLines.get(getTicker());
+    private void refreshLines(Map<String,List<CanvasLine>> linesMap) {
+        List<CanvasLine> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
 
@@ -161,11 +160,24 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             myPane.getChildren().add(l.view());
         }
     }
+
+    private void deleteFibonacci() {
+        deleteLines(fibLines);
+    }
+
+    private void clearFibonacci() {
+        clearLines(fibLines);
+    }
+
+    private void refreshFibonacci() {
+        refreshLines(fibLines);
+    }
+
     private void updateMyPaneLines(CanvasLine line) {
-        List<CanvasLine> lines = myPaneLines.get(getTicker());
+        List<CanvasLine> lines = fibLines.get(getTicker());
         if (lines == null) {
             lines = new ArrayList<>();
-            myPaneLines.put(getTicker(), lines);
+            fibLines.put(getTicker(), lines);
         }
         lines.add(line);
     }
@@ -246,10 +258,14 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
-    public void notifyCalculated(DerivativesCalculatedEvent event) {
+    public void notify(DerivativesCalculatedEvent event) {
+        deleteLines(levels);
+        List<CanvasLine> lines = new ArrayList<>();
         for(DerivativeFx d : event.getCalculated()) {
-            System.out.println(d.getTicker());
+            lines.add(new LevelLine(d, ruler));
         }
+        levels.put(getTicker(),lines);
+        refreshLines(levels);
     }
 
     //endregion  Interface methods

@@ -14,7 +14,6 @@ import javafx.util.Callback;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.DerivativesCalculatedListener;
-import oahu.exceptions.NotImplementedException;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 
@@ -89,7 +88,7 @@ public class DerivativesControllerImpl implements DerivativesController {
 
         DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
         for (DerivativesCalculatedListener l : calculatedListeners) {
-            l.notifyCalculated(evt);
+            l.notify(evt);
         }
     }
 
