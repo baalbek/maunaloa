@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class DefaultMainFrameController implements MainFrameController {
     //region FXML
+    @FXML private ChartCanvasController obxCandlesticksController;
+    @FXML private ChartCanvasController obxWeeksController;
     @FXML private ChartCanvasController candlesticksController;
     @FXML private ChartCanvasController weeksController;
     @FXML private DerivativesController optionsController;
@@ -64,9 +66,18 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     public void setTicker(Stock ticker) {
-        candlesticksController.setTicker(ticker);
-        weeksController.setTicker(ticker);
-        optionsController.setTicker(ticker);
+
+        switch (ticker.getTickerCategory()) {
+            case 1:
+                candlesticksController.setTicker(ticker);
+                weeksController.setTicker(ticker);
+                optionsController.setTicker(ticker);
+                break;
+            case 2:
+                System.out.println(obxCandlesticksController);
+                System.out.println(obxWeeksController);
+                break;
+        }
         /*
         if (cxLoadStockHtml.isSelected()) {
             stock.assign(facade.spot(ticker));

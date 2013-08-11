@@ -76,6 +76,16 @@
                         <fx:include source="ChartCanvas.fxml" fx:id="weeks" ></fx:include>
                     </content>
                 </Tab>
+                <Tab text="OBX Candlesticks">
+                    <content>
+                        <fx:include source="ChartCanvas.fxml" fx:id="obxCandlesticks" ></fx:include>
+                    </content>
+                </Tab>
+                <Tab text="OBX Weeks">
+                    <content>
+                        <fx:include source="ChartCanvas.fxml" fx:id="obxWeeks" ></fx:include>
+                    </content>
+                </Tab>
             </tabs>
         </TabPane>
     </center>

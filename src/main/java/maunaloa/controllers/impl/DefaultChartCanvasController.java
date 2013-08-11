@@ -66,10 +66,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             }
         };
 
-        //*
         myCanvas.widthProperty().bind(myContainer.widthProperty());
         myCanvas.heightProperty().bind(myContainer.heightProperty());
-        //*/
 
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
@@ -86,7 +84,13 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     //region Public Methods
 
     public void draw() {
-        chart.draw(myCanvas);
+        switch (getTicker().getTickerCategory()) {
+            case 1:
+                chart.draw(myCanvas);
+                break;
+            case 2:
+                break;
+        }
     }
 
     //endregion
@@ -190,8 +194,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void setTicker(Stock ticker) {
-        clearFibonacci();
         this.ticker = ticker;
+
+        clearFibonacci();
         draw();
         refreshFibonacci();
     }
