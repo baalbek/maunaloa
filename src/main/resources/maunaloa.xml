@@ -17,6 +17,8 @@
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
 
+    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" />
+
     <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl" />
 
     <bean id="stockprice-factory" class="maunakea.financial.DefaultHtmlStockPriceFactory" >
@@ -50,6 +52,7 @@
           class="maunaloa.controllers.impl.DefaultMainFrameController">
         <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="weeklyChart" ref="chartWeeks" />
+        <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="facade" ref="facade" />
 
     </bean>

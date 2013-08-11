@@ -84,13 +84,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     //region Public Methods
 
     public void draw() {
-        switch (getTicker().getTickerCategory()) {
-            case 1:
-                chart.draw(myCanvas);
-                break;
-            case 2:
-                break;
-        }
+        chart.draw(myCanvas);
     }
 
     //endregion
