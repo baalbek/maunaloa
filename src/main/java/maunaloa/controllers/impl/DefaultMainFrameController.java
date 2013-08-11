@@ -7,9 +7,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
+import oahu.exceptions.NotImplementedException;
+import oahu.financial.Stock;
 import oahux.chart.MaunaloaChart;
 import oahux.models.MaunaloaFacade;
 
@@ -56,11 +59,11 @@ public class DefaultMainFrameController implements MainFrameController {
 
     //region Initialization methods
 
-    public List<String> getTickers() {
+    public List<Stock> getTickers() {
         return facade.getTickers();
     }
 
-    public void setTicker(String ticker) {
+    public void setTicker(Stock ticker) {
         candlesticksController.setTicker(ticker);
         weeksController.setTicker(ticker);
         optionsController.setTicker(ticker);
@@ -73,7 +76,18 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     private void initChoiceBoxTickers() {
-        final ObservableList<String> cbitems = FXCollections.observableArrayList(getTickers());
+        final ObservableList<Stock> cbitems = FXCollections.observableArrayList(getTickers());
+        cbTickers.setConverter(new StringConverter<Stock>() {
+            @Override
+            public String toString(Stock o) {
+                return String.format("[%s] %s",o.getTicker(),o.getCompanyName());
+            }
+
+            @Override
+            public Stock fromString(String s) {
+                throw new NotImplementedException();
+            }
+        });
         cbTickers.getItems().addAll(cbitems);
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(
                 new ChangeListener<Number>() {
@@ -88,7 +102,7 @@ public class DefaultMainFrameController implements MainFrameController {
     private void notifyOptionsController() {
         Object prop = cbTickers.valueProperty().get();
         if (prop == null) return;
-        String ticker = prop.toString();
+        Stock ticker = (Stock)prop;
         optionsController.setTicker(ticker);
     }
 

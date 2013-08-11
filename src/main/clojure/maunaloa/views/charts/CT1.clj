@@ -71,7 +71,6 @@
         (- h (+ mtop mbtm))))
     (let [qsx (B/block-chain
                 :qs [itrend-block cc-block vol-block]
-                ;:qs [itrend-block]
                 :h (- h mtop mbtm)
                 :x0 mleft
                 :x1 (- w mright)
@@ -79,7 +78,6 @@
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
         (println vr)
         (.setRuler vm vr)
-        ;(.setRuler vm ChartViewModel/CHART_A1_HRULER hr)
         )
       (doseq [q (rest qsx)]
         (Q/plot-quadrant gc q)))))

@@ -43,6 +43,11 @@ public class Downloader implements EtradeDownloader {
     }
 
     @Override
+    public Page downloadPaperHistory(String s) throws IOException {
+        throw new oahu.exceptions.NotImplementedException();
+    }
+
+    @Override
     public void login() throws IOException {
         ////To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();

@@ -14,6 +14,8 @@ import javafx.util.Callback;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.DerivativesCalculatedListener;
+import oahu.exceptions.NotImplementedException;
+import oahu.financial.Stock;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 
@@ -174,14 +176,15 @@ public class DerivativesControllerImpl implements DerivativesController {
         return _selectedLoadDerivativesProperty;
     }
 
+
     @Override
-    public void setTicker(String ticker) {
+    public void setTicker(Stock ticker) {
         switch (_selectedDerivativeProperty.get().getUserData().toString()) {
             case "calls":
-                loadCalls(ticker);
+                loadCalls(ticker.getTicker());
                 break;
             case "puts":
-                loadPuts(ticker);
+                loadPuts(ticker.getTicker());
                 break;
             case "all":
                 loadAll();

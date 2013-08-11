@@ -100,7 +100,7 @@ public class FacadeImpl implements MaunaloaFacade {
     }
 
     @Override
-    public List<String> getTickers() {
+    public List<Stock> getTickers() {
         return getLocator().getTickers();
     }
     //endregion Interface Methods

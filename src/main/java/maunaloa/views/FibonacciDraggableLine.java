@@ -45,45 +45,27 @@ public class FibonacciDraggableLine extends DraggableLine {
 
         double y = Math.min(startY, endY);
 
-        DoubleBinding y50 = new DoubleBinding() {
-            {
-                super.bind(line.startYProperty(),line.endYProperty());
-            }
-            @Override
-            protected double computeValue() {
-                return (line.startYProperty().get() + line.endYProperty().get()) * 0.5;
-            }
-        };
+        group.getChildren().add(createFibLine(createBinding(0.5), Color.BLACK));
 
-        DoubleBinding y618 = new DoubleBinding() {
-            {
-                super.bind(line.startYProperty(),line.endYProperty());
-            }
-            @Override
-            protected double computeValue() {
-                return line.getStartY() + (line.getEndY() - line.getStartY()) * PHI;
-            }
-        };
+        group.getChildren().add(createFibLine(createBinding(PHI),Color.BLACK));
 
-        DoubleBinding y382 = new DoubleBinding() {
-            {
-                super.bind(line.startYProperty(),line.endYProperty());
-            }
-            @Override
-            protected double computeValue() {
-                return line.getStartY() + (line.getEndY() - line.getStartY()) * PHI * PHI;
-            }
-        };
-
-        group.getChildren().add(createFibLine(y50, Color.BLACK));
-
-        group.getChildren().add(createFibLine(y618,Color.BLACK));
-
-        group.getChildren().add(createFibLine(y382,Color.BLACK));
+        group.getChildren().add(createFibLine(createBinding(PHI*PHI),Color.BLACK));
     }
     //endregion
 
     //region Private Methods
+    private DoubleBinding createBinding(final double level) {
+        return new DoubleBinding() {
+            {
+                super.bind(line.startYProperty(),line.endYProperty());
+            }
+            @Override
+            protected double computeValue() {
+                return line.getStartY() + (line.getEndY() - line.getStartY()) * level;
+            }
+        };
+    }
+
     private Line createFibLine(DoubleBinding db, Color color) {
         Line newLine = new Line();
         newLine.setStroke(color);

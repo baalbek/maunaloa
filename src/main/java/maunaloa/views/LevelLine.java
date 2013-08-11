@@ -13,7 +13,6 @@ import oahux.domain.DerivativeFx;
  * User: rcs
  * Date: 8/10/13
  * Time: 3:11 PM
- * To change this template use File | Settings | File Templates.
  */
 public class LevelLine implements CanvasLine {
     private Line line ;
@@ -24,6 +23,8 @@ public class LevelLine implements CanvasLine {
     public LevelLine(DerivativeFx derivative, IRuler ruler) {
         this.derivative = derivative;
         this.ruler = (IBoundaryRuler)ruler;
+        group = new Group();
+        group.getChildren().add(new Line(0,0,1200,1200));
     }
 
 

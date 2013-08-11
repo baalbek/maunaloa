@@ -86,7 +86,6 @@
       :y0 mtop)]
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
         (.setRuler vm vr)
-        ;(.setRuler vm ChartViewModel/CHART_B1_HRULER hr)
         )
       (doseq [q (rest qsx)]
         (Q/plot-quadrant gc q)))))

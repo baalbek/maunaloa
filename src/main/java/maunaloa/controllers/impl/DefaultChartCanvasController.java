@@ -20,6 +20,7 @@ import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.views.CanvasLine;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.LevelLine;
+import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
@@ -41,11 +42,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     private MaunaloaChart chart;
     private MaunaloaFacade model;
-    private String ticker;
+    private Stock ticker;
     private String name;
 
-    Map<String,List<CanvasLine>> fibLines = new HashMap<>();
-    Map<String,List<CanvasLine>> levels = new HashMap<>();
+    Map<Stock,List<CanvasLine>> fibLines = new HashMap<>();
+    Map<Stock,List<CanvasLine>> levels = new HashMap<>();
 
 
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
@@ -132,7 +133,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMouseReleased(null);
     }
 
-    private void deleteLines(Map<String,List<CanvasLine>> linesMap) {
+    private void deleteLines(Map<Stock,List<CanvasLine>> linesMap) {
         List<CanvasLine> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
@@ -141,7 +142,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
         lines.clear();
     }
-    private void clearLines(Map<String,List<CanvasLine>> linesMap) {
+    private void clearLines(Map<Stock,List<CanvasLine>> linesMap) {
         List<CanvasLine> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
@@ -151,7 +152,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
     }
 
-    private void refreshLines(Map<String,List<CanvasLine>> linesMap) {
+    private void refreshLines(Map<Stock,List<CanvasLine>> linesMap) {
         List<CanvasLine> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
@@ -188,7 +189,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
 
     @Override
-    public void setTicker(String ticker) {
+    public void setTicker(Stock ticker) {
         clearFibonacci();
         this.ticker = ticker;
         draw();
@@ -239,11 +240,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public Collection<StockPrice> stockPrices(int i) {
-        return model.stockPrices(getTicker(),-1);
+        return model.stockPrices(getTicker().getTicker(),-1);
     }
 
     @Override
-    public String getTicker() {
+    public Stock getTicker() {
         return ticker;
     }
 
