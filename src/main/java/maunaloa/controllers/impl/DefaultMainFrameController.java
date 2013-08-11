@@ -44,6 +44,8 @@ public class DefaultMainFrameController implements MainFrameController {
     private MaunaloaChart candlesticksChart;
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxWeeklyChart;
+    private MaunaloaChart obxCandlesticksChart;
+
 
     public DefaultMainFrameController() {
 
@@ -75,7 +77,7 @@ public class DefaultMainFrameController implements MainFrameController {
                 optionsController.setTicker(ticker);
                 break;
             case 2:
-                System.out.println(obxCandlesticksController);
+                obxCandlesticksController.setTicker(ticker);
                 obxWeeksController.setTicker(ticker);
                 break;
         }
@@ -169,6 +171,11 @@ public class DefaultMainFrameController implements MainFrameController {
         weeksController.setModel(getFacade());
         weeksController.setMenuBar(myMenuBar);
 
+        obxCandlesticksController.setName("OBX Candlest.");
+        obxCandlesticksController.setChart(getObxCandlesticksChart());
+        obxCandlesticksController.setModel(getFacade());
+        obxCandlesticksController.setMenuBar(myMenuBar);
+
         obxWeeksController.setName("OBX Weeks");
         obxWeeksController.setChart(getObxWeeklyChart());
         obxWeeksController.setModel(getFacade());
@@ -212,6 +219,14 @@ public class DefaultMainFrameController implements MainFrameController {
 
     public void setObxWeeklyChart(MaunaloaChart obxWeeklyChart) {
         this.obxWeeklyChart = obxWeeklyChart;
+    }
+
+    public MaunaloaChart getObxCandlesticksChart() {
+        return obxCandlesticksChart;
+    }
+
+    public void setObxCandlesticksChart(MaunaloaChart obxCandlesticksChart) {
+        this.obxCandlesticksChart = obxCandlesticksChart;
     }
 
     //endregion

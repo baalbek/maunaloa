@@ -17,6 +17,8 @@
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
 
+    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" />
+
     <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" />
 
     <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl" />
@@ -52,6 +54,7 @@
           class="maunaloa.controllers.impl.DefaultMainFrameController">
         <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="weeklyChart" ref="chartWeeks" />
+        <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="facade" ref="facade" />
 
