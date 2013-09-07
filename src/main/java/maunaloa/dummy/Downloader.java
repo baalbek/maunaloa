@@ -49,32 +49,32 @@ public class Downloader implements EtradeDownloader {
 
     @Override
     public void login() throws IOException {
-        ////To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();
     }
 
     @Override
     public void logout() throws IOException {
-        ////To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();
     }
 
     @Override
     public void closeAllWindows() {
-        ////To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();
     }
 
     @Override
     public HtmlPage getLoginPage() {
-        //return null;//To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();
     }
 
     @Override
     public HtmlPage getLogoutPage() {
-        //return null;//To change body of implemented methods use File | Settings | File Templates.
         throw new NotImplementedException();
+    }
+
+    @Override
+    public WebClient getWebClient() {
+        throw new oahu.exceptions.NotImplementedException();
     }
 
     public String getHtmlPath() {

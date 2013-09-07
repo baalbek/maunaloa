@@ -166,4 +166,29 @@ public class DerivativeFxImpl implements DerivativeFx {
     public String getSeries() {
         return derivative.getSeries();
     }
+
+    @Override
+    public double getWatermark() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void setWatermark(double v) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void updateWatermark(double v) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public double getDiffFromBought() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public void setDiffFromBought(double v) {
+        throw new NotImplementedException();
+    }
 }

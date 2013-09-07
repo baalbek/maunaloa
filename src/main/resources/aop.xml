@@ -7,11 +7,6 @@
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-    <!--
-    <bean id="traceAspect" class="maunaloa.aspects.TraceAspect" />
-    -->
-
-
     <bean id="validateBeansAspect" class="maunaloa.aspects.ValidateBeansAspect">
         <property name="spreadLimit" value="5.0" />
         <property name="daysLimit" value="10" />
@@ -19,12 +14,8 @@
 
     <bean id="memoizeAspect" class="maunaloa.aspects.MemoizeAspect" />
 
-    <!--
-
-    <bean id="downloadMaintenanceAspect" class="maunaloa.aspects.DownloadMaintenanceAspect">
+    <!--<bean id="downloadMaintenanceAspect" class="maunaloa.aspects.DownloadMaintenanceAspect">
         <property name="fileStoreDir" value="/home/rcs/opt/java/maunaloa/html" />
         <property name="fileStoreFormat" value="html" />
-    </bean>
-    -->
-
+    </bean>-->
 </beans>

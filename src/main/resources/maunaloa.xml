@@ -8,10 +8,11 @@
 
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
-
-    <bean id="downloader" class="maunaloa.dummy.Downloader">
+    <bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>
+   <!-- <bean id="downloader" class="maunaloa.dummy.Downloader">
         <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
     </bean>
+    -->
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
 

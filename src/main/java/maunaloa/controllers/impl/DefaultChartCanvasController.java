@@ -136,7 +136,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
         if (lines == null) return;
 
-        clearLines(linesMap);
+        for (CanvasLine l : lines) {
+            myPane.getChildren().remove(l.view());
+        }
 
         lines.clear();
     }
@@ -160,18 +162,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
     }
 
-    private void deleteFibonacci() {
-        deleteLines(fibLines);
-    }
-
-    private void clearFibonacci() {
-        clearLines(fibLines);
-    }
-
-    private void refreshFibonacci() {
-        refreshLines(fibLines);
-    }
-
     private void updateMyPaneLines(CanvasLine line) {
         List<CanvasLine> lines = fibLines.get(getTicker());
         if (lines == null) {
@@ -188,11 +178,13 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void setTicker(Stock ticker) {
-        this.ticker = ticker;
 
-        clearFibonacci();
+        clearLines(fibLines);
+        clearLines(levels);
+        this.ticker = ticker;
         draw();
-        refreshFibonacci();
+        refreshLines(fibLines);
+        refreshLines(levels);
     }
 
 
@@ -225,7 +217,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         MenuItem m3 = new MenuItem("Delete");
         m3.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
-                deleteFibonacci();
+                deleteLines(fibLines);
             }
         });
         menu.getItems().addAll(m1,m2,m3);
