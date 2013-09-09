@@ -11,6 +11,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -122,6 +123,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     myPane.getChildren().add(fibLine.view());
                 }
                 lineA.set(null);
+                deactivateFibonacci();
             }
         });
     }
@@ -201,26 +203,28 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void setMenuBar(MenuBar menuBar) {
-        Menu menu = new Menu(String.format("Fibonacci (%s)",name));
-        MenuItem m1 = new MenuItem("Activate");
+        Menu menu = new Menu(String.format("%s",name));
+        MenuItem m1 = new MenuItem("Fibonacci line");
         m1.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 activateFibonacci();
             }
         });
+        /*
         MenuItem m2 = new MenuItem("Deactivate");
         m2.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 deactivateFibonacci();
             }
         });
-        MenuItem m3 = new MenuItem("Delete");
+        */
+        MenuItem m3 = new MenuItem("Delete fibonacci");
         m3.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 deleteLines(fibLines);
             }
         });
-        menu.getItems().addAll(m1,m2,m3);
+        menu.getItems().addAll(m1,m3, new SeparatorMenuItem());
         menuBar.getMenus().add(menu);
     }
 

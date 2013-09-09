@@ -6,6 +6,32 @@
 
     <import resource="classpath:aop.xml"  />
 
+
+    <!-- Converters -->
+    <bean id="dateEditor"
+          class="org.springframework.beans.propertyeditors.CustomDateEditor">
+
+        <constructor-arg>
+            <bean class="java.text.SimpleDateFormat">
+                <constructor-arg value="yyyy-MM-dd" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg value="true" />
+
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="java.util.Date">
+                    <ref local="dateEditor" />
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
     <bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>
@@ -48,7 +74,7 @@
         <property name="locator" ref="locator" />
         <property name="etrade" ref="etrade" />
         <property name="calculator" ref="calculator" />
-        <!-- property name="defaultStartDate" value="2010-1-1" / -->
+        <property name="defaultStartDate" value="2010-01-01" />
     </bean>
 
     <bean id="mainframe-controller"

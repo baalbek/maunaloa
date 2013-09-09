@@ -3,7 +3,6 @@ package maunaloa.views;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.Line;
-import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.domain.DerivativeFx;
