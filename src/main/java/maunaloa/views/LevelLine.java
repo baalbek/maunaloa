@@ -3,6 +3,7 @@ package maunaloa.views;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.shape.Line;
+import oahu.financial.StockPrice;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.domain.DerivativeFx;
@@ -23,7 +24,9 @@ public class LevelLine implements CanvasLine {
         this.derivative = derivative;
         this.ruler = (IBoundaryRuler)ruler;
         group = new Group();
-        group.getChildren().add(new Line(0,0,1200,1200));
+        StockPrice p = derivative.getParent();
+        double y = ruler.calcPix(p.getCls());
+        group.getChildren().add(new Line(0,y,0,((IBoundaryRuler) ruler).getLowerRight().getX()));
     }
 
 
