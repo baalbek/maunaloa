@@ -15,7 +15,7 @@ import javafx.scene.shape.Line;
  * Date: 3/31/13
  * Time: 7:42 PM
  */
-public abstract class DraggableLine implements  CanvasLine {
+public abstract class DraggableLine implements CanvasGroup {
     protected Line line ;
     protected Circle startAnchor ;
     protected Circle endAnchor ;
