@@ -27,6 +27,7 @@ import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
+import org.apache.log4j.Logger;
 
 import java.util.*;
 
@@ -37,6 +38,8 @@ import java.util.*;
  * Time: 12:26 AM
  */
 public class DefaultChartCanvasController implements ChartCanvasController {
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
+
     @FXML private Canvas myCanvas;
     @FXML private VBox myContainer;
     @FXML private Pane myPane;
@@ -258,6 +261,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         deleteLines(levels);
         List<CanvasLine> lines = new ArrayList<>();
         for(DerivativeFx d : event.getCalculated()) {
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("notify adding line for derivative %s",d.getTicker()));
+            }
             lines.add(new LevelLine(d, ruler));
         }
         levels.put(getTicker(),lines);

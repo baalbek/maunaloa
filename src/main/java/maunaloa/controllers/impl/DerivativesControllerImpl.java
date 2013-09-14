@@ -18,6 +18,7 @@ import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +31,8 @@ import java.util.List;
  * Time: 08:48
  */
 public class DerivativesControllerImpl implements DerivativesController {
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
+
     //region FXML
     @FXML private TableView<DerivativeFx> derivativesTableView;
 
@@ -86,6 +89,9 @@ public class DerivativesControllerImpl implements DerivativesController {
     }
 
     private void fireCalculatedEvent(List<DerivativeFx> calculated) {
+        if (log.isDebugEnabled()) {
+            log.debug(String.format("fireCalculatedEvent listeners: %d",calculatedListeners.size()));
+        }
         if (calculatedListeners.size() == 0) return;
 
         DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);

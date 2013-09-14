@@ -14,8 +14,7 @@
 
     <bean id="memoizeAspect" class="maunaloa.aspects.MemoizeAspect" />
 
-    <!--<bean id="downloadMaintenanceAspect" class="maunaloa.aspects.DownloadMaintenanceAspect">
-        <property name="fileStoreDir" value="/home/rcs/opt/java/maunaloa/html" />
-        <property name="fileStoreFormat" value="html" />
-    </bean>-->
+    <bean id="downloadMaintenanceAspect" class="maunaloa.aspects.DownloadMaintenanceAspect">
+        <property name="storeDir" value="/home/rcs/opt/java/maunaloa/html" />
+    </bean>
 </beans>
