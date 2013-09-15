@@ -82,19 +82,31 @@ public class DerivativeFxImpl implements DerivativeFx {
         return stockPriceRisk;
     }
 
+    private Double _delta = null;
     @Override
     public double getDelta() {
-        return 0.75;
+        if (_delta == null) {
+            _delta = calculator.delta(this);
+        }
+        return _delta;
     }
 
+    private Double _spread = null;
     @Override
     public double getSpread() {
-        return 2.3;
+        if (_spread == null) {
+            _spread = calculator.spread(this);
+        }
+        return _spread;
     }
 
+    private Double _breakEven = null;
     @Override
     public double getBreakeven() {
-        return 223.0;
+        if (_breakEven == null) {
+            _breakEven = calculator.breakEven(this);
+        }
+        return _breakEven;
     }
 
 

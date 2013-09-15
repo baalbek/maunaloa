@@ -125,13 +125,13 @@
 ;;------------------------------------------------------------------------
 
 (defn -delta [this, ^Derivative deriv]
-  (let [ cb ^Derivative deriv
-         iv (.getIvSell cb)
-         new-spot (+ 1.0 (-> cb .getParent .getValue))
+  (let [
+         iv (.getIvSell deriv)
+         new-spot (+ 1.0 (-> deriv .getParent .getValue))
          new-price ((price-fn deriv)
                      new-spot
-                     (.getX cb)
-                     (/ (.getDays cb) 365.0)
+                     (.getX deriv)
+                     (/ (.getDays deriv) 365.0)
                      iv)]
     (- new-price (.getSell deriv))))
 

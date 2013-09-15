@@ -33,7 +33,7 @@ public class RiscLines implements CanvasGroup {
                 String.format("(%s) Break-even: %.2f",
                         derivative.getTicker(),
                         derivative.getBreakeven()));
-        createLevel(derivative.getBreakeven(), Color.RED,
+        createLevel(derivative.stockPriceRiskProperty().get(), Color.RED,
                 String.format("(%s) Risc: %.2f",
                         derivative.getTicker(),
                         derivative.stockPriceRiskProperty().get()));
