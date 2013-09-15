@@ -75,28 +75,11 @@ public class DerivativesControllerImpl implements DerivativesController {
     //endregion Init
 
     //region FXML Actions
+    //endregion
 
-    /*
-    public void calcRisk(ActionEvent event) {
-        String txVal = ((TextField)event.getSource()).textProperty().get();
-        double risk = Double.parseDouble(txVal);
+    //region Private Methods
 
-        List<DerivativeFx> calculated = new ArrayList<>();
-
-        for (DerivativeFx fx : derivativesTableView.getItems()) {
-            if (fx.isCheckedProperty().get() == true) {
-                fx.setRisk(risk);
-                calculated.add(fx);
-            }
-        }
-
-        if (calculated.size() > 0) {
-            fireCalculatedEvent(calculated);
-        }
-    }
-    //*/
-
-    public void calcRisc(RiscItem item) {
+    private void calcRisc(RiscItem item) {
         List<DerivativeFx> calculated = new ArrayList<>();
 
         for (DerivativeFx fx : derivativesTableView.getItems()) {
@@ -122,10 +105,6 @@ public class DerivativesControllerImpl implements DerivativesController {
             l.notify(evt);
         }
     }
-
-    //endregion
-
-    //region Private Methods
 
     private void loadCalls(String ticker) {
         if  (_selectedLoadDerivativesProperty.get() == true) {
@@ -168,17 +147,6 @@ public class DerivativesControllerImpl implements DerivativesController {
     }
     private void initChoiceBoxRisc() {
         final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(getRiscItems());
-        cbRisc.setConverter(new StringConverter<RiscItem>() {
-            @Override
-            public String toString(RiscItem o) {
-                return String.format(" %s", o.getValue());
-            }
-
-            @Override
-            public RiscItem fromString(String s) {
-                throw new NotImplementedException();
-            }
-        });
         cbRisc.getItems().addAll(cbitems);
         cbRisc.getSelectionModel().selectedIndexProperty().addListener(
             new ChangeListener<Number>() {

@@ -15,4 +15,9 @@ public class RiscItem {
     public double getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%.1f",getValue());
+    }
 }
