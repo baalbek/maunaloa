@@ -4,14 +4,19 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 import maunaloa.controllers.DerivativesController;
+import maunaloa.domain.RiscItem;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.DerivativesCalculatedListener;
 import oahu.exceptions.NotImplementedException;
@@ -52,6 +57,7 @@ public class DerivativesControllerImpl implements DerivativesController {
     @FXML private TableColumn<DerivativeFx, Double> colRisc;
     @FXML private TableColumn<DerivativeFx, Double> colSpRisc;
 
+    @FXML private ChoiceBox cbRisc;
     @FXML private TextField txSpot;
     @FXML private TextField txOpen;
     @FXML private TextField txHi;
@@ -70,6 +76,7 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     //region FXML Actions
 
+    /*
     public void calcRisk(ActionEvent event) {
         String txVal = ((TextField)event.getSource()).textProperty().get();
         double risk = Double.parseDouble(txVal);
@@ -79,6 +86,22 @@ public class DerivativesControllerImpl implements DerivativesController {
         for (DerivativeFx fx : derivativesTableView.getItems()) {
             if (fx.isCheckedProperty().get() == true) {
                 fx.setRisk(risk);
+                calculated.add(fx);
+            }
+        }
+
+        if (calculated.size() > 0) {
+            fireCalculatedEvent(calculated);
+        }
+    }
+    //*/
+
+    public void calcRisc(RiscItem item) {
+        List<DerivativeFx> calculated = new ArrayList<>();
+
+        for (DerivativeFx fx : derivativesTableView.getItems()) {
+            if (fx.isCheckedProperty().get() == true) {
+                fx.setRisk(item.getValue());
                 calculated.add(fx);
             }
         }
@@ -127,7 +150,45 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     //region Initialization methods
     public void initialize() {
+        initChoiceBoxRisc();
         initGrid();
+    }
+
+    private List<RiscItem> getRiscItems() {
+        List<RiscItem> result = new ArrayList<>();
+
+        for (int i=1; i<11; ++i) {
+            result.add(new RiscItem(i));
+            result.add(new RiscItem(i+0.5));
+        }
+        for (int i=11; i<25; ++i) {
+            result.add(new RiscItem(i));
+        }
+        return result;
+    }
+    private void initChoiceBoxRisc() {
+        final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(getRiscItems());
+        cbRisc.setConverter(new StringConverter<RiscItem>() {
+            @Override
+            public String toString(RiscItem o) {
+                return String.format(" %s", o.getValue());
+            }
+
+            @Override
+            public RiscItem fromString(String s) {
+                throw new NotImplementedException();
+            }
+        });
+        cbRisc.getItems().addAll(cbitems);
+        cbRisc.getSelectionModel().selectedIndexProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number value, Number newValue) {
+                    calcRisc(cbitems.get(newValue.intValue()));
+                }
+            }
+        );
+
     }
 
     private void initGrid() {
