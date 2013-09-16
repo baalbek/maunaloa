@@ -21,7 +21,9 @@ import maunaloa.domain.RiscItem;
 import maunaloa.domain.StockPriceFx;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.DerivativesControllerListener;
+import maunaloa.events.StockPriceAssignedEvent;
 import oahu.financial.Stock;
+import oahu.financial.StockPrice;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
@@ -104,6 +106,12 @@ public class DerivativesControllerImpl implements DerivativesController {
         if (calculatedListeners.size() == 0) return;
 
         DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
+        for (DerivativesControllerListener l : calculatedListeners) {
+            l.notify(evt);
+        }
+    }
+    private void fireAssignStockPriceEvent(StockPrice value) {
+        StockPriceAssignedEvent evt = new StockPriceAssignedEvent(value);
         for (DerivativesControllerListener l : calculatedListeners) {
             l.notify(evt);
         }
@@ -234,7 +242,9 @@ public class DerivativesControllerImpl implements DerivativesController {
                 break;
         }
         if (_selectedLoadStockProperty.get() == true) {
-            stockPrice.setPrice(model.spot(ticker.getTicker()));
+            StockPrice spot = model.spot(ticker.getTicker());
+            stockPrice.setPrice(spot);
+            fireAssignStockPriceEvent(spot);
         }
     }
 

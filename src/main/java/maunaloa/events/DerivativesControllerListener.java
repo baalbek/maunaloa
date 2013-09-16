@@ -1,9 +1,5 @@
 package maunaloa.events;
 
-import oahu.financial.Derivative;
-
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -12,4 +8,5 @@ import java.util.List;
  */
 public interface DerivativesControllerListener {
     void notify(DerivativesCalculatedEvent event);
+    void notify(StockPriceAssignedEvent event);
 }

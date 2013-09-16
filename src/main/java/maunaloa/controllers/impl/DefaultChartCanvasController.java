@@ -18,9 +18,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.events.DerivativesCalculatedEvent;
+import maunaloa.events.StockPriceAssignedEvent;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.RiscLines;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -268,6 +270,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
         levels.put(getTicker(),lines);
         refreshLines(levels);
+    }
+
+    @Override
+    public void notify(StockPriceAssignedEvent event) {
+        StockPrice sp = event.getStockPrice();
+        System.out.println("Event fired: " + event + ", " + sp);
     }
 
     //endregion  Interface methods
