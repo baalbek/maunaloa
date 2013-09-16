@@ -154,7 +154,7 @@ public class DefaultMainFrameController implements MainFrameController {
         optionsController.setModel(getFacade());
         optionsController.setMenuBar(myMenuBar);
         optionsController.addDerivativesCalculatedListener(candlesticksController);
-        //optionsController.addDerivativesCalculatedListener(weeksController);
+        optionsController.addDerivativesCalculatedListener(weeksController);
     }
 
     public void initialize() {

@@ -1,5 +1,6 @@
 package maunaloa.controllers.impl;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -15,8 +16,10 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.domain.RiscItem;
+import maunaloa.domain.StockPriceFx;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.DerivativesCalculatedListener;
 import oahu.exceptions.NotImplementedException;
@@ -24,6 +27,7 @@ import oahu.financial.Stock;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
+import ranoraraku.beans.StockPriceBean;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,12 +66,14 @@ public class DerivativesControllerImpl implements DerivativesController {
     @FXML private TextField txOpen;
     @FXML private TextField txHi;
     @FXML private TextField txLo;
-    private MaunaloaFacade model;
-    private MenuBar menuBar;
-    private List<DerivativesCalculatedListener> calculatedListeners;
     //endregion FXML
 
     //region Init
+
+    private MaunaloaFacade model;
+    private MenuBar menuBar;
+    private List<DerivativesCalculatedListener> calculatedListeners;
+    private StockPriceFx stockPrice = new StockPriceFx();
 
     public DerivativesControllerImpl() {
         calculatedListeners = new ArrayList<>();
@@ -110,15 +116,10 @@ public class DerivativesControllerImpl implements DerivativesController {
         if  (_selectedLoadDerivativesProperty.get() == true) {
             derivativesTableView.getItems().setAll(FXCollections.observableArrayList(model.calls(ticker)));
         }
-        else if (_selectedLoadStockProperty.get() == true) {
-        }
     }
     private void loadPuts(String ticker) {
-        if (ticker == null) return;
         if  (_selectedLoadDerivativesProperty.get() == true) {
             derivativesTableView.getItems().setAll(FXCollections.observableArrayList(model.puts(ticker)));
-        }
-        else if (_selectedLoadStockProperty.get() == true) {
         }
     }
     private void loadAll() {
@@ -131,6 +132,7 @@ public class DerivativesControllerImpl implements DerivativesController {
     public void initialize() {
         initChoiceBoxRisc();
         initGrid();
+        initStockPrice();
     }
 
     private List<RiscItem> getRiscItems() {
@@ -144,6 +146,13 @@ public class DerivativesControllerImpl implements DerivativesController {
             result.add(new RiscItem(i));
         }
         return result;
+    }
+    private void initStockPrice() {
+        StringConverter<? extends Number> converter =  new DoubleStringConverter();
+        Bindings.bindBidirectional(txSpot.textProperty(), stockPrice.clsProperty(), (StringConverter<Number>) converter);
+        Bindings.bindBidirectional(txOpen.textProperty(), stockPrice.opnProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txHi.textProperty(), stockPrice.hiProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txLo.textProperty(), stockPrice.loProperty(),  (StringConverter<Number>)converter);
     }
     private void initChoiceBoxRisc() {
         final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(getRiscItems());
@@ -214,6 +223,8 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     @Override
     public void setTicker(Stock ticker) {
+        if (ticker == null) return;
+
         switch (_selectedDerivativeProperty.get().getUserData().toString()) {
             case "calls":
                 loadCalls(ticker.getTicker());
@@ -224,6 +235,9 @@ public class DerivativesControllerImpl implements DerivativesController {
             case "all":
                 loadAll();
                 break;
+        }
+        if (_selectedLoadStockProperty.get() == true) {
+            stockPrice.setPrice(model.spot(ticker.getTicker()));
         }
     }
 
