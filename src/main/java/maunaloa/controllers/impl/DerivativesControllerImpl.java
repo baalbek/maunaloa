@@ -9,7 +9,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -21,13 +20,11 @@ import maunaloa.controllers.DerivativesController;
 import maunaloa.domain.RiscItem;
 import maunaloa.domain.StockPriceFx;
 import maunaloa.events.DerivativesCalculatedEvent;
-import maunaloa.events.DerivativesCalculatedListener;
-import oahu.exceptions.NotImplementedException;
+import maunaloa.events.DerivativesControllerListener;
 import oahu.financial.Stock;
 import oahux.domain.DerivativeFx;
 import oahux.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
-import ranoraraku.beans.StockPriceBean;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,7 +69,7 @@ public class DerivativesControllerImpl implements DerivativesController {
 
     private MaunaloaFacade model;
     private MenuBar menuBar;
-    private List<DerivativesCalculatedListener> calculatedListeners;
+    private List<DerivativesControllerListener> calculatedListeners;
     private StockPriceFx stockPrice = new StockPriceFx();
 
     public DerivativesControllerImpl() {
@@ -107,7 +104,7 @@ public class DerivativesControllerImpl implements DerivativesController {
         if (calculatedListeners.size() == 0) return;
 
         DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
-        for (DerivativesCalculatedListener l : calculatedListeners) {
+        for (DerivativesControllerListener l : calculatedListeners) {
             l.notify(evt);
         }
     }
@@ -252,7 +249,7 @@ public class DerivativesControllerImpl implements DerivativesController {
     }
 
     @Override
-    public void addDerivativesCalculatedListener(DerivativesCalculatedListener listener) {
+    public void addDerivativesCalculatedListener(DerivativesControllerListener listener) {
         calculatedListeners.add(listener);
     }
     //endregion  Interface methods
