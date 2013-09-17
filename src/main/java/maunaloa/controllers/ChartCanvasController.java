@@ -1,5 +1,6 @@
 package maunaloa.controllers;
 
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import maunaloa.events.DerivativesControllerListener;
 import oahu.financial.Stock;
@@ -18,5 +19,6 @@ public interface ChartCanvasController extends MaunaloaChartViewModel, Derivativ
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);
     void setMenuBar(MenuBar menuBar);
+    void setFibonacciMenu(Menu menu);
     void setName(String name);
 }

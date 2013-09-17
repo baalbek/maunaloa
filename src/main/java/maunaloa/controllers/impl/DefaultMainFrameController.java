@@ -33,6 +33,7 @@ public class DefaultMainFrameController implements MainFrameController {
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
     @FXML private MenuBar myMenuBar;
+    @FXML private Menu fibonacciMenu;
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
@@ -152,7 +153,7 @@ public class DefaultMainFrameController implements MainFrameController {
         optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
         optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
         optionsController.setModel(getFacade());
-        optionsController.setMenuBar(myMenuBar);
+        //optionsController.setMenuBar(myMenuBar);
         optionsController.addDerivativesCalculatedListener(candlesticksController);
         optionsController.addDerivativesCalculatedListener(weeksController);
     }
@@ -164,22 +165,26 @@ public class DefaultMainFrameController implements MainFrameController {
         candlesticksController.setName("Candlesticks");
         candlesticksController.setChart(getCandlesticksChart());
         candlesticksController.setModel(getFacade());
-        candlesticksController.setMenuBar(myMenuBar);
+        candlesticksController.setFibonacciMenu(fibonacciMenu);
+        //candlesticksController.setMenuBar(myMenuBar);
 
         weeksController.setName("Weeks");
         weeksController.setChart(getWeeklyChart());
         weeksController.setModel(getFacade());
-        weeksController.setMenuBar(myMenuBar);
+        weeksController.setFibonacciMenu(fibonacciMenu);
+        //weeksController.setMenuBar(myMenuBar);
 
         obxCandlesticksController.setName("OBX Candlest.");
         obxCandlesticksController.setChart(getObxCandlesticksChart());
         obxCandlesticksController.setModel(getFacade());
-        obxCandlesticksController.setMenuBar(myMenuBar);
+        obxCandlesticksController.setFibonacciMenu(fibonacciMenu);
+        //obxCandlesticksController.setMenuBar(myMenuBar);
 
         obxWeeksController.setName("OBX Weeks");
         obxWeeksController.setChart(getObxWeeklyChart());
         obxWeeksController.setModel(getFacade());
-        obxWeeksController.setMenuBar(myMenuBar);
+        obxWeeksController.setFibonacciMenu(fibonacciMenu);
+        //obxWeeksController.setMenuBar(myMenuBar);
 
         initOptionsController();
     }

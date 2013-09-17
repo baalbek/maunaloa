@@ -234,6 +234,24 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
+    public void setFibonacciMenu(Menu menu) {
+        MenuItem m1 = new MenuItem(String.format("(%s) Fibonacci line",name));
+        m1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                activateFibonacci();
+            }
+        });
+
+        MenuItem m3 = new MenuItem(String.format("(%s) Delete fibonacci",name));
+        m3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                deleteLines(fibLines);
+            }
+        });
+        menu.getItems().addAll(m1,m3, new SeparatorMenuItem());
+    }
+
+    @Override
     public void setName(String name) {
         this.name = name;
     }
