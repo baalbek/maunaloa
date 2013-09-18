@@ -8,6 +8,8 @@ import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.models.MaunaloaFacade;
 
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -18,7 +20,6 @@ public interface ChartCanvasController extends MaunaloaChartViewModel, Derivativ
     void setTicker(Stock ticker);
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);
-    void setMenuBar(MenuBar menuBar);
-    void setFibonacciMenu(Menu menu);
     void setName(String name);
+    void setMenus(Map<String,Menu> menus);
 }

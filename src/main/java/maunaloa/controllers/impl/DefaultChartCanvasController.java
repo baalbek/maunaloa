@@ -206,6 +206,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         this.model = model;
     }
 
+    /*
     @Override
     public void setMenuBar(MenuBar menuBar) {
         Menu menu = new Menu(String.format("%s",name));
@@ -215,14 +216,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 activateFibonacci();
             }
         });
-        /*
-        MenuItem m2 = new MenuItem("Deactivate");
-        m2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                deactivateFibonacci();
-            }
-        });
-        */
         MenuItem m3 = new MenuItem("Delete fibonacci");
         m3.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -250,10 +243,32 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         });
         menu.getItems().addAll(m1,m3, new SeparatorMenuItem());
     }
+    */
 
     @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void setMenus(Map<String, Menu> menus) {
+        Menu fibMenu = menus.get("fibonacci");
+        if (fibMenu != null) {
+            MenuItem m1 = new MenuItem(String.format("(%s) Fibonacci line",name));
+            m1.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    activateFibonacci();
+                }
+            });
+
+            MenuItem m3 = new MenuItem(String.format("(%s) Delete fibonacci",name));
+            m3.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    deleteLines(fibLines);
+                }
+            });
+            fibMenu.getItems().addAll(m1,m3, new SeparatorMenuItem());
+        }
     }
 
     @Override

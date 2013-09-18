@@ -16,7 +16,9 @@ import oahu.financial.Stock;
 import oahux.chart.MaunaloaChart;
 import oahux.models.MaunaloaFacade;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -162,28 +164,35 @@ public class DefaultMainFrameController implements MainFrameController {
 
         initChoiceBoxTickers();
 
+        Map<String, Menu> myMenus = new HashMap<>();
+        myMenus.put("fibonacci",fibonacciMenu);
+
         candlesticksController.setName("Candlesticks");
         candlesticksController.setChart(getCandlesticksChart());
         candlesticksController.setModel(getFacade());
-        candlesticksController.setFibonacciMenu(fibonacciMenu);
+        candlesticksController.setMenus(myMenus);
+        //candlesticksController.setFibonacciMenu(fibonacciMenu);
         //candlesticksController.setMenuBar(myMenuBar);
 
         weeksController.setName("Weeks");
         weeksController.setChart(getWeeklyChart());
         weeksController.setModel(getFacade());
-        weeksController.setFibonacciMenu(fibonacciMenu);
+        weeksController.setMenus(myMenus);
+        //weeksController.setFibonacciMenu(fibonacciMenu);
         //weeksController.setMenuBar(myMenuBar);
 
         obxCandlesticksController.setName("OBX Candlest.");
         obxCandlesticksController.setChart(getObxCandlesticksChart());
         obxCandlesticksController.setModel(getFacade());
-        obxCandlesticksController.setFibonacciMenu(fibonacciMenu);
+        obxCandlesticksController.setMenus(myMenus);
+        //obxCandlesticksController.setFibonacciMenu(fibonacciMenu);
         //obxCandlesticksController.setMenuBar(myMenuBar);
 
         obxWeeksController.setName("OBX Weeks");
         obxWeeksController.setChart(getObxWeeklyChart());
         obxWeeksController.setModel(getFacade());
-        obxWeeksController.setFibonacciMenu(fibonacciMenu);
+        obxWeeksController.setMenus(myMenus);
+        //obxWeeksController.setFibonacciMenu(fibonacciMenu);
         //obxWeeksController.setMenuBar(myMenuBar);
 
         initOptionsController();

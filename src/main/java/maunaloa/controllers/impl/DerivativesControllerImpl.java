@@ -22,6 +22,7 @@ import maunaloa.domain.StockPriceFx;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.DerivativesControllerListener;
 import maunaloa.events.StockPriceAssignedEvent;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.domain.DerivativeFx;
@@ -31,6 +32,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -254,9 +256,9 @@ public class DerivativesControllerImpl implements DerivativesController {
     }
 
     @Override
-    public void setMenuBar(MenuBar menuBar) {
-        this.menuBar = menuBar;
+    public void setMenus(Map<String, Menu> menus) {
     }
+
 
     @Override
     public void addDerivativesCalculatedListener(DerivativesControllerListener listener) {
