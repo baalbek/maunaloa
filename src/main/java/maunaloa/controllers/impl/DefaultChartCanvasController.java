@@ -11,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +23,6 @@ import maunaloa.events.StockPriceAssignedEvent;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.RiscLines;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -126,9 +124,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 if (line != null) {
                     myPane.getChildren().remove(line);
                     if (log.isDebugEnabled()) {
-                        log.debug(String.format("Has Fibonacci extension: ",isFibonacciExtensionsProperty().get()));
+                        log.debug(String.format("Has Fibonacci extension: %s", fibonacci1272extProperty().get()));
                     }
-                    CanvasGroup fibLine = new FibonacciDraggableLine(line,getRuler(),isFibonacciExtensionsProperty().get());
+                    CanvasGroup fibLine = new FibonacciDraggableLine(line,getRuler(), fibonacci1272extProperty().get());
                     updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }
@@ -190,7 +188,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void setTicker(Stock ticker) {
-
         clearLines(fibLines);
         clearLines(levels);
         this.ticker = ticker;
@@ -210,45 +207,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     public void setModel(MaunaloaFacade model) {
         this.model = model;
     }
-
-    /*
-    @Override
-    public void setMenuBar(MenuBar menuBar) {
-        Menu menu = new Menu(String.format("%s",name));
-        MenuItem m1 = new MenuItem("Fibonacci line");
-        m1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                activateFibonacci();
-            }
-        });
-        MenuItem m3 = new MenuItem("Delete fibonacci");
-        m3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                deleteLines(fibLines);
-            }
-        });
-        menu.getItems().addAll(m1,m3, new SeparatorMenuItem());
-        menuBar.getMenus().add(menu);
-    }
-
-    @Override
-    public void setFibonacciMenu(Menu menu) {
-        MenuItem m1 = new MenuItem(String.format("(%s) Fibonacci line",name));
-        m1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                activateFibonacci();
-            }
-        });
-
-        MenuItem m3 = new MenuItem(String.format("(%s) Delete fibonacci",name));
-        m3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                deleteLines(fibLines);
-            }
-        });
-        menu.getItems().addAll(m1,m3, new SeparatorMenuItem());
-    }
-    */
 
     @Override
     public void setName(String name) {
@@ -276,10 +234,10 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
     }
 
-    private BooleanProperty _isFibonacciExtensionsProperty = new SimpleBooleanProperty();
+    private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true);
     @Override
-    public BooleanProperty isFibonacciExtensionsProperty() {
-        return _isFibonacciExtensionsProperty;
+    public BooleanProperty fibonacci1272extProperty() {
+        return _fibonacci1272extProperty;
     }
 
     @Override

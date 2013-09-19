@@ -48,7 +48,7 @@ public class DefaultMainFrameController implements MainFrameController {
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxWeeklyChart;
     private MaunaloaChart obxCandlesticksChart;
-    private CheckMenuItem fibonacciExtensionCheckMenu;
+    private CheckMenuItem fib1272extCheckMenu;
 
 
     public DefaultMainFrameController() {
@@ -156,7 +156,6 @@ public class DefaultMainFrameController implements MainFrameController {
         optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
         optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
         optionsController.setModel(getFacade());
-        //optionsController.setMenuBar(myMenuBar);
         optionsController.addDerivativesCalculatedListener(candlesticksController);
         optionsController.addDerivativesCalculatedListener(weeksController);
     }
@@ -167,41 +166,30 @@ public class DefaultMainFrameController implements MainFrameController {
 
         Map<String, Menu> myMenus = new HashMap<>();
         myMenus.put("fibonacci",fibonacciMenu);
-        fibonacciExtensionCheckMenu = new CheckMenuItem("1.2 extension");
-        fibonacciMenu.getItems().addAll(fibonacciExtensionCheckMenu, new SeparatorMenuItem());
+        fib1272extCheckMenu = new CheckMenuItem("1.272 extension");
+        fib1272extCheckMenu.setSelected(true);
+        fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
 
 
-        candlesticksController.setName("Candlesticks");
-        candlesticksController.setChart(getCandlesticksChart());
-        candlesticksController.setModel(getFacade());
-        candlesticksController.setMenus(myMenus);
-        candlesticksController.isFibonacciExtensionsProperty().bind(fibonacciExtensionCheckMenu.selectedProperty());
-
-        //candlesticksController.setFibonacciMenu(fibonacciMenu);
-        //candlesticksController.setMenuBar(myMenuBar);
-
-        weeksController.setName("Weeks");
-        weeksController.setChart(getWeeklyChart());
-        weeksController.setModel(getFacade());
-        weeksController.setMenus(myMenus);
-        //weeksController.setFibonacciMenu(fibonacciMenu);
-        //weeksController.setMenuBar(myMenuBar);
-
-        obxCandlesticksController.setName("OBX Candlest.");
-        obxCandlesticksController.setChart(getObxCandlesticksChart());
-        obxCandlesticksController.setModel(getFacade());
-        obxCandlesticksController.setMenus(myMenus);
-        //obxCandlesticksController.setFibonacciMenu(fibonacciMenu);
-        //obxCandlesticksController.setMenuBar(myMenuBar);
-
-        obxWeeksController.setName("OBX Weeks");
-        obxWeeksController.setChart(getObxWeeklyChart());
-        obxWeeksController.setModel(getFacade());
-        obxWeeksController.setMenus(myMenus);
-        //obxWeeksController.setFibonacciMenu(fibonacciMenu);
-        //obxWeeksController.setMenuBar(myMenuBar);
+        initCanvanController(candlesticksController,"Candlesticks",getCandlesticksChart(),myMenus);
+        initCanvanController(weeksController,"Weeks",getWeeklyChart(),myMenus);
+        initCanvanController(obxCandlesticksController,"OBX Candlest.",getObxCandlesticksChart(),myMenus);
+        initCanvanController(obxWeeksController, "OBX Weeks", getObxWeeklyChart(), myMenus);
 
         initOptionsController();
+    }
+
+    private void initCanvanController(ChartCanvasController controller,
+                                      String name,
+                                      MaunaloaChart chart,
+                                      Map<String, Menu> menus) {
+
+        controller.setName(name);
+        controller.setChart(chart);
+        controller.setModel(getFacade());
+        controller.setMenus(menus);
+        controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty());
+
     }
 
     //endregion  Initialization methods

@@ -26,9 +26,7 @@ public class FibonacciDraggableLine extends DraggableLine {
     static int colorsIndex = 0;
 
     static double PHI = 0.618034;
-    static double PHI_EXT = 1.27;
-
-    private boolean hasExtensions = false;
+    static double PHI_EXT = 1.272;
 
     private IBoundaryRuler vruler;
 
@@ -49,21 +47,18 @@ public class FibonacciDraggableLine extends DraggableLine {
         return _colors.get(getColorsIndex());
     }
 
-    public FibonacciDraggableLine(Line line, IRuler vruler) {
-        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, vruler);
+    public FibonacciDraggableLine(Line line, IRuler vruler, boolean fib1272Extensions) {
+        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, vruler, fib1272Extensions);
     }
 
-    public FibonacciDraggableLine(Line line, IRuler vruler, boolean hasExtensions) {
-        this(line,vruler);
-        this.hasExtensions = hasExtensions;
-    }
 
     public FibonacciDraggableLine(double startX,
                                   double startY,
                                   double endX,
                                   double endY,
                                   double anchorRadius,
-                                  IRuler vruler) {
+                                  IRuler vruler,
+                                  boolean fib1272Extensions) {
 
 
         super(startX, startY, endX, endY, anchorRadius);
@@ -75,30 +70,49 @@ public class FibonacciDraggableLine extends DraggableLine {
         double y = Math.min(startY, endY);
 
         Color curColor = getCurrentColor();
-        group.getChildren().add(createFibLine(createBinding(0.5), curColor));
+        group.getChildren().add(createFibLine(createBinding(0.5,false), curColor));
 
-        group.getChildren().add(createFibLine(createBinding(PHI), curColor));
+        group.getChildren().add(createFibLine(createBinding(PHI,false), curColor));
 
-        group.getChildren().add(createFibLine(createBinding(PHI*PHI),curColor));
+        group.getChildren().add(createFibLine(createBinding(PHI*PHI,false),curColor));
 
-        if (hasExtensions == true) {
-            group.getChildren().add(createFibLine(createBinding(PHI_EXT),curColor));
+        if (fib1272Extensions == true) {
+            group.getChildren().add(createFibLine(createBinding(PHI_EXT,false),curColor));
+            group.getChildren().add(createFibLine(createBinding(PHI_EXT-1.0,true),curColor));
         }
     }
     //endregion
 
     //region Private Methods
-    private DoubleBinding createBinding(final double level) {
+    private DoubleBinding createBinding(final double level, final boolean isFlipped) {
         return new DoubleBinding() {
             {
                 super.bind(line.startYProperty(),line.endYProperty());
             }
             @Override
             protected double computeValue() {
-                return line.getStartY() + (line.getEndY() - line.getStartY()) * level;
+                if (isFlipped == true) {
+                    return line.getStartY() - ((line.getEndY() - line.getStartY()) * level);
+                }
+                else {
+                    return line.getStartY() + ((line.getEndY() - line.getStartY()) * level);
+                }
             }
         };
     }
+    /*
+    private DoubleBinding createBindingNegate(final double level) {
+        return new DoubleBinding() {
+            {
+                super.bind(line.startYProperty(),line.endYProperty());
+            }
+            @Override
+            protected double computeValue() {
+                return line.getStartY() - ((line.getEndY() - line.getStartY()) * level);
+            }
+        };
+    }
+    //*/
 
     private Line createFibLine(DoubleBinding db, Color color) {
         Line newLine = new Line();
