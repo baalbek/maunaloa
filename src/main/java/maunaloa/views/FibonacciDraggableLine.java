@@ -7,6 +7,9 @@ import javafx.scene.shape.Line;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -19,14 +22,40 @@ public class FibonacciDraggableLine extends DraggableLine {
     //region Init
 
 
+    static List<Color> _colors;
+    static int colorsIndex = 0;
 
     static double PHI = 0.618034;
+    static double PHI_EXT = 1.27;
+
+    private boolean hasExtensions = false;
 
     private IBoundaryRuler vruler;
 
+    static int getColorsIndex() {
+        if (colorsIndex >= _colors.size()) {
+            colorsIndex = 0;
+        }
+        return colorsIndex++;
+    }
+    static Color getCurrentColor() {
+        if (_colors == null) {
+            _colors = new ArrayList<>();
+            _colors.add(Color.BLUEVIOLET);
+            _colors.add(Color.BROWN);
+            _colors.add(Color.CHOCOLATE);
+            _colors.add(Color.GREEN);
+        }
+        return _colors.get(getColorsIndex());
+    }
 
     public FibonacciDraggableLine(Line line, IRuler vruler) {
         this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, vruler);
+    }
+
+    public FibonacciDraggableLine(Line line, IRuler vruler, boolean hasExtensions) {
+        this(line,vruler);
+        this.hasExtensions = hasExtensions;
     }
 
     public FibonacciDraggableLine(double startX,
@@ -45,11 +74,16 @@ public class FibonacciDraggableLine extends DraggableLine {
 
         double y = Math.min(startY, endY);
 
-        group.getChildren().add(createFibLine(createBinding(0.5), Color.BLACK));
+        Color curColor = getCurrentColor();
+        group.getChildren().add(createFibLine(createBinding(0.5), curColor));
 
-        group.getChildren().add(createFibLine(createBinding(PHI),Color.BLACK));
+        group.getChildren().add(createFibLine(createBinding(PHI), curColor));
 
-        group.getChildren().add(createFibLine(createBinding(PHI*PHI),Color.BLACK));
+        group.getChildren().add(createFibLine(createBinding(PHI*PHI),curColor));
+
+        if (hasExtensions == true) {
+            group.getChildren().add(createFibLine(createBinding(PHI_EXT),curColor));
+        }
     }
     //endregion
 

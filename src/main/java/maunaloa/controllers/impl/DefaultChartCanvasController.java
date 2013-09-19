@@ -2,7 +2,9 @@ package maunaloa.controllers.impl;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -123,7 +125,10 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 Line line = lineA.get();
                 if (line != null) {
                     myPane.getChildren().remove(line);
-                    CanvasGroup fibLine = new FibonacciDraggableLine(line,getRuler());
+                    if (log.isDebugEnabled()) {
+                        log.debug(String.format("Has Fibonacci extension: ",isFibonacciExtensionsProperty().get()));
+                    }
+                    CanvasGroup fibLine = new FibonacciDraggableLine(line,getRuler(),isFibonacciExtensionsProperty().get());
                     updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }
@@ -269,6 +274,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             });
             fibMenu.getItems().addAll(m1,m3, new SeparatorMenuItem());
         }
+    }
+
+    private BooleanProperty _isFibonacciExtensionsProperty = new SimpleBooleanProperty();
+    @Override
+    public BooleanProperty isFibonacciExtensionsProperty() {
+        return _isFibonacciExtensionsProperty;
     }
 
     @Override

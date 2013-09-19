@@ -48,6 +48,7 @@ public class DefaultMainFrameController implements MainFrameController {
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxWeeklyChart;
     private MaunaloaChart obxCandlesticksChart;
+    private CheckMenuItem fibonacciExtensionCheckMenu;
 
 
     public DefaultMainFrameController() {
@@ -166,11 +167,16 @@ public class DefaultMainFrameController implements MainFrameController {
 
         Map<String, Menu> myMenus = new HashMap<>();
         myMenus.put("fibonacci",fibonacciMenu);
+        fibonacciExtensionCheckMenu = new CheckMenuItem("1.2 extension");
+        fibonacciMenu.getItems().addAll(fibonacciExtensionCheckMenu, new SeparatorMenuItem());
+
 
         candlesticksController.setName("Candlesticks");
         candlesticksController.setChart(getCandlesticksChart());
         candlesticksController.setModel(getFacade());
         candlesticksController.setMenus(myMenus);
+        candlesticksController.isFibonacciExtensionsProperty().bind(fibonacciExtensionCheckMenu.selectedProperty());
+
         //candlesticksController.setFibonacciMenu(fibonacciMenu);
         //candlesticksController.setMenuBar(myMenuBar);
 

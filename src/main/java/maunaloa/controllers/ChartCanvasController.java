@@ -1,5 +1,6 @@
 package maunaloa.controllers;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import maunaloa.events.DerivativesControllerListener;
@@ -22,4 +23,5 @@ public interface ChartCanvasController extends MaunaloaChartViewModel, Derivativ
     void setModel(MaunaloaFacade model);
     void setName(String name);
     void setMenus(Map<String,Menu> menus);
+    BooleanProperty isFibonacciExtensionsProperty();
 }
