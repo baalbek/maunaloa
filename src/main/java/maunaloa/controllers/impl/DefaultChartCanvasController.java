@@ -23,6 +23,7 @@ import maunaloa.events.StockPriceAssignedEvent;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.RiscLines;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -56,7 +57,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
 
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
-    private IRuler ruler;
+    private IRuler vruler;
+    private IRuler hruler;
 
     //region Initialization Methods
     public void initialize() {
@@ -100,7 +102,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double x = event.getX();
+                double x = getHRuler().roundPix(event.getX());
                 double y = event.getY();
                 Line line = new Line(x, y, x, y);
                 myPane.getChildren().add(line);
@@ -126,7 +128,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     if (log.isDebugEnabled()) {
                         log.debug(String.format("Has Fibonacci extension: %s", fibonacci1272extProperty().get()));
                     }
-                    CanvasGroup fibLine = new FibonacciDraggableLine(line,getRuler(), fibonacci1272extProperty().get());
+                    line.setStartX(getHRuler().roundPix(line.getStartX()));
+                    line.setEndX(getHRuler().roundPix(line.getEndX()));
+                    CanvasGroup fibLine = new FibonacciDraggableLine(line,
+                                                                    getHRuler(),
+                                                                    getVRuler(),
+                                                                    fibonacci1272extProperty().get());
                     updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }
@@ -251,13 +258,23 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
-    public IRuler getRuler() {
-        return ruler;
+    public IRuler getVRuler() {
+        return vruler;
     }
 
     @Override
-    public void setRuler(IRuler ruler) {
-        this.ruler = ruler;
+    public void setVRuler(IRuler ruler) {
+        this.vruler = ruler;
+    }
+
+    @Override
+    public IRuler getHRuler() {
+        return hruler;
+    }
+
+    @Override
+    public void setHRuler(IRuler ruler) {
+        this.hruler = ruler;
     }
 
     @Override
@@ -268,7 +285,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             if (log.isDebugEnabled()) {
                 log.debug(String.format("notify adding line for derivative %s",d.getTicker()));
             }
-            lines.add(new RiscLines(d, ruler));
+            lines.add(new RiscLines(d, vruler));
         }
         levels.put(getTicker(),lines);
         refreshLines(levels);

@@ -22,16 +22,15 @@
                              num-items
                              add-plotters
                              freqs
-                             legend]
+                             legend
+                             padding]
                       :or {
                           num-items 90
-                          ;add-plotters [(LP/single-line-plotter
-                          ;                (take num-items (rseq data-values))
-                          ;                (take num-items (rseq data-dx))
-                          ;                (:stockprice VC/colors))]
                           add-plotters nil
                           freqs [10 50 200]
-                          legend true}}]]
+                          legend true
+                          padding 1.05
+                          }}]]
   (let [dx (take num-items (rseq data-dx))
         itrends (create-freqs ITR/calc-itrend data-values freqs num-items)
         itrend-plotters (map #(LP/single-line-plotter %1 dx (VC/get-color "itrend" %2))  itrends freqs)
@@ -45,8 +44,8 @@
                         ]
     (B/foundation
       {
-        :data-min (/ data-min 1.02)
-        :data-max (* data-max 1.02)
+        :data-min (/ data-min padding)
+        :data-max (* data-max padding)
         :start-date (last dx)
         :end-date (first dx)
         :pct pct

@@ -34,6 +34,8 @@
 ;;------------------------------------------------------------------------
 ;;-------------------------- Interface methods ---------------------------
 ;;------------------------------------------------------------------------
+(defn ct1-setPadding [this, ^double value])
+
 (defn ct1-setViewModel [this, ^MaunaloaChartViewModel vm]
   (let [m (.state this)]
     (reset! m vm)))
@@ -77,7 +79,8 @@
                 :y0 mtop)]
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
         (println vr)
-        (.setRuler vm vr)
+        (.setHRuler vm hr)
+        (.setVRuler vm vr)
         )
       (doseq [q (rest qsx)]
         (Q/plot-quadrant gc q)))))

@@ -29,6 +29,7 @@ public class FibonacciDraggableLine extends DraggableLine {
     static double PHI_EXT = 1.272;
 
     private IBoundaryRuler vruler;
+    private IRuler hruler;
 
     static int getColorsIndex() {
         if (colorsIndex >= _colors.size()) {
@@ -47,8 +48,8 @@ public class FibonacciDraggableLine extends DraggableLine {
         return _colors.get(getColorsIndex());
     }
 
-    public FibonacciDraggableLine(Line line, IRuler vruler, boolean fib1272Extensions) {
-        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, vruler, fib1272Extensions);
+    public FibonacciDraggableLine(Line line, IRuler hruler, IRuler vruler, boolean fib1272Extensions) {
+        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, hruler, vruler, fib1272Extensions);
     }
 
 
@@ -57,13 +58,17 @@ public class FibonacciDraggableLine extends DraggableLine {
                                   double endX,
                                   double endY,
                                   double anchorRadius,
+                                  IRuler hruler,
                                   IRuler vruler,
                                   boolean fib1272Extensions) {
 
 
         super(startX, startY, endX, endY, anchorRadius);
 
+        this.hruler = hruler;
+
         this.vruler = (IBoundaryRuler)vruler;
+
 
         double x = Math.max(startX, endX);
 
