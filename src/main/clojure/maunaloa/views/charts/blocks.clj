@@ -23,13 +23,15 @@
                              add-plotters
                              freqs
                              legend
-                             padding]
+                             padding
+                             snap-unit]
                       :or {
                           num-items 90
                           add-plotters nil
                           freqs [10 50 200]
                           legend true
                           padding 1.05
+                          snap-unit nil
                           }}]]
   (let [dx (take num-items (rseq data-dx))
         itrends (create-freqs ITR/calc-itrend data-values freqs num-items)
@@ -51,6 +53,7 @@
         :pct pct
         :legend legend
         :plotters (concat itrend-plotters cur-add-plotters)
+        :snap-unit snap-unit
       })))
 
 (defn cybercycle-block [data-values data-dx pct

@@ -102,7 +102,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double x = getHRuler().roundPix(event.getX());
+                double x = getHRuler().snapTo(event.getX());
                 double y = event.getY();
                 Line line = new Line(x, y, x, y);
                 myPane.getChildren().add(line);
@@ -128,8 +128,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     if (log.isDebugEnabled()) {
                         log.debug(String.format("Has Fibonacci extension: %s", fibonacci1272extProperty().get()));
                     }
-                    line.setStartX(getHRuler().roundPix(line.getStartX()));
-                    line.setEndX(getHRuler().roundPix(line.getEndX()));
+                    line.setStartX(getHRuler().snapTo(line.getStartX()));
+                    line.setEndX(getHRuler().snapTo(line.getEndX()));
                     CanvasGroup fibLine = new FibonacciDraggableLine(line,
                                                                     getHRuler(),
                                                                     getVRuler(),
