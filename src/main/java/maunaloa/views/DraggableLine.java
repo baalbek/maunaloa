@@ -37,7 +37,7 @@ public abstract class DraggableLine implements CanvasGroup {
 
     //region Abstract Methods
     //public abstract void onMousePressed();
-    protected abstract void onMouseReleased(MouseEvent event);
+    protected abstract void onMouseReleased(MouseEvent event, Circle anchor);
     protected abstract void onMouseDragged(MouseEvent event);
     //endregion
 
@@ -87,7 +87,7 @@ public abstract class DraggableLine implements CanvasGroup {
             @Override
             public void handle(MouseEvent event) {
                 mousePressPoint.set(null) ;
-                onMouseReleased(event);
+                onMouseReleased(event,anchor);
                 event.consume();
             }
         });

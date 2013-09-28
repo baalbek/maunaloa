@@ -3,6 +3,7 @@ package maunaloa.views;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
@@ -134,7 +135,8 @@ public class FibonacciDraggableLine extends DraggableLine {
 
 
     @Override
-    protected void onMouseReleased(MouseEvent event) {
+    protected void onMouseReleased(MouseEvent event, Circle anchor) {
+        anchor.setCenterX(hruler.snapTo(anchor.getCenterX()));
         setAnchorsVisible(true);
     }
 
