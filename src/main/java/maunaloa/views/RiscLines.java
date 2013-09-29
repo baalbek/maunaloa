@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.domain.DerivativeFx;
@@ -64,5 +65,15 @@ public class RiscLines implements CanvasGroup {
     @Override
     public Node view() {
         return group;
+    }
+
+    @Override
+    public void setStatus(int status) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public int getStatus() {
+        throw new NotImplementedException();
     }
 }

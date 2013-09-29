@@ -16,6 +16,7 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.events.DerivativesCalculatedEvent;
@@ -130,10 +131,35 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     }
                     line.setStartX(getHRuler().snapTo(line.getStartX()));
                     line.setEndX(getHRuler().snapTo(line.getEndX()));
-                    CanvasGroup fibLine = new FibonacciDraggableLine(line,
+                    final CanvasGroup fibLine = new FibonacciDraggableLine(line,
                                                                     getHRuler(),
                                                                     getVRuler(),
                                                                     fibonacci1272extProperty().get());
+                    /*
+                    fibLine.getLine().addEventFilter(MouseEvent.MOUSE_ENTERED,
+                            new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    fibLine.getLine().setStrokeWidth(fibLine.getLine().getStrokeWidth()+10);
+                                    System.out.println(fibLine.getLine());
+                                }
+                            });
+                    fibLine.getLine().addEventFilter(MouseEvent.MOUSE_CLICKED,
+                            new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    System.out.println("You clicked on line " + fibLine.getLine());
+                                    fibLine.getLine().setStroke(Color.RED);
+                                }
+                            });
+                    fibLine.getLine().addEventFilter(MouseEvent.MOUSE_EXITED,
+                            new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent mouseEvent) {
+                                    fibLine.getLine().setStrokeWidth(1.0);
+                                }
+                            });
+                    */
                     updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }

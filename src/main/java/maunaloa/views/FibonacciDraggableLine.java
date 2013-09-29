@@ -5,6 +5,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 
@@ -93,15 +94,15 @@ public class FibonacciDraggableLine extends DraggableLine {
     private DoubleBinding createBinding(final double level, final boolean isFlipped) {
         return new DoubleBinding() {
             {
-                super.bind(line.startYProperty(),line.endYProperty());
+                super.bind(getLine().startYProperty(), getLine().endYProperty());
             }
             @Override
             protected double computeValue() {
                 if (isFlipped == true) {
-                    return line.getStartY() - ((line.getEndY() - line.getStartY()) * level);
+                    return getLine().getStartY() - ((getLine().getEndY() - getLine().getStartY()) * level);
                 }
                 else {
-                    return line.getStartY() + ((line.getEndY() - line.getStartY()) * level);
+                    return getLine().getStartY() + ((getLine().getEndY() - getLine().getStartY()) * level);
                 }
             }
         };
@@ -126,7 +127,7 @@ public class FibonacciDraggableLine extends DraggableLine {
         newLine.setEndX(vruler.getLowerRight().getX());
         newLine.startYProperty().bind(db);
         newLine.endYProperty().bind(db);
-        newLine.startXProperty().bind(line.endXProperty());
+        newLine.startXProperty().bind(getLine().endXProperty());
         return newLine;
     }
     //endregion
@@ -144,6 +145,7 @@ public class FibonacciDraggableLine extends DraggableLine {
     protected void onMouseDragged(MouseEvent event) {
         setAnchorsVisible(false);
     }
+
 
     //endregion
 

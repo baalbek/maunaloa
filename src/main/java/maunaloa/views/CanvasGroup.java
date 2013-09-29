@@ -9,5 +9,10 @@ import javafx.scene.Node;
  * Time: 11:53 PM
  */
 public interface CanvasGroup {
+    int NORMAL = 0;
+    int SELECTED = 1;
+    int SAVED_TO_DB = 2;
     Node view();
+    void setStatus(int status);
+    int getStatus();
 }

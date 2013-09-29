@@ -6,6 +6,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
@@ -16,7 +17,7 @@ import javafx.scene.shape.Line;
  * Time: 7:42 PM
  */
 public abstract class DraggableLine implements CanvasGroup {
-    protected Line line ;
+    private final Line line ;
     protected Circle startAnchor ;
     protected Circle endAnchor ;
     protected Group group ;
@@ -24,8 +25,15 @@ public abstract class DraggableLine implements CanvasGroup {
     private DoubleProperty anchorRadius ;
     private BooleanProperty anchorsVisible ;
 
+    private static double STROKE_WIDTH_NORMAL = 1.0;
+    private static double STROKE_WIDTH_SELECTED = 4.0;
+
+    private int status = CanvasGroup.NORMAL;
+
     public DraggableLine(double startX, double startY, double endX, double endY, double anchorRadius) {
         line = new Line(startX, startY, endX, endY);
+        line.setStrokeWidth(STROKE_WIDTH_NORMAL);
+        addEvents(line);
         this.anchorRadius = new SimpleDoubleProperty(anchorRadius);
         anchorsVisible = new SimpleBooleanProperty(true);
         startAnchor = createAnchor(line.startXProperty(), line.startYProperty());
@@ -47,7 +55,51 @@ public abstract class DraggableLine implements CanvasGroup {
         return group ;
     }
 
+    @Override
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @Override
+    public int getStatus() {
+        return status;
+    }
     //endregion
+
+    //region Events
+    private void addEvents(final Line line) {
+        line.addEventFilter(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        line.setStrokeWidth(STROKE_WIDTH_SELECTED);
+                    }
+                });
+        line.addEventFilter(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        line.setStrokeWidth(STROKE_WIDTH_NORMAL);
+                    }
+                });
+        line.addEventFilter(MouseEvent.MOUSE_CLICKED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if (getStatus() == CanvasGroup.NORMAL) {
+                            setStatus(CanvasGroup.SELECTED);
+                            line.setStroke(Color.RED);
+                        }
+                        else if (getStatus() == CanvasGroup.SELECTED) {
+                            setStatus(CanvasGroup.NORMAL);
+                            line.setStroke(Color.BLACK);
+                        }
+                    }
+                });
+    }
+
+
+    //endregion Events
 
     //region Private Methods
     private Circle createAnchor(DoubleProperty x, DoubleProperty y) {
@@ -56,7 +108,10 @@ public abstract class DraggableLine implements CanvasGroup {
         anchor.centerYProperty().bindBidirectional(y);
         anchor.radiusProperty().bind(anchorRadius);
         anchor.visibleProperty().bind(anchorsVisible);
-        anchor.getStyleClass().add("draggable-line-anchor");
+        anchor.setStrokeWidth(0.5);
+        anchor.setFill(Color.TRANSPARENT);
+        anchor.setStroke(Color.BLACK);
+        //anchor.getStyleClass().add("draggable-line-anchor");
 
         final ObjectProperty<Point2D> mousePressPoint = new SimpleObjectProperty<>();
         anchor.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
@@ -94,7 +149,6 @@ public abstract class DraggableLine implements CanvasGroup {
         return anchor;
     }
     //endregion
-
 
     //region Properties
     public DoubleProperty anchorRadiusProperty() {
@@ -151,6 +205,10 @@ public abstract class DraggableLine implements CanvasGroup {
 
     public void setEndY(double y) {
         line.setEndY(y);
+    }
+
+    public Line getLine() {
+        return line;
     }
     //endregion
 }
