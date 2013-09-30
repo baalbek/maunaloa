@@ -1,4 +1,4 @@
-(ns maunaloa.service.mongodb.MongoWindowDressingModel
+(ns maunaloa.models.mongodb.MongoWindowDressingModel
   ( :gen-class
     :implements [maunaloa.models.ChartWindowDressingModel])
   (:require (maunaloa.service.mongodb [fibonacci :as fib])))

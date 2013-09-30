@@ -8,8 +8,10 @@ import javafx.scene.shape.Line;
 import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +21,7 @@ import java.util.List;
  * Time: 7:43 PM
  */
 
-public class FibonacciDraggableLine extends DraggableLine {
+public class FibonacciDraggableLine extends DraggableLine implements MongodbLine {
 
     //region Init
 
@@ -32,6 +34,8 @@ public class FibonacciDraggableLine extends DraggableLine {
 
     private IBoundaryRuler vruler;
     private IRuler hruler;
+    private ObjectId mongodbId;
+    private boolean active;
 
     static int getColorsIndex() {
         if (colorsIndex >= _colors.size()) {
@@ -107,20 +111,6 @@ public class FibonacciDraggableLine extends DraggableLine {
             }
         };
     }
-    /*
-    private DoubleBinding createBindingNegate(final double level) {
-        return new DoubleBinding() {
-            {
-                super.bind(line.startYProperty(),line.endYProperty());
-            }
-            @Override
-            protected double computeValue() {
-                return line.getStartY() - ((line.getEndY() - line.getStartY()) * level);
-            }
-        };
-    }
-    //*/
-
     private Line createFibLine(DoubleBinding db, Color color) {
         Line newLine = new Line();
         newLine.setStroke(color);
@@ -130,11 +120,15 @@ public class FibonacciDraggableLine extends DraggableLine {
         newLine.startXProperty().bind(getLine().endXProperty());
         return newLine;
     }
+    private MongodbCoord coord(Circle anchor) {
+        Date dx = (Date)hruler.calcValue(anchor.getCenterX());
+        double valY = (Double)vruler.calcValue(anchor.getCenterY());
+        MongodbCoord curCoord = new MongodbCoord(dx, valY);
+        return curCoord;
+    }
     //endregion
 
     //region Implemented Abstract Methods
-
-
     @Override
     protected void onMouseReleased(MouseEvent event, Circle anchor) {
         anchor.setCenterX(hruler.snapTo(anchor.getCenterX()));
@@ -145,9 +139,29 @@ public class FibonacciDraggableLine extends DraggableLine {
     protected void onMouseDragged(MouseEvent event) {
         setAnchorsVisible(false);
     }
-
-
     //endregion
+
+    //region interface MongodbLine
+    @Override
+    public ObjectId getMongodbId() {
+        return mongodbId;
+    }
+    @Override
+    public boolean getActive() {
+        return active;
+    }
+
+    @Override
+    public void setActive(boolean value) {
+        active = value;
+    }
+
+    @Override
+    public MongodbCoord coord(int pt) {
+        Circle anchor = pt == MongodbLine.P1 ? startAnchor : endAnchor;
+        return coord(anchor);
+    }
+    //endregion MongodbLine
 
     //region Properties
 
