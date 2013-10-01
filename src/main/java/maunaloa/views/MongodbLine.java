@@ -1,5 +1,6 @@
 package maunaloa.views;
 
+import com.mongodb.BasicDBObject;
 import org.bson.types.ObjectId;
 
 /**
@@ -9,10 +10,13 @@ import org.bson.types.ObjectId;
  * Time: 11:19 AM
  */
 public interface MongodbLine {
-    public static int P1 = 1;
-    public static int P2 = 2;
+    static int P1 = 1;
+    static int P2 = 2;
+    static int LOC_CNDL = 1;
+    static int LOC_WEEKS = 2;
     ObjectId getMongodbId();
     boolean getActive();
     void setActive(boolean value);
-    MongodbCoord coord(int pt);
+    BasicDBObject coord(int pt);
+    long getLocation();
 }

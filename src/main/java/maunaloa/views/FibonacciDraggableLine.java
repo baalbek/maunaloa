@@ -1,5 +1,6 @@
 package maunaloa.views;
 
+import com.mongodb.BasicDBObject;
 import javafx.beans.binding.DoubleBinding;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -21,7 +22,7 @@ import java.util.List;
  * Time: 7:43 PM
  */
 
-public class FibonacciDraggableLine extends DraggableLine implements MongodbLine {
+public class FibonacciDraggableLine extends DraggableLine {
 
     //region Init
 
@@ -32,10 +33,6 @@ public class FibonacciDraggableLine extends DraggableLine implements MongodbLine
     static double PHI = 0.618034;
     static double PHI_EXT = 1.272;
 
-    private IBoundaryRuler vruler;
-    private IRuler hruler;
-    private ObjectId mongodbId;
-    private boolean active;
 
     static int getColorsIndex() {
         if (colorsIndex >= _colors.size()) {
@@ -54,6 +51,29 @@ public class FibonacciDraggableLine extends DraggableLine implements MongodbLine
         return _colors.get(getColorsIndex());
     }
 
+    /*
+    public FibonacciDraggableLine(ObjectId mongodbId,
+                                  boolean active,
+                                  long location,
+                                  BasicDBObject p1,
+                                  BasicDBObject p2,
+                                  IRuler hruler,
+                                  IRuler vruler) {
+        this.mongodbId = mongodbId;
+        this.active = active;
+        this.location = location;
+
+
+        this.hruler = hruler;
+        this.vruler = (IBoundaryRuler)vruler;
+
+        double startX = hruler.calcPix((Date)p1.get("x"));
+        double startY = vruler.calcPix((Double)p1.get("y"));
+        double endX = hruler.calcPix((Date)p2.get("x"));
+        double endY = vruler.calcPix((Double)p2.get("y"));
+    }
+    */
+
     public FibonacciDraggableLine(Line line, IRuler hruler, IRuler vruler, boolean fib1272Extensions) {
         this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, hruler, vruler, fib1272Extensions);
     }
@@ -69,11 +89,8 @@ public class FibonacciDraggableLine extends DraggableLine implements MongodbLine
                                   boolean fib1272Extensions) {
 
 
-        super(startX, startY, endX, endY, anchorRadius);
+        super(startX, startY, endX, endY, anchorRadius,hruler,vruler);
 
-        this.hruler = hruler;
-
-        this.vruler = (IBoundaryRuler)vruler;
 
 
         double x = Math.max(startX, endX);
@@ -120,12 +137,6 @@ public class FibonacciDraggableLine extends DraggableLine implements MongodbLine
         newLine.startXProperty().bind(getLine().endXProperty());
         return newLine;
     }
-    private MongodbCoord coord(Circle anchor) {
-        Date dx = (Date)hruler.calcValue(anchor.getCenterX());
-        double valY = (Double)vruler.calcValue(anchor.getCenterY());
-        MongodbCoord curCoord = new MongodbCoord(dx, valY);
-        return curCoord;
-    }
     //endregion
 
     //region Implemented Abstract Methods
@@ -142,25 +153,6 @@ public class FibonacciDraggableLine extends DraggableLine implements MongodbLine
     //endregion
 
     //region interface MongodbLine
-    @Override
-    public ObjectId getMongodbId() {
-        return mongodbId;
-    }
-    @Override
-    public boolean getActive() {
-        return active;
-    }
-
-    @Override
-    public void setActive(boolean value) {
-        active = value;
-    }
-
-    @Override
-    public MongodbCoord coord(int pt) {
-        Circle anchor = pt == MongodbLine.P1 ? startAnchor : endAnchor;
-        return coord(anchor);
-    }
     //endregion MongodbLine
 
     //region Properties

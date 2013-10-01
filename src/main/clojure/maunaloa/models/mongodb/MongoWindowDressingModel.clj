@@ -4,8 +4,8 @@
   (:require (maunaloa.service.mongodb [fibonacci :as fib])))
 
 
-(defn -saveFibonacci [this ticker d0 val0 d1 val1]
-  (fib/save ticker d0 val0 d1 val1))
+(defn -saveFibonacci [this ticker loc p1 p2]
+  (fib/save ticker loc p1 p2)) 
 
 
 (defn -fetchFibonacci [this ticker fromDate toDate]

@@ -1,5 +1,6 @@
 package maunaloa.views;
 
+import com.mongodb.BasicDBObject;
 import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -9,6 +10,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import oahux.chart.IBoundaryRuler;
+import oahux.chart.IRuler;
+import org.bson.types.ObjectId;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,11 +22,16 @@ import javafx.scene.shape.Line;
  * Date: 3/31/13
  * Time: 7:42 PM
  */
-public abstract class DraggableLine implements CanvasGroup {
+public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     private final Line line ;
+    private ObjectId mongodbId;
+    private boolean active;
+    private long location;
     protected Circle startAnchor ;
     protected Circle endAnchor ;
     protected Group group ;
+    protected IBoundaryRuler vruler;
+    protected IRuler hruler;
 
     private DoubleProperty anchorRadius ;
     private BooleanProperty anchorsVisible ;
@@ -30,6 +41,25 @@ public abstract class DraggableLine implements CanvasGroup {
 
     private int status = CanvasGroup.NORMAL;
 
+    public DraggableLine(ObjectId mongodbId,
+                         boolean active,
+                         long location,
+                         BasicDBObject p1,
+                         BasicDBObject p2) {
+        this.line = null;
+    }
+    public DraggableLine(double startX,
+                         double startY,
+                         double endX,
+                         double endY,
+                         double anchorRadius,
+                         IRuler hruler,
+                         IRuler vruler) {
+        this(startX,startY,endX,endY,anchorRadius);
+        this.hruler = hruler;
+
+        this.vruler = (IBoundaryRuler)vruler;
+    }
     public DraggableLine(double startX, double startY, double endX, double endY, double anchorRadius) {
         line = new Line(startX, startY, endX, endY);
         line.setStrokeWidth(STROKE_WIDTH_NORMAL);
@@ -49,7 +79,7 @@ public abstract class DraggableLine implements CanvasGroup {
     protected abstract void onMouseDragged(MouseEvent event);
     //endregion
 
-    //region Interface Methods
+    //region Interface CanvasGroup
     @Override
     public Node view() {
         return group ;
@@ -64,7 +94,38 @@ public abstract class DraggableLine implements CanvasGroup {
     public int getStatus() {
         return status;
     }
-    //endregion
+    //endregion Interface CanvasGroup
+
+    //region interface MongodbLine
+    @Override
+    public ObjectId getMongodbId() {
+        return mongodbId;
+    }
+    @Override
+    public boolean getActive() {
+        return active;
+    }
+
+    @Override
+    public void setActive(boolean value) {
+        active = value;
+    }
+
+
+    @Override
+    public BasicDBObject coord(int pt) {
+        Circle anchor = pt == MongodbLine.P1 ? startAnchor : endAnchor;
+        return coord(anchor);
+    }
+    @Override
+    public long getLocation() {
+        return location;
+    }
+    public void setLocation(long value) {
+        location = value;
+    }
+    //endregion Interface MongodbLine
+
 
     //region Events
     private void addEvents(final Line line) {
@@ -102,6 +163,14 @@ public abstract class DraggableLine implements CanvasGroup {
     //endregion Events
 
     //region Private Methods
+    private BasicDBObject coord(Circle anchor) {
+        Date dx = (Date)hruler.calcValue(anchor.getCenterX());
+        double valY = (Double)vruler.calcValue(anchor.getCenterY());
+        BasicDBObject curCoord = new BasicDBObject("x", dx);
+        curCoord.append("y", valY);
+        return curCoord;
+    }
+
     private Circle createAnchor(DoubleProperty x, DoubleProperty y) {
         final Circle anchor = new Circle();
         anchor.centerXProperty().bindBidirectional(x);

@@ -20,10 +20,11 @@
       (.append result "y" y-val)
       result)))
 
-(defn create-item [tix p1 p2]
+(defn create-item [tix loc p1 p2]
   (let [result (BasicDBObject. "tix" tix)]
     (doto result
       (.append "active" true)
+      (.append "loc" loc)
       (.append "p0" p1)
       (.append "p1" p2))))
 
@@ -32,11 +33,11 @@
         query (BasicDBObject. "tix" ticker)]
     (.find coll query)))
 
-(defn save [ticker from-date val-1 to-date val-2]
+(defn save [ticker loc p1 p2]
   (let [coll (get-collection "fibonacci")
-        p1 (create-point from-date val-1)
-        p2 (create-point to-date val-2)
-        result (create-item ticker p1 p2)]
+        ;p1 (create-point from-date val-1)
+        ;p2 (create-point to-date val-2)
+        result (create-item ticker loc p1 p2)]
     (.save coll result)))
 
 
