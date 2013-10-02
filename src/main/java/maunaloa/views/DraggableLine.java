@@ -13,8 +13,11 @@ import javafx.scene.shape.Line;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
+import org.joda.time.DateMidnight;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,6 +44,14 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     private static double STROKE_WIDTH_SELECTED = 4.0;
 
     private int status = CanvasGroup.NORMAL;
+
+    private static Map<Integer,Color> statusColors;
+    static {
+        statusColors = new HashMap<>();
+        statusColors.put(CanvasGroup.NORMAL, Color.BLACK);
+        statusColors.put(CanvasGroup.SELECTED, Color.RED);
+        statusColors.put(CanvasGroup.SAVED_TO_DB, Color.GREEN);
+    }
     //endregion Init
 
     //region Constructors
@@ -99,6 +110,7 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     @Override
     public void setStatus(int status) {
         this.status = status;
+        line.setStroke(statusColors.get(status));
     }
 
     @Override
@@ -112,6 +124,11 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     public ObjectId getMongodbId() {
         return mongodbId;
     }
+    @Override
+    public void setMongodbId(ObjectId id) {
+        mongodbId = id;
+    }
+
     @Override
     public boolean getActive() {
         return active;
@@ -159,11 +176,9 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
                     public void handle(MouseEvent mouseEvent) {
                         if (getStatus() == CanvasGroup.NORMAL) {
                             setStatus(CanvasGroup.SELECTED);
-                            line.setStroke(Color.RED);
                         }
                         else if (getStatus() == CanvasGroup.SELECTED) {
                             setStatus(CanvasGroup.NORMAL);
-                            line.setStroke(Color.BLACK);
                         }
                     }
                 });
@@ -174,9 +189,9 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
 
     //region Private Methods
     private BasicDBObject coord(Circle anchor) {
-        Date dx = (Date)hruler.calcValue(anchor.getCenterX());
+        DateMidnight dx = (DateMidnight)hruler.calcValue(anchor.getCenterX());
         double valY = (Double)vruler.calcValue(anchor.getCenterY());
-        BasicDBObject curCoord = new BasicDBObject("x", dx);
+        BasicDBObject curCoord = new BasicDBObject("x", dx.toDate());
         curCoord.append("y", valY);
         return curCoord;
     }

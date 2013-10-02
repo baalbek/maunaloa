@@ -22,6 +22,7 @@ public interface ChartCanvasController extends MaunaloaChartViewModel, Derivativ
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);
     void setName(String name);
+    void setLocation(int loc);
     void setMenus(Map<String,Menu> menus);
     BooleanProperty fibonacci1272extProperty();
 }

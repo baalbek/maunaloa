@@ -2,6 +2,7 @@ package maunaloa.models.impl;
 
 import javafx.scene.Node;
 import maunaloa.domain.impl.DerivativeFxImpl;
+import maunaloa.models.ChartWindowDressingModel;
 import maunaloa.utils.DateUtils;
 import oahu.annotations.Memoize;
 import oahu.exceptions.NotImplementedException;
@@ -27,6 +28,7 @@ public class FacadeImpl implements MaunaloaFacade {
 
     Map<String, Collection<Stock>> stockBeansMap = new HashMap<>();
     private StockLocator locator;
+    private ChartWindowDressingModel windowDressingModel;
 
     public FacadeImpl()  {
        setDefaultStartDate(DateUtils.createDate(2010, 1, 1));
@@ -102,6 +104,14 @@ public class FacadeImpl implements MaunaloaFacade {
     @Override
     public List<Stock> getTickers() {
         return getLocator().getTickers();
+    }
+
+    @Override
+    public ChartWindowDressingModel getWindowDressingModel() {
+        return windowDressingModel;
+    }
+    public void setWindowDressingModel(ChartWindowDressingModel model) {
+        windowDressingModel = model;
     }
     //endregion Interface Methods
 

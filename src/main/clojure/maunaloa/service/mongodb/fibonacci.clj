@@ -1,5 +1,7 @@
 (ns maunaloa.service.mongodb.fibonacci
-  (:import [com.mongodb MongoClient BasicDBObject])
+  (:import
+    [com.mongodb MongoClient BasicDBObject]
+    [maunaloa.domain MongoDBResult])
   (:require (maunaloa.utils [commonutils :as util])))
 
 
@@ -35,10 +37,9 @@
 
 (defn save [ticker loc p1 p2]
   (let [coll (get-collection "fibonacci")
-        ;p1 (create-point from-date val-1)
-        ;p2 (create-point to-date val-2)
-        result (create-item ticker loc p1 p2)]
-    (.save coll result)))
+        result (create-item ticker loc p1 p2)
+        server-result (.save coll result)]
+    (MongoDBResult. result server-result)))
 
 
 

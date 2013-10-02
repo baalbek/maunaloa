@@ -173,20 +173,22 @@ public class DefaultMainFrameController implements MainFrameController {
 
         myMenus.put("mongodb",mongodbMenu);
 
-        initCanvanController(candlesticksController,"Candlesticks",getCandlesticksChart(),myMenus);
-        initCanvanController(weeksController,"Weeks",getWeeklyChart(),myMenus);
-        initCanvanController(obxCandlesticksController,"OBX Candlest.",getObxCandlesticksChart(),myMenus);
-        initCanvanController(obxWeeksController, "OBX Weeks", getObxWeeklyChart(), myMenus);
+        initCanvanController(candlesticksController,"Candlesticks",1,getCandlesticksChart(),myMenus);
+        initCanvanController(weeksController,"Weeks",2,getWeeklyChart(),myMenus);
+        initCanvanController(obxCandlesticksController,"OBX Candlest.",3,getObxCandlesticksChart(),myMenus);
+        initCanvanController(obxWeeksController, "OBX Weeks", 4, getObxWeeklyChart(), myMenus);
 
         initOptionsController();
     }
 
     private void initCanvanController(ChartCanvasController controller,
                                       String name,
+                                      int location,
                                       MaunaloaChart chart,
                                       Map<String, Menu> menus) {
 
         controller.setName(name);
+        controller.setLocation(location);
         controller.setChart(chart);
         controller.setModel(getFacade());
         controller.setMenus(menus);

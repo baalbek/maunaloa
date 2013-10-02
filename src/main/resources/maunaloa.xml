@@ -69,7 +69,10 @@
     </bean>
 
 
+    <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel"></bean>
+
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
+        <property name="windowDressingModel" ref="windowdressingmodel" />
         <property name="locator" ref="locator" />
         <property name="etrade" ref="etrade" />
         <property name="calculator" ref="calculator" />

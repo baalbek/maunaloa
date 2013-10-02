@@ -15,6 +15,7 @@ public interface MongodbLine {
     static int LOC_CNDL = 1;
     static int LOC_WEEKS = 2;
     ObjectId getMongodbId();
+    void setMongodbId(ObjectId id);
     boolean getActive();
     void setActive(boolean value);
     BasicDBObject coord(int pt);

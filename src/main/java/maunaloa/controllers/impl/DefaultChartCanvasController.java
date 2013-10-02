@@ -1,5 +1,6 @@
 package maunaloa.controllers.impl;
 
+import com.mongodb.BasicDBObject;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -19,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
+import maunaloa.domain.MongoDBResult;
 import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.StockPriceAssignedEvent;
 import maunaloa.views.CanvasGroup;
@@ -61,6 +63,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
     private IRuler vruler;
     private IRuler hruler;
+    private int location;
 
     //region Initialization Methods
     public void initialize() {
@@ -136,31 +139,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                                                                     getHRuler(),
                                                                     getVRuler(),
                                                                     fibonacci1272extProperty().get());
-                    /*
-                    fibLine.getLine().addEventFilter(MouseEvent.MOUSE_ENTERED,
-                            new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    fibLine.getLine().setStrokeWidth(fibLine.getLine().getStrokeWidth()+10);
-                                    System.out.println(fibLine.getLine());
-                                }
-                            });
-                    fibLine.getLine().addEventFilter(MouseEvent.MOUSE_CLICKED,
-                            new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    System.out.println("You clicked on line " + fibLine.getLine());
-                                    fibLine.getLine().setStroke(Color.RED);
-                                }
-                            });
-                    fibLine.getLine().addEventFilter(MouseEvent.MOUSE_EXITED,
-                            new EventHandler<MouseEvent>() {
-                                @Override
-                                public void handle(MouseEvent mouseEvent) {
-                                    fibLine.getLine().setStrokeWidth(1.0);
-                                }
-                            });
-                    */
                     updateMyPaneLines(fibLine);
                     myPane.getChildren().add(fibLine.view());
                 }
@@ -248,6 +226,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
+    public void setLocation(int loc) {
+        location = loc;
+    }
+
+    @Override
     public void setMenus(Map<String, Menu> menus) {
         Menu fibMenu = menus.get("fibonacci");
         if (fibMenu != null) {
@@ -276,7 +259,13 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     for (CanvasGroup line : lines) {
                         if (line.getStatus() == CanvasGroup.SELECTED) {
                             MongodbLine mongoLine = (MongodbLine)line;
-                            System.out.println(mongoLine.coord(MongodbLine.P1));
+                            BasicDBObject p1 = mongoLine.coord(MongodbLine.P1);
+                            BasicDBObject p2 = mongoLine.coord(MongodbLine.P2);
+                            MongoDBResult result = model.getWindowDressingModel().saveFibonacci(getTicker().getTicker(),location,p1,p2);
+                            if (result.isOk()) {
+                                mongoLine.setMongodbId(result.getObjectId());
+                                line.setStatus(CanvasGroup.SAVED_TO_DB);
+                            }
                         }
                     }
                 }
