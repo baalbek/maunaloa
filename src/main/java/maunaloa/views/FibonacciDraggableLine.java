@@ -51,6 +51,9 @@ public class FibonacciDraggableLine extends DraggableLine {
         return _colors.get(getColorsIndex());
     }
 
+    //endregion Init
+
+    //region Constructors
     /*
     public FibonacciDraggableLine(ObjectId mongodbId,
                                   boolean active,
@@ -74,6 +77,7 @@ public class FibonacciDraggableLine extends DraggableLine {
     }
     */
 
+
     public FibonacciDraggableLine(Line line, IRuler hruler, IRuler vruler, boolean fib1272Extensions) {
         this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, hruler, vruler, fib1272Extensions);
     }
@@ -91,8 +95,10 @@ public class FibonacciDraggableLine extends DraggableLine {
 
         super(startX, startY, endX, endY, anchorRadius,hruler,vruler);
 
+        init(startX, startY, endX, endY, fib1272Extensions);
+    }
 
-
+    private void init(double startX, double startY, double endX, double endY, boolean fib1272Extensions) {
         double x = Math.max(startX, endX);
 
         double y = Math.min(startY, endY);
@@ -109,7 +115,7 @@ public class FibonacciDraggableLine extends DraggableLine {
             group.getChildren().add(createFibLine(createBinding(PHI_EXT-1.0,true),curColor));
         }
     }
-    //endregion
+    //endregion Constructors
 
     //region Private Methods
     private DoubleBinding createBinding(final double level, final boolean isFlipped) {

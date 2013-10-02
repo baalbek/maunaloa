@@ -23,6 +23,7 @@ import maunaloa.events.DerivativesCalculatedEvent;
 import maunaloa.events.StockPriceAssignedEvent;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
+import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
@@ -264,6 +265,23 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 }
             });
             fibMenu.getItems().addAll(m1,m3, new SeparatorMenuItem());
+        }
+
+        Menu mongoMenu = menus.get("mongodb");
+        if (mongoMenu != null) {
+            MenuItem m1 = new MenuItem(String.format("(%s) Save to MongoDB",name));
+            m1.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    List<CanvasGroup> lines = fibLines.get(getTicker());
+                    for (CanvasGroup line : lines) {
+                        if (line.getStatus() == CanvasGroup.SELECTED) {
+                            MongodbLine mongoLine = (MongodbLine)line;
+                            System.out.println(mongoLine.coord(MongodbLine.P1));
+                        }
+                    }
+                }
+            });
+            mongoMenu.getItems().addAll(m1, new SeparatorMenuItem());
         }
     }
 

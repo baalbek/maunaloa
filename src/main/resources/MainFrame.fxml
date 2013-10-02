@@ -20,9 +20,8 @@
                                 <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Fibonacci" fx:id="fibonacciMenu">
-
-                        </Menu>
+                        <Menu mnemonicParsing="false" text="Fibonacci" fx:id="fibonacciMenu"></Menu>
+                        <Menu mnemonicParsing="false" text="MongoDB" fx:id="mongodbMenu"></Menu>
                     </menus>
                 </MenuBar>
                 <HBox prefHeight="-1.0" prefWidth="-1.0">

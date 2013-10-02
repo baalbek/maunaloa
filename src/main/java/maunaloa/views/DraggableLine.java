@@ -23,7 +23,8 @@ import java.util.Date;
  * Time: 7:42 PM
  */
 public abstract class DraggableLine implements CanvasGroup, MongodbLine {
-    private final Line line ;
+    //region Init
+    private Line line ;
     private ObjectId mongodbId;
     private boolean active;
     private long location;
@@ -40,12 +41,19 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     private static double STROKE_WIDTH_SELECTED = 4.0;
 
     private int status = CanvasGroup.NORMAL;
+    //endregion Init
 
+    //region Constructors
     public DraggableLine(ObjectId mongodbId,
                          boolean active,
                          long location,
                          BasicDBObject p1,
-                         BasicDBObject p2) {
+                         BasicDBObject p2,
+                         IRuler hruler,
+                         IRuler vruler) {
+        this.mongodbId = mongodbId;
+        this.location = location;
+
         this.line = null;
     }
     public DraggableLine(double startX,
@@ -57,10 +65,13 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
                          IRuler vruler) {
         this(startX,startY,endX,endY,anchorRadius);
         this.hruler = hruler;
-
         this.vruler = (IBoundaryRuler)vruler;
     }
     public DraggableLine(double startX, double startY, double endX, double endY, double anchorRadius) {
+        init(startX, startY, endX, endY, anchorRadius);
+    }
+
+    private void init(double startX, double startY, double endX, double endY, double anchorRadius) {
         line = new Line(startX, startY, endX, endY);
         line.setStrokeWidth(STROKE_WIDTH_NORMAL);
         addEvents(line);
@@ -71,7 +82,7 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
         group = new Group();
         group.getChildren().addAll(line, startAnchor, endAnchor);
     }
-
+    //endregion Constructors
 
     //region Abstract Methods
     //public abstract void onMousePressed();
@@ -125,7 +136,6 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
         location = value;
     }
     //endregion Interface MongodbLine
-
 
     //region Events
     private void addEvents(final Line line) {

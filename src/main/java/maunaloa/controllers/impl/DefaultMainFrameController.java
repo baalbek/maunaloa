@@ -36,6 +36,7 @@ public class DefaultMainFrameController implements MainFrameController {
     @FXML private ChoiceBox cbTickers;
     @FXML private MenuBar myMenuBar;
     @FXML private Menu fibonacciMenu;
+    @FXML private Menu mongodbMenu;
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
@@ -170,6 +171,7 @@ public class DefaultMainFrameController implements MainFrameController {
         fib1272extCheckMenu.setSelected(true);
         fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
 
+        myMenus.put("mongodb",mongodbMenu);
 
         initCanvanController(candlesticksController,"Candlesticks",getCandlesticksChart(),myMenus);
         initCanvanController(weeksController,"Weeks",getWeeklyChart(),myMenus);
