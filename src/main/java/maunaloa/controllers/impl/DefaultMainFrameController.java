@@ -14,7 +14,7 @@ import maunaloa.controllers.MainFrameController;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahux.chart.MaunaloaChart;
-import oahux.models.MaunaloaFacade;
+import maunaloa.models.MaunaloaFacade;
 
 import java.util.HashMap;
 import java.util.List;

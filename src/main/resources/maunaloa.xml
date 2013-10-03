@@ -69,14 +69,16 @@
     </bean>
 
 
-    <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel"></bean>
+    <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel">
+        <property name="mongodbHost" value="andromeda2" />
+    </bean>
 
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
         <property name="windowDressingModel" ref="windowdressingmodel" />
         <property name="locator" ref="locator" />
         <property name="etrade" ref="etrade" />
         <property name="calculator" ref="calculator" />
-        <property name="defaultStartDate" value="2010-01-01" />
+        <property name="defaultStartDate" value="2011-01-01" />
     </bean>
 
     <bean id="mainframe-controller"

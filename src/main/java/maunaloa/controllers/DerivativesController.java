@@ -7,7 +7,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.Toggle;
 import maunaloa.events.DerivativesControllerListener;
 import oahu.financial.Stock;
-import oahux.models.MaunaloaFacade;
+import maunaloa.models.MaunaloaFacade;
 
 import java.util.Map;
 

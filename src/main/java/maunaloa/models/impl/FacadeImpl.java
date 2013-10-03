@@ -8,7 +8,7 @@ import oahu.annotations.Memoize;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.*;
 import oahux.domain.DerivativeFx;
-import oahux.models.MaunaloaFacade;
+import maunaloa.models.MaunaloaFacade;
 import org.apache.ibatis.session.SqlSession;
 import ranoraraku.models.mybatis.StockMapper;
 import ranoraraku.utils.MyBatisUtils;

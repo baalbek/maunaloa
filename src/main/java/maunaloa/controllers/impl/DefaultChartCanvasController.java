@@ -33,7 +33,7 @@ import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.domain.DerivativeFx;
-import oahux.models.MaunaloaFacade;
+import maunaloa.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
 
 import java.util.*;

@@ -7,7 +7,7 @@ import maunaloa.events.DerivativesControllerListener;
 import oahu.financial.Stock;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
-import oahux.models.MaunaloaFacade;
+import maunaloa.models.MaunaloaFacade;
 
 import java.util.Map;
 

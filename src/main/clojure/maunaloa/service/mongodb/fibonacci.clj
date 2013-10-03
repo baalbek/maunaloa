@@ -7,8 +7,8 @@
 
 (def get-collection
   (memoize
-    (fn [collection]
-      (let [clt (MongoClient. "xochitecatl" 27017)
+    (fn [host collection]
+      (let [clt (MongoClient. host 27017)
             db (.getDB clt "maunaloa")
             result (.getCollection db collection)]
         result))))
@@ -30,13 +30,13 @@
       (.append "p0" p1)
       (.append "p1" p2))))
 
-(defn fetch [ticker from-date to-date]
-  (let [coll (get-collection "fibonacci")
+(defn fetch [host ticker from-date to-date]
+  (let [coll (get-collection host "fibonacci")
         query (BasicDBObject. "tix" ticker)]
     (.find coll query)))
 
-(defn save [ticker loc p1 p2]
-  (let [coll (get-collection "fibonacci")
+(defn save [host ticker loc p1 p2]
+  (let [coll (get-collection host "fibonacci")
         result (create-item ticker loc p1 p2)
         server-result (.save coll result)]
     (MongoDBResult. result server-result)))
