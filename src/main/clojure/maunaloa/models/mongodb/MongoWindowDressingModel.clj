@@ -2,7 +2,8 @@
   ( :gen-class
     :init init
     :state state
-    :implements [maunaloa.models.ChartWindowDressingModel])
+    :implements [maunaloa.models.ChartWindowDressingModel]
+    :methods [[getMongodbHost [] String] [setMongodbHost [String] void]])
   (:require (maunaloa.service.mongodb [fibonacci :as fib])))
 
 (defn -init []
@@ -25,6 +26,6 @@
 (defn -fetchFibonacci [this ticker fromDate toDate]
   (let [s (.state this)
         host (:host @s)]
-    (fib/fetch ticker fromDate toDate)))
+    (fib/fetch host ticker fromDate toDate)))
 
 

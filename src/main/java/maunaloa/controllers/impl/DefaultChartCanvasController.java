@@ -1,6 +1,7 @@
 package maunaloa.controllers.impl;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -153,17 +154,30 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMouseReleased(null);
     }
 
-    private void deleteLines(Map<Stock,List<CanvasGroup>> linesMap) {
+    private void deleteLines(Map<Stock,List<CanvasGroup>> linesMap, boolean deleteAll) {
         List<CanvasGroup> lines = linesMap.get(getTicker());
 
         if (lines == null) return;
 
+        List<CanvasGroup> linesToBeRemoved = new ArrayList<>();
+
         for (CanvasGroup l : lines) {
-            myPane.getChildren().remove(l.view());
+            if (log.isDebugEnabled()) {
+                log.debug(String.format("Will attempt to delete line %s with status %d", l, l.getStatus()));
+            }
+            if ((deleteAll == true) || (l.getStatus() == CanvasGroup.SELECTED)) {
+                myPane.getChildren().remove(l.view());
+                linesToBeRemoved.add(l);
+            }
         }
 
-        lines.clear();
+        for (CanvasGroup l : linesToBeRemoved) {
+            lines.remove(l);
+        }
+
+        //lines.clear();
     }
+
     private void clearLines(Map<Stock,List<CanvasGroup>> linesMap) {
         List<CanvasGroup> lines = linesMap.get(getTicker());
 
@@ -241,13 +255,20 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 }
             });
 
-            MenuItem m3 = new MenuItem(String.format("(%s) Delete fibonacci",name));
-            m3.setOnAction(new EventHandler<ActionEvent>() {
+            MenuItem m2 = new MenuItem(String.format("(%s) Delete selected",name));
+            m2.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
-                    deleteLines(fibLines);
+                    deleteLines(fibLines,false);
                 }
             });
-            fibMenu.getItems().addAll(m1,m3, new SeparatorMenuItem());
+
+            MenuItem m3 = new MenuItem(String.format("(%s) Delete all",name));
+            m3.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    deleteLines(fibLines,true);
+                }
+            });
+            fibMenu.getItems().addAll(m1,m2,m3, new SeparatorMenuItem());
         }
 
         Menu mongoMenu = menus.get("mongodb");
@@ -259,12 +280,20 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     for (CanvasGroup line : lines) {
                         if (line.getStatus() == CanvasGroup.SELECTED) {
                             MongodbLine mongoLine = (MongodbLine)line;
-                            BasicDBObject p1 = mongoLine.coord(MongodbLine.P1);
-                            BasicDBObject p2 = mongoLine.coord(MongodbLine.P2);
-                            MongoDBResult result = model.getWindowDressingModel().saveFibonacci(getTicker().getTicker(),location,p1,p2);
+                            DBObject p1 = mongoLine.coord(MongodbLine.P1);
+                            DBObject p2 = mongoLine.coord(MongodbLine.P2);
+                            String tix = getTicker().getTicker();
+                            MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
+                            log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
+                                    tix,
+                                    result.getObjectId(),
+                                    location));
                             if (result.isOk()) {
                                 mongoLine.setMongodbId(result.getObjectId());
                                 line.setStatus(CanvasGroup.SAVED_TO_DB);
+                            }
+                            else {
+                                log.error(String.format("(fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
                             }
                         }
                     }
@@ -312,7 +341,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void notify(DerivativesCalculatedEvent event) {
-        deleteLines(levels);
+        deleteLines(levels,true);
         List<CanvasGroup> lines = new ArrayList<>();
         for(DerivativeFx d : event.getCalculated()) {
             if (log.isDebugEnabled()) {

@@ -33,7 +33,7 @@
 (defn fetch [host ticker from-date to-date]
   (let [coll (get-collection host "fibonacci")
         query (BasicDBObject. "tix" ticker)]
-    (.find coll query)))
+    (.toArray (.find coll query))))
 
 (defn save [host ticker loc p1 p2]
   (let [coll (get-collection host "fibonacci")
