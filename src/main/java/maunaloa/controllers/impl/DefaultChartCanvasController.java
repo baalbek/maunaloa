@@ -1,6 +1,5 @@
 package maunaloa.controllers.impl;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -11,6 +10,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -18,17 +20,19 @@ import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 import maunaloa.controllers.ChartCanvasController;
+import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MongoDBResult;
 import maunaloa.events.DerivativesCalculatedEvent;
+import maunaloa.events.FetchedFromMongoDBEvent;
+import maunaloa.events.MongoDBControllerListener;
 import maunaloa.events.StockPriceAssignedEvent;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -37,6 +41,7 @@ import oahux.domain.DerivativeFx;
 import maunaloa.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -45,7 +50,7 @@ import java.util.*;
  * Date: 7/26/13
  * Time: 12:26 AM
  */
-public class DefaultChartCanvasController implements ChartCanvasController {
+public class DefaultChartCanvasController implements ChartCanvasController, MongoDBControllerListener {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
     @FXML private Canvas myCanvas;
@@ -270,7 +275,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             });
             fibMenu.getItems().addAll(m1,m2,m3, new SeparatorMenuItem());
         }
-
+        final MongoDBControllerListener myMongoDBlistener = this;
         Menu mongoMenu = menus.get("mongodb");
         if (mongoMenu != null) {
             MenuItem m1 = new MenuItem(String.format("(%s) Save to MongoDB",name));
@@ -299,7 +304,36 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     }
                 }
             });
-            mongoMenu.getItems().addAll(m1, new SeparatorMenuItem());
+            MenuItem m2 = new MenuItem(String.format("(%s) Fetch from MongoDB",name));
+            m2.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    try {
+                        URL url = this.getClass().getResource("/FetchFromMongoDialog.fxml");
+
+                        FXMLLoader loader = new FXMLLoader(url);
+
+                        Parent parent = (Parent)loader.load();
+
+                        MongoDBController c = loader.getController();
+                        c.setListener(myMongoDBlistener);
+
+                        Stage stage = new Stage();
+                        stage.setTitle("Fetch from MongoDB");
+                        stage.setScene(new Scene(parent));
+                        stage.show();
+                    }
+                    catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            MenuItem m3 = new MenuItem(String.format("(%s) Set selected as inactive",name));
+            m3.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+
+                }
+            });
+            mongoMenu.getItems().addAll(m1, m2, new SeparatorMenuItem());
         }
     }
 
@@ -357,6 +391,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     public void notify(StockPriceAssignedEvent event) {
         StockPrice sp = event.getStockPrice();
         System.out.println("Event fired: " + event + ", " + sp);
+    }
+
+    @Override
+    public void onFetchedFromMongoDB(FetchedFromMongoDBEvent event) {
+        System.out.println("Hi, I'm listening!");
     }
 
     //endregion  Interface methods
