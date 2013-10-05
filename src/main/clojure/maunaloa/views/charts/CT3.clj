@@ -55,9 +55,11 @@
         dx (U/vec-map-beans .getDx beans)
         num-items 90
         cndl-plotter (CNDL/candlestick-plotter (take num-items (rseq beans)))
-        itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
-                                                     :add-plotters [cndl-plotter]
-                                                     :legend false})
+        itrend-block (CB/itrend-block prices dx 0.5
+                       {:num-items num-items
+                        :add-plotters [cndl-plotter]
+                        :legend false
+                        :snap-unit 1})
 
         cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items
                                                       :legend false})
@@ -76,7 +78,8 @@
                 :x1 (- w mright)
                 :y0 mtop)]
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
-        (println vr)
+        (println (str "VR " vr))
+        (println (str "HR " hr))
         (.setHRuler vm hr)
         (.setVRuler vm vr)
         )

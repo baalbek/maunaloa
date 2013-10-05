@@ -79,7 +79,8 @@
                 :x1 (- w mright)
                 :y0 mtop)]
       (let [[hr vr] (Q/plot-quadrant gc (first qsx))]
-        (println vr)
+        (println (str "VR " vr))
+        (println (str "HR " hr))
         (.setHRuler vm hr)
         (.setVRuler vm vr)
         )

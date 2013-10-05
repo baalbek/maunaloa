@@ -61,10 +61,12 @@
         prices (U/vec-map-beans .getValue beans)
         num-items (- (count beans) 20)
         cndl-plotter (CNDL/candlestick-plotter (take num-items (rseq (vec beans))))
-        itrend-block (CB/itrend-block prices dx 0.5 {:num-items num-items
-                                                     :add-plotters [cndl-plotter]
-                                                     :legend true
-                                                     :freqs [50 10]})
+        itrend-block (CB/itrend-block prices dx 0.5
+                       {:num-items num-items
+                        :add-plotters [cndl-plotter]
+                        :legend true
+                        :freqs [50 10]
+                        :snap-unit 2})
 
         cc-block (CB/cybercycle-block prices dx 0.25 {:num-items num-items
                                                       :legend true
