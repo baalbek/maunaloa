@@ -316,6 +316,7 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
 
                         MongoDBController c = loader.getController();
                         c.setListener(myMongoDBlistener);
+                        c.setFacade(model);
 
                         Stage stage = new Stage();
                         stage.setTitle("Fetch from MongoDB");

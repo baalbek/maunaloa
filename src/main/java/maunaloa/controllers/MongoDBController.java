@@ -1,6 +1,7 @@
 package maunaloa.controllers;
 
 import maunaloa.events.MongoDBControllerListener;
+import maunaloa.models.MaunaloaFacade;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,5 +11,6 @@ import maunaloa.events.MongoDBControllerListener;
  */
 public interface MongoDBController {
     void setListener(MongoDBControllerListener listener);
+    void setFacade(MaunaloaFacade facade);
 
 }
