@@ -45,6 +45,8 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
 
     private int status = CanvasGroup.NORMAL;
 
+    private List<String> comments;
+
     private static Map<Integer,Color> statusColors;
     static {
         statusColors = new HashMap<>();
@@ -151,6 +153,17 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     }
     public void setLocation(long value) {
         location = value;
+    }
+    @Override
+    void addComment(String comment) {
+        if (comments == null) {
+            comments = new ArrayList<String>();
+        }
+        comments.add(comment);
+    }
+    @Override
+    List<String> getComments() {
+        return comments;
     }
     //endregion Interface MongodbLine
 

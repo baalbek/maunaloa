@@ -20,4 +20,6 @@ public interface MongodbLine {
     void setActive(boolean value);
     BasicDBObject coord(int pt);
     long getLocation();
+    void addComment(String comment);
+    List<String> getComments();
 }
