@@ -15,9 +15,7 @@ import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
 import org.joda.time.DateMidnight;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -155,14 +153,14 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
         location = value;
     }
     @Override
-    void addComment(String comment) {
+    public void addComment(String comment) {
         if (comments == null) {
             comments = new ArrayList<String>();
         }
         comments.add(comment);
     }
     @Override
-    List<String> getComments() {
+    public List<String> getComments() {
         return comments;
     }
     //endregion Interface MongodbLine

@@ -261,7 +261,7 @@ public class DerivativesControllerImpl implements DerivativesController {
 
 
     @Override
-    public void addDerivativesCalculatedListener(DerivativesControllerListener listener) {
+    public void addDerivativesControllerListener(DerivativesControllerListener listener) {
         calculatedListeners.add(listener);
     }
     //endregion  Interface methods

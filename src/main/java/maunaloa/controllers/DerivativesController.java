@@ -18,5 +18,5 @@ public interface DerivativesController {
     void setTicker(Stock ticker);
     void setModel(MaunaloaFacade model);
     void setMenus(Map<String,Menu> menus);
-    void addDerivativesCalculatedListener(DerivativesControllerListener listener);
+    void addDerivativesControllerListener(DerivativesControllerListener listener);
 }

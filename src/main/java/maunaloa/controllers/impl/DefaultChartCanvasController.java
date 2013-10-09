@@ -25,14 +25,12 @@ import javafx.stage.Stage;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MongoDBResult;
-import maunaloa.events.DerivativesCalculatedEvent;
-import maunaloa.events.FetchedFromMongoDBEvent;
-import maunaloa.events.MongoDBControllerListener;
-import maunaloa.events.StockPriceAssignedEvent;
+import maunaloa.events.*;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -249,6 +247,7 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
         location = loc;
     }
 
+    /*
     @Override
     public void setMenus(Map<String, Menu> menus) {
         Menu fibMenu = menus.get("fibonacci");
@@ -337,6 +336,7 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
             mongoMenu.getItems().addAll(m1, m2, new SeparatorMenuItem());
         }
     }
+    //*/
 
     private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true);
     @Override
@@ -373,7 +373,9 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
     public void setHRuler(IRuler ruler) {
         this.hruler = ruler;
     }
+    //endregion  Interface methods
 
+    //region  DerivativesControllerListener Interface methods
     @Override
     public void notify(DerivativesCalculatedEvent event) {
         deleteLines(levels,true);
@@ -393,11 +395,32 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
         StockPrice sp = event.getStockPrice();
         System.out.println("Event fired: " + event + ", " + sp);
     }
+    //endregion  DerivativesControllerListener Interface methods
 
+    //region  MongoDBControllerListener Interface methods
     @Override
     public void onFetchedFromMongoDB(FetchedFromMongoDBEvent event) {
         System.out.println("Hi, I'm listening!");
     }
+    //endregion MongoDBControllerListener  Interface methods
 
-    //endregion  Interface methods
+    //region  MainFrameControllerListener Interface methods
+    @Override
+    public void onFibonacciEvent(FibonacciEvent event) {
+        if (event.getLocation() != this.location) return;
+
+        System.out.println("I was hit with a Fib event: " + this.name);
+
+        switch  (event.getAction()) {
+            case FibonacciEvent.NEW_LINE:
+                activateFibonacci();
+                break;
+            case FibonacciEvent.DELETE_SEL_LINES:
+                break;
+            case FibonacciEvent.DELETE_ALL_LINES:
+                break;
+        }
+    }
+    //endregion  MainFrameControllerListener Interface methods
+
 }

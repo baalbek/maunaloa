@@ -61,7 +61,7 @@
         </VBox>
     </top>
     <center>
-        <TabPane prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="myTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab text="Options">
                     <content>

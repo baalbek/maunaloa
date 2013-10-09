@@ -5,20 +5,22 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
+import maunaloa.events.FibonacciEvent;
+import maunaloa.events.MainFrameControllerListener;
+import maunaloa.models.MaunaloaFacade;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahux.chart.MaunaloaChart;
-import maunaloa.models.MaunaloaFacade;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,6 +42,7 @@ public class DefaultMainFrameController implements MainFrameController {
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
+    @FXML private TabPane myTabPane;
     //endregion FXML
 
     //region Init
@@ -51,9 +54,9 @@ public class DefaultMainFrameController implements MainFrameController {
     private MaunaloaChart obxCandlesticksChart;
     private CheckMenuItem fib1272extCheckMenu;
 
+    private List<MainFrameControllerListener> myListeners = new ArrayList<>();
 
     public DefaultMainFrameController() {
-
     }
 
 
@@ -157,42 +160,54 @@ public class DefaultMainFrameController implements MainFrameController {
         optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
         optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
         optionsController.setModel(getFacade());
-        optionsController.addDerivativesCalculatedListener(candlesticksController);
-        optionsController.addDerivativesCalculatedListener(weeksController);
+        optionsController.addDerivativesControllerListener(candlesticksController);
+        optionsController.addDerivativesControllerListener(weeksController);
     }
 
     public void initialize() {
 
         initChoiceBoxTickers();
+        initMenus();
 
-        Map<String, Menu> myMenus = new HashMap<>();
-        myMenus.put("fibonacci",fibonacciMenu);
-        fib1272extCheckMenu = new CheckMenuItem("1.272 extension");
-        fib1272extCheckMenu.setSelected(true);
-        fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
 
-        myMenus.put("mongodb",mongodbMenu);
-
-        initCanvanController(candlesticksController,"Candlesticks",1,getCandlesticksChart(),myMenus);
-        initCanvanController(weeksController,"Weeks",2,getWeeklyChart(),myMenus);
-        initCanvanController(obxCandlesticksController,"OBX Candlest.",3,getObxCandlesticksChart(),myMenus);
-        initCanvanController(obxWeeksController, "OBX Weeks", 4, getObxWeeklyChart(), myMenus);
+        initCanvanController(candlesticksController,"Candlesticks",1,getCandlesticksChart());
+        initCanvanController(weeksController,"Weeks",2,getWeeklyChart());
+        initCanvanController(obxCandlesticksController,"OBX Candlest.",3,getObxCandlesticksChart());
+        initCanvanController(obxWeeksController, "OBX Weeks", 4, getObxWeeklyChart());
 
         initOptionsController();
     }
 
+    private void initMenus() {
+        fib1272extCheckMenu = new CheckMenuItem("1.272 extension");
+        fib1272extCheckMenu.setSelected(false);
+        fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
+
+        MenuItem m1 = new MenuItem("New Fibonacci line");
+        m1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+                System.out.println("Location: " + curloc);
+                for (MainFrameControllerListener listener : myListeners) {
+                    listener.onFibonacciEvent(new FibonacciEvent(curloc,FibonacciEvent.NEW_LINE));
+                }
+            }
+        });
+        fibonacciMenu.getItems().addAll(m1, new SeparatorMenuItem());
+
+    }
     private void initCanvanController(ChartCanvasController controller,
                                       String name,
                                       int location,
-                                      MaunaloaChart chart,
-                                      Map<String, Menu> menus) {
+                                      MaunaloaChart chart) {
 
         controller.setName(name);
         controller.setLocation(location);
         controller.setChart(chart);
         controller.setModel(getFacade());
-        controller.setMenus(menus);
         controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty());
+
+        myListeners.add(controller);
 
     }
 
