@@ -409,15 +409,15 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
     public void onFibonacciEvent(FibonacciEvent event) {
         if (event.getLocation() != this.location) return;
 
-        System.out.println("I was hit with a Fib event: " + this.name);
-
         switch  (event.getAction()) {
             case FibonacciEvent.NEW_LINE:
                 activateFibonacci();
                 break;
             case FibonacciEvent.DELETE_SEL_LINES:
+                deleteLines(fibLines,false);
                 break;
             case FibonacciEvent.DELETE_ALL_LINES:
+                deleteLines(fibLines,true);
                 break;
         }
     }

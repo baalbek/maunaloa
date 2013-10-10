@@ -8,8 +8,10 @@ package maunaloa.events;
  */
 public class FibonacciEvent {
     public final static int NEW_LINE = 1;
-    public final static int DELETE_SEL_LINES = 2;
-    public final static int DELETE_ALL_LINES = 3;
+    public final static int HODE_SEL_LINES = 2;
+    public final static int HODE_ALL_LINES = 3;
+    public final static int DELETE_SEL_LINES = 4;
+    public final static int DELETE_ALL_LINES = 5;
 
     private final int location;
     private final int action;
