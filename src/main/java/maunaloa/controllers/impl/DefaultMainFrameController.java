@@ -178,56 +178,17 @@ public class DefaultMainFrameController implements MainFrameController {
         initOptionsController();
     }
 
+
     private void initMenus() {
         fib1272extCheckMenu = new CheckMenuItem("1.272 extension");
         fib1272extCheckMenu.setSelected(false);
         fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
 
-        MenuItem m1 = new MenuItem("New Line");
-        m1.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(new FibonacciEvent(curloc,FibonacciEvent.NEW_LINE));
-                }
-            }
-        });
-        MenuItem m2 = new MenuItem("Hide selected Lines");
-        m2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(new FibonacciEvent(curloc,FibonacciEvent.HODE_SEL_LINES));
-                }
-            }
-        });
-        MenuItem m3 = new MenuItem("Hide all Lines");
-        m3.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(new FibonacciEvent(curloc,FibonacciEvent.HODE_ALL_LINES));
-                }
-            }
-        });
-        MenuItem m4 = new MenuItem("Delete selected Lines");
-        m4.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(new FibonacciEvent(curloc,FibonacciEvent.DELETE_SEL_LINES));
-                }
-            }
-        });
-        MenuItem m5 = new MenuItem("Delete all Lines");
-        m5.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(new FibonacciEvent(curloc,FibonacciEvent.DELETE_ALL_LINES));
-                }
-            }
-        });
+        MenuItem m1 = createMenuItem("New Line",FibonacciEvent.NEW_LINE);
+        MenuItem m2 = createMenuItem("Hide selected Lines",FibonacciEvent.HODE_SEL_LINES);
+        MenuItem m3 = createMenuItem("Hide all Lines",FibonacciEvent.HODE_ALL_LINES);
+        MenuItem m4 = createMenuItem("Delete selected Lines",FibonacciEvent.DELETE_SEL_LINES);
+        MenuItem m5 = createMenuItem("Delete all Lines",FibonacciEvent.DELETE_ALL_LINES);
         fibonacciMenu.getItems().addAll(m1,
                                         new SeparatorMenuItem(),
                                         m2,m3,
@@ -235,6 +196,21 @@ public class DefaultMainFrameController implements MainFrameController {
                                         m4,m5);
 
     }
+
+    private MenuItem createMenuItem(String title,
+                                    final int fibEvent) {
+        MenuItem m = new MenuItem(title);
+        m.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+                for (MainFrameControllerListener listener : myListeners) {
+                    listener.onFibonacciEvent(new FibonacciEvent(curloc,fibEvent));
+                }
+            }
+        });
+        return m;
+    }
+
     private void initCanvanController(ChartCanvasController controller,
                                       String name,
                                       int location,
