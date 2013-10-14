@@ -70,7 +70,7 @@
 
 
     <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel">
-        <property name="mongodbHost" value="xochitecatl" />
+        <property name="mongodbHost" value="andromeda2" />
     </bean>
 
     <bean id="facade" class="maunaloa.models.impl.FacadeImpl">

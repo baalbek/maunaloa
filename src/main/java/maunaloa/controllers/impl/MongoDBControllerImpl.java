@@ -4,7 +4,10 @@ import com.mongodb.DBObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -13,6 +16,9 @@ import maunaloa.events.MongoDBControllerListener;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.utils.DateUtils;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +38,9 @@ public class MongoDBControllerImpl implements MongoDBController {
     private TextField txFromDate;
     @FXML
     private TextField txToDate;
-    private MongoDBControllerListener listener;
+
     private MaunaloaFacade facade;
+    private List<MongoDBControllerListener> listeners;
 
     public void initialize() {
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -50,6 +57,8 @@ public class MongoDBControllerImpl implements MongoDBController {
             public void handle(ActionEvent actionEvent) {
                 Date d1 = DateUtils.parse(txFromDate.getText());
                 Date d2 = DateUtils.parse(txToDate.getText());
+
+
                 List<DBObject> lines = facade.getWindowDressingModel().fetchFibonacci("OSEBX", d1, d2);
                 for (DBObject line : lines) {
                     System.out.println(line);
@@ -59,12 +68,47 @@ public class MongoDBControllerImpl implements MongoDBController {
     }
 
     @Override
-    public void setListener(MongoDBControllerListener listener) {
-        this.listener = listener;
+    public void addListener(MongoDBControllerListener listener) {
+        if (listeners == null) {
+            listeners = new ArrayList<>();
+        }
+        listeners.add(listener);
+    }
+
+    @Override
+    public void setListeners(List<MongoDBControllerListener> listeners) {
+        this.listeners = listeners;
     }
 
     @Override
     public void setFacade(MaunaloaFacade facade) {
         this.facade = facade;
+    }
+
+    public static void loadApp(MaunaloaFacade facade,
+                               List<MongoDBControllerListener> listeners) {
+        try {
+            URL url = MongoDBControllerImpl.class.getResource("/FetchFromMongoDialog.fxml");
+
+            FXMLLoader loader = new FXMLLoader(url);
+
+            Parent parent = null;
+
+            parent = (Parent)loader.load();
+
+            MongoDBController c = loader.getController();
+            c.setListeners(listeners);
+            c.setFacade(facade);
+            /*
+            c.addListener(myMongoDBlistener);
+            c.setFacade(model);
+              */
+            Stage stage = new Stage();
+            stage.setTitle("Fetch from MongoDB");
+            stage.setScene(new Scene(parent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

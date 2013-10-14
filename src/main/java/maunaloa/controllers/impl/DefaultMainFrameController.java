@@ -14,6 +14,7 @@ import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
 import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
+import maunaloa.events.MongoDBEvent;
 import maunaloa.models.MaunaloaFacade;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
@@ -184,21 +185,37 @@ public class DefaultMainFrameController implements MainFrameController {
         fib1272extCheckMenu.setSelected(false);
         fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
 
-        MenuItem m1 = createMenuItem("New Line",FibonacciEvent.NEW_LINE);
-        MenuItem m2 = createMenuItem("Hide selected Lines",FibonacciEvent.HODE_SEL_LINES);
-        MenuItem m3 = createMenuItem("Hide all Lines",FibonacciEvent.HODE_ALL_LINES);
-        MenuItem m4 = createMenuItem("Delete selected Lines",FibonacciEvent.DELETE_SEL_LINES);
-        MenuItem m5 = createMenuItem("Delete all Lines",FibonacciEvent.DELETE_ALL_LINES);
+        MenuItem m1 = createFibonacciMenuItem("New Line", FibonacciEvent.NEW_LINE);
+        MenuItem m2 = createFibonacciMenuItem("Hide selected Lines", FibonacciEvent.HODE_SEL_LINES);
+        MenuItem m3 = createFibonacciMenuItem("Hide all Lines", FibonacciEvent.HODE_ALL_LINES);
+        MenuItem m4 = createFibonacciMenuItem("Delete selected Lines", FibonacciEvent.DELETE_SEL_LINES);
+        MenuItem m5 = createFibonacciMenuItem("Delete all Lines", FibonacciEvent.DELETE_ALL_LINES);
         fibonacciMenu.getItems().addAll(m1,
                                         new SeparatorMenuItem(),
                                         m2,m3,
                                         new SeparatorMenuItem(),
                                         m4,m5);
 
+
+        MenuItem mongo1 = createMongoDBMenuItem("Save to datastore", MongoDBEvent.SAVE_TO_DATASTORE);
+        MenuItem mongo2 = createMongoDBMenuItem("Fetch from datastore", MongoDBEvent.FETCH_FROM_DATASTORE);
+        mongodbMenu.getItems().addAll(mongo1,mongo2);
+
     }
 
-    private MenuItem createMenuItem(String title,
-                                    final int fibEvent) {
+    private MenuItem createMongoDBMenuItem(String title,
+                                             final int mongoEvent) {
+        MenuItem m = new MenuItem(title);
+        m.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+
+            }
+        });
+        return m;
+    }
+    private MenuItem createFibonacciMenuItem(String title,
+                                             final int fibEvent) {
         MenuItem m = new MenuItem(title);
         m.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {

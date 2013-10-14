@@ -5,6 +5,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import maunaloa.events.DerivativesControllerListener;
 import maunaloa.events.MainFrameControllerListener;
+import maunaloa.events.MongoDBControllerListener;
 import oahu.financial.Stock;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
@@ -21,7 +22,8 @@ import java.util.Map;
 public interface ChartCanvasController extends
                                         MaunaloaChartViewModel,
                                         DerivativesControllerListener,
-                                        MainFrameControllerListener {
+                                        MainFrameControllerListener,
+                                        MongoDBControllerListener {
     void setTicker(Stock ticker);
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);

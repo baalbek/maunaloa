@@ -1,5 +1,7 @@
 package maunaloa.events;
 
+import oahu.financial.Stock;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -7,5 +9,5 @@ package maunaloa.events;
  * Time: 4:25 PM
  */
 public interface MongoDBControllerListener {
-    void onFetchedFromMongoDB(FetchedFromMongoDBEvent event);
+    void onMongoDBEvent(MongoDBEvent event);
 }

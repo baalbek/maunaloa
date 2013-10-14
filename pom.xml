@@ -55,6 +55,7 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
+
         </dependency>
 
         <!--****************************************************************
@@ -99,12 +100,10 @@
             <artifactId>oahu</artifactId>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>rcstadheim</groupId>
             <artifactId>oahux</artifactId>
         </dependency>
-        -->
 
         <dependency>
             <groupId>rcstadheim</groupId>

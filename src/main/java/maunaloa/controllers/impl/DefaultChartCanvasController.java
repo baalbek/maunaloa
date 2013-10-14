@@ -1,36 +1,23 @@
 package maunaloa.controllers.impl;
 
-import com.mongodb.DBObject;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
 import maunaloa.controllers.ChartCanvasController;
-import maunaloa.controllers.MongoDBController;
-import maunaloa.domain.MongoDBResult;
 import maunaloa.events.*;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
-import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -39,7 +26,6 @@ import oahux.domain.DerivativeFx;
 import maunaloa.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
 
-import java.net.URL;
 import java.util.*;
 
 /**
@@ -48,7 +34,7 @@ import java.util.*;
  * Date: 7/26/13
  * Time: 12:26 AM
  */
-public class DefaultChartCanvasController implements ChartCanvasController, MongoDBControllerListener {
+public class DefaultChartCanvasController implements ChartCanvasController {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
     @FXML private Canvas myCanvas;
@@ -314,7 +300,7 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
                         Parent parent = (Parent)loader.load();
 
                         MongoDBController c = loader.getController();
-                        c.setListener(myMongoDBlistener);
+                        c.addListener(myMongoDBlistener);
                         c.setFacade(model);
 
                         Stage stage = new Stage();
@@ -399,8 +385,17 @@ public class DefaultChartCanvasController implements ChartCanvasController, Mong
 
     //region  MongoDBControllerListener Interface methods
     @Override
-    public void onFetchedFromMongoDB(FetchedFromMongoDBEvent event) {
+    public void onMongoDBEvent(MongoDBEvent event) {
+        if (event.getLocation() != this.location) return;
+
         System.out.println("Hi, I'm listening!");
+
+        switch (event.getAction()) {
+            case MongoDBEvent.SAVE_TO_DATASTORE:
+                break;
+            case MongoDBEvent.FETCH_FROM_DATASTORE:
+                break;
+        }
     }
     //endregion MongoDBControllerListener  Interface methods
 
