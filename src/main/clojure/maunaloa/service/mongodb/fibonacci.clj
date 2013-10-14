@@ -1,5 +1,6 @@
 (ns maunaloa.service.mongodb.fibonacci
   (:import
+    [java.util Date]
     [com.mongodb MongoClient BasicDBObject]
     [maunaloa.domain MongoDBResult])
   (:require (maunaloa.utils [commonutils :as util])))
@@ -7,7 +8,8 @@
 
 (def get-collection
   (memoize
-    (fn [host collection]
+    (fn [^String host
+         ^String collection]
       (let [clt (MongoClient. host 27017)
             db (.getDB clt "maunaloa")
             result (.getCollection db collection)]
@@ -22,7 +24,10 @@
       (.append result "y" y-val)
       result)))
 
-(defn create-item [tix loc p1 p2]
+(defn create-item [^String tix
+                   loc
+                   ^BasicDBObject p1
+                   ^BasicDBObject p2]
   (let [result (BasicDBObject. "tix" tix)]
     (doto result
       (.append "active" true)
@@ -30,12 +35,19 @@
       (.append "p0" p1)
       (.append "p1" p2))))
 
-(defn fetch [host ticker from-date to-date]
+(defn fetch [^String host
+             ^String ticker
+             ^Date from-date
+             ^Date to-date]
   (let [coll (get-collection host "fibonacci")
         query (BasicDBObject. "tix" ticker)]
     (.toArray (.find coll query))))
 
-(defn save [host ticker loc p1 p2]
+(defn save [^String host
+            ^String ticker
+            loc
+            ^BasicDBObject p1
+            ^BasicDBObject p2]
   (let [coll (get-collection host "fibonacci")
         result (create-item ticker loc p1 p2)
         server-result (.save coll result)]

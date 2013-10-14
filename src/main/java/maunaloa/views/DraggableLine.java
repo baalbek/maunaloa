@@ -142,9 +142,16 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
 
     @Override
     public BasicDBObject coord(int pt) {
-        Circle anchor = pt == MongodbLine.P1 ? startAnchor : endAnchor;
+        Circle anchor = null;
+        if (pt == MongodbLine.P1) {
+            anchor = startAnchor.getCenterX() < endAnchor.getCenterX() ? startAnchor : endAnchor;
+        }
+        else {
+            anchor = endAnchor.getCenterX() > startAnchor.getCenterX() ? endAnchor : startAnchor;
+        }
         return coord(anchor);
     }
+
     @Override
     public long getLocation() {
         return location;

@@ -206,14 +206,15 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     private MenuItem createMongoDBMenuItem(String title,
-                                           final int mongoEvent) {
+                                           final int mongoEventId) {
         MenuItem m = new MenuItem(title);
         m.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                if (mongoEvent == MongoDBEvent.SAVE_TO_DATASTORE) {
+                if (mongoEventId == MongoDBEvent.SAVE_TO_DATASTORE) {
+                    MongoDBEvent mongoEvent = new MongoDBEvent(curloc,MongoDBEvent.SAVE_TO_DATASTORE);
                     for (MainFrameControllerListener listener : myListeners) {
-                        listener.onMongoDBEvent(new MongoDBEvent(curloc,MongoDBEvent.SAVE_TO_DATASTORE));
+                        listener.onMongoDBEvent(mongoEvent);
                     }
                 }
                 else {

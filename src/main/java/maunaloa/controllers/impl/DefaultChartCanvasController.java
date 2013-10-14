@@ -1,5 +1,6 @@
 package maunaloa.controllers.impl;
 
+import com.mongodb.DBObject;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -14,9 +15,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
+import maunaloa.domain.MongoDBResult;
 import maunaloa.events.*;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
+import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
@@ -390,6 +393,27 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
         switch (event.getAction()) {
             case MongoDBEvent.SAVE_TO_DATASTORE:
+                List<CanvasGroup> lines = fibLines.get(getTicker());
+                for (CanvasGroup line : lines) {
+                    if (line.getStatus() == CanvasGroup.SELECTED) {
+                        MongodbLine mongoLine = (MongodbLine)line;
+                        DBObject p1 = mongoLine.coord(MongodbLine.P1);
+                        DBObject p2 = mongoLine.coord(MongodbLine.P2);
+                        String tix = getTicker().getTicker();
+                        MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
+                        log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
+                                tix,
+                                result.getObjectId(),
+                                location));
+                        if (result.isOk()) {
+                            mongoLine.setMongodbId(result.getObjectId());
+                            line.setStatus(CanvasGroup.SAVED_TO_DB);
+                        }
+                        else {
+                            log.error(String.format("(fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
+                        }
+                    }
+                }
                 break;
             case MongoDBEvent.FETCH_FROM_DATASTORE:
                 System.out.println("Hello, will fetch you from "  + this.location);
