@@ -12,9 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
+import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.MongoDBControllerListener;
+import maunaloa.events.MongoDBEvent;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.utils.DateUtils;
+import oahu.exceptions.NotImplementedException;
+import oahu.financial.Stock;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +44,9 @@ public class MongoDBControllerImpl implements MongoDBController {
     private TextField txToDate;
 
     private MaunaloaFacade facade;
-    private List<MongoDBControllerListener> listeners;
+    private List<MainFrameControllerListener> listeners;
+    private Stock stock;
+    private int location;
 
     public void initialize() {
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
@@ -55,20 +61,27 @@ public class MongoDBControllerImpl implements MongoDBController {
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                if (stock == null) {
+                    System.out.println("Ticker not set");
+                    return;
+                }
                 Date d1 = DateUtils.parse(txFromDate.getText());
                 Date d2 = DateUtils.parse(txToDate.getText());
 
 
-                List<DBObject> lines = facade.getWindowDressingModel().fetchFibonacci("OSEBX", d1, d2);
+                List<DBObject> lines = facade.getWindowDressingModel().fetchFibonacci(stock.getTicker(), d1, d2);
                 for (DBObject line : lines) {
                     System.out.println(line);
+                }
+                for (MainFrameControllerListener listener : listeners) {
+                    listener.onMongoDBEvent(new MongoDBEvent(location,MongoDBEvent.FETCH_FROM_DATASTORE,lines));
                 }
             }
         });
     }
 
     @Override
-    public void addListener(MongoDBControllerListener listener) {
+    public void addListener(MainFrameControllerListener listener) {
         if (listeners == null) {
             listeners = new ArrayList<>();
         }
@@ -76,7 +89,7 @@ public class MongoDBControllerImpl implements MongoDBController {
     }
 
     @Override
-    public void setListeners(List<MongoDBControllerListener> listeners) {
+    public void setListeners(List<MainFrameControllerListener> listeners) {
         this.listeners = listeners;
     }
 
@@ -85,8 +98,20 @@ public class MongoDBControllerImpl implements MongoDBController {
         this.facade = facade;
     }
 
-    public static void loadApp(MaunaloaFacade facade,
-                               List<MongoDBControllerListener> listeners) {
+    @Override
+    public void setTicker(Stock stock) {
+        this.stock = stock;
+    }
+
+    @Override
+    public void setLocation(int location) {
+        this.location = location;
+    }
+
+    public static void loadApp(Stock stock,
+                               MaunaloaFacade facade,
+                               List<MainFrameControllerListener> listeners,
+                               int location) {
         try {
             URL url = MongoDBControllerImpl.class.getResource("/FetchFromMongoDialog.fxml");
 
@@ -99,10 +124,9 @@ public class MongoDBControllerImpl implements MongoDBController {
             MongoDBController c = loader.getController();
             c.setListeners(listeners);
             c.setFacade(facade);
-            /*
-            c.addListener(myMongoDBlistener);
-            c.setFacade(model);
-              */
+            c.setTicker(stock);
+            c.setLocation(location);
+
             Stage stage = new Stage();
             stage.setTitle("Fetch from MongoDB");
             stage.setScene(new Scene(parent));

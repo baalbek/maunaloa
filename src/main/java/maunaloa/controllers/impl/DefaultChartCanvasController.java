@@ -388,12 +388,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     public void onMongoDBEvent(MongoDBEvent event) {
         if (event.getLocation() != this.location) return;
 
-        System.out.println("Hi, I'm listening!");
-
         switch (event.getAction()) {
             case MongoDBEvent.SAVE_TO_DATASTORE:
                 break;
             case MongoDBEvent.FETCH_FROM_DATASTORE:
+                System.out.println("Hello, will fetch you from "  + this.location);
                 break;
         }
     }

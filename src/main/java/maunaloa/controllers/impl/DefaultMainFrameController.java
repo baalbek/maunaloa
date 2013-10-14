@@ -56,6 +56,7 @@ public class DefaultMainFrameController implements MainFrameController {
     private CheckMenuItem fib1272extCheckMenu;
 
     private List<MainFrameControllerListener> myListeners = new ArrayList<>();
+    private Stock currentTicker;
 
     public DefaultMainFrameController() {
     }
@@ -79,6 +80,7 @@ public class DefaultMainFrameController implements MainFrameController {
 
     public void setTicker(Stock ticker) {
 
+        this.currentTicker = ticker;
         switch (ticker.getTickerCategory()) {
             case 1:
                 candlesticksController.setTicker(ticker);
@@ -204,16 +206,25 @@ public class DefaultMainFrameController implements MainFrameController {
     }
 
     private MenuItem createMongoDBMenuItem(String title,
-                                             final int mongoEvent) {
+                                           final int mongoEvent) {
         MenuItem m = new MenuItem(title);
         m.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+                if (mongoEvent == MongoDBEvent.SAVE_TO_DATASTORE) {
+                    for (MainFrameControllerListener listener : myListeners) {
+                        listener.onMongoDBEvent(new MongoDBEvent(curloc,MongoDBEvent.SAVE_TO_DATASTORE));
+                    }
+                }
+                else {
+                    MongoDBControllerImpl.loadApp(currentTicker,getFacade(),myListeners,curloc);
+                }
 
             }
         });
         return m;
     }
+
     private MenuItem createFibonacciMenuItem(String title,
                                              final int fibEvent) {
         MenuItem m = new MenuItem(title);

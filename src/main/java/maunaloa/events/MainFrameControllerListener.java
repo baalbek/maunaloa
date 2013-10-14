@@ -8,5 +8,5 @@ package maunaloa.events;
  */
 public interface MainFrameControllerListener {
     void onFibonacciEvent(FibonacciEvent event);
-
+    void onMongoDBEvent(MongoDBEvent event);
 }
