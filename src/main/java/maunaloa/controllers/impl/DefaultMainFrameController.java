@@ -12,6 +12,7 @@ import javafx.util.StringConverter;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
+import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.MongoDBEvent;
@@ -218,7 +219,13 @@ public class DefaultMainFrameController implements MainFrameController {
                     }
                 }
                 else {
-                    MongoDBControllerImpl.loadApp(currentTicker,getFacade(),myListeners,curloc);
+                    //MongoDBControllerImpl.loadApp(currentTicker,getFacade(),myListeners,curloc);
+                    MaunaloaContext ctx = new MaunaloaContext();
+                    ctx.setListeners(myListeners);
+                    ctx.setFacade(getFacade());
+                    ctx.setStock(currentTicker);
+                    ctx.setLocation(curloc);
+                    MongoDBControllerImpl.loadApp(ctx);
                 }
 
             }

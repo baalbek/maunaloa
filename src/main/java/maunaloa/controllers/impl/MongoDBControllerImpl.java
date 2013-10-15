@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
+import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.MongoDBControllerListener;
 import maunaloa.events.MongoDBEvent;
@@ -106,6 +107,32 @@ public class MongoDBControllerImpl implements MongoDBController {
         this.location = location;
     }
 
+    public static void loadApp(MaunaloaContext ctx) {
+        try {
+            URL url = MongoDBControllerImpl.class.getResource("/FetchFromMongoDialog.fxml");
+
+            FXMLLoader loader = new FXMLLoader(url);
+
+            Parent parent = null;
+
+            parent = (Parent)loader.load();
+
+            MongoDBController c = loader.getController();
+            c.setListeners(ctx.getListeners());
+            c.setFacade(ctx.getFacade());
+            c.setTicker(ctx.getStock());
+            c.setLocation(ctx.getLocation());
+
+            Stage stage = new Stage();
+            stage.setTitle("Fetch from MongoDB");
+            stage.setScene(new Scene(parent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
     public static void loadApp(Stock stock,
                                MaunaloaFacade facade,
                                List<MainFrameControllerListener> listeners,
@@ -133,4 +160,5 @@ public class MongoDBControllerImpl implements MongoDBController {
             e.printStackTrace();
         }
     }
+    //*/
 }
