@@ -51,6 +51,7 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
         statusColors.put(CanvasGroup.NORMAL, Color.BLACK);
         statusColors.put(CanvasGroup.SELECTED, Color.RED);
         statusColors.put(CanvasGroup.SAVED_TO_DB, Color.GREEN);
+        statusColors.put(CanvasGroup.SAVED_TO_DB_SELECTED, Color.AQUAMARINE);
     }
     //endregion Init
 
@@ -192,11 +193,27 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
                 new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        /*
                         if (getStatus() == CanvasGroup.NORMAL) {
                             setStatus(CanvasGroup.SELECTED);
                         }
                         else if (getStatus() == CanvasGroup.SELECTED) {
                             setStatus(CanvasGroup.NORMAL);
+                        }
+                        //*/
+                        switch (getStatus()) {
+                            case CanvasGroup.NORMAL:
+                                setStatus(CanvasGroup.SELECTED);
+                                break;
+                            case CanvasGroup.SELECTED:
+                                setStatus(CanvasGroup.NORMAL);
+                                break;
+                            case CanvasGroup.SAVED_TO_DB:
+                                setStatus(CanvasGroup.SAVED_TO_DB_SELECTED);
+                                break;
+                            case CanvasGroup.SAVED_TO_DB_SELECTED:
+                                setStatus(CanvasGroup.SAVED_TO_DB);
+                                break;
                         }
                     }
                 });

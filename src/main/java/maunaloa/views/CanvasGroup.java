@@ -12,6 +12,7 @@ public interface CanvasGroup {
     int NORMAL = 0;
     int SELECTED = 1;
     int SAVED_TO_DB = 2;
+    int SAVED_TO_DB_SELECTED = 3;
     Node view();
     void setStatus(int status);
     int getStatus();

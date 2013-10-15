@@ -32,8 +32,8 @@
     (doto result
       (.append "active" true)
       (.append "loc" loc)
-      (.append "p0" p1)
-      (.append "p1" p2))))
+      (.append "p1" p1)
+      (.append "p2" p2))))
 
 (defn fetch [^String host
              ^String ticker

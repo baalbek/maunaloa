@@ -1,6 +1,7 @@
 package maunaloa.controllers.impl;
 
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
@@ -236,97 +237,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         location = loc;
     }
 
-    /*
-    @Override
-    public void setMenus(Map<String, Menu> menus) {
-        Menu fibMenu = menus.get("fibonacci");
-        if (fibMenu != null) {
-            MenuItem m1 = new MenuItem(String.format("(%s) Fibonacci line",name));
-            m1.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    activateFibonacci();
-                }
-            });
-
-            MenuItem m2 = new MenuItem(String.format("(%s) Delete selected",name));
-            m2.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    deleteLines(fibLines,false);
-                }
-            });
-
-            MenuItem m3 = new MenuItem(String.format("(%s) Delete all",name));
-            m3.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    deleteLines(fibLines,true);
-                }
-            });
-            fibMenu.getItems().addAll(m1,m2,m3, new SeparatorMenuItem());
-        }
-        final MongoDBControllerListener myMongoDBlistener = this;
-        Menu mongoMenu = menus.get("mongodb");
-        if (mongoMenu != null) {
-            MenuItem m1 = new MenuItem(String.format("(%s) Save to MongoDB",name));
-            m1.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    List<CanvasGroup> lines = fibLines.get(getTicker());
-                    for (CanvasGroup line : lines) {
-                        if (line.getStatus() == CanvasGroup.SELECTED) {
-                            MongodbLine mongoLine = (MongodbLine)line;
-                            DBObject p1 = mongoLine.coord(MongodbLine.P1);
-                            DBObject p2 = mongoLine.coord(MongodbLine.P2);
-                            String tix = getTicker().getTicker();
-                            MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
-                            log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
-                                    tix,
-                                    result.getObjectId(),
-                                    location));
-                            if (result.isOk()) {
-                                mongoLine.setMongodbId(result.getObjectId());
-                                line.setStatus(CanvasGroup.SAVED_TO_DB);
-                            }
-                            else {
-                                log.error(String.format("(fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
-                            }
-                        }
-                    }
-                }
-            });
-            MenuItem m2 = new MenuItem(String.format("(%s) Fetch from MongoDB",name));
-            m2.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-                    try {
-                        URL url = this.getClass().getResource("/FetchFromMongoDialog.fxml");
-
-                        FXMLLoader loader = new FXMLLoader(url);
-
-                        Parent parent = (Parent)loader.load();
-
-                        MongoDBController c = loader.getController();
-                        c.addListener(myMongoDBlistener);
-                        c.setFacade(model);
-
-                        Stage stage = new Stage();
-                        stage.setTitle("Fetch from MongoDB");
-                        stage.setScene(new Scene(parent));
-                        stage.show();
-                    }
-                    catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
-            MenuItem m3 = new MenuItem(String.format("(%s) Set selected as inactive",name));
-            m3.setOnAction(new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent e) {
-
-                }
-            });
-            mongoMenu.getItems().addAll(m1, m2, new SeparatorMenuItem());
-        }
-    }
-    //*/
-
     private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true);
     @Override
     public BooleanProperty fibonacci1272extProperty() {
@@ -395,22 +305,48 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             case MongoDBEvent.SAVE_TO_DATASTORE:
                 List<CanvasGroup> lines = fibLines.get(getTicker());
                 for (CanvasGroup line : lines) {
+                    /*
+                    switch (line.getStatus()) {
+                        case CanvasGroup.SELECTED:
+                            break;
+                        case CanvasGroup.SAVED_TO_DB_SELECTED:
+                            break;
+                    }
+                    */
                     if (line.getStatus() == CanvasGroup.SELECTED) {
                         MongodbLine mongoLine = (MongodbLine)line;
                         DBObject p1 = mongoLine.coord(MongodbLine.P1);
                         DBObject p2 = mongoLine.coord(MongodbLine.P2);
                         String tix = getTicker().getTicker();
                         MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
-                        log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
-                                tix,
-                                result.getObjectId(),
-                                location));
                         if (result.isOk()) {
+                            log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
+                                    tix,
+                                    result.getObjectId(),
+                                    location));
                             mongoLine.setMongodbId(result.getObjectId());
                             line.setStatus(CanvasGroup.SAVED_TO_DB);
                         }
                         else {
-                            log.error(String.format("(fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
+                            log.error(String.format("(Saving fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
+                        }
+                    }
+                    else if (line.getStatus() == CanvasGroup.SAVED_TO_DB_SELECTED) {
+                        MongodbLine mongoLine = (MongodbLine)line;
+                        DBObject p1 = mongoLine.coord(MongodbLine.P1);
+                        DBObject p2 = mongoLine.coord(MongodbLine.P2);
+                        String tix = getTicker().getTicker();
+
+                        WriteResult result = model.getWindowDressingModel().updateCoord(mongoLine.getMongodbId(),p1,p2);
+                        if (result.getLastError().ok()) {
+                            log.info(String.format("(%s) Successfully updated fibline with _id: %s to location: %d",
+                                    tix,
+                                    mongoLine.getMongodbId(),
+                                    location));
+                            line.setStatus(CanvasGroup.SAVED_TO_DB);
+                        }
+                        else {
+                            log.error(String.format("(Updating fibline %s, %d) %s",tix,location,result.getError()));
                         }
                     }
                 }

@@ -200,9 +200,11 @@ public class DefaultMainFrameController implements MainFrameController {
                                         m4,m5);
 
 
-        MenuItem mongo1 = createMongoDBMenuItem("Save to datastore", MongoDBEvent.SAVE_TO_DATASTORE);
-        MenuItem mongo2 = createMongoDBMenuItem("Fetch from datastore", MongoDBEvent.FETCH_FROM_DATASTORE);
-        mongodbMenu.getItems().addAll(mongo1,mongo2);
+        MenuItem mongo1a = createMongoDBMenuItem("Save to datastore", MongoDBEvent.SAVE_TO_DATASTORE);
+        MenuItem mongo2a = createMongoDBMenuItem("Fetch from datastore", MongoDBEvent.FETCH_FROM_DATASTORE);
+        mongodbMenu.getItems().addAll(  mongo1a,
+                                        new SeparatorMenuItem(),
+                                        mongo2a);
 
     }
 

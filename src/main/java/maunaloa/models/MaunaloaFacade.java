@@ -5,7 +5,6 @@ package maunaloa.models;
  * User: rcs
  * Date: 03.10.13
  * Time: 09:39
- * To change this template use File | Settings | File Templates.
  */
 
 import javafx.scene.Node;
