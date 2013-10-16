@@ -6,7 +6,8 @@
    :methods [[getMongodbHost [] String] [setMongodbHost [String] void]])
   (:import
     [java.util Date]
-    [com.mongodb MongoClient BasicDBObject])
+    [org.bson.types ObjectId]
+    [com.mongodb MongoClient DBObject BasicDBObject])
   (:require
     (maunaloa.service.mongodb [fibonacci :as fib])))
 
