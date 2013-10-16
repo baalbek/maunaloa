@@ -1,7 +1,8 @@
 (ns maunaloa.service.mongodb.fibonacci
   (:import
     [java.util Date]
-    [com.mongodb MongoClient BasicDBObject]
+    [com.mongodb MongoClient DBObject BasicDBObject]
+    [org.bson.types ObjectId]
     [maunaloa.domain MongoDBResult])
   (:require (maunaloa.utils [commonutils :as util])))
 
@@ -54,6 +55,17 @@
     (MongoDBResult. result server-result)))
 
 
+;db.fibonacci.update({_id : ObjectId("525d841b44ae19e5186a95c6")}, {$set : {loc: 3}})
+(defn update-coord [^String host
+                    ^ObjectId id
+                    ^DBObject p1
+                    ^DBObject p2]
+  (let [coll (get-collection host "fibonacci")
+        set-obj (BasicDBObject. "$set" (BasicDBObject. "p1" p1))
+        query (BasicDBObject. "_id" (ObjectId. "525d841b44ae19e5186a95c6"))]
+        ;query (BasicDBObject. "_id" id)]
+    (.append set-obj "$set" (BasicDBObject. "p2" p2))
+    (.update coll query set-obj)))
 
 
 

@@ -21,6 +21,7 @@
   (let [s (.state this)]
     (reset! s (assoc @s :host host))))
 
+;MongoDBResult saveFibonacci(String ticker, int location, DBObject p1, DBObject p2);
 (defn -saveFibonacci [this
                       ^String ticker
                       loc
@@ -30,6 +31,7 @@
         host (:host @s)]
     (fib/save host ticker loc p1 p2)))
 
+;List<DBObject> fetchFibonacci(String ticker, Date fromDate, Date toDate);
 (defn -fetchFibonacci [this
                        ^String ticker
                        ^Date fromDate
@@ -39,3 +41,11 @@
     (fib/fetch host ticker fromDate toDate)))
 
 
+;WriteResult updateCoord(ObjectId id, DBObject p1, DBObject p2);
+(defn -updateCoord [this
+                    ^ObjectId id
+                    ^DBObject p1
+                    ^DBObject p2]
+  (let [s (.state this)
+        host (:host @s)]
+    (fib/update-coord host id p1 p2)))
