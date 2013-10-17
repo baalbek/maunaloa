@@ -35,4 +35,8 @@ public class MongoDBEvent {
     public int getAction() {
         return action;
     }
+
+    public List<DBObject> getLines() {
+        return lines;
+    }
 }

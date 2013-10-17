@@ -134,7 +134,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                                                                     getVRuler(),
                                                                     fibonacci1272extProperty().get());
                     updateMyPaneLines(fibLine);
-                    myPane.getChildren().add(fibLine.view());
                 }
                 lineA.set(null);
                 deactivateFibonacci();
@@ -198,6 +197,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             fibLines.put(getTicker(), lines);
         }
         lines.add(line);
+        myPane.getChildren().add(line.view());
     }
 
     //endregion Fibonacci
@@ -292,7 +292,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     @Override
     public void notify(StockPriceAssignedEvent event) {
         StockPrice sp = event.getStockPrice();
-        System.out.println("Event fired: " + event + ", " + sp);
+        System.out.println("Evenjt fired: " + event + ", " + sp);
     }
     //endregion  DerivativesControllerListener Interface methods
 
@@ -305,14 +305,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             case MongoDBEvent.SAVE_TO_DATASTORE:
                 List<CanvasGroup> lines = fibLines.get(getTicker());
                 for (CanvasGroup line : lines) {
-                    /*
-                    switch (line.getStatus()) {
-                        case CanvasGroup.SELECTED:
-                            break;
-                        case CanvasGroup.SAVED_TO_DB_SELECTED:
-                            break;
-                    }
-                    */
                     if (line.getStatus() == CanvasGroup.SELECTED) {
                         MongodbLine mongoLine = (MongodbLine)line;
                         DBObject p1 = mongoLine.coord(MongodbLine.P1);
@@ -352,9 +344,32 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 }
                 break;
             case MongoDBEvent.FETCH_FROM_DATASTORE:
-                System.out.println("Hello, will fetch you from "  + this.location);
+                for (DBObject o : event.getLines()) {
+                    MongodbLine line = createLineFromDBObject(o);
+
+
+                }
                 break;
         }
+    }
+
+    private MongodbLine createLineFromDBObject(DBObject obj) {
+        DBObject p1 = (DBObject)obj.get("p1");
+        DBObject p2 = (DBObject)obj.get("p2");
+
+
+        double p2x = hruler.calcPix(p2.get("x"));
+        double p2y = vruler.calcPix(p2.get("y"));
+
+        System.out.println("p2x: " + p2x + ", p2y: " + p2y);
+
+        /*
+        final CanvasGroup fibLine = new FibonacciDraggableLine(
+                getHRuler(),
+                getVRuler(),
+                fibonacci1272extProperty().get());
+        */
+        return null;
     }
     //endregion MongoDBControllerListener  Interface methods
 
