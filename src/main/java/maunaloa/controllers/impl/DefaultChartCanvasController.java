@@ -18,6 +18,8 @@ import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.domain.MongoDBResult;
 import maunaloa.events.*;
+import maunaloa.events.mongodb.FetchFromMongoDBEvent;
+import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.MongodbLine;
@@ -237,6 +239,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         location = loc;
     }
 
+    @Override
+    public int getLocation() {
+        return location;
+    }
+
     private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true);
     @Override
     public BooleanProperty fibonacci1272extProperty() {
@@ -272,6 +279,57 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     public void setHRuler(IRuler ruler) {
         this.hruler = ruler;
     }
+
+    @Override
+    public void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
+
+    }
+
+    @Override
+    public void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
+        if (event.getLocation() != this.location) return;
+
+        List<CanvasGroup> lines = fibLines.get(getTicker());
+        for (CanvasGroup line : lines) {
+            if (line.getStatus() == CanvasGroup.SELECTED) {
+                MongodbLine mongoLine = (MongodbLine)line;
+                DBObject p1 = mongoLine.coord(MongodbLine.P1);
+                DBObject p2 = mongoLine.coord(MongodbLine.P2);
+                String tix = getTicker().getTicker();
+                MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
+                if (result.isOk()) {
+                    log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
+                            tix,
+                            result.getObjectId(),
+                            location));
+                    mongoLine.setMongodbId(result.getObjectId());
+                    line.setStatus(CanvasGroup.SAVED_TO_DB);
+                }
+                else {
+                    log.error(String.format("(Saving fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
+                }
+            }
+            else if (line.getStatus() == CanvasGroup.SAVED_TO_DB_SELECTED) {
+                MongodbLine mongoLine = (MongodbLine)line;
+                DBObject p1 = mongoLine.coord(MongodbLine.P1);
+                DBObject p2 = mongoLine.coord(MongodbLine.P2);
+                String tix = getTicker().getTicker();
+
+                WriteResult result = model.getWindowDressingModel().updateCoord(mongoLine.getMongodbId(),p1,p2);
+                if (result.getLastError().ok()) {
+                    log.info(String.format("(%s) Successfully updated fibline with _id: %s to location: %d",
+                            tix,
+                            mongoLine.getMongodbId(),
+                            location));
+                    line.setStatus(CanvasGroup.SAVED_TO_DB);
+                }
+                else {
+                    log.error(String.format("(Updating fibline %s, %d) %s",tix,location,result.getError()));
+                }
+            }
+        }
+
+    }
     //endregion  Interface methods
 
     //region  DerivativesControllerListener Interface methods
@@ -294,10 +352,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         StockPrice sp = event.getStockPrice();
         System.out.println("Evenjt fired: " + event + ", " + sp);
     }
-    //endregion  DerivativesControllerListener Interface methods
 
-    //region  MongoDBControllerListener Interface methods
-    @Override
+
+    /*
     public void onMongoDBEvent(MongoDBEvent event) {
         if (event.getLocation() != this.location) return;
 
@@ -352,6 +409,10 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 break;
         }
     }
+    //*/
+
+
+    //endregion  DerivativesControllerListener Interface methods
 
     private MongodbLine createLineFromDBObject(DBObject obj) {
         DBObject p1 = (DBObject)obj.get("p1");

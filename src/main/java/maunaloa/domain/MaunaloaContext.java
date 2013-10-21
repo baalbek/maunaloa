@@ -4,6 +4,7 @@ import maunaloa.events.MainFrameControllerListener;
 import maunaloa.models.MaunaloaFacade;
 import oahu.financial.Stock;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,9 @@ public class MaunaloaContext {
     private MaunaloaFacade facade;
     private List<MainFrameControllerListener> listeners;
     private int location;
+    private Date startDate;
+    private Date endDate;
+
 
     public Stock getStock() {
         return stock;
@@ -48,5 +52,21 @@ public class MaunaloaContext {
 
     public void setLocation(int location) {
         this.location = location;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 }

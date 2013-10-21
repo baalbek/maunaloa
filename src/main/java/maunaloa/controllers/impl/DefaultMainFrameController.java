@@ -16,6 +16,7 @@ import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.MongoDBEvent;
+import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.models.MaunaloaFacade;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
@@ -215,24 +216,37 @@ public class DefaultMainFrameController implements MainFrameController {
             @Override public void handle(ActionEvent e) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
                 if (mongoEventId == MongoDBEvent.SAVE_TO_DATASTORE) {
-                    MongoDBEvent mongoEvent = new MongoDBEvent(curloc,MongoDBEvent.SAVE_TO_DATASTORE);
+                    SaveToMongoDBEvent event = new SaveToMongoDBEvent(curloc);
                     for (MainFrameControllerListener listener : myListeners) {
-                        listener.onMongoDBEvent(mongoEvent);
+                        listener.onSaveToMongoDBEvent(event);
                     }
                 }
                 else {
-                    //MongoDBControllerImpl.loadApp(currentTicker,getFacade(),myListeners,curloc);
+                    /*
                     MaunaloaContext ctx = new MaunaloaContext();
                     ctx.setListeners(myListeners);
                     ctx.setFacade(getFacade());
                     ctx.setStock(currentTicker);
                     ctx.setLocation(curloc);
                     MongoDBControllerImpl.loadApp(ctx);
+                    */
                 }
 
             }
         });
         return m;
+    }
+
+    private MainFrameControllerListener findListener(int location) {
+        MainFrameControllerListener result = null;
+        for (MainFrameControllerListener listener : myListeners) {
+            ChartCanvasController ccc = (ChartCanvasController)listener;
+            if (ccc.getLocation() == location) {
+                result = listener;
+                break;
+            }
+        }
+        return result;
     }
 
     private MenuItem createFibonacciMenuItem(String title,

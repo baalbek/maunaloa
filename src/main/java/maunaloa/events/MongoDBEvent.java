@@ -3,6 +3,7 @@ package maunaloa.events;
 import com.mongodb.DBObject;
 import oahu.financial.Stock;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,8 @@ public class MongoDBEvent {
     private final int location;
     private final int action;
     private final List<DBObject> lines;
+    private Date fromDate;
+    private Date toDate;
 
     public MongoDBEvent(int location, int action) {
         this(location,action,null);
@@ -38,5 +41,21 @@ public class MongoDBEvent {
 
     public List<DBObject> getLines() {
         return lines;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 }

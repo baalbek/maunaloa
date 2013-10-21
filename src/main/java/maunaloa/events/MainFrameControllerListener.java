@@ -1,5 +1,8 @@
 package maunaloa.events;
 
+import maunaloa.events.mongodb.FetchFromMongoDBEvent;
+import maunaloa.events.mongodb.SaveToMongoDBEvent;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -8,5 +11,6 @@ package maunaloa.events;
  */
 public interface MainFrameControllerListener {
     void onFibonacciEvent(FibonacciEvent event);
-    void onMongoDBEvent(MongoDBEvent event);
+    void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event);
+    void onSaveToMongoDBEvent(SaveToMongoDBEvent event);
 }

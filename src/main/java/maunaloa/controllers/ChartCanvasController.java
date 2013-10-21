@@ -22,12 +22,12 @@ import java.util.Map;
 public interface ChartCanvasController extends
                                         MaunaloaChartViewModel,
                                         DerivativesControllerListener,
-                                        MainFrameControllerListener,
-                                        MongoDBControllerListener {
+                                        MainFrameControllerListener {
     void setTicker(Stock ticker);
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);
     void setName(String name);
     void setLocation(int loc);
+    int getLocation();
     BooleanProperty fibonacci1272extProperty();
 }
