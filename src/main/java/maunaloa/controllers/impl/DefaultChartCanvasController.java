@@ -27,6 +27,7 @@ import maunaloa.views.RiscLines;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
+import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.domain.DerivativeFx;
@@ -134,9 +135,9 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     line.setStartX(getHRuler().snapTo(line.getStartX()));
                     line.setEndX(getHRuler().snapTo(line.getEndX()));
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
-                                                                    getHRuler(),
-                                                                    getVRuler(),
-                                                                    fibonacci1272extProperty().get());
+                            getHRuler(),
+                            getVRuler(),
+                            fibonacci1272extProperty().get());
                     updateMyPaneLines(fibLine);
                 }
                 lineA.set(null);
@@ -253,6 +254,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
+    public IDateBoundaryRuler getHruler() {
+        return (IDateBoundaryRuler)hruler;
+    }
+
+    @Override
     public Collection<StockPrice> stockPrices(int i) {
         return model.stockPrices(getTicker().getTicker(),-1);
     }
@@ -284,7 +290,14 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
-
+        for (DBObject o : event.getLines()) {
+            Line line = createLineFromDBObject(o);
+            CanvasGroup fibLine = new FibonacciDraggableLine(line,
+                    getHRuler(),
+                    getVRuler(),
+                    fibonacci1272extProperty().get());
+            updateMyPaneLines(fibLine);
+        }
     }
 
     @Override
@@ -416,23 +429,24 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     //endregion  DerivativesControllerListener Interface methods
 
-    private MongodbLine createLineFromDBObject(DBObject obj) {
+    private Line createLineFromDBObject(DBObject obj) {
         DBObject p1 = (DBObject)obj.get("p1");
         DBObject p2 = (DBObject)obj.get("p2");
 
+        double p1x = hruler.calcPix(p1.get("x"));
+        double p1y = vruler.calcPix(p1.get("y"));
 
         double p2x = hruler.calcPix(p2.get("x"));
         double p2y = vruler.calcPix(p2.get("y"));
 
-        System.out.println("p2x: " + p2x + ", p2y: " + p2y);
 
-        /*
-        final CanvasGroup fibLine = new FibonacciDraggableLine(
-                getHRuler(),
-                getVRuler(),
-                fibonacci1272extProperty().get());
-        */
-        return null;
+        Line line = new Line();
+        line.setStartX(p1x);
+        line.setStartY(p1y);
+        line.setEndX(p2x);
+        line.setEndY(p2y);
+
+        return line;
     }
     //endregion MongoDBControllerListener  Interface methods
 

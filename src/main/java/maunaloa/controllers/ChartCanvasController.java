@@ -7,6 +7,7 @@ import maunaloa.events.DerivativesControllerListener;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.MongoDBControllerListener;
 import oahu.financial.Stock;
+import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
 import maunaloa.models.MaunaloaFacade;
@@ -31,5 +32,6 @@ public interface ChartCanvasController extends
     void setLocation(int loc);
     int getLocation();
     BooleanProperty fibonacci1272extProperty();
+    IDateBoundaryRuler getHruler();
 
 }

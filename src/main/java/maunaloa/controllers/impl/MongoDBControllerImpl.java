@@ -13,16 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MaunaloaContext;
-import maunaloa.events.MainFrameControllerListener;
-import maunaloa.events.MongoDBEvent;
-import maunaloa.models.MaunaloaFacade;
+import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.utils.DateUtils;
-import oahu.exceptions.NotImplementedException;
-import oahu.financial.Stock;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +30,7 @@ import java.util.List;
  * Time: 3:58 PM
  */
 public class MongoDBControllerImpl implements MongoDBController {
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
     @FXML
     private Button btnCancel;
     @FXML
@@ -61,18 +58,33 @@ public class MongoDBControllerImpl implements MongoDBController {
                     System.out.println("Ticker not set");
                     return;
                 }
-                Date d1 = DateUtils.parse(txFromDate.getText());
-                Date d2 = DateUtils.parse(txToDate.getText());
+
+                Date d1 = null;
+
+                if (txFromDate.getText().isEmpty()) {
+                    d1 = ctx.getStartDate();
+                }
+                else {
+                    d1 = DateUtils.parse(txFromDate.getText());
+                }
+
+                Date d2 = null;
+                if (txToDate.getText().isEmpty()) {
+                    d2 = ctx.getEndDate();
+                }
+                else {
+                    d2 = DateUtils.parse(txToDate.getText());
+                }
+
 
                 List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetchFibonacci(ctx.getStock().getTicker(), d1, d2);
 
-                /*
-                MongoDBEvent mongoEvent = new MongoDBEvent(ctx.getLocation(),MongoDBEvent.FETCH_FROM_DATASTORE,lines);
-
-                for (MainFrameControllerListener listener : ctx.getListeners()) {
-                    listener.onMongoDBEvent(mongoEvent);
-                }
-                */
+                log.info(String.format("Fetched %d lines for ticker %s between %s and %s",
+                        lines.size(),
+                        ctx.getStock().getTicker(),
+                        d1,
+                        d2));
+                ctx.getListener().onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
             }
         });
     }

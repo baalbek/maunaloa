@@ -227,20 +227,16 @@ public class DefaultMainFrameController implements MainFrameController {
                     MainFrameControllerListener curListener = findListener(curloc);
 
                     ChartCanvasController ccc = (ChartCanvasController)curListener;
-
                     ctx.setListener(curListener);
-
-                    IDateBoundaryRuler dbr =  null; //(IDateBoundaryRuler)hruler;
+                    IDateBoundaryRuler dbr =  ccc.getHruler(); //(IDateBoundaryRuler)hruler;
                     ctx.setStartDate(dbr.getStartDate());
                     ctx.setEndDate(dbr.getEndDate());
 
-                    /*
-                    ctx.setListeners(myListeners);
                     ctx.setFacade(getFacade());
-                    ctx.setStock(currentTicker);
                     ctx.setLocation(curloc);
+                    ctx.setStock(currentTicker);
+
                     MongoDBControllerImpl.loadApp(ctx);
-                    */
                 }
 
             }
