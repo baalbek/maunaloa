@@ -20,6 +20,7 @@ import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.models.MaunaloaFacade;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
+import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.MaunaloaChart;
 
 import java.util.ArrayList;
@@ -228,6 +229,10 @@ public class DefaultMainFrameController implements MainFrameController {
                     ChartCanvasController ccc = (ChartCanvasController)curListener;
 
                     ctx.setListener(curListener);
+
+                    IDateBoundaryRuler dbr =  null; //(IDateBoundaryRuler)hruler;
+                    ctx.setStartDate(dbr.getStartDate());
+                    ctx.setEndDate(dbr.getEndDate());
 
                     /*
                     ctx.setListeners(myListeners);

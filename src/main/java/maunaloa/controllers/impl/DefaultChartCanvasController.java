@@ -61,8 +61,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     private IRuler vruler;
     private IRuler hruler;
     private int location;
-    private Date viewStartDate;
-    private Date viewEndDate;
+
 
     //region Initialization Methods
     public void initialize() {
@@ -251,16 +250,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     @Override
     public BooleanProperty fibonacci1272extProperty() {
         return _fibonacci1272extProperty;
-    }
-
-    @Override
-    public Date getViewStartDate() {
-        return viewStartDate;
-    }
-
-    @Override
-    public Date getViewEndDate() {
-        return viewEndDate;
     }
 
     @Override
