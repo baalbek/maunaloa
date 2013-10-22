@@ -24,6 +24,7 @@ import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -60,6 +61,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     private IRuler vruler;
     private IRuler hruler;
     private int location;
+    private Date viewStartDate;
+    private Date viewEndDate;
 
     //region Initialization Methods
     public void initialize() {
@@ -248,6 +251,16 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     @Override
     public BooleanProperty fibonacci1272extProperty() {
         return _fibonacci1272extProperty;
+    }
+
+    @Override
+    public Date getViewStartDate() {
+        return viewStartDate;
+    }
+
+    @Override
+    public Date getViewEndDate() {
+        return viewEndDate;
     }
 
     @Override

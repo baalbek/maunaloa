@@ -17,6 +17,7 @@ public class MaunaloaContext {
     private Stock stock;
     private MaunaloaFacade facade;
     private List<MainFrameControllerListener> listeners;
+    private MainFrameControllerListener listener;
     private int location;
     private Date startDate;
     private Date endDate;
@@ -68,5 +69,13 @@ public class MaunaloaContext {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public MainFrameControllerListener getListener() {
+        return listener;
+    }
+
+    public void setListener(MainFrameControllerListener listener) {
+        this.listener = listener;
     }
 }

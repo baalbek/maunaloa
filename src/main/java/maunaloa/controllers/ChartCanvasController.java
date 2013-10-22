@@ -11,6 +11,7 @@ import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
 import maunaloa.models.MaunaloaFacade;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -30,4 +31,7 @@ public interface ChartCanvasController extends
     void setLocation(int loc);
     int getLocation();
     BooleanProperty fibonacci1272extProperty();
+    Date getViewStartDate();
+    Date getViewEndDate();
+
 }

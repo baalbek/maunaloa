@@ -222,8 +222,14 @@ public class DefaultMainFrameController implements MainFrameController {
                     }
                 }
                 else {
-                    /*
                     MaunaloaContext ctx = new MaunaloaContext();
+                    MainFrameControllerListener curListener = findListener(curloc);
+
+                    ChartCanvasController ccc = (ChartCanvasController)curListener;
+
+                    ctx.setListener(curListener);
+
+                    /*
                     ctx.setListeners(myListeners);
                     ctx.setFacade(getFacade());
                     ctx.setStock(currentTicker);

@@ -65,11 +65,14 @@ public class MongoDBControllerImpl implements MongoDBController {
                 Date d2 = DateUtils.parse(txToDate.getText());
 
                 List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetchFibonacci(ctx.getStock().getTicker(), d1, d2);
+
+                /*
                 MongoDBEvent mongoEvent = new MongoDBEvent(ctx.getLocation(),MongoDBEvent.FETCH_FROM_DATASTORE,lines);
 
                 for (MainFrameControllerListener listener : ctx.getListeners()) {
                     listener.onMongoDBEvent(mongoEvent);
                 }
+                */
             }
         });
     }
