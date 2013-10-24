@@ -46,9 +46,7 @@ public class MongoDBControllerImpl implements MongoDBController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 // close the dialog.
-                Node source = (Node) actionEvent.getSource();
-                Stage stage = (Stage) source.getScene().getWindow();
-                stage.close();
+                closeView(actionEvent);
             }
         });
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
@@ -77,16 +75,28 @@ public class MongoDBControllerImpl implements MongoDBController {
                 }
 
 
-                List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetchFibonacci(ctx.getStock().getTicker(), d1, d2);
+                List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetchFibonacci(
+                        ctx.getStock().getTicker(),
+                        ctx.getLocation(),
+                        d1,
+                        d2);
 
-                log.info(String.format("Fetched %d lines for ticker %s between %s and %s",
+                log.info(String.format("Fetched %d lines for ticker %s, location: %d between %s and %s",
                         lines.size(),
                         ctx.getStock().getTicker(),
+                        ctx.getLocation(),
                         d1,
                         d2));
                 ctx.getListener().onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
+                closeView(actionEvent);
             }
         });
+    }
+
+    private void closeView(ActionEvent actionEvent) {
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     @Override

@@ -35,11 +35,12 @@
 ;List<DBObject> fetchFibonacci(String ticker, Date fromDate, Date toDate);
 (defn -fetchFibonacci [this
                        ^String ticker
+                       loc
                        ^Date fromDate
                        ^Date toDate]
   (let [s (.state this)
         host (:host @s)]
-    (fib/fetch host ticker fromDate toDate)))
+    (fib/fetch host ticker loc fromDate toDate)))
 
 
 ;WriteResult updateCoord(ObjectId id, DBObject p1, DBObject p2);

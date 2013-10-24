@@ -11,7 +11,7 @@ import java.util.List;
 public interface ChartWindowDressingModel {
     WriteResult updateCoord(ObjectId id, DBObject p1, DBObject p2);
     MongoDBResult saveFibonacci(String ticker, int location, DBObject p1, DBObject p2);
-    List<DBObject> fetchFibonacci(String ticker, Date fromDate, Date toDate);
+    List<DBObject> fetchFibonacci(String ticker, int location, Date fromDate, Date toDate);
 }
 
 

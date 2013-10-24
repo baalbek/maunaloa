@@ -38,6 +38,7 @@
 
 (defn fetch [^String host
              ^String ticker
+             loc
              ^Date from-date
              ^Date to-date]
   (let [coll (get-collection host "fibonacci")
