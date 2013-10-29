@@ -243,7 +243,7 @@ public class DefaultMainFrameController implements MainFrameController {
                         ctx.setLocation(curloc);
                         ctx.setStock(currentTicker);
 
-                        MongoDBControllerImpl.loadApp(ctx);
+                        MongoDBFetchFibController.loadApp(ctx);
                         break;
                     case COMMENTS:
                         break;
