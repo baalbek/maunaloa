@@ -15,7 +15,6 @@ import maunaloa.controllers.MainFrameController;
 import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
-import maunaloa.events.MongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.models.MaunaloaFacade;
 import oahu.exceptions.NotImplementedException;
@@ -60,6 +59,10 @@ public class DefaultMainFrameController implements MainFrameController {
 
     private List<MainFrameControllerListener> myListeners = new ArrayList<>();
     private Stock currentTicker;
+
+    public final static int SAVE_TO_DATASTORE  = 1;
+    public final static int FETCH_FROM_DATASTORE  = 2;
+    public final static int COMMENTS  = 3;
 
     public DefaultMainFrameController() {
     }
@@ -202,11 +205,13 @@ public class DefaultMainFrameController implements MainFrameController {
                                         m4,m5);
 
 
-        MenuItem mongo1a = createMongoDBMenuItem("Save to datastore", MongoDBEvent.SAVE_TO_DATASTORE);
-        MenuItem mongo2a = createMongoDBMenuItem("Fetch from datastore", MongoDBEvent.FETCH_FROM_DATASTORE);
+        MenuItem mongo1a = createMongoDBMenuItem("Save to datastore", SAVE_TO_DATASTORE);
+        MenuItem mongo2a = createMongoDBMenuItem("Fetch from datastore", FETCH_FROM_DATASTORE);
+        MenuItem mongo3a = createMongoDBMenuItem("Comments", COMMENTS);
         mongodbMenu.getItems().addAll(  mongo1a,
                                         new SeparatorMenuItem(),
-                                        mongo2a);
+                                        mongo2a,
+                                        mongo3a);
 
     }
 
@@ -216,6 +221,35 @@ public class DefaultMainFrameController implements MainFrameController {
         m.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+
+                switch (mongoEventId) {
+                    case SAVE_TO_DATASTORE:
+                        SaveToMongoDBEvent event = new SaveToMongoDBEvent(curloc);
+                        for (MainFrameControllerListener listener : myListeners) {
+                            listener.onSaveToMongoDBEvent(event);
+                        }
+                        break;
+                    case FETCH_FROM_DATASTORE:
+                        MaunaloaContext ctx = new MaunaloaContext();
+                        MainFrameControllerListener curListener = findListener(curloc);
+
+                        ChartCanvasController ccc = (ChartCanvasController)curListener;
+                        ctx.setListener(curListener);
+                        IDateBoundaryRuler dbr =  ccc.getHruler(); //(IDateBoundaryRuler)hruler;
+                        ctx.setStartDate(dbr.getStartDate());
+                        ctx.setEndDate(dbr.getEndDate());
+
+                        ctx.setFacade(getFacade());
+                        ctx.setLocation(curloc);
+                        ctx.setStock(currentTicker);
+
+                        MongoDBControllerImpl.loadApp(ctx);
+                        break;
+                    case COMMENTS:
+                        break;
+                }
+
+                /*
                 if (mongoEventId == MongoDBEvent.SAVE_TO_DATASTORE) {
                     SaveToMongoDBEvent event = new SaveToMongoDBEvent(curloc);
                     for (MainFrameControllerListener listener : myListeners) {
@@ -238,6 +272,7 @@ public class DefaultMainFrameController implements MainFrameController {
 
                     MongoDBControllerImpl.loadApp(ctx);
                 }
+                //*/
 
             }
         });
