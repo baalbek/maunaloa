@@ -104,6 +104,7 @@ public class MongoDBFetchFibController implements MongoDBController {
         this.ctx = ctx;
     }
 
+    /*
     public static void loadApp(MaunaloaContext ctx) {
         try {
             URL url = MongoDBFetchFibController.class.getResource("/FetchFromMongoDialog.fxml");
@@ -125,6 +126,7 @@ public class MongoDBFetchFibController implements MongoDBController {
             e.printStackTrace();
         }
     }
+    //*/
 
 
     /*

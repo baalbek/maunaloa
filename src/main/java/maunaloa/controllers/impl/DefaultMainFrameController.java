@@ -17,6 +17,7 @@ import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.models.MaunaloaFacade;
+import maunaloa.utils.FxUtils;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahux.chart.IDateBoundaryRuler;
@@ -243,9 +244,13 @@ public class DefaultMainFrameController implements MainFrameController {
                         ctx.setLocation(curloc);
                         ctx.setStock(currentTicker);
 
-                        MongoDBFetchFibController.loadApp(ctx);
+                        //MongoDBFetchFibController.loadApp(ctx);
+
+                        FxUtils.loadApp(ctx,"/FetchFromMongoDialog.fxml","Fetch from MongoDB");
+
                         break;
                     case COMMENTS:
+                        FxUtils.loadApp(null,"/ChartCommentsDialog.fxml","MongoDB Comments");
                         break;
                 }
 

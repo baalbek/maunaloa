@@ -6,12 +6,28 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<VBox prefHeight="471.0" prefWidth="716.0" xmlns:fx="http://javafx.com/fxml">
+<VBox
+        prefHeight="471.0"
+        prefWidth="716.0"
+        xmlns:fx="http://javafx.com/fxml/1"
+        xmlns="http://javafx.com/javafx/2.2"
+        fx:controller="maunaloa.controllers.impl.MongoDBCommentsController">
   <children>
-    <HBox prefHeight="100.0" prefWidth="200.0" />
     <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
-        <TreeView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+        <TextArea fx:id="txaArea" prefHeight="100.0" prefWidth="533.0" wrapText="true" />
+      </children>
+    </HBox>
+    <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+        <Button fx:id="btnAddComment" mnemonicParsing="false" text="Add Comment" />
+        <Button fx:id="btnDeleteComment" mnemonicParsing="false" text="Delete Comment" />
+        <Button fx:id="btnClose" mnemonicParsing="false" text="Close" />
+      </children>
+    </HBox>
+    <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+        <TreeView fx:id="treeComments" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
       </children>
     </HBox>
   </children>
