@@ -1,19 +1,13 @@
 package maunaloa.controllers;
 
 import javafx.beans.property.BooleanProperty;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import maunaloa.events.DerivativesControllerListener;
 import maunaloa.events.MainFrameControllerListener;
-import maunaloa.events.MongoDBControllerListener;
+import maunaloa.models.MaunaloaFacade;
 import oahu.financial.Stock;
 import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
-import maunaloa.models.MaunaloaFacade;
-
-import java.util.Date;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.

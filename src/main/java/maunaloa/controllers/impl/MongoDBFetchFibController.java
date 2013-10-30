@@ -29,7 +29,7 @@ import java.util.List;
  * Date: 10/5/13
  * Time: 3:58 PM
  */
-public class MongoDBControllerImpl implements MongoDBController {
+public class MongoDBFetchFibController implements MongoDBController {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
     @FXML
     private Button btnCancel;
@@ -106,7 +106,7 @@ public class MongoDBControllerImpl implements MongoDBController {
 
     public static void loadApp(MaunaloaContext ctx) {
         try {
-            URL url = MongoDBControllerImpl.class.getResource("/FetchFromMongoDialog.fxml");
+            URL url = MongoDBFetchFibController.class.getResource("/FetchFromMongoDialog.fxml");
 
             FXMLLoader loader = new FXMLLoader(url);
 
