@@ -1,8 +1,9 @@
 (ns maunaloa.scaffold
   (:import
     [org.springframework.beans.factory.xml XmlBeanFactory]
-    [org.springframework.core.io FileSystemResource]))
+    [org.springframework.context.support ClassPathXmlApplicationContext]))
 
-(defn get-factory []
-  (let [f ^XmlBeanFactory (XmlBeanFactory. (FileSystemResource. "maunaloa.xml"))]
+(defn gf [[xml]]
+  (let [cur-xml (if (nil? xml)  "maunaloa.xml" xml)
+        f ^XmlBeanFactory (XmlBeanFactory. (ClassPathXmlApplicationContext. cur-xml))]
     f))
