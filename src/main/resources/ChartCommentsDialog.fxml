@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<VBox prefHeight="471.0" prefWidth="716.0" xmlns:fx="http://javafx.com/fxml">
+  <children>
+    <HBox prefHeight="100.0" prefWidth="200.0" />
+    <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+        <TreeView prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+      </children>
+    </HBox>
+  </children>
+</VBox>

@@ -51,3 +51,11 @@
   (let [s (.state this)
         host (:host @s)]
     (fib/update-coord host id p1 p2)))
+
+;Tuple<WriteResult,List<DBObject>> fetchComments(ObjectId id);
+(defn -fetchComments [this, ^ObjectId id]
+  )
+
+;WriteResult addComment(ObjectId id, DBObject comment);
+(defn -addComment [this, ^ObjectId id, ^DBObject comment])
+

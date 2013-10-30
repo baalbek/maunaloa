@@ -1,7 +1,12 @@
 (ns maunaloa.service.mongodb.fibonacci
   (:import
     [java.util Date]
-    [com.mongodb MongoClient DBObject BasicDBObject]
+    [com.mongodb
+      MongoClient
+      DBObject
+      BasicDBObject
+      DBCollection
+      DBCursor]
     [org.bson.types ObjectId]
     [maunaloa.domain MongoDBResult])
   (:require (maunaloa.utils [commonutils :as util])))
@@ -41,9 +46,9 @@
              loc
              ^Date from-date
              ^Date to-date]
-  (let [coll (get-collection host "fibonacci")
+  (let [coll ^DBCollection (get-collection host "fibonacci")
         query (BasicDBObject. "tix" ticker)]
-    (.toArray (.find coll query))))
+    (.toArray ^DBCursor (.find coll query))))
 
 (defn save [^String host
             ^String ticker
@@ -61,7 +66,7 @@
                     ^ObjectId id
                     ^DBObject p1
                     ^DBObject p2]
-  (let [coll (get-collection host "fibonacci")
+  (let [coll ^DBCollection (get-collection host "fibonacci")
         set-obj (BasicDBObject. "$set" (BasicDBObject. "p1" p1))
         query (BasicDBObject. "_id" (ObjectId. "525d841b44ae19e5186a95c6"))]
         ;query (BasicDBObject. "_id" id)]
