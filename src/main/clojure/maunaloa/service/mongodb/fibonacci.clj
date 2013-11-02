@@ -68,8 +68,8 @@
                     ^DBObject p2]
   (let [coll ^DBCollection (get-collection host "fibonacci")
         set-obj (BasicDBObject. "$set" (BasicDBObject. "p1" p1))
-        query (BasicDBObject. "_id" (ObjectId. "525d841b44ae19e5186a95c6"))]
-        ;query (BasicDBObject. "_id" id)]
+        ;query (BasicDBObject. "_id" (ObjectId. "525d841b44ae19e5186a95c6"))]
+        query (BasicDBObject. "_id" id)]
     (.append set-obj "$set" (BasicDBObject. "p2" p2))
     (.update coll query set-obj)))
 

@@ -162,13 +162,13 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
     }
     @Override
     public void addComment(String comment) {
-        if (comments == null) {
-            comments = new ArrayList<String>();
-        }
-        comments.add(comment);
+        getComments().add(comment);
     }
     @Override
     public List<String> getComments() {
+        if (comments == null) {
+            comments = new ArrayList<String>();
+        }
         return comments;
     }
     //endregion Interface MongodbLine
