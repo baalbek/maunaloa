@@ -1,4 +1,4 @@
-(ns maunaloa.scaffold
+(ns maunaloax.scaffold
   (:import
     [org.springframework.beans.factory.xml XmlBeanFactory]
     [org.springframework.context.support ClassPathXmlApplicationContext]))
