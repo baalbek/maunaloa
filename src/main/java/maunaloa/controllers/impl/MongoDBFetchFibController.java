@@ -15,6 +15,7 @@ import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.utils.DateUtils;
+import maunaloa.utils.FxUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -45,8 +46,7 @@ public class MongoDBFetchFibController implements MongoDBController {
         btnCancel.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                // close the dialog.
-                closeView(actionEvent);
+                FxUtils.closeView(actionEvent);
             }
         });
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
@@ -88,74 +88,14 @@ public class MongoDBFetchFibController implements MongoDBController {
                         d1,
                         d2));
                 ctx.getListener().onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
-                closeView(actionEvent);
+                FxUtils.closeView(actionEvent);
             }
         });
     }
 
-    private void closeView(ActionEvent actionEvent) {
-        Node source = (Node) actionEvent.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
-        stage.close();
-    }
 
     @Override
     public void setContext(MaunaloaContext ctx) {
         this.ctx = ctx;
     }
-
-    /*
-    public static void loadApp(MaunaloaContext ctx) {
-        try {
-            URL url = MongoDBFetchFibController.class.getResource("/FetchFromMongoDialog.fxml");
-
-            FXMLLoader loader = new FXMLLoader(url);
-
-            Parent parent = null;
-
-            parent = (Parent)loader.load();
-
-            MongoDBController c = loader.getController();
-            c.setContext(ctx);
-
-            Stage stage = new Stage();
-            stage.setTitle("Fetch from MongoDB");
-            stage.setScene(new Scene(parent));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    //*/
-
-
-    /*
-    public static void loadApp(Stock stock,
-                               MaunaloaFacade facade,
-                               List<MainFrameControllerListener> listeners,
-                               int location) {
-        try {
-            URL url = MongoDBControllerImpl.class.getResource("/FetchFromMongoDialog.fxml");
-
-            FXMLLoader loader = new FXMLLoader(url);
-
-            Parent parent = null;
-
-            parent = (Parent)loader.load();
-
-            MongoDBController c = loader.getController();
-            c.setListeners(listeners);
-            c.setFacade(facade);
-            c.setTicker(stock);
-            c.setLocation(location);
-
-            Stage stage = new Stage();
-            stage.setTitle("Fetch from MongoDB");
-            stage.setScene(new Scene(parent));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    //*/
 }

@@ -1,5 +1,7 @@
 package maunaloa.controllers.impl;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +12,7 @@ import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MaunaloaContext;
+import maunaloa.utils.FxUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -38,7 +41,12 @@ public class MongoDBCommentsController implements MongoDBController {
     private MaunaloaContext ctx;
 
     public void initialize() {
-
+        btnClose.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                FxUtils.closeView(actionEvent);
+            }
+        });
     }
 
     @Override
