@@ -57,5 +57,5 @@
   )
 
 ;WriteResult addComment(ObjectId id, DBObject comment);
-(defn -addComment [this, ^ObjectId id, ^DBObject comment])
+(defn -addComment [this, ^ObjectId id, ^String comment])
 

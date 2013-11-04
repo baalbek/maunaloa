@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
@@ -38,13 +39,27 @@ public class MongoDBCommentsController implements MongoDBController {
     @FXML
     private TextArea txaComment;
 
+    private TreeItem<String> root;
+
     private MaunaloaContext ctx;
 
+
     public void initialize() {
+        root = new TreeItem<String>("MongoDB Comments");
+        root.setExpanded(true);
+        treeComments.rootProperty().set(root);
+
         btnClose.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 FxUtils.closeView(actionEvent);
+            }
+        });
+        btnAddComment.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                TreeItem<String> item = new TreeItem<>(txaComment.getText());
+                root.getChildren().add(item);
             }
         });
     }
