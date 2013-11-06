@@ -4,13 +4,8 @@ import com.mongodb.DBObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
@@ -18,8 +13,6 @@ import maunaloa.utils.DateUtils;
 import maunaloa.utils.FxUtils;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +33,7 @@ public class MongoDBFetchFibController implements MongoDBController {
     private TextField txFromDate;
     @FXML
     private TextField txToDate;
+
     private MaunaloaContext ctx;
 
     public void initialize() {

@@ -54,7 +54,8 @@
 
 ;Tuple<WriteResult,List<DBObject>> fetchComments(ObjectId id);
 (defn -fetchComments [this, ^ObjectId id]
-  )
+  (let [result (java.util.ArrayList.)]
+    result))
 
 ;WriteResult addComment(ObjectId id, DBObject comment);
 (defn -addComment [this, ^ObjectId id, ^String comment])

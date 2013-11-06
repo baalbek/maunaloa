@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ChartWindowDressingModel {
-    Tuple2<WriteResult,List<String>> fetchComments(ObjectId id);
+    List<String> fetchComments(ObjectId id);
     WriteResult addComment(ObjectId id, String comment);
     WriteResult updateCoord(ObjectId id, DBObject p1, DBObject p2);
     MongoDBResult saveFibonacci(String ticker, int location, DBObject p1, DBObject p2);

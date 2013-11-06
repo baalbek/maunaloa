@@ -250,6 +250,7 @@ public class DefaultMainFrameController implements MainFrameController {
 
                         break;
                     case COMMENTS:
+                        MaunaloaContext ctx2 = new MaunaloaContext();
                         FxUtils.loadApp(null,"/ChartCommentsDialog.fxml","MongoDB Comments");
                         break;
                 }

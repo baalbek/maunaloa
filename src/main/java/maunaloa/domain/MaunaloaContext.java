@@ -2,7 +2,9 @@ package maunaloa.domain;
 
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.models.MaunaloaFacade;
+import maunaloa.views.CanvasGroup;
 import oahu.financial.Stock;
+import org.bson.types.ObjectId;
 
 import java.util.Date;
 import java.util.List;
@@ -17,10 +19,12 @@ public class MaunaloaContext {
     private Stock stock;
     private MaunaloaFacade facade;
     private List<MainFrameControllerListener> listeners;
+    private List<CanvasGroup> lines;
     private MainFrameControllerListener listener;
     private int location;
     private Date startDate;
     private Date endDate;
+    private ObjectId objectId;
 
 
     public Stock getStock() {
@@ -77,5 +81,21 @@ public class MaunaloaContext {
 
     public void setListener(MainFrameControllerListener listener) {
         this.listener = listener;
+    }
+
+    public ObjectId getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(ObjectId objectId) {
+        this.objectId = objectId;
+    }
+
+    public List<CanvasGroup> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<CanvasGroup> lines) {
+        this.lines = lines;
     }
 }

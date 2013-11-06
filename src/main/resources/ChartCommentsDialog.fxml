@@ -22,6 +22,7 @@
           </HBox.margin>
         </Button>
         <Button fx:id="btnDeleteComment" mnemonicParsing="false" text="Delete Comment" HBox.margin="$x1" />
+        <Button fx:id="btnSave"  mnemonicParsing="false" text="Save to MongoDB" HBox.margin="$x1"/>
         <Button fx:id="btnClose" mnemonicParsing="false" text="Close" HBox.margin="$x1" />
       </children>
     </HBox>

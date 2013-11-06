@@ -3,21 +3,19 @@ package maunaloa.controllers.impl;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.stage.Stage;
 import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MaunaloaContext;
 import maunaloa.utils.FxUtils;
+import maunaloa.views.CanvasGroup;
+import maunaloa.views.MongodbLine;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +33,8 @@ public class MongoDBCommentsController implements MongoDBController {
     @FXML
     private Button btnClose;
     @FXML
+    private Button btnSave;
+    @FXML
     private TreeView treeComments;
     @FXML
     private TextArea txaComment;
@@ -43,11 +43,15 @@ public class MongoDBCommentsController implements MongoDBController {
 
     private MaunaloaContext ctx;
 
+    private List<String> existingComments;
+    private List<String> newComments = new ArrayList<>();
 
     public void initialize() {
         root = new TreeItem<String>("MongoDB Comments");
         root.setExpanded(true);
         treeComments.rootProperty().set(root);
+
+        //populateTree();
 
         btnClose.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -58,10 +62,26 @@ public class MongoDBCommentsController implements MongoDBController {
         btnAddComment.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                TreeItem<String> item = new TreeItem<>(txaComment.getText());
+                String newComment = txaComment.getText();
+                TreeItem<String> item = new TreeItem<>(newComment);
                 root.getChildren().add(item);
+                newComments.add(newComment);
             }
         });
+    }
+
+    private void populateTree() {
+        /*
+        List<String> comments = ctx.getFacade().getWindowDressingModel().fetchComments(ctx.getObjectId());
+        for (String comment : comments) {
+            root.getChildren().add(new TreeItem<>(comment));
+        }
+        //*/
+        for (CanvasGroup line : ctx.getLines()) {
+            MongodbLine mongoLine = line instanceof MongodbLine ? (MongodbLine)line : null;
+            if (mongoLine == null) continue;
+
+        }
     }
 
     @Override
