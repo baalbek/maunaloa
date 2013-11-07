@@ -9,7 +9,9 @@
     [org.bson.types ObjectId]
     [com.mongodb MongoClient DBObject BasicDBObject])
   (:require
-    (maunaloa.service.mongodb [fibonacci :as fib])))
+    (maunaloa.service.mongodb
+      [comments :as comments]
+      [fibonacci :as fib])))
 
 (defn -init []
   [[] (atom {})])
