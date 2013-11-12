@@ -70,6 +70,7 @@
 
 
     <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel">
+        <property name="cloud" value="false" />
         <property name="mongodbHost" value="xochitecatl" />
     </bean>
 

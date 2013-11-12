@@ -5,7 +5,8 @@
       DBObject
       BasicDBObject
       DBCollection
-      DBCursor]
+      DBCursor
+      DBApiLayer]
     [org.bson.types ObjectId]
     [maunaloa.domain MongoDBResult])
   (:require
@@ -33,7 +34,7 @@
       (.append "p1" p1)
       (.append "p2" p2))))
 
-(defn fetch [^String host
+(comment fetch [^String host
              ^String ticker
              loc
              ^Date from-date
@@ -42,19 +43,19 @@
         query (BasicDBObject. "tix" ticker)]
     (.toArray ^DBCursor (.find coll query))))
 
-(defn save [^String host
+(defn save [^DBApiLayer conn
             ^String ticker
             loc
             ^BasicDBObject p1
             ^BasicDBObject p2]
-  (let [coll (MONGO/get-collection host "fibonacci")
+  (let [coll (.getCollection conn "fibonacci")
         result (create-item ticker loc p1 p2)
         server-result (.save coll result)]
     (MongoDBResult. result server-result)))
 
 
 ;db.fibonacci.update({_id : ObjectId("525d841b44ae19e5186a95c6")}, {$set : {loc: 3}})
-(defn update-coord [^String host
+(comment update-coord [^String host
                     ^ObjectId id
                     ^DBObject p1
                     ^DBObject p2]
