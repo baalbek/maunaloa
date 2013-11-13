@@ -9,7 +9,7 @@
      [setMongodbHost [String] void]
      [isCloud [] boolean]
      [setCloud [boolean] void]
-    ]
+    ])
   (:import
     [java.util Date]
     [org.bson.types ObjectId]
@@ -18,7 +18,7 @@
     (maunaloa.service.mongodb
       [common :as MONGO]
       [comments :as comments]
-      [fibonacci :as fib]))))
+      [fibonacci :as fib])))
 
 (defn -init []
   [[] (atom {})])
@@ -41,16 +41,16 @@
 
 (defn dbconn [this]
   (if (= (-isCloud this) true)
-    (MONGO/local-connection (-getMongodbHost this))
-    (MONGO/cloud-connection)))
+    (MONGO/cloud-connection)
+    (MONGO/local-connection (-getMongodbHost this))))
 
 ;MongoDBResult saveFibonacci(String ticker, int location, DBObject p1, DBObject p2);
 
 (defn -saveFibonacci [this
                       ^String ticker
                       loc
-                      ^BasicDBObject p1
-                      ^BasicDBObject p2]
+                      ^DBObject p1
+                      ^DBObject p2]
   (fib/save (dbconn this) ticker loc p1 p2))
 
 ;List<DBObject> fetchFibonacci(String ticker, Date fromDate, Date toDate);
@@ -58,20 +58,24 @@
                        ^String ticker
                        loc
                        ^Date fromDate
-                       ^Date toDate])
+                       ^Date toDate]
+  (fib/fetch (dbconn this) ticker loc fromDate toDate))
 
 
 ;WriteResult updateCoord(ObjectId id, DBObject p1, DBObject p2);
 (defn -updateCoord [this
                     ^ObjectId id
                     ^DBObject p1
-                    ^DBObject p2])
+                    ^DBObject p2]
+  (fib/update-coord (dbconn this) id p1 p2))
 
 ;Tuple<WriteResult,List<DBObject>> fetchComments(ObjectId id);
 (defn -fetchComments [this,
-                      ^ObjectId id])
+                      ^ObjectId id]
+  (comments/fetch (dbconn this) id))
 
 ;WriteResult addComment(ObjectId id, DBObject comment);
 (defn -addComment [this,
                    ^ObjectId id,
-                   ^String comment])
+                   ^String comment]
+  (comments/save (dbconn this) id comment))

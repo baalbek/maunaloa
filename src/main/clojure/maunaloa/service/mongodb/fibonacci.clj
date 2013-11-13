@@ -2,16 +2,14 @@
   (:import
     [java.util Date]
     [com.mongodb
-      DBObject
       BasicDBObject
-      DBCollection
+      DBObject
       DBCursor
       DBApiLayer]
     [org.bson.types ObjectId]
     [maunaloa.domain MongoDBResult])
   (:require
-    (maunaloa.utils [commonutils :as util])
-    (maunaloa.service.mongodb [common :as MONGO])))
+    (maunaloa.utils [commonutils :as util])))
 
 
 (defn create-point
@@ -25,8 +23,8 @@
 
 (defn create-item [^String tix
                    loc
-                   ^BasicDBObject p1
-                   ^BasicDBObject p2]
+                   ^DBObject p1
+                   ^DBObject p2]
   (let [result (BasicDBObject. "tix" tix)]
     (doto result
       (.append "active" true)
@@ -34,20 +32,22 @@
       (.append "p1" p1)
       (.append "p2" p2))))
 
-(comment fetch [^String host
+(defn fetch [^DBApiLayer conn
              ^String ticker
              loc
              ^Date from-date
              ^Date to-date]
-  (let [coll ^DBCollection (MONGO/get-collection host "fibonacci")
+  (let [coll (.getCollection conn "fibonacci")
         query (BasicDBObject. "tix" ticker)]
+    (doto query
+      (.append "loc" loc))
     (.toArray ^DBCursor (.find coll query))))
 
 (defn save [^DBApiLayer conn
             ^String ticker
             loc
-            ^BasicDBObject p1
-            ^BasicDBObject p2]
+            ^DBObject p1
+            ^DBObject p2]
   (let [coll (.getCollection conn "fibonacci")
         result (create-item ticker loc p1 p2)
         server-result (.save coll result)]
@@ -55,11 +55,11 @@
 
 
 ;db.fibonacci.update({_id : ObjectId("525d841b44ae19e5186a95c6")}, {$set : {loc: 3}})
-(comment update-coord [^String host
+(defn update-coord [^DBApiLayer conn
                     ^ObjectId id
                     ^DBObject p1
                     ^DBObject p2]
-  (let [coll ^DBCollection (MONGO/get-collection host "fibonacci")
+  (let [coll (.getCollection conn "fibonacci")
         set-obj (BasicDBObject. "$set" (BasicDBObject. "p1" p1))
         ;query (BasicDBObject. "_id" (ObjectId. "525d841b44ae19e5186a95c6"))]
         query (BasicDBObject. "_id" id)]

@@ -28,12 +28,3 @@
             db (.getDB clt "maunaloa")]
         db))))
 
-;(def get-collection
-;  (memoize
-;    (fn [connection
-;         ^String collection]
-;         ;& {:keys [port db] :or {port 27017 db }}]]
-;      (let [clt (MongoClient. host port)
-;            db (.getDB clt database)
-;            result (.getCollection db collection)]
-;        result))))
