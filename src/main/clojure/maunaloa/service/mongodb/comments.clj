@@ -21,4 +21,4 @@
   (let [coll (.getCollection conn "comments")
        result (BasicDBObject. "refid" id)]
     (.append result "c" comment)
-      (MongoDBResult. result (.save coll result))))
+    (.save coll result)))
