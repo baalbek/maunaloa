@@ -41,6 +41,10 @@
         query (BasicDBObject. "tix" ticker)]
     (doto query
       (.append "loc" loc))
+    (if-not (nil? from-date)
+      (.put query "p1.x" (BasicDBObject. "$gt" from-date)))
+    (if-not (nil? to-date)
+      (.put query "p2.x" (BasicDBObject. "$lt" to-date)))
     (.toArray ^DBCursor (.find coll query))))
 
 (defn save [^DBApiLayer conn
