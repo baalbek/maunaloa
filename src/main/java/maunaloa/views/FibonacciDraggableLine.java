@@ -156,6 +156,8 @@ public class FibonacciDraggableLine extends DraggableLine {
     protected void onMouseDragged(MouseEvent event) {
         setAnchorsVisible(false);
     }
+
+
     //endregion
 
     //region interface MongodbLine

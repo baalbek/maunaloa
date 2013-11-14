@@ -16,6 +16,7 @@ import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
+import maunaloa.models.ChartWindowDressingModel;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.utils.FxUtils;
 import oahu.exceptions.NotImplementedException;
@@ -52,6 +53,7 @@ public class DefaultMainFrameController implements MainFrameController {
     //region Init
 
     private MaunaloaFacade facade;
+    private ChartWindowDressingModel windowDressingModel;
     private MaunaloaChart candlesticksChart;
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxWeeklyChart;
@@ -251,7 +253,10 @@ public class DefaultMainFrameController implements MainFrameController {
                         break;
                     case COMMENTS:
                         MaunaloaContext ctx2 = new MaunaloaContext();
-                        FxUtils.loadApp(null,"/ChartCommentsDialog.fxml","MongoDB Comments");
+                        ChartCanvasController ccc2;
+
+                        ctx2.setListener(findListener(curloc));
+                        FxUtils.loadApp(ctx2,"/ChartCommentsDialog.fxml","MongoDB Comments");
                         break;
                 }
 
@@ -369,6 +374,14 @@ public class DefaultMainFrameController implements MainFrameController {
 
     public void setObxCandlesticksChart(MaunaloaChart obxCandlesticksChart) {
         this.obxCandlesticksChart = obxCandlesticksChart;
+    }
+
+    public ChartWindowDressingModel getWindowDressingModel() {
+        return windowDressingModel;
+    }
+
+    public void setWindowDressingModel(ChartWindowDressingModel windowDressingModel) {
+        this.windowDressingModel = windowDressingModel;
     }
 
     //endregion

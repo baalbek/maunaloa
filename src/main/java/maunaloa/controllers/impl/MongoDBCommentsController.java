@@ -80,7 +80,8 @@ public class MongoDBCommentsController implements MongoDBController {
         for (CanvasGroup line : ctx.getLines()) {
             MongodbLine mongoLine = line instanceof MongodbLine ? (MongodbLine)line : null;
             if (mongoLine == null) continue;
-
+            List<String> comments = ctx.getWindowDressingModel().fetchComments(mongoLine.getMongodbId());
+            root.getChildren().add(new TreeItem<>(mongoLine.getDesc()));
         }
     }
 

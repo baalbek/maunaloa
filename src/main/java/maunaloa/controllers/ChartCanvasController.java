@@ -27,5 +27,4 @@ public interface ChartCanvasController extends
     int getLocation();
     BooleanProperty fibonacci1272extProperty();
     IDateBoundaryRuler getHruler();
-
 }

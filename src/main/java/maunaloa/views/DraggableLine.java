@@ -171,6 +171,10 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
         }
         return comments;
     }
+    @Override
+    public String getDesc() {
+        return String.format("%s",getMongodbId());
+    }
     //endregion Interface MongodbLine
 
     //region Events

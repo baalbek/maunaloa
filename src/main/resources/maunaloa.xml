@@ -89,7 +89,7 @@
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="facade" ref="facade" />
-
+        <property name="windowDressingModel" ref="windowdressingmodel" />
     </bean>
 </beans>
 

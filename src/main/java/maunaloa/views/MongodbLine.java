@@ -24,4 +24,5 @@ public interface MongodbLine {
     long getLocation();
     void addComment(String comment);
     List<String> getComments();
+    String getDesc();
 }

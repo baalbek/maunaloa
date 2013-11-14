@@ -73,6 +73,14 @@
         </copy>
     </target>
 
+    <target name="copy-clojure">
+        <copy todir="target">
+            <fileset dir="${src.clojure}">
+                <include name="**/*.clj" />
+            </fileset>
+        </copy>
+    </target>
+
     <target name="main" depends="copy-from" />
 </project>
      

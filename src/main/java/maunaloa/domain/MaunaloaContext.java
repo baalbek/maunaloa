@@ -1,6 +1,7 @@
 package maunaloa.domain;
 
 import maunaloa.events.MainFrameControllerListener;
+import maunaloa.models.ChartWindowDressingModel;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.views.CanvasGroup;
 import oahu.financial.Stock;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MaunaloaContext {
     private Stock stock;
     private MaunaloaFacade facade;
+    private ChartWindowDressingModel windowDressingModel;
     private List<MainFrameControllerListener> listeners;
     private List<CanvasGroup> lines;
     private MainFrameControllerListener listener;
@@ -97,5 +99,13 @@ public class MaunaloaContext {
 
     public void setLines(List<CanvasGroup> lines) {
         this.lines = lines;
+    }
+
+    public ChartWindowDressingModel getWindowDressingModel() {
+        return windowDressingModel;
+    }
+
+    public void setWindowDressingModel(ChartWindowDressingModel windowDressingModel) {
+        this.windowDressingModel = windowDressingModel;
     }
 }
