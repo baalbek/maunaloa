@@ -253,9 +253,11 @@ public class DefaultMainFrameController implements MainFrameController {
                         break;
                     case COMMENTS:
                         MaunaloaContext ctx2 = new MaunaloaContext();
-                        ChartCanvasController ccc2;
+                        ctx2.setWindowDressingModel(getWindowDressingModel());
+                        ChartCanvasController ccc2 = (ChartCanvasController)findListener(curloc);
 
-                        ctx2.setListener(findListener(curloc));
+                        ctx2.setLines(ccc2.getLines());
+
                         FxUtils.loadApp(ctx2,"/ChartCommentsDialog.fxml","MongoDB Comments");
                         break;
                 }

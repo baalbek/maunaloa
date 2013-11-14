@@ -4,10 +4,13 @@ import javafx.beans.property.BooleanProperty;
 import maunaloa.events.DerivativesControllerListener;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.models.MaunaloaFacade;
+import maunaloa.views.CanvasGroup;
 import oahu.financial.Stock;
 import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,4 +30,5 @@ public interface ChartCanvasController extends
     int getLocation();
     BooleanProperty fibonacci1272extProperty();
     IDateBoundaryRuler getHruler();
+    List<CanvasGroup> getLines();
 }

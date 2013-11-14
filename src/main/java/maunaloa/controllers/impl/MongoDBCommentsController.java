@@ -9,6 +9,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import maunaloa.controllers.MongoDBController;
 import maunaloa.domain.MaunaloaContext;
+import maunaloa.domain.TreeViewItemWrapper;
 import maunaloa.utils.FxUtils;
 import maunaloa.views.CanvasGroup;
 import maunaloa.views.MongodbLine;
@@ -39,7 +40,7 @@ public class MongoDBCommentsController implements MongoDBController {
     @FXML
     private TextArea txaComment;
 
-    private TreeItem<String> root;
+    private TreeItem<TreeViewItemWrapper> root;
 
     private MaunaloaContext ctx;
 
@@ -47,7 +48,7 @@ public class MongoDBCommentsController implements MongoDBController {
     private List<String> newComments = new ArrayList<>();
 
     public void initialize() {
-        root = new TreeItem<String>("MongoDB Comments");
+        root = new TreeItem<TreeViewItemWrapper>(new TreeViewItemWrapper("MongoDB Comments"));
         root.setExpanded(true);
         treeComments.rootProperty().set(root);
 
@@ -63,7 +64,7 @@ public class MongoDBCommentsController implements MongoDBController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 String newComment = txaComment.getText();
-                TreeItem<String> item = new TreeItem<>(newComment);
+                TreeItem<TreeViewItemWrapper> item = new TreeItem<>(new TreeViewItemWrapper(newComment));
                 root.getChildren().add(item);
                 newComments.add(newComment);
             }
@@ -77,16 +78,21 @@ public class MongoDBCommentsController implements MongoDBController {
             root.getChildren().add(new TreeItem<>(comment));
         }
         //*/
-        for (CanvasGroup line : ctx.getLines()) {
-            MongodbLine mongoLine = line instanceof MongodbLine ? (MongodbLine)line : null;
-            if (mongoLine == null) continue;
-            List<String> comments = ctx.getWindowDressingModel().fetchComments(mongoLine.getMongodbId());
-            root.getChildren().add(new TreeItem<>(mongoLine.getDesc()));
+        List<CanvasGroup> lines = ctx.getLines();
+        if (lines != null) {
+            for (CanvasGroup line : lines) {
+                System.out.println("Line: " + line);
+                MongodbLine mongoLine = line instanceof MongodbLine ? (MongodbLine)line : null;
+                if (mongoLine == null) continue;
+                List<String> comments = ctx.getWindowDressingModel().fetchComments(mongoLine.getMongodbId());
+                root.getChildren().add(new TreeItem<>(new TreeViewItemWrapper(mongoLine)));
+            }
         }
     }
 
     @Override
     public void setContext(MaunaloaContext ctx) {
         this.ctx = ctx;
+        populateTree();
     }
 }

@@ -33,6 +33,7 @@ import oahux.chart.MaunaloaChart;
 import oahux.domain.DerivativeFx;
 import maunaloa.models.MaunaloaFacade;
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 
 import java.util.*;
 
@@ -259,6 +260,20 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
+    public List<CanvasGroup> getLines() {
+        List<CanvasGroup> result = null;
+
+        List<CanvasGroup> fibs = fibLines.get(getTicker());
+
+        if (fibs != null) {
+            System.out.println("Controller lines not null");
+            result = fibs;
+        }
+
+        return result;
+    }
+
+    @Override
     public Collection<StockPrice> stockPrices(int i) {
         return model.stockPrices(getTicker().getTicker(),-1);
     }
@@ -292,11 +307,14 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     public void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         for (DBObject o : event.getLines()) {
             Line line = createLineFromDBObject(o);
-            CanvasGroup fibLine = new FibonacciDraggableLine(line,
+            MongodbLine fibLine = new FibonacciDraggableLine(line,
                     getHRuler(),
                     getVRuler(),
                     fibonacci1272extProperty().get());
-            updateMyPaneLines(fibLine);
+
+            fibLine.setMongodbId((ObjectId)o.get("_id"));
+
+            updateMyPaneLines((CanvasGroup) fibLine);
         }
     }
 
