@@ -1,5 +1,6 @@
 package maunaloa.controllers.impl;
 
+import com.mongodb.DBObject;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -15,6 +16,7 @@ import maunaloa.controllers.MainFrameController;
 import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
+import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.models.ChartWindowDressingModel;
 import maunaloa.models.MaunaloaFacade;
@@ -233,6 +235,7 @@ public class DefaultMainFrameController implements MainFrameController {
                         }
                         break;
                     case FETCH_FROM_DATASTORE:
+                        /*
                         MaunaloaContext ctx = new MaunaloaContext();
                         MainFrameControllerListener curListener = findListener(curloc);
 
@@ -245,10 +248,16 @@ public class DefaultMainFrameController implements MainFrameController {
                         ctx.setFacade(getFacade());
                         ctx.setLocation(curloc);
                         ctx.setStock(currentTicker);
-
-                        //MongoDBFetchFibController.loadApp(ctx);
-
                         FxUtils.loadApp(ctx,"/FetchFromMongoDialog.fxml","Fetch from MongoDB");
+                        //*/
+                        MainFrameControllerListener curListener = findListener(curloc);
+                        IDateBoundaryRuler dbr = ((ChartCanvasController)curListener).getHruler();
+                        List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
+                                currentTicker.getTicker(),
+                                curloc,
+                                dbr.getStartDate(),
+                                dbr.getEndDate());
+                        curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
 
                         break;
                     case COMMENTS:

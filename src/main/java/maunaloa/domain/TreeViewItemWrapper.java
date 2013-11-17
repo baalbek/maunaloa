@@ -1,5 +1,9 @@
 package maunaloa.domain;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import maunaloa.views.MongodbLine;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -9,16 +13,32 @@ package maunaloa.domain;
 public class TreeViewItemWrapper {
     private final Object wrapped;
 
-    public TreeViewItemWrapper(Object wrapped) {
+    public TreeViewItemWrapper (Object wrapped) {
         this.wrapped = wrapped;
     }
     @Override
     public String toString() {
-        return wrapped.toString();
+        if (wrapped instanceof DBObject) {
+            return (String)((DBObject) wrapped).get("c");
+        }
+        else if (wrapped instanceof MongodbLine) {
+            MongodbLine line = (MongodbLine)wrapped;
+            BasicDBObject p1 = line.coord(MongodbLine.P1);
+            BasicDBObject p2 = line.coord(MongodbLine.P2);
+
+            return String.format("x1: %s, y1: %.1f, x2: %s, y2: %.1f",
+                    p1.get("x"),
+                    p1.get("y"),
+                    p2.get("x"),
+                    p2.get("y"));
+        }
+        else {
+            return wrapped.toString();
+        }
     }
 
     public static TreeViewItemWrapper createDefault(String desc) {
-        return new TreeViewItemWrapper(desc);
+        return new TreeViewItemWrapper (desc);
     }
 
     public Object getWrapped() {

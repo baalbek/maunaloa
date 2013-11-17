@@ -1,5 +1,6 @@
 package maunaloa.controllers.impl;
 
+import com.mongodb.DBObject;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -41,6 +42,7 @@ public class MongoDBCommentsController implements MongoDBController {
     private TextArea txaComment;
 
     private TreeItem<TreeViewItemWrapper> root;
+    //private TreeItem<? super TreeViewItemWrapper> root2;
 
     private MaunaloaContext ctx;
 
@@ -65,7 +67,8 @@ public class MongoDBCommentsController implements MongoDBController {
             public void handle(ActionEvent actionEvent) {
                 String newComment = txaComment.getText();
                 TreeItem<TreeViewItemWrapper> item = new TreeItem<>(new TreeViewItemWrapper(newComment));
-                root.getChildren().add(item);
+                TreeItem<TreeViewItemWrapper> selected = (TreeItem<TreeViewItemWrapper>)treeComments.getFocusModel().getFocusedItem();
+                selected.getChildren().add(item);
                 newComments.add(newComment);
             }
         });
@@ -84,8 +87,13 @@ public class MongoDBCommentsController implements MongoDBController {
                 System.out.println("Line: " + line);
                 MongodbLine mongoLine = line instanceof MongodbLine ? (MongodbLine)line : null;
                 if (mongoLine == null) continue;
-                List<String> comments = ctx.getWindowDressingModel().fetchComments(mongoLine.getMongodbId());
-                root.getChildren().add(new TreeItem<>(new TreeViewItemWrapper(mongoLine)));
+                TreeItem<TreeViewItemWrapper> item = new TreeItem<>(new TreeViewItemWrapper(mongoLine));
+                List<DBObject> comments = ctx.getWindowDressingModel().fetchComments(mongoLine.getMongodbId());
+                for (DBObject c : comments) {
+                    TreeItem<TreeViewItemWrapper> citem = new TreeItem<>(new TreeViewItemWrapper(c));
+                    item.getChildren().add(citem);
+                }
+                root.getChildren().add(item);
             }
         }
     }
@@ -95,4 +103,23 @@ public class MongoDBCommentsController implements MongoDBController {
         this.ctx = ctx;
         populateTree();
     }
+
+    /*
+    private void testThis() {
+        TreeView view = new TreeView();
+
+        TreeItem<? super TreeViewItemWrapper> item = new TreeItem<>(new TreeViewItemWrapper("sdfs"));
+
+        TreeItem<? super TreeViewItemWrapper> item2 = new TreeItem<>(new TreeViewItemWrapper("sdfs"));
+        item.getChildren().add(item2);
+
+        List<? super Number> lx = new ArrayList<>();
+        lx.add(3);
+        lx.add(new Double("343.3"));
+
+        root.getChildren().add(new TreeItem<TreeViewItemWrapper>(new TreeViewItemWrapper("sfsd")));
+
+        root2.getChildren().add(new TreeItem<>(new TreeViewItemWrapper("sfs")));
+    }
+    //*/
 }
