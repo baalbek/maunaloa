@@ -17,7 +17,9 @@ import maunaloa.views.MongodbLine;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -47,14 +49,12 @@ public class MongoDBCommentsController implements MongoDBController {
     private MaunaloaContext ctx;
 
     private List<String> existingComments;
-    private List<String> newComments = new ArrayList<>();
+    private Map<TreeItem<TreeViewItemWrapper>, List<String>> newComments = new HashMap<>();
 
     public void initialize() {
         root = new TreeItem<TreeViewItemWrapper>(new TreeViewItemWrapper("MongoDB Comments"));
         root.setExpanded(true);
         treeComments.rootProperty().set(root);
-
-        //populateTree();
 
         btnClose.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -69,7 +69,25 @@ public class MongoDBCommentsController implements MongoDBController {
                 TreeItem<TreeViewItemWrapper> item = new TreeItem<>(new TreeViewItemWrapper(newComment));
                 TreeItem<TreeViewItemWrapper> selected = (TreeItem<TreeViewItemWrapper>)treeComments.getFocusModel().getFocusedItem();
                 selected.getChildren().add(item);
-                newComments.add(newComment);
+
+                List<String> myComments = newComments.get(selected);
+
+                if (myComments == null) {
+                    myComments = new ArrayList<>();
+                    newComments.put(selected,myComments);
+                }
+                myComments.add(newComment);
+            }
+        });
+        btnSave.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                for (Map.Entry<TreeItem<TreeViewItemWrapper>, List<String>> item : newComments.entrySet()) {
+                    MongodbLine line = (MongodbLine)item.getKey().getValue().getWrapped();
+                    for (String s : item.getValue()) {
+                        ctx.getWindowDressingModel().addComment(line.getMongodbId(), s);
+                    }
+                }
             }
         });
     }
