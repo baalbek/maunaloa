@@ -20,5 +20,7 @@
             ^String comment]
   (let [coll (.getCollection conn "comments")
        result (BasicDBObject. "refid" id)]
-    (.append result "c" comment)
+    (doto result
+      (.append "c" comment)
+      (.append "dx" (java.util.Date.)))
     (.save coll result)))
