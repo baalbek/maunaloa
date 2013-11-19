@@ -1,6 +1,8 @@
 (ns maunaloa.service.mongodb.common
   (:import
-    [com.mongodb MongoClient]))
+    [com.mongodb MongoClient])
+  (:require
+    [waimea.utils.logservice :as LOG]))
 
 ;  mongo -u heroku -p 4a0b28228851cfa6ef121ee73560dd58 paulo.mongohq.com:10044/app19368679
 
@@ -18,7 +20,7 @@
       (let [clt (MongoClient. "paulo.mongohq.com" 10044)
             db (.getDB clt "app19368679")
             auth-result (.authenticate db "heroku" (.toCharArray "4a0b28228851cfa6ef121ee73560dd58"))]
-        (println auth-result) 
+        (LOG/info (str "Connected to: paulo.mongohq.com, user: heroku, with result: " auth-result))
         db))))
 
 (def local-connection
@@ -26,5 +28,6 @@
     (fn [^String host]
       (let [clt (MongoClient. host 27017)
             db (.getDB clt "maunaloa")]
+        (LOG/info (str "Connected to: " host ", database: maunaloa"))
         db))))
 

@@ -4,6 +4,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import maunaloa.views.MongodbLine;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -19,7 +21,11 @@ public class TreeViewItemWrapper {
     @Override
     public String toString() {
         if (wrapped instanceof DBObject) {
-            return (String)((DBObject) wrapped).get("c");
+            DBObject commObj = (DBObject)wrapped;
+            String comment = (String)commObj.get("c");
+            Date commentDate = (Date)commObj.get("dx");
+            //return (String)((DBObject) wrapped).get("c");
+            return String.format("%s - %s", commentDate,comment);
         }
         else if (wrapped instanceof MongodbLine) {
             MongodbLine line = (MongodbLine)wrapped;

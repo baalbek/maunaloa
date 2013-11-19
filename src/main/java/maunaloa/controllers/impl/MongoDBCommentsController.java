@@ -1,6 +1,7 @@
 package maunaloa.controllers.impl;
 
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -85,7 +86,8 @@ public class MongoDBCommentsController implements MongoDBController {
                 for (Map.Entry<TreeItem<TreeViewItemWrapper>, List<String>> item : newComments.entrySet()) {
                     MongodbLine line = (MongodbLine)item.getKey().getValue().getWrapped();
                     for (String s : item.getValue()) {
-                        ctx.getWindowDressingModel().addComment(line.getMongodbId(), s);
+                        WriteResult wr = ctx.getWindowDressingModel().addComment(line.getMongodbId(), s);
+                        log.info(String.format("Insert comment [%s]: %s ",s, wr.getError()));
                     }
                 }
             }
