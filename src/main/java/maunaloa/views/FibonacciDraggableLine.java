@@ -140,7 +140,7 @@ public class FibonacciDraggableLine extends DraggableLine {
         newLine.setEndX(vruler.getLowerRight().getX());
         newLine.startYProperty().bind(db);
         newLine.endYProperty().bind(db);
-        newLine.startXProperty().bind(getLine().endXProperty());
+        newLine.startXProperty().bind(getLine().startXProperty());
         return newLine;
     }
     //endregion

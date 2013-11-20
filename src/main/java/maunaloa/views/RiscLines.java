@@ -20,7 +20,6 @@ import org.apache.log4j.Logger;
  */
 public class RiscLines implements CanvasGroup {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
-    private Line line ;
     private Group group ;
     private final IBoundaryRuler ruler;
     private final DerivativeFx derivative;
