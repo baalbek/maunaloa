@@ -25,6 +25,7 @@ import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.MaunaloaChart;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class DefaultMainFrameController implements MainFrameController {
 
     //region Init
 
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
     private MaunaloaFacade facade;
     private ChartWindowDressingModel windowDressingModel;
     private MaunaloaChart candlesticksChart;
@@ -251,12 +253,24 @@ public class DefaultMainFrameController implements MainFrameController {
                         FxUtils.loadApp(ctx,"/FetchFromMongoDialog.fxml","Fetch from MongoDB");
                         //*/
                         MainFrameControllerListener curListener = findListener(curloc);
+                        /*
                         IDateBoundaryRuler dbr = ((ChartCanvasController)curListener).getHruler();
                         List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
                                 currentTicker.getTicker(),
                                 curloc,
                                 dbr.getStartDate(),
                                 dbr.getEndDate());
+                        //*/
+                        List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
+                                currentTicker.getTicker(),
+                                curloc,
+                                null,
+                                null);
+
+                        log.info(String.format("Fetching from mongodb lines for ticker: %s, location: %d, num lines: %d",
+                                currentTicker.getTicker(),
+                                curloc,
+                                lines == null ? 0 : lines.size()));
                         curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
 
                         break;
