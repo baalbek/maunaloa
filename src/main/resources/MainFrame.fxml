@@ -21,6 +21,7 @@
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Fibonacci" fx:id="fibonacciMenu"></Menu>
+                        <Menu mnemonicParsing="false" text="Levels" fx:id="levelsMenu"></Menu>
                         <Menu mnemonicParsing="false" text="MongoDB" fx:id="mongodbMenu"></Menu>
                     </menus>
                 </MenuBar>

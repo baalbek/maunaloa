@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<VBox padding="$x2" prefHeight="100.0" prefWidth="219.0" xmlns:fx="http://javafx.com/fxml" fx:controller="maunaloa.controllers.impl.NewLevelController">
+  <children>
+    <HBox prefHeight="100.0" prefWidth="259.0">
+      <children>
+        <Label minWidth="-Infinity" text="Level value:" HBox.hgrow="ALWAYS">
+          <HBox.margin>
+            <Insets right="10.0" fx:id="x1" />
+          </HBox.margin>
+        </Label>
+        <TextField fx:id="txLevel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="200.0" />
+      </children>
+      <VBox.margin>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" fx:id="x2" />
+      </VBox.margin>
+    </HBox>
+    <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+        <Button fx:id="btnOk" mnemonicParsing="false" text="OK" HBox.margin="$x2" />
+        <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancel" HBox.margin="$x2" />
+      </children>
+    </HBox>
+  </children>
+</VBox>

@@ -46,6 +46,7 @@ public class DefaultMainFrameController implements MainFrameController {
     @FXML private ChoiceBox cbTickers;
     @FXML private MenuBar myMenuBar;
     @FXML private Menu fibonacciMenu;
+    @FXML private Menu levelsMenu;
     @FXML private Menu mongodbMenu;
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
@@ -215,13 +216,28 @@ public class DefaultMainFrameController implements MainFrameController {
         MenuItem mongo1a = createMongoDBMenuItem("Save to datastore", SAVE_TO_DATASTORE);
         MenuItem mongo2a = createMongoDBMenuItem("Fetch from datastore", FETCH_FROM_DATASTORE);
         MenuItem mongo3a = createMongoDBMenuItem("Comments", COMMENTS);
-        mongodbMenu.getItems().addAll(  mongo1a,
-                                        new SeparatorMenuItem(),
-                                        mongo2a,
-                                        mongo3a);
+        mongodbMenu.getItems().addAll(
+                mongo2a,
+                new SeparatorMenuItem(),
+                mongo3a,
+                new SeparatorMenuItem(),
+                mongo1a);
 
     }
 
+    private MenuItem createLevelsMenuItem(String title) {
+        MenuItem m = new MenuItem(title);
+
+        m.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+
+            }
+        });
+
+        return m;
+    }
     private MenuItem createMongoDBMenuItem(String title,
                                            final int mongoEventId) {
         MenuItem m = new MenuItem(title);
