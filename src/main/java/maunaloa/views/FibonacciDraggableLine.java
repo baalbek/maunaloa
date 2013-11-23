@@ -2,6 +2,7 @@ package maunaloa.views;
 
 import com.mongodb.BasicDBObject;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -125,12 +126,9 @@ public class FibonacciDraggableLine extends DraggableLine {
             }
             @Override
             protected double computeValue() {
-                if (isFlipped == true) {
-                    return getLine().getStartY() - ((getLine().getEndY() - getLine().getStartY()) * level);
-                }
-                else {
-                    return getLine().getStartY() + ((getLine().getEndY() - getLine().getStartY()) * level);
-                }
+                double adjustment = (getLine().getEndY() - getLine().getStartY()) * level;
+                double y = getLine().getStartY();
+                return (isFlipped == true) ? y - adjustment : y + adjustment;
             }
         };
     }
@@ -140,7 +138,11 @@ public class FibonacciDraggableLine extends DraggableLine {
         newLine.setEndX(vruler.getLowerRight().getX());
         newLine.startYProperty().bind(db);
         newLine.endYProperty().bind(db);
-        newLine.startXProperty().bind(getLine().startXProperty());
+        Line line = getLine();
+
+        DoubleProperty dp = line.getStartX() < line.getEndX() ? line.startXProperty() : line.endXProperty();
+
+        newLine.startXProperty().bind(dp);
         return newLine;
     }
     //endregion
