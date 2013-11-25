@@ -223,9 +223,11 @@ public class DefaultMainFrameController implements MainFrameController {
                 new SeparatorMenuItem(),
                 mongo1a);
 
+        MenuItem levels1 = createLevelsMenuItem("New Level");
+        levelsMenu.getItems().add(levels1);
     }
 
-    private MenuItem createLevelsMenuItem(String title) {
+    private MenuItem createLevelsMenuItem(final String title) {
         MenuItem m = new MenuItem(title);
 
         m.setOnAction(new EventHandler<ActionEvent>() {
@@ -233,6 +235,13 @@ public class DefaultMainFrameController implements MainFrameController {
             public void handle(ActionEvent actionEvent) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
 
+                MaunaloaContext ctx = new MaunaloaContext();
+
+                ctx.setLocation(curloc);
+
+                ctx.setListeners(myListeners);
+
+                FxUtils.loadApp(ctx,"/NewLevelDialog.fxml", title);
             }
         });
 
@@ -253,35 +262,12 @@ public class DefaultMainFrameController implements MainFrameController {
                         }
                         break;
                     case FETCH_FROM_DATASTORE:
-                        /*
-                        MaunaloaContext ctx = new MaunaloaContext();
                         MainFrameControllerListener curListener = findListener(curloc);
-
-                        ChartCanvasController ccc = (ChartCanvasController)curListener;
-                        ctx.setListener(curListener);
-                        IDateBoundaryRuler dbr =  ccc.getHruler(); //(IDateBoundaryRuler)hruler;
-                        ctx.setStartDate(dbr.getStartDate());
-                        ctx.setEndDate(dbr.getEndDate());
-
-                        ctx.setFacade(getFacade());
-                        ctx.setLocation(curloc);
-                        ctx.setStock(currentTicker);
-                        FxUtils.loadApp(ctx,"/FetchFromMongoDialog.fxml","Fetch from MongoDB");
-                        //*/
-                        MainFrameControllerListener curListener = findListener(curloc);
-                        /*
-                        IDateBoundaryRuler dbr = ((ChartCanvasController)curListener).getHruler();
                         List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
                                 currentTicker.getTicker(),
                                 curloc,
-                                dbr.getStartDate(),
-                                dbr.getEndDate());
-                        //*/
-                        List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
-                                currentTicker.getTicker(),
-                                curloc,
-                                null,
-                                null);
+                                null, // dbr.getStartDate(),
+                                null); // dbr.getEndDate());
 
                         log.info(String.format("Fetching from mongodb lines for ticker: %s, location: %d, num lines: %d",
                                 currentTicker.getTicker(),
@@ -300,32 +286,6 @@ public class DefaultMainFrameController implements MainFrameController {
                         FxUtils.loadApp(ctx2,"/ChartCommentsDialog.fxml","MongoDB Comments");
                         break;
                 }
-
-                /*
-                if (mongoEventId == MongoDBEvent.SAVE_TO_DATASTORE) {
-                    SaveToMongoDBEvent event = new SaveToMongoDBEvent(curloc);
-                    for (MainFrameControllerListener listener : myListeners) {
-                        listener.onSaveToMongoDBEvent(event);
-                    }
-                }
-                else {
-                    MaunaloaContext ctx = new MaunaloaContext();
-                    MainFrameControllerListener curListener = findListener(curloc);
-
-                    ChartCanvasController ccc = (ChartCanvasController)curListener;
-                    ctx.setListener(curListener);
-                    IDateBoundaryRuler dbr =  ccc.getHruler(); //(IDateBoundaryRuler)hruler;
-                    ctx.setStartDate(dbr.getStartDate());
-                    ctx.setEndDate(dbr.getEndDate());
-
-                    ctx.setFacade(getFacade());
-                    ctx.setLocation(curloc);
-                    ctx.setStock(currentTicker);
-
-                    MongoDBControllerImpl.loadApp(ctx);
-                }
-                //*/
-
             }
         });
         return m;
@@ -349,8 +309,9 @@ public class DefaultMainFrameController implements MainFrameController {
         m.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
+                FibonacciEvent evt = new FibonacciEvent(curloc,fibEvent);
                 for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(new FibonacciEvent(curloc,fibEvent));
+                    listener.onFibonacciEvent(evt);
                 }
             }
         });

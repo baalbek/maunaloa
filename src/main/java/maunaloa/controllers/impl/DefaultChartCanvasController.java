@@ -24,7 +24,6 @@ import maunaloa.views.CanvasGroup;
 import maunaloa.views.FibonacciDraggableLine;
 import maunaloa.views.MongodbLine;
 import maunaloa.views.RiscLines;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IDateBoundaryRuler;
@@ -56,6 +55,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     private String name;
 
     Map<Stock,List<CanvasGroup>> fibLines = new HashMap<>();
+    Map<Stock,List<CanvasGroup>> riscLevels = new HashMap<>();
     Map<Stock,List<CanvasGroup>> levels = new HashMap<>();
 
 
@@ -214,11 +214,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     @Override
     public void setTicker(Stock ticker) {
         clearLines(fibLines);
-        clearLines(levels);
+        clearLines(riscLevels);
         this.ticker = ticker;
         draw();
         refreshLines(fibLines);
-        refreshLines(levels);
+        refreshLines(riscLevels);
     }
 
 
@@ -363,12 +363,17 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
 
     }
+
+    @Override
+    public void onNewLevelEvent(NewLevelEvent evt) {
+        if (evt.getLocation() != this.location) return;
+    }
     //endregion  Interface methods
 
     //region  DerivativesControllerListener Interface methods
     @Override
     public void notify(DerivativesCalculatedEvent event) {
-        deleteLines(levels,true);
+        deleteLines(riscLevels,true);
         List<CanvasGroup> lines = new ArrayList<>();
         for(DerivativeFx d : event.getCalculated()) {
             if (log.isDebugEnabled()) {
@@ -376,8 +381,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             }
             lines.add(new RiscLines(d, vruler));
         }
-        levels.put(getTicker(),lines);
-        refreshLines(levels);
+        riscLevels.put(getTicker(), lines);
+        refreshLines(riscLevels);
     }
 
     @Override
@@ -385,65 +390,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         StockPrice sp = event.getStockPrice();
         System.out.println("Evenjt fired: " + event + ", " + sp);
     }
-
-
-    /*
-    public void onMongoDBEvent(MongoDBEvent event) {
-        if (event.getLocation() != this.location) return;
-
-        switch (event.getAction()) {
-            case MongoDBEvent.SAVE_TO_DATASTORE:
-                List<CanvasGroup> lines = fibLines.get(getTicker());
-                for (CanvasGroup line : lines) {
-                    if (line.getStatus() == CanvasGroup.SELECTED) {
-                        MongodbLine mongoLine = (MongodbLine)line;
-                        DBObject p1 = mongoLine.coord(MongodbLine.P1);
-                        DBObject p2 = mongoLine.coord(MongodbLine.P2);
-                        String tix = getTicker().getTicker();
-                        MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
-                        if (result.isOk()) {
-                            log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
-                                    tix,
-                                    result.getObjectId(),
-                                    location));
-                            mongoLine.setMongodbId(result.getObjectId());
-                            line.setStatus(CanvasGroup.SAVED_TO_DB);
-                        }
-                        else {
-                            log.error(String.format("(Saving fibline %s, %d) %s",tix,location,result.getWriteResult().getError()));
-                        }
-                    }
-                    else if (line.getStatus() == CanvasGroup.SAVED_TO_DB_SELECTED) {
-                        MongodbLine mongoLine = (MongodbLine)line;
-                        DBObject p1 = mongoLine.coord(MongodbLine.P1);
-                        DBObject p2 = mongoLine.coord(MongodbLine.P2);
-                        String tix = getTicker().getTicker();
-
-                        WriteResult result = model.getWindowDressingModel().updateCoord(mongoLine.getMongodbId(),p1,p2);
-                        if (result.getLastError().ok()) {
-                            log.info(String.format("(%s) Successfully updated fibline with _id: %s to location: %d",
-                                    tix,
-                                    mongoLine.getMongodbId(),
-                                    location));
-                            line.setStatus(CanvasGroup.SAVED_TO_DB);
-                        }
-                        else {
-                            log.error(String.format("(Updating fibline %s, %d) %s",tix,location,result.getError()));
-                        }
-                    }
-                }
-                break;
-            case MongoDBEvent.FETCH_FROM_DATASTORE:
-                for (DBObject o : event.getLines()) {
-                    MongodbLine line = createLineFromDBObject(o);
-
-
-                }
-                break;
-        }
-    }
-    //*/
-
 
     //endregion  DerivativesControllerListener Interface methods
 

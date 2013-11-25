@@ -13,4 +13,5 @@ public interface MainFrameControllerListener {
     void onFibonacciEvent(FibonacciEvent event);
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event);
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event);
+    void onNewLevelEvent(NewLevelEvent evt);
 }
