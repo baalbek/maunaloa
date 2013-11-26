@@ -61,7 +61,8 @@ public class Level implements CanvasGroup, MongodbLine {
     @Override
     public Node view() {
         if (group == null) {
-            createLevel(levelValue, lineColor, String.format("%.f", levelValue));
+            group = new Group();
+            createLevel(levelValue, lineColor, String.format("%.1f", levelValue));
         }
         return group;
     }

@@ -20,10 +20,7 @@ import maunaloa.domain.MongoDBResult;
 import maunaloa.events.*;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
-import maunaloa.views.CanvasGroup;
-import maunaloa.views.FibonacciDraggableLine;
-import maunaloa.views.MongodbLine;
-import maunaloa.views.RiscLines;
+import maunaloa.views.*;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IDateBoundaryRuler;
@@ -139,7 +136,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                             getHRuler(),
                             getVRuler(),
                             fibonacci1272extProperty().get());
-                    updateMyPaneLines(fibLine);
+                    updateMyPaneLines(fibLine,fibLines);
                 }
                 lineA.set(null);
                 deactivateFibonacci();
@@ -196,11 +193,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         }
     }
 
-    private void updateMyPaneLines(CanvasGroup line) {
-        List<CanvasGroup> lines = fibLines.get(getTicker());
+    private void updateMyPaneLines(CanvasGroup line, Map<Stock,List<CanvasGroup>> linesMap) {
+        List<CanvasGroup> lines = linesMap.get(getTicker());
         if (lines == null) {
             lines = new ArrayList<>();
-            fibLines.put(getTicker(), lines);
+            linesMap.put(getTicker(), lines);
         }
         lines.add(line);
         myPane.getChildren().add(line.view());
@@ -314,7 +311,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
             fibLine.setMongodbId((ObjectId)o.get("_id"));
 
-            updateMyPaneLines((CanvasGroup) fibLine);
+            updateMyPaneLines((CanvasGroup) fibLine, fibLines);
         }
     }
 
@@ -361,12 +358,13 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 }
             }
         }
-
     }
 
     @Override
     public void onNewLevelEvent(NewLevelEvent evt) {
         if (evt.getLocation() != this.location) return;
+        Level level = new Level(evt.getValue(),getVRuler());
+        updateMyPaneLines(level, levels);
     }
     //endregion  Interface methods
 
