@@ -23,7 +23,7 @@ import java.util.*;
  * Date: 3/31/13
  * Time: 7:42 PM
  */
-public abstract class DraggableLine implements CanvasGroup, MongodbLine {
+public abstract class DraggableLine extends AbstractSelectable implements CanvasGroup, MongodbLine {
     //region Init
     private Line line ;
     private ObjectId mongodbId;
@@ -172,55 +172,6 @@ public abstract class DraggableLine implements CanvasGroup, MongodbLine {
         return comments;
     }
     //endregion Interface MongodbLine
-
-    //region Events
-    private void addEvents(final Line line) {
-        line.addEventFilter(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        line.setStrokeWidth(STROKE_WIDTH_SELECTED);
-                    }
-                });
-        line.addEventFilter(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        line.setStrokeWidth(STROKE_WIDTH_NORMAL);
-                    }
-                });
-        line.addEventFilter(MouseEvent.MOUSE_CLICKED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        /*
-                        if (getStatus() == CanvasGroup.NORMAL) {
-                            setStatus(CanvasGroup.SELECTED);
-                        }
-                        else if (getStatus() == CanvasGroup.SELECTED) {
-                            setStatus(CanvasGroup.NORMAL);
-                        }
-                        //*/
-                        switch (getStatus()) {
-                            case CanvasGroup.NORMAL:
-                                setStatus(CanvasGroup.SELECTED);
-                                break;
-                            case CanvasGroup.SELECTED:
-                                setStatus(CanvasGroup.NORMAL);
-                                break;
-                            case CanvasGroup.SAVED_TO_DB:
-                                setStatus(CanvasGroup.SAVED_TO_DB_SELECTED);
-                                break;
-                            case CanvasGroup.SAVED_TO_DB_SELECTED:
-                                setStatus(CanvasGroup.SAVED_TO_DB);
-                                break;
-                        }
-                    }
-                });
-    }
-
-
-    //endregion Events
 
     //region Private Methods
     private BasicDBObject coord(Circle anchor) {
