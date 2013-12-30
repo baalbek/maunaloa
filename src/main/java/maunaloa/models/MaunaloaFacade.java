@@ -8,6 +8,7 @@ package maunaloa.models;
  */
 
 import javafx.scene.Node;
+import maunaloax.models.ChartWindowDressingModel;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.domain.DerivativeFx;

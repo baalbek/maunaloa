@@ -16,7 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
-import maunaloa.domain.MongoDBResult;
+import maunaloax.domain.MongoDBResult;
 import maunaloa.events.*;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;

@@ -12,9 +12,9 @@ dependencies {
     compile project(':oahux')
     compile project(':maunakea')
     compile project(':ranoraraku')
-    compile project(':maunaloax')
     //compile 'commons-lang:commons-lang:20030203.000129'
     compile 'junit:junit:4.11'
+    compile 'log4j:log4j:1.2.17'
     compile 'org.aspectj:aspectjrt:1.7.4'
     compile 'org.aspectj:aspectjtools:1.7.4'
     compile 'org.aspectj:aspectjweaver:1.7.4'
@@ -26,7 +26,8 @@ dependencies {
     runtime 'org.mongodb:mongo-java-driver:2.11.3'
     runtime 'org.clojure:clojure:1.5.1'
     runtime 'org.clojure:clojure-contrib:1.2.0'
-    runtime  project(':waimea')
+    runtime project(':waimea')
+    runtime project(':maunaloax')
     compile files('../libs/javafx-2.2.jar')
 }
 
