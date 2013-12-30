@@ -1,3 +1,0 @@
-
-ant copy-waimea
-
