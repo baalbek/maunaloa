@@ -18,7 +18,7 @@ import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
-import maunaloa.models.ChartWindowDressingModel;
+import maunaloax.models.ChartWindowDressingModel;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.utils.FxUtils;
 import oahu.exceptions.NotImplementedException;

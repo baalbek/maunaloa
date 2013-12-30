@@ -2,7 +2,7 @@ package maunaloa.models.impl;
 
 import javafx.scene.Node;
 import maunaloa.domain.impl.DerivativeFxImpl;
-import maunaloa.models.ChartWindowDressingModel;
+import maunaloax.models.ChartWindowDressingModel;
 import maunaloa.utils.DateUtils;
 import oahu.annotations.Memoize;
 import oahu.exceptions.NotImplementedException;

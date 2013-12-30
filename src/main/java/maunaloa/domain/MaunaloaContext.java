@@ -1,7 +1,7 @@
 package maunaloa.domain;
 
 import maunaloa.events.MainFrameControllerListener;
-import maunaloa.models.ChartWindowDressingModel;
+import maunaloax.models.ChartWindowDressingModel;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.views.CanvasGroup;
 import oahu.financial.Stock;
