@@ -3,8 +3,9 @@ package maunaloa.dummy;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.Page;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.html.EtradeDownloader;
-import org.apache.commons.lang.NotImplementedException;
+//import org.apache.commons.lang.NotImplementedException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

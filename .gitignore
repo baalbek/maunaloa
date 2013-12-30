@@ -7,20 +7,14 @@ classes
 *.txt
 *.html
 *.html.xml
-src/main/clojure/waimea
-src/main/java/taharoa/models/impl/MybatisModel2.java
-src/main/java/taharoa/viewmodels/impl/MainFrameViewModelImpl2.java
 *.*~
 .idea
 *.iml
 xml
 tmp
-src/main/clojure/taharoa.xml
 src/test/clojure/taharoa.xml
 src/test/clojure/taharoa/models
 src/test/clojure/waimea
-oahu
-maunakea
 src/main/java/waimea
 src/main/clojure/Stock.xml
 src/main/clojure/dbcp.properties
@@ -29,6 +23,8 @@ src/main/clojure/log4j.properties
 src/main/clojure/mybatis.conf.xml
 *.log*
 html/
-
+.gradle/
+build/
+dist/
 
 

@@ -21,6 +21,7 @@ import java.util.Properties;
 import javafx.scene.image.Image;
 
 public class App extends Application {
+
     public static void main(String[] args) {
 
         Locale.setDefault(Locale.US);

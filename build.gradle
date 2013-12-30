@@ -1,0 +1,59 @@
+apply plugin: 'java'
+group = 'rcstadheim'
+archivesBaseName = 'maunaloa'
+version = '2.0'
+ 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(':oahu')
+    compile project(':oahux')
+    compile project(':maunakea')
+    compile project(':ranoraraku')
+    compile project(':maunaloax')
+    //compile 'commons-lang:commons-lang:20030203.000129'
+    compile 'junit:junit:4.11'
+    compile 'org.aspectj:aspectjrt:1.7.4'
+    compile 'org.aspectj:aspectjtools:1.7.4'
+    compile 'org.aspectj:aspectjweaver:1.7.4'
+    compile 'joda-time:joda-time:2.3'
+    compile 'org.mongodb:mongo-java-driver:2.11.3'
+    compile 'org.springframework:spring-core:4.0.0.RELEASE'
+    compile 'org.springframework:spring-context:4.0.0.RELEASE'
+    compile 'org.springframework:spring-aop:4.0.0.RELEASE'
+    runtime 'org.mongodb:mongo-java-driver:2.11.3'
+    runtime 'org.clojure:clojure:1.5.1'
+    runtime 'org.clojure:clojure-contrib:1.2.0'
+    runtime  project(':waimea')
+    compile files('../libs/javafx-2.2.jar')
+}
+
+String clazzPath() {
+    ((configurations.runtime.files.collect { f ->
+        f.name
+    }) << ".").join(" ")
+
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'maunaloa.App'
+        attributes 'Class-Path': clazzPath()
+    }
+}
+
+task copydeps(type: Copy) {
+    into 'dist' from configurations.runtime
+}
+
+task copyjar(type: Copy) {
+    into 'dist' from new File("$libsDir/maunaloa-${version}.jar")
+}
+
+task copyall(dependsOn: [copydeps,copyjar])
+
+task prncp {
+    println clazzPath()
+}
