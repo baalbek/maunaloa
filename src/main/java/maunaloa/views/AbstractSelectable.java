@@ -2,7 +2,11 @@ package maunaloa.views;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,6 +17,18 @@ import javafx.scene.shape.Line;
 public abstract class AbstractSelectable {
     public static double STROKE_WIDTH_NORMAL = 1.0;
     public static double STROKE_WIDTH_SELECTED = 4.0;
+
+    protected int status = CanvasGroup.NORMAL;
+
+    protected static Map<Integer,Color> statusColors;
+    static {
+        statusColors = new HashMap<>();
+        statusColors.put(CanvasGroup.NORMAL, Color.BLACK);
+        statusColors.put(CanvasGroup.SELECTED, Color.RED);
+        statusColors.put(CanvasGroup.SAVED_TO_DB, Color.GREEN);
+        statusColors.put(CanvasGroup.SAVED_TO_DB_SELECTED, Color.AQUAMARINE);
+    }
+
 
     public void addEvents(final Line line) {
         line.addEventFilter(MouseEvent.MOUSE_ENTERED,
@@ -50,6 +66,7 @@ public abstract class AbstractSelectable {
                     }
                 });
     }
+
     public abstract void setStatus(int status);
     public abstract int getStatus();
 }

@@ -41,18 +41,11 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
     private static double STROKE_WIDTH_NORMAL = 1.0;
     private static double STROKE_WIDTH_SELECTED = 4.0;
 
-    private int status = CanvasGroup.NORMAL;
+
 
     private List<String> comments;
 
-    private static Map<Integer,Color> statusColors;
-    static {
-        statusColors = new HashMap<>();
-        statusColors.put(CanvasGroup.NORMAL, Color.BLACK);
-        statusColors.put(CanvasGroup.SELECTED, Color.RED);
-        statusColors.put(CanvasGroup.SAVED_TO_DB, Color.GREEN);
-        statusColors.put(CanvasGroup.SAVED_TO_DB_SELECTED, Color.AQUAMARINE);
-    }
+
     //endregion Init
 
     //region Constructors
@@ -118,6 +111,7 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
     public int getStatus() {
         return status;
     }
+
     //endregion Interface CanvasGroup
 
     //region interface MongodbLine

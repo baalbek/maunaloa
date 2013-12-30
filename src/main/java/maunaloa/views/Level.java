@@ -28,7 +28,7 @@ import java.util.List;
  * Date: 20.11.13
  * Time: 09:40
  */
-public class Level implements CanvasGroup, MongodbLine {
+public class Level extends AbstractSelectable implements CanvasGroup, MongodbLine {
     //region Init
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
     private Group group ;
@@ -40,6 +40,7 @@ public class Level implements CanvasGroup, MongodbLine {
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
     private final Color lineColor;
+    private Line line;
 
     public Level(double levelValue, IRuler ruler) {
         this(levelValue, ruler, Color.BLACK);
@@ -63,7 +64,7 @@ public class Level implements CanvasGroup, MongodbLine {
         Point2D pt0 = ruler.getUpperLeft();
         Point2D pt = ruler.getLowerRight();
         double yBe = ruler.calcPix(value);
-        Line line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
+        line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
         line.setStroke(lineColor);
 
         valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,text);
@@ -72,6 +73,7 @@ public class Level implements CanvasGroup, MongodbLine {
         group.getChildren().addAll(line,anchor);
         group.getChildren().add(valueLabel);
 
+        addEvents(line);
 
     }
 
@@ -150,12 +152,13 @@ public class Level implements CanvasGroup, MongodbLine {
 
     @Override
     public void setStatus(int status) {
-        throw new NotImplementedException();
+        this.status = status;
+        line.setStroke(statusColors.get(status));
     }
 
     @Override
     public int getStatus() {
-        throw new NotImplementedException();
+        return status;
     }
     //endregion interface CanvasGroup
 
