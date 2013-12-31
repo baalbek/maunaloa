@@ -59,3 +59,5 @@ task copyall(dependsOn: [copydeps,copyjar])
 task prncp {
     println clazzPath()
 }
+
+task quick(dependsOn: [build, copyjar])
