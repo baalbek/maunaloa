@@ -18,12 +18,11 @@ import maunaloa.events.FibonacciEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
-import maunaloax.models.ChartWindowDressingModel;
 import maunaloa.models.MaunaloaFacade;
 import maunaloa.utils.FxUtils;
+import maunaloax.models.ChartWindowDressingModel;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
-import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.MaunaloaChart;
 import org.apache.log4j.Logger;
 

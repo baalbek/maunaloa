@@ -22,6 +22,8 @@ import javafx.scene.image.Image;
 
 public class App extends Application {
 
+    private static String springXmlFileName = "maunaloa.xml";
+
     public static void main(String[] args) {
 
         Locale.setDefault(Locale.US);
@@ -38,6 +40,14 @@ public class App extends Application {
         }
         //*/
 
+        if (args.length > 0) {
+            springXmlFileName = args[0];
+        }
+
+        System.out.println("Xml file: " + springXmlFileName);
+        /*
+        ApplicationContext factory = new ClassPathXmlApplicationContext(springXmlFileName);
+        */
         launch(args);
     }
 
@@ -54,7 +64,7 @@ public class App extends Application {
                     JavaFXWindow.class.getResource(
                         "ui/resources/appicon_48x48.png").toExternalForm(), 48, 48, false, true));
         */ 
-        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
+        ApplicationContext factory = new ClassPathXmlApplicationContext(springXmlFileName);
 
         URL url = this.getClass().getResource("/MainFrame.fxml");
 
