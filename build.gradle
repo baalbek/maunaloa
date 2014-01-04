@@ -1,4 +1,6 @@
 apply plugin: 'java'
+apply plugin: 'groovy'
+
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
 version = '2.0'
@@ -27,6 +29,7 @@ dependencies {
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-aop:$springVersion"
     compile 'org.mongodb:mongo-java-driver:2.11.3'
+    compile 'org.codehaus.groovy:groovy-all:2.2.1'
     runtime 'org.clojure:clojure:1.5.1'
     runtime 'org.clojure:clojure-contrib:1.2.0'
     runtime project(':waimea')
@@ -38,7 +41,6 @@ String clazzPath() {
     ((configurations.runtime.files.collect { f ->
         f.name
     }) << ".").join(" ")
-
 }
 
 jar {

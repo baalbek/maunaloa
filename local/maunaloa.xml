@@ -83,7 +83,7 @@
     </bean>
 
     <bean id="mainframe-controller"
-          class="maunaloa.controllers.impl.DefaultMainFrameController">
+          class="maunaloa.controllers.groovy.MainFrameController2">
         <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="weeklyChart" ref="chartWeeks" />
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
