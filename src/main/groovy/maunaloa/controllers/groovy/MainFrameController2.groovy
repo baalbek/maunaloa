@@ -35,6 +35,7 @@ import maunaloax.models.ChartWindowDressingModel
 import oahu.exceptions.NotImplementedException
 import oahu.financial.Stock
 import oahux.chart.MaunaloaChart
+import org.apache.log4j.Logger
 
 class MainFrameController2  implements MainFrameController {
     //region FXML
@@ -68,11 +69,11 @@ class MainFrameController2  implements MainFrameController {
             controller.setLocation(location)
             controller.setChart(chart)
             controller.setModel(facade)
-            //controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty())
+            controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty())
             myListeners.add(controller);
         }
 
-        initController candlesticksController, "Canclesticks", 2, candlesticksChart
+        initController candlesticksController, "Canclesticks", 1, candlesticksChart
         initController weeksController,"Weeks",2, weeklyChart
         initController obxCandlesticksController,"OBX Candlest.", 3, obxCandlesticksChart
         initController obxWeeksController, "OBX Weeks", 4, obxWeeklyChart
@@ -184,29 +185,30 @@ class MainFrameController2  implements MainFrameController {
                             }
                             break
                         case FETCH_FROM_DATASTORE:
-                            /*
-                            MainFrameControllerListener curListener = findListener(curloc)
-                            List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
-                                    currentTicker.getTicker(),
-                                    curloc,
-                                    null,
-                                    null)
-
-                            log.info(String.format("Fetching from mongodb lines for ticker: %s, location: %d, num lines: %d",
-                                    currentTicker.getTicker(),
-                                    curloc,
-                                    lines == null ? 0 : lines.size()));
-                            curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines))
-                            */
+                            MainFrameControllerListener curListener = myListeners.find { ChartCanvasController x -> x.location == curloc }
+                            if (curListener != null) {
+                                List<DBObject> lines = facade.getWindowDressingModel().fetchFibonacci(
+                                        currentTicker.getTicker(),
+                                        curloc,
+                                        null,
+                                        null)
+                                log.info(String.format("Fetching from mongodb lines for ticker: %s, location: %d, num lines: %d",
+                                        currentTicker.getTicker(),
+                                        curloc,
+                                        lines == null ? 0 : lines.size()));
+                                curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines))
+                            }
                             break
                         case COMMENTS:
-                            MaunaloaContext ctx2 = new MaunaloaContext()
-                            ctx2.setWindowDressingModel(getWindowDressingModel())
-                            ChartCanvasController ccc2 = (ChartCanvasController)findListener(curloc)
+                            ChartCanvasController ccc2 = myListeners.find { ChartCanvasController x -> x.location == curloc }
 
-                            ctx2.setLines(ccc2.getLines())
+                            if (ccc2 != null) {
+                                MaunaloaContext ctx2 = new MaunaloaContext()
+                                ctx2.setWindowDressingModel(windowDressingModel)
+                                ctx2.setLines(ccc2.getLines())
+                                FxUtils.loadApp(ctx2,"/ChartCommentsDialog.fxml","MongoDB Comments")
+                            }
 
-                            FxUtils.loadApp(ctx2,"/ChartCommentsDialog.fxml","MongoDB Comments")
                             break
                     }
                 }
@@ -266,7 +268,7 @@ class MainFrameController2  implements MainFrameController {
 
     void setTicker(Stock stock) {
         println stock.companyName
-        currentTicker = stock.ticker
+        currentTicker = stock
         switch (stock.tickerCategory) {
             case 1:
                 candlesticksController.ticker = stock
@@ -280,7 +282,7 @@ class MainFrameController2  implements MainFrameController {
         }
     }
 
-    String currentTicker
+    Stock currentTicker
     MaunaloaChart candlesticksChart
     MaunaloaChart weeklyChart
     MaunaloaChart obxCandlesticksChart
@@ -288,6 +290,7 @@ class MainFrameController2  implements MainFrameController {
     MaunaloaFacade facade
     ChartWindowDressingModel windowDressingModel
 
+    private Logger log = Logger.getLogger(getClass().getPackage().getName())
     private CheckMenuItem fib1272extCheckMenu
     private List<MainFrameControllerListener> myListeners = new ArrayList<>()
 }
