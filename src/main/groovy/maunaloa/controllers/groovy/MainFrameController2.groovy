@@ -239,30 +239,23 @@ class MainFrameController2  implements MainFrameController {
         fib1272extCheckMenu.setSelected(false)
         fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem())
 
-        MenuItem m1 = createFibonacciMenuItem("New Line", FibonacciEvent.NEW_LINE)
-        MenuItem m2 = createFibonacciMenuItem("Hide selected Lines", FibonacciEvent.HODE_SEL_LINES)
-        MenuItem m3 = createFibonacciMenuItem("Hide all Lines", FibonacciEvent.HODE_ALL_LINES)
-        MenuItem m4 = createFibonacciMenuItem("Delete selected Lines", FibonacciEvent.DELETE_SEL_LINES)
-        MenuItem m5 = createFibonacciMenuItem("Delete all Lines", FibonacciEvent.DELETE_ALL_LINES)
-        fibonacciMenu.getItems().addAll(m1,
+        fibonacciMenu.getItems().addAll(
+                createFibonacciMenuItem("New Line", FibonacciEvent.NEW_LINE),
                 new SeparatorMenuItem(),
-                m2,m3,
+                createFibonacciMenuItem("Hide selected Lines", FibonacciEvent.HODE_SEL_LINES),
+                createFibonacciMenuItem("Hide all Lines", FibonacciEvent.HODE_ALL_LINES),
                 new SeparatorMenuItem(),
-                m4,m5)
+                createFibonacciMenuItem("Delete selected Lines", FibonacciEvent.DELETE_SEL_LINES),
+                createFibonacciMenuItem("Delete all Lines", FibonacciEvent.DELETE_ALL_LINES))
 
-
-        MenuItem mongo1a = createMongoDBMenuItem("Save to datastore", SAVE_TO_DATASTORE)
-        MenuItem mongo2a = createMongoDBMenuItem("Fetch from datastore", FETCH_FROM_DATASTORE)
-        MenuItem mongo3a = createMongoDBMenuItem("Comments", COMMENTS)
         mongodbMenu.getItems().addAll(
-                mongo2a,
+                createMongoDBMenuItem("Fetch from datastore", FETCH_FROM_DATASTORE),
                 new SeparatorMenuItem(),
-                mongo3a,
+                createMongoDBMenuItem("Comments", COMMENTS),
                 new SeparatorMenuItem(),
-                mongo1a)
+                createMongoDBMenuItem("Save to datastore", SAVE_TO_DATASTORE))
 
-        MenuItem levels1 = createLevelsMenuItem("New Level")
-        levelsMenu.getItems().add(levels1)
+        levelsMenu.getItems().add(createLevelsMenuItem("New Level"))
     }
 
 
