@@ -104,7 +104,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                double x = getHRuler().snapTo(event.getX());
+                double x = getHruler().snapTo(event.getX());
                 double y = event.getY();
                 Line line = new Line(x, y, x, y);
                 myPane.getChildren().add(line);
@@ -130,11 +130,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                     if (log.isDebugEnabled()) {
                         log.debug(String.format("Has Fibonacci extension: %s", fibonacci1272extProperty().get()));
                     }
-                    line.setStartX(getHRuler().snapTo(line.getStartX()));
-                    line.setEndX(getHRuler().snapTo(line.getEndX()));
+                    line.setStartX(getHruler().snapTo(line.getStartX()));
+                    line.setEndX(getHruler().snapTo(line.getEndX()));
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
-                            getHRuler(),
-                            getVRuler(),
+                            getHruler(),
+                            getVruler(),
                             fibonacci1272extProperty().get());
                     updateMyPaneLines(fibLine,fibLines);
                 }
@@ -252,11 +252,6 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
-    public IDateBoundaryRuler getHruler() {
-        return (IDateBoundaryRuler)hruler;
-    }
-
-    @Override
     public List<CanvasGroup> getLines() {
         List<CanvasGroup> result = null;
 
@@ -281,22 +276,22 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
-    public IRuler getVRuler() {
+    public IRuler getVruler() {
         return vruler;
     }
 
     @Override
-    public void setVRuler(IRuler ruler) {
+    public void setVruler(IRuler ruler) {
         this.vruler = ruler;
     }
 
     @Override
-    public IRuler getHRuler() {
+    public IRuler getHruler() {
         return hruler;
     }
 
     @Override
-    public void setHRuler(IRuler ruler) {
+    public void setHruler(IRuler ruler) {
         this.hruler = ruler;
     }
 
@@ -305,8 +300,8 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         for (DBObject o : event.getLines()) {
             Line line = createLineFromDBObject(o);
             MongodbLine fibLine = new FibonacciDraggableLine(line,
-                    getHRuler(),
-                    getVRuler(),
+                    getHruler(),
+                    getVruler(),
                     fibonacci1272extProperty().get());
 
             fibLine.setMongodbId((ObjectId)o.get("_id"));
@@ -363,7 +358,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     @Override
     public void onNewLevelEvent(NewLevelEvent evt) {
         if (evt.getLocation() != this.location) return;
-        Level level = new Level(evt.getValue(),getVRuler());
+        Level level = new Level(evt.getValue(), getVruler());
         updateMyPaneLines(level, levels);
     }
     //endregion  Interface methods

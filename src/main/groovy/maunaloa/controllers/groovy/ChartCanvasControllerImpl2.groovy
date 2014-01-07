@@ -1,6 +1,12 @@
 package maunaloa.controllers.groovy
 
+import javafx.beans.InvalidationListener
 import javafx.beans.property.BooleanProperty
+import javafx.beans.property.SimpleBooleanProperty
+import javafx.fxml.FXML
+import javafx.scene.canvas.Canvas
+import javafx.scene.layout.Pane
+import javafx.scene.layout.VBox
 import maunaloa.controllers.ChartCanvasController
 import maunaloa.events.DerivativesCalculatedEvent
 import maunaloa.events.FibonacciEvent
@@ -18,44 +24,32 @@ import oahux.chart.MaunaloaChart
 
 class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
-    @Override
-    void setTicker(Stock ticker) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    @FXML private Canvas myCanvas
+    @FXML private VBox myContainer
+    @FXML private Pane myPane
 
-    @Override
-    void setChart(MaunaloaChart chart) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    //region Init
+    public void initialize() {
+        InvalidationListener listener = new InvalidationListener() {
+            @Override
+            public void invalidated(javafx.beans.Observable arg0) {
+                if (ticker == null) return
+                chart.draw(myCanvas)
+            }
+        }
 
-    @Override
-    void setModel(MaunaloaFacade model) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+        myCanvas.widthProperty().bind(myContainer.widthProperty())
+        myCanvas.heightProperty().bind(myContainer.heightProperty())
 
-    @Override
-    void setName(String name) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        myCanvas.widthProperty().addListener(listener)
+        myCanvas.heightProperty().addListener(listener)
     }
+    //endregion
 
-    @Override
-    void setLocation(int loc) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    int getLocation() {
-        return 0  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
+    private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true)
     @Override
     BooleanProperty fibonacci1272extProperty() {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    IDateBoundaryRuler getHruler() {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+        return _fibonacci1272extProperty
     }
 
     @Override
@@ -63,6 +57,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         return null  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    //region Events
     @Override
     void notify(DerivativesCalculatedEvent event) {
         //To change body of implemented methods use File | Settings | File Templates.
@@ -75,7 +70,18 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @Override
     void onFibonacciEvent(FibonacciEvent event) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if (event.getLocation() != this.location) return
+        switch  (event.getAction()) {
+            case FibonacciEvent.NEW_LINE:
+                activateFibonacci();
+                break;
+            case FibonacciEvent.DELETE_SEL_LINES:
+                deleteLines(fibLines,false);
+                break;
+            case FibonacciEvent.DELETE_ALL_LINES:
+                deleteLines(fibLines,true);
+                break;
+        }
     }
 
     @Override
@@ -92,34 +98,41 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     void onNewLevelEvent(NewLevelEvent evt) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+    //endregion
 
     @Override
     Collection<StockPrice> stockPrices(int period) {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+        return model.stockPrices(getTicker().getTicker(),-1);
     }
 
+    //region Property ticker
+    private Stock ticker
+    @Override
+    void setTicker(Stock ticker) {
+/*        clearLines(fibLines);
+        clearLines(riscLevels);*/
+        this.ticker = ticker;
+        chart.draw(myCanvas)
+/*        draw();
+        refreshLines(fibLines);
+        refreshLines(riscLevels);*/
+    }
     @Override
     Stock getTicker() {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
+        return ticker
     }
+    //endregion
 
-    @Override
-    IRuler getVRuler() {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
-    }
+    IRuler vruler
 
-    @Override
-    void setVRuler(IRuler ruler) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    IRuler hruler
 
-    @Override
-    IRuler getHRuler() {
-        return null  //To change body of implemented methods use File | Settings | File Templates.
-    }
+    int location
 
-    @Override
-    void setHRuler(IRuler ruler) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+    String name
+
+    MaunaloaFacade model
+
+    MaunaloaChart chart
+
 }
