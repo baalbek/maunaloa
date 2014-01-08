@@ -214,14 +214,13 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             double p2x = hruler.calcPix(p2.get("x"))
             double p2y = vruler.calcPix(p2.get("y"))
 
-
             Line line = new Line()
             line.setStartX(p1x)
             line.setStartY(p1y)
             line.setEndX(p2x)
             line.setEndY(p2y)
             return line
-        }
+        } as Line
         for (DBObject o : event.getLines()) {
             Line line = createLineFromDBObject(o)
             MongodbLine fibLine = new FibonacciDraggableLine(line,
@@ -240,7 +239,12 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         if (event.getLocation() != this.location) return
 
         List<CanvasGroup> lines = fibLines.get(getTicker())
-        for (CanvasGroup line : lines) {
+        lines.each  { CanvasGroup line ->
+            MongodbLine mongoLine = (MongodbLine)line
+            mongoLine.save(getTicker().getTicker(), model)
+        }
+        /*
+        lines.each  { CanvasGroup line ->
             if (line.getStatus() == CanvasGroup.SELECTED) {
                 MongodbLine mongoLine = (MongodbLine)line
                 DBObject p1 = mongoLine.coord(MongodbLine.P1)
@@ -278,6 +282,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
                 }
             }
         }
+        //*/
     }
 
     @Override
