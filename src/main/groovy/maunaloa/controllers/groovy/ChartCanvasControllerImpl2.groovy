@@ -204,7 +204,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @Override
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
-        Line createLineFromDBObject = { DBObject obj ->
+        def createLineFromDBObject = { DBObject obj ->
             DBObject p1 = (DBObject)obj.get("p1")
             DBObject p2 = (DBObject)obj.get("p2")
 
@@ -220,7 +220,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             line.setEndX(p2x)
             line.setEndY(p2y)
             return line
-        } as Line
+        }
         for (DBObject o : event.getLines()) {
             Line line = createLineFromDBObject(o)
             MongodbLine fibLine = new FibonacciDraggableLine(line,
@@ -231,6 +231,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             fibLine.setMongodbId((ObjectId)o.get("_id"))
 
             updateMyPaneLines((CanvasGroup) fibLine, fibLines)
+            println o
         }
     }
 

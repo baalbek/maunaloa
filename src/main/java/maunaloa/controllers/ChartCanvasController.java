@@ -24,7 +24,10 @@ public interface ChartCanvasController extends
                                         MainFrameControllerListener {
     void setTicker(Stock ticker);
     void setChart(MaunaloaChart chart);
+
+    MaunaloaFacade getModel();
     void setModel(MaunaloaFacade model);
+
     void setName(String name);
     void setLocation(long loc);
     long getLocation();

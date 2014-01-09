@@ -21,6 +21,7 @@ import maunaloa.events.*;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.views.*;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IDateBoundaryRuler;
@@ -223,6 +224,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     public void setChart(MaunaloaChart chart) {
         this.chart = chart;
         this.chart.setViewModel(this);
+    }
+
+    @Override
+    public MaunaloaFacade getModel() {
+        return model;
     }
 
     @Override

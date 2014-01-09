@@ -16,7 +16,6 @@ import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
-import oahux.controllers.MaunaloaChartViewModel;
 import org.bson.types.ObjectId;
 import org.joda.time.DateMidnight;
 
@@ -142,7 +141,7 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
 
     @Override
     public BasicDBObject coord(int pt) {
-        Circle anchor = null;
+        Circle anchor;
         if (pt == MongodbLine.P1) {
             anchor = startAnchor.getCenterX() < endAnchor.getCenterX() ? startAnchor : endAnchor;
         }
@@ -166,7 +165,7 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
     @Override
     public List<String> getComments() {
         if (comments == null) {
-            comments = new ArrayList<String>();
+            comments = new ArrayList<>();
         }
         return comments;
     }
@@ -175,7 +174,7 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
         DBObject p1 = coord(MongodbLine.P1);
         DBObject p2 = coord(MongodbLine.P2);
         MongoDBResult result = null;
-        MaunaloaFacade facade = null; //controller)getModel();
+        MaunaloaFacade facade = controller.getModel();
         String ticker = controller.getTicker().getTicker();
         switch (getStatus()) {
             case CanvasGroup.SELECTED:

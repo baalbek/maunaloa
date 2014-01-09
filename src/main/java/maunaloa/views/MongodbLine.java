@@ -27,6 +27,5 @@ public interface MongodbLine {
     long getLocation();
     void addComment(String comment);
     List<String> getComments();
-    //MongoDBResult save(String ticker, MaunaloaFacade facade);
     MongoDBResult save(ChartCanvasController controller);
 }
