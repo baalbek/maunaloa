@@ -241,7 +241,17 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         List<CanvasGroup> lines = fibLines.get(getTicker())
         lines.each  { CanvasGroup line ->
             MongodbLine mongoLine = (MongodbLine)line
-            mongoLine.save(getTicker().getTicker(), model)
+            String tix = getTicker().getTicker()
+            MongoDBResult result = mongoLine.save(tix, model)
+            if (result.isOk()) {
+                log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
+                        tix,
+                        result.getObjectId(),
+                        location))
+            }
+            else {
+                log.error(String.format("(Saving fibline %s, %d) %s",tix,location,result.getWriteResult().getError()))
+            }
         }
         /*
         lines.each  { CanvasGroup line ->
@@ -306,7 +316,6 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         clearLines(riscLevels)
         this.ticker = ticker
         chart.draw(myCanvas)
-        draw()
         refreshLines(fibLines)
         refreshLines(riscLevels)
     }
@@ -327,7 +336,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     IRuler hruler
 
-    int location
+    long location
 
     String name
 

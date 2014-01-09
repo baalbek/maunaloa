@@ -14,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import maunaloa.controllers.ChartCanvasController;
+import maunaloa.models.MaunaloaFacade;
+import maunaloax.domain.MongoDBResult;
 import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
@@ -201,6 +204,11 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
     @Override
     public List<String> getComments() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public MongoDBResult save(ChartCanvasController controller) {
+        return null;
     }
     //endregion interface MongodbLine
 }

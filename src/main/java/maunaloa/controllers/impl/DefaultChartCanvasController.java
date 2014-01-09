@@ -59,7 +59,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     final ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
     private IRuler vruler;
     private IRuler hruler;
-    private int location;
+    private long location;
 
 
     //region Initialization Methods
@@ -236,12 +236,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
-    public void setLocation(int loc) {
+    public void setLocation(long loc) {
         location = loc;
     }
 
     @Override
-    public int getLocation() {
+    public long getLocation() {
         return location;
     }
 

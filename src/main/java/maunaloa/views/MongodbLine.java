@@ -1,6 +1,7 @@
 package maunaloa.views;
 
 import com.mongodb.BasicDBObject;
+import maunaloa.controllers.ChartCanvasController;
 import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
 import org.bson.types.ObjectId;
@@ -26,5 +27,6 @@ public interface MongodbLine {
     long getLocation();
     void addComment(String comment);
     List<String> getComments();
-    MongoDBResult save(String ticker, MaunaloaFacade facade);
+    //MongoDBResult save(String ticker, MaunaloaFacade facade);
+    MongoDBResult save(ChartCanvasController controller);
 }

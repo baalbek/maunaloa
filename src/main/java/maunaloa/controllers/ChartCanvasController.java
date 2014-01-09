@@ -26,8 +26,8 @@ public interface ChartCanvasController extends
     void setChart(MaunaloaChart chart);
     void setModel(MaunaloaFacade model);
     void setName(String name);
-    void setLocation(int loc);
-    int getLocation();
+    void setLocation(long loc);
+    long getLocation();
     BooleanProperty fibonacci1272extProperty();
     List<CanvasGroup> getLines();
 }

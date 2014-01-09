@@ -1,6 +1,7 @@
 package maunaloa.views;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
@@ -10,8 +11,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import maunaloa.controllers.ChartCanvasController;
+import maunaloa.models.MaunaloaFacade;
+import maunaloax.domain.MongoDBResult;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
+import oahux.controllers.MaunaloaChartViewModel;
 import org.bson.types.ObjectId;
 import org.joda.time.DateMidnight;
 
@@ -164,6 +169,29 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
             comments = new ArrayList<String>();
         }
         return comments;
+    }
+    @Override
+    public MongoDBResult save(ChartCanvasController controller) {
+        DBObject p1 = coord(MongodbLine.P1);
+        DBObject p2 = coord(MongodbLine.P2);
+        MongoDBResult result = null;
+        MaunaloaFacade facade = null; //controller)getModel();
+        String ticker = controller.getTicker().getTicker();
+        switch (getStatus()) {
+            case CanvasGroup.SELECTED:
+                result = facade.getWindowDressingModel().saveFibonacci(ticker,location,p1,p2);
+                break;
+            case CanvasGroup.SAVED_TO_DB_SELECTED:
+                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(getMongodbId(),p1,p2));
+                break;
+            default:
+                result = null;
+                break;
+        }
+        if ((result != null) && (result.isOk() == true)) {
+            setStatus(CanvasGroup.SAVED_TO_DB);
+        }
+        return result;
     }
     //endregion Interface MongodbLine
 

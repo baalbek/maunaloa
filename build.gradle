@@ -3,7 +3,7 @@ apply plugin: 'groovy'
 
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
-version = '2.0'
+version = '2.1'
 
 //ext.springVersion = '4.0.0.RELEASE'
 ext.springVersion = '3.2.6.RELEASE'
