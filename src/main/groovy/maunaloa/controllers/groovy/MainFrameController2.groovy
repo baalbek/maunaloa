@@ -65,6 +65,7 @@ class MainFrameController2  implements MainFrameController {
         initMenus()
 
         def initController = { controller, name, location, chart ->
+            if (controller == null) return
             controller.setName(name)
             controller.setLocation(location)
             controller.setChart(chart)
@@ -149,12 +150,15 @@ class MainFrameController2  implements MainFrameController {
         });
 
 
-        optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty())
-        optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty())
-        optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty())
-        optionsController.setModel(facade)
-        optionsController.addDerivativesControllerListener(candlesticksController)
-        optionsController.addDerivativesControllerListener(weeksController)
+        if (optionsController != null) {
+            optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty())
+            optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty())
+            optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty())
+            optionsController.setModel(facade)
+            optionsController.addDerivativesControllerListener(candlesticksController)
+            optionsController.addDerivativesControllerListener(weeksController)
+        }
+
     }
 
     private void initMenus() {

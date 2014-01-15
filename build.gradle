@@ -3,7 +3,7 @@ apply plugin: 'groovy'
 
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
-version = '2.1'
+version = '2.2'
 
 //ext.springVersion = '4.0.0.RELEASE'
 ext.springVersion = '3.2.6.RELEASE'
@@ -34,7 +34,8 @@ dependencies {
     runtime 'org.clojure:clojure-contrib:1.2.0'
     runtime project(':waimea')
     runtime project(':maunaloaq')
-    compile files('../libs/javafx-2.2.jar')
+    //compile files('../libs/javafx-2.2.jar')
+    compile files('../libs/jfxrt.jar')
 }
 
 String clazzPath() {
