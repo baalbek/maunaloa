@@ -242,11 +242,10 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         List<CanvasGroup> lines = fibLines.get(getTicker())
         lines.each  { CanvasGroup line ->
             MongodbLine mongoLine = (MongodbLine)line
-            String tix = getTicker().getTicker()
-            MongoDBResult result = mongoLine.save(tix, model)
+            MongoDBResult result = mongoLine.save(this)
             if (result.isOk()) {
                 log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
-                        tix,
+                        getTicker().getTicker(),
                         result.getObjectId(),
                         location))
             }

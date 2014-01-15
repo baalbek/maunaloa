@@ -176,9 +176,10 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
         MongoDBResult result = null;
         MaunaloaFacade facade = controller.getModel();
         String ticker = controller.getTicker().getTicker();
+        long curLoc = controller.getLocation();
         switch (getStatus()) {
             case CanvasGroup.SELECTED:
-                result = facade.getWindowDressingModel().saveFibonacci(ticker,location,p1,p2);
+                result = facade.getWindowDressingModel().saveFibonacci(ticker,curLoc,p1,p2);
                 break;
             case CanvasGroup.SAVED_TO_DB_SELECTED:
                 result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(getMongodbId(),p1,p2));
