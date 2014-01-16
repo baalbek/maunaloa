@@ -57,31 +57,34 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
         myCanvas.widthProperty().addListener(listener)
         myCanvas.heightProperty().addListener(listener)
+
+        fibController = new FibonacciController(myPane: myPane)
+        levelsController = new LevelsController(myPane: myPane)
     }
     //endregion
 
     private void clearLines(Map<Stock,List<CanvasGroup>> linesMap) {
-        List<CanvasGroup> lines = linesMap.get(getTicker())
+/*        List<CanvasGroup> lines = linesMap.get(getTicker())
 
         if (lines == null) return
 
         for (CanvasGroup l : lines) {
             myPane.getChildren().remove(l.view())
-        }
+        }*/
     }
 
     private void refreshLines(Map<Stock,List<CanvasGroup>> linesMap) {
-        List<CanvasGroup> lines = linesMap.get(getTicker())
+/*        List<CanvasGroup> lines = linesMap.get(getTicker())
 
         if (lines == null) return
 
         for (CanvasGroup l : lines) {
             myPane.getChildren().add(l.view())
         }
-    }
+ */   }
 
     private void deleteLines(Map<Stock,List<CanvasGroup>> linesMap, boolean deleteAll) {
-        List<CanvasGroup> lines = linesMap.get(getTicker())
+/*        List<CanvasGroup> lines = linesMap.get(getTicker())
 
         if (lines == null) return
 
@@ -101,17 +104,17 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             lines.remove(l)
         }
 
-        //lines.clear();
+ */       //lines.clear();
     }
 
     private void updateMyPaneLines(CanvasGroup line, Map<Stock,List<CanvasGroup>> linesMap) {
-        List<CanvasGroup> lines = linesMap.get(getTicker())
+/*        List<CanvasGroup> lines = linesMap.get(getTicker())
         if (lines == null) {
             lines = new ArrayList<>()
             linesMap.put(getTicker(), lines)
         }
         lines.add(line)
-        myPane.getChildren().add(line.view())
+        myPane.getChildren().add(line.view())*/
     }
 
     @Override
@@ -122,7 +125,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     //region Events
     @Override
     void notify(DerivativesCalculatedEvent event) {
-        deleteLines(riscLevels,true)
+        /*deleteLines(riscLevels,true)
         List<CanvasGroup> lines = new ArrayList<>()
         for(DerivativeFx d : event.getCalculated()) {
             if (log.isDebugEnabled()) {
@@ -131,7 +134,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             lines.add(new RiscLines(d, vruler))
         }
         riscLevels.put(getTicker(), lines)
-        refreshLines(riscLevels)
+        refreshLines(riscLevels)*/
     }
 
     @Override
@@ -141,7 +144,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @Override
     void onFibonacciEvent(FibonacciEvent event) {
-        final ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
+       /* final ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
         def activateFibonacci = {
             myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -199,12 +202,12 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             case FibonacciEvent.DELETE_ALL_LINES:
                 deleteLines(fibLines,true)
                 break
-        }
+        }*/
     }
 
     @Override
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
-        def createLineFromDBObject = { DBObject obj ->
+        /*def createLineFromDBObject = { DBObject obj ->
             DBObject p1 = (DBObject)obj.get("p1")
             DBObject p2 = (DBObject)obj.get("p2")
 
@@ -232,12 +235,12 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
             updateMyPaneLines((CanvasGroup) fibLine, fibLines)
             println o
-        }
+        }*/
     }
 
     @Override
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
-        if (event.getLocation() != this.location) return
+        /*if (event.getLocation() != this.location) return
 
         List<CanvasGroup> lines = fibLines.get(getTicker())
         lines.each  { CanvasGroup line ->
@@ -252,54 +255,14 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             else {
                 log.error(String.format("(Saving fibline %s, %d) %s",tix,location,result.getWriteResult().getError()))
             }
-        }
-        /*
-        lines.each  { CanvasGroup line ->
-            if (line.getStatus() == CanvasGroup.SELECTED) {
-                MongodbLine mongoLine = (MongodbLine)line
-                DBObject p1 = mongoLine.coord(MongodbLine.P1)
-                DBObject p2 = mongoLine.coord(MongodbLine.P2)
-                String tix = getTicker().getTicker()
-                MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2)
-                if (result.isOk()) {
-                    log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
-                            tix,
-                            result.getObjectId(),
-                            location))
-                    mongoLine.setMongodbId(result.getObjectId())
-                    line.setStatus(CanvasGroup.SAVED_TO_DB)
-                }
-                else {
-                    log.error(String.format("(Saving fibline %s, %d) %s",tix,location,result.getWriteResult().getError()))
-                }
-            }
-            else if (line.getStatus() == CanvasGroup.SAVED_TO_DB_SELECTED) {
-                MongodbLine mongoLine = (MongodbLine)line
-                DBObject p1 = mongoLine.coord(MongodbLine.P1)
-                DBObject p2 = mongoLine.coord(MongodbLine.P2)
-                String tix = getTicker().getTicker()
-
-                WriteResult result = model.getWindowDressingModel().updateCoord(mongoLine.getMongodbId(),p1,p2)
-                if (result.getLastError().ok()) {
-                    log.info(String.format("(%s) Successfully updated fibline with _id: %s to location: %d",
-                            tix,
-                            mongoLine.getMongodbId(),
-                            location))
-                    line.setStatus(CanvasGroup.SAVED_TO_DB)
-                }
-                else {
-                    log.error(String.format("(Updating fibline %s, %d) %s",tix,location,result.getError()))
-                }
-            }
-        }
-        //*/
+        }*/
     }
 
     @Override
     void onNewLevelEvent(NewLevelEvent evt) {
-        if (evt.getLocation() != this.location) return
+        /*if (evt.getLocation() != this.location) return
         Level level = new Level(evt.getValue(), getVruler())
-        updateMyPaneLines(level, levels)
+        updateMyPaneLines(level, levels)*/
     }
     //endregion
 
@@ -312,12 +275,12 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     private Stock ticker
     @Override
     void setTicker(Stock ticker) {
-        clearLines(fibLines)
-        clearLines(riscLevels)
+        /*clearLines(fibLines)
+        clearLines(riscLevels)*/
         this.ticker = ticker
         chart.draw(myCanvas)
-        refreshLines(fibLines)
-        refreshLines(riscLevels)
+        /*refreshLines(fibLines)
+        refreshLines(riscLevels)*/
     }
     @Override
     Stock getTicker() {
@@ -351,7 +314,11 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     }
 
     private Logger log = Logger.getLogger(getClass().getPackage().getName())
+    /*
     private Map<Stock,List<CanvasGroup>> fibLines = new HashMap<>()
     private Map<Stock,List<CanvasGroup>> riscLevels = new HashMap<>()
     private Map<Stock,List<CanvasGroup>> levels = new HashMap<>()
+    */
+    private FibonacciController fibController = null
+    private LevelsController levelsController = null
 }
