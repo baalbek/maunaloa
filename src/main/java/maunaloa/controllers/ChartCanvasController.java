@@ -1,6 +1,7 @@
 package maunaloa.controllers;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.scene.layout.Pane;
 import maunaloa.events.DerivativesControllerListener;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.models.MaunaloaFacade;
@@ -33,4 +34,6 @@ public interface ChartCanvasController extends
     long getLocation();
     BooleanProperty fibonacci1272extProperty();
     List<CanvasGroup> getLines();
+
+    Pane getMyPane();
 }

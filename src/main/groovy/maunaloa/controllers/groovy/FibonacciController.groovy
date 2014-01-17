@@ -6,9 +6,12 @@ import javafx.event.EventHandler
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.Pane
 import javafx.scene.shape.Line
+import maunaloa.controllers.ChartCanvasController
 import maunaloa.events.FibonacciEvent
 import maunaloa.views.CanvasGroup
 import maunaloa.views.FibonacciDraggableLine
+import oahu.financial.Stock
+import oahux.chart.IRuler
 
 /**
  * Created by rcs on 1/15/14.
@@ -16,7 +19,8 @@ import maunaloa.views.FibonacciDraggableLine
 class FibonacciController {
 
     ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
-    Pane myPane
+
+    ChartCanvasController parent
 
     void notify(FibonacciEvent event) {
 
@@ -35,10 +39,11 @@ class FibonacciController {
     }
 
     private void activateFibonacci() {
-    /*    myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
+        Pane myPane = parent.getMyPane()
+        myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent evt) {
-                double x = getHruler().snapTo(evt.getX())
+                double x = parent.getHruler().snapTo(evt.getX())
                 double y = evt.getY()
                 Line line = new Line(x, y, x, y)
                 myPane.getChildren().add(line)
@@ -61,14 +66,14 @@ class FibonacciController {
                 Line line = lineA.get()
                 if (line != null) {
                     myPane.getChildren().remove(line)
-                    if (log.isDebugEnabled()) {
+/*                    if (log.isDebugEnabled()) {
                         log.debug(String.format("Has Fibonacci extension: %s", fibonacci1272extProperty().get()))
-                    }
+                    }*/
                     line.setStartX(getHruler().snapTo(line.getStartX()))
                     line.setEndX(getHruler().snapTo(line.getEndX()))
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
-                            getHruler(),
-                            getVruler(),
+                            parent.getHruler(),
+                            parent.getVruler(),
                             fibonacci1272extProperty().get())
                     updateMyPaneLines(fibLine,fibLines)
                 }
@@ -77,6 +82,12 @@ class FibonacciController {
                 myPane.setOnMouseDragged(null)
                 myPane.setOnMouseReleased(null)
             }
-        })*/
+        })
     }
+
+    private void updateMyPaneLines(CanvasGroup line, Map<Stock,List<CanvasGroup>> linesMap) {
+
+    }
+
+    private Map<Stock,List<CanvasGroup>> fibLines = new HashMap<>()
 }

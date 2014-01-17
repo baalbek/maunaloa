@@ -272,6 +272,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
     }
 
     @Override
+    public Pane getMyPane() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public Collection<StockPrice> stockPrices(int i) {
         return model.stockPrices(getTicker().getTicker(),-1);
     }

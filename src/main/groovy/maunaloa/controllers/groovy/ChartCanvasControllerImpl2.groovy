@@ -40,7 +40,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @FXML private Canvas myCanvas
     @FXML private VBox myContainer
-    @FXML private Pane myPane
+    @FXML Pane myPane
 
     //region Init
     public void initialize() {
@@ -58,8 +58,8 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         myCanvas.widthProperty().addListener(listener)
         myCanvas.heightProperty().addListener(listener)
 
-        fibController = new FibonacciController(myPane: myPane)
-        levelsController = new LevelsController(myPane: myPane)
+        fibController = new FibonacciController(parent: this)
+        //levelsController = new LevelsController(myPane: myPane)
     }
     //endregion
 

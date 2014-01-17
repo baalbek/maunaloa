@@ -23,6 +23,7 @@ public class RiscLines implements CanvasGroup {
     private Group group ;
     private final IBoundaryRuler ruler;
     private final DerivativeFx derivative;
+    private int status;
 
     public RiscLines(DerivativeFx derivative, IRuler ruler) {
         this.derivative = derivative;
@@ -68,11 +69,11 @@ public class RiscLines implements CanvasGroup {
 
     @Override
     public void setStatus(int status) {
-        throw new NotImplementedException();
+        this.status = status;
     }
 
     @Override
     public int getStatus() {
-        throw new NotImplementedException();
+        return status;
     }
 }
