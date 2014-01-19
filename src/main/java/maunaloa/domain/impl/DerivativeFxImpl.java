@@ -104,7 +104,7 @@ public class DerivativeFxImpl implements DerivativeFx {
     @Override
     public double getBreakeven() {
         if (_breakEven == null) {
-            _breakEven = calculator.breakEven(this);
+            _breakEven = calculator.stockPriceFor(getSell(),this);
         }
         return _breakEven;
     }
