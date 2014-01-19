@@ -308,7 +308,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     @Override
     public void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
-        for (DBObject o : event.getLines()) {
+        for (DBObject o : event.getFibonacci()) {
             Line line = createLineFromDBObject(o);
             MongodbLine fibLine = new FibonacciDraggableLine(line,
                     getHruler(),

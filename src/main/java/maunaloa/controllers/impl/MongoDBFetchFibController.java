@@ -81,7 +81,7 @@ public class MongoDBFetchFibController implements MongoDBController {
                         ctx.getLocation(),
                         d1,
                         d2));
-                ctx.getListener().onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
+                ctx.getListener().onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines,null));
                 FxUtils.closeView(actionEvent);
             }
         });

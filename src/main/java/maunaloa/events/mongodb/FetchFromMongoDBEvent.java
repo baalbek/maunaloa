@@ -11,13 +11,19 @@ import java.util.List;
  * Time: 13:06
  */
 public class FetchFromMongoDBEvent {
-    private final List<DBObject> lines;
+    private final List<DBObject> fibonacci;
+    private final List<DBObject> levels;
 
-    public FetchFromMongoDBEvent(List<DBObject> lines) {
-        this.lines = lines;
+    public FetchFromMongoDBEvent(List<DBObject> fibonacci,
+                                 List<DBObject> levels) {
+        this.fibonacci = fibonacci;
+        this.levels = levels;
     }
 
-    public List<DBObject> getLines() {
-        return lines;
+    public List<DBObject> getFibonacci() {
+        return fibonacci;
+    }
+    public List<DBObject> getLevels() {
+        return levels;
     }
 }

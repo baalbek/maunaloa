@@ -272,7 +272,7 @@ public class DefaultMainFrameController implements MainFrameController {
                                 currentTicker.getTicker(),
                                 curloc,
                                 lines == null ? 0 : lines.size()));
-                        curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines));
+                        curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines,null));
 
                         break;
                     case COMMENTS:
