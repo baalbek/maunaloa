@@ -120,7 +120,7 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
                     anchor.setCenterX(oldCenterX+deltaX);
                     anchor.setCenterY(oldCenterY+deltaY);
 
-                    double yVal = ((Double)ruler.calcValue(anchor.getCenterY())).doubleValue();
+                    double yVal = (Double) ruler.calcValue(anchor.getCenterY());
 
                     valueLabel.setText(String.format("%.1f", yVal));
                     valueLabel.setX(anchor.getCenterX()+valueLabelDeltaX);
