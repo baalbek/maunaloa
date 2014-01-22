@@ -25,8 +25,6 @@ class FibonacciController extends ChartCanvasControllerHelper {
 
     ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
 
-    //ChartCanvasController parent
-
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
 
     }
