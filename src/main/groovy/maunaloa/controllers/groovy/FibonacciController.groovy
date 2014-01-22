@@ -25,10 +25,13 @@ class FibonacciController extends ChartCanvasControllerHelper {
 
     ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
 
+    void deleteLines(boolean deleteAll) {
+        deleteLines(deleteAll, fibLines)
+    }
+
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
 
     }
-
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
         IRuler hruler = parent.getHruler()
@@ -65,10 +68,11 @@ class FibonacciController extends ChartCanvasControllerHelper {
 
     void activateFibonacci() {
         Pane myPane = parent.getMyPane()
+
         myPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent evt) {
-                double x = parent.getHruler().snapTo(evt.getX())
+                double x = getParent().getHruler().snapTo(evt.getX())
                 double y = evt.getY()
                 Line line = new Line(x, y, x, y)
                 myPane.getChildren().add(line)
@@ -91,11 +95,11 @@ class FibonacciController extends ChartCanvasControllerHelper {
                 Line line = lineA.get()
                 if (line != null) {
                     myPane.getChildren().remove(line)
-                    line.setStartX(parent.getHruler().snapTo(line.getStartX()))
-                    line.setEndX(parent.getHruler().snapTo(line.getEndX()))
+                    line.setStartX(getParent().getHruler().snapTo(line.getStartX()))
+                    line.setEndX(getParent().getHruler().snapTo(line.getEndX()))
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
-                            parent.getHruler(),
-                            parent.getVruler())
+                            getParent().getHruler(),
+                            getParent().getVruler())
                     updateMyPaneLines(fibLine,fibLines)
                 }
                 lineA.set(null)

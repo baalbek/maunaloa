@@ -18,6 +18,10 @@ import org.bson.types.ObjectId
 class LevelsController extends ChartCanvasControllerHelper {
     private Map<Stock,List<CanvasGroup>> levels = new HashMap<>()
 
+    void deleteLines(boolean deleteAll) {
+        deleteLines(deleteAll, levels)
+    }
+
     public void onNewLevelEvent(NewLevelEvent evt) {
         Level level = new Level(evt.getValue(), parent.getVruler())
         updateMyPaneLines(level, levels)

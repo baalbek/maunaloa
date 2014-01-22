@@ -45,8 +45,7 @@ class MainFrameController2  implements MainFrameController {
     @FXML private DerivativesController optionsController
     @FXML private ChoiceBox cbTickers
     @FXML private MenuBar myMenuBar
-    @FXML private Menu fibonacciMenu
-    @FXML private Menu levelsMenu
+    @FXML private Menu linesMenu
     @FXML private Menu mongodbMenu
     @FXML private ToggleGroup rgDerivatives
     @FXML private CheckBox cxLoadOptionsHtml
@@ -162,7 +161,7 @@ class MainFrameController2  implements MainFrameController {
 
     private void initMenus() {
 
-        def createFibonacciMenuItem = {String title,  final int fibEvent ->
+        def creteLinesMenuItem = {String title,  final int fibEvent ->
             MenuItem m = new MenuItem(title);
             m.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
@@ -238,18 +237,16 @@ class MainFrameController2  implements MainFrameController {
             return m
         }
 
-/*        fib1272extCheckMenu = new CheckMenuItem("1.272 extension")
-        fib1272extCheckMenu.setSelected(false)
-        fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem())*/
-
-        fibonacciMenu.getItems().addAll(
-                createFibonacciMenuItem("New Line", ChartCanvasLineEvent.NEW_LINE),
+        linesMenu.getItems().addAll(
+                createLevelsMenuItem("New Level"),
                 new SeparatorMenuItem(),
-                createFibonacciMenuItem("Hide selected Lines", ChartCanvasLineEvent.HODE_SEL_LINES),
-                createFibonacciMenuItem("Hide all Lines", ChartCanvasLineEvent.HODE_ALL_LINES),
+                creteLinesMenuItem("New Fibonacci Line", ChartCanvasLineEvent.NEW_LINE),
                 new SeparatorMenuItem(),
-                createFibonacciMenuItem("Delete selected Lines", ChartCanvasLineEvent.DELETE_SEL_LINES),
-                createFibonacciMenuItem("Delete all Lines", ChartCanvasLineEvent.DELETE_ALL_LINES))
+                creteLinesMenuItem("Hide selected Lines", ChartCanvasLineEvent.HODE_SEL_LINES),
+                creteLinesMenuItem("Hide all Lines", ChartCanvasLineEvent.HODE_ALL_LINES),
+                new SeparatorMenuItem(),
+                creteLinesMenuItem("Delete selected Lines", ChartCanvasLineEvent.DELETE_SEL_LINES),
+                creteLinesMenuItem("Delete all Lines", ChartCanvasLineEvent.DELETE_ALL_LINES))
 
         mongodbMenu.getItems().addAll(
                 createMongoDBMenuItem("Fetch from datastore", FETCH_FROM_DATASTORE),
@@ -258,7 +255,6 @@ class MainFrameController2  implements MainFrameController {
                 new SeparatorMenuItem(),
                 createMongoDBMenuItem("Save to datastore", SAVE_TO_DATASTORE))
 
-        levelsMenu.getItems().add(createLevelsMenuItem("New Level"))
     }
 
 
