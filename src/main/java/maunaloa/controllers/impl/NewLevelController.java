@@ -10,6 +10,7 @@ import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.NewLevelEvent;
 import maunaloa.utils.FxUtils;
+import oahu.exceptions.NotImplementedException;
 import org.apache.log4j.Logger;
 
 /**
@@ -39,17 +40,27 @@ public class NewLevelController implements MongoDBController {
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                NewLevelEvent evt =
-                    new NewLevelEvent(
-                        ctx.getLocation(),
-                        Double.parseDouble(txLevel.getText()));
-
-                for (MainFrameControllerListener listener : ctx.getListeners()) {
-                    listener.onNewLevelEvent(evt);
-                }
+                fireNewLevelEvent();
+            }
+        });
+        txLevel.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                fireNewLevelEvent();
                 FxUtils.closeView(actionEvent);
             }
         });
+    }
+
+    private void fireNewLevelEvent() {
+        NewLevelEvent evt =
+                new NewLevelEvent(
+                        ctx.getLocation(),
+                        Double.parseDouble(txLevel.getText()));
+
+        for (MainFrameControllerListener listener : ctx.getListeners()) {
+            listener.onNewLevelEvent(evt);
+        }
     }
 
     @Override
