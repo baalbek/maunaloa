@@ -55,14 +55,14 @@ task copydeps(type: Copy) {
     into 'dist' from configurations.runtime
 }
 
-task copyjar(type: Copy) {
+task cj(type: Copy) {
     into 'dist' from new File("$libsDir/maunaloa-${version}.jar")
 }
 
-task copyall(dependsOn: [copydeps,copyjar])
+task copyall(dependsOn: [copydeps,cj])
 
 task prncp {
     println clazzPath()
 }
 
-task quick(dependsOn: [build, copyjar])
+task quick(dependsOn: [build, cj])

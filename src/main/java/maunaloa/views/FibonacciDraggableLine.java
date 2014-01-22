@@ -107,16 +107,26 @@ public class FibonacciDraggableLine extends DraggableLine {
         double y = Math.min(startY, endY);
 
         Color curColor = getCurrentColor();
+
         group.getChildren().add(createFibLine(createBinding(0.5,false), curColor));
 
         group.getChildren().add(createFibLine(createBinding(PHI,false), curColor));
 
         group.getChildren().add(createFibLine(createBinding(PHI*PHI,false),curColor));
 
-        if (fib1272Extensions == true) {
+
+        if (startX < endX) {
             group.getChildren().add(createFibLine(createBinding(PHI_EXT,false),curColor));
+        }
+        else {
             group.getChildren().add(createFibLine(createBinding(PHI_EXT-1.0,true),curColor));
         }
+
+/*        if (fib1272Extensions == true) {
+            group.getChildren().add(createFibLine(createBinding(PHI_EXT,false),curColor));
+            group.getChildren().add(createFibLine(createBinding(PHI_EXT-1.0,true),curColor));
+        }*/
+
     }
     //endregion Constructors
 
