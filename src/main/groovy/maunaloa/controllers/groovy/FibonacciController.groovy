@@ -21,11 +21,11 @@ import org.bson.types.ObjectId
 /**
  * Created by rcs on 1/15/14.
  */
-class FibonacciController {
+class FibonacciController extends ChartCanvasControllerHelper {
 
     ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
 
-    ChartCanvasController parent
+    //ChartCanvasController parent
 
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
 
@@ -60,7 +60,7 @@ class FibonacciController {
 
             fibLine.setMongodbId((ObjectId)o.get("_id"))
 
-            updateMyPaneLines((CanvasGroup) fibLine)
+            updateMyPaneLines((CanvasGroup) fibLine, fibLines)
             println o
         }
     }
@@ -98,7 +98,7 @@ class FibonacciController {
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
                             parent.getHruler(),
                             parent.getVruler())
-                    updateMyPaneLines(fibLine)
+                    updateMyPaneLines(fibLine,fibLines)
                 }
                 lineA.set(null)
                 myPane.setOnMousePressed(null)
@@ -108,42 +108,5 @@ class FibonacciController {
         })
     }
 
-    void deleteLines(boolean deleteAll) {
-        List<CanvasGroup> lines = fibLines.get(parent.getTicker())
-
-        if (lines == null) {
-            log.warn(String.format("No fibonacci lines for %s",parent.getTicker()))
-            return
-        }
-
-        List<CanvasGroup> linesToBeRemoved = new ArrayList<>()
-
-        for (CanvasGroup l : lines) {
-            if (log.isDebugEnabled()) {
-                log.debug(String.format("Will attempt to delete line %s with status %d", l, l.getStatus()))
-            }
-            if (deleteAll || (l.getStatus() == CanvasGroup.SELECTED)) {
-                parent.getMyPane().getChildren().remove(l.view())
-                linesToBeRemoved.add(l)
-            }
-        }
-
-        for (CanvasGroup l : linesToBeRemoved) {
-            lines.remove(l)
-        }
-    }
-
-    private void updateMyPaneLines(CanvasGroup line) {
-        Stock curTicker = parent.getTicker()
-        List<CanvasGroup> lines = fibLines.get(curTicker)
-        if (lines == null) {
-            lines = new ArrayList<>()
-            fibLines.put(curTicker, lines)
-        }
-        lines.add(line)
-        parent.getMyPane().getChildren().add(line.view())
-    }
-
     private Map<Stock,List<CanvasGroup>> fibLines = new HashMap<>()
-    private Logger log = Logger.getLogger(getClass().getPackage().getName())
 }

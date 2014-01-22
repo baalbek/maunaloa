@@ -15,9 +15,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import maunaloa.controllers.ChartCanvasController;
-import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
-import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
@@ -89,11 +87,7 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
         line.startYProperty().bindBidirectional(anchor.centerYProperty());
         line.endYProperty().bindBidirectional(anchor.centerYProperty());
 
-        //label.xProperty().bindBidirectional(anchor.centerXProperty());
-        //label.yProperty().bindBidirectional(anchor.centerYProperty());
-
         anchor.radiusProperty().bind(anchorRadius);
-        //anchor.visibleProperty().bind(anchorsVisible);
         anchor.setStrokeWidth(0.5);
         anchor.setFill(Color.TRANSPARENT);
         anchor.setStroke(Color.BLACK);

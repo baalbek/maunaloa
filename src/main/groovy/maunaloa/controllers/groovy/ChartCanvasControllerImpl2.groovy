@@ -157,8 +157,8 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @Override
     void onNewLevelEvent(NewLevelEvent evt) {
-        /*if (evt.getLocation() != this.location) return
-        Level level = new Level(evt.getValue(), getVruler())
+        if (evt.getLocation() != this.location) return
+        /*Level level = new Level(evt.getValue(), getVruler())
         updateMyPaneLines(level, levels)*/
     }
     //endregion
