@@ -11,7 +11,6 @@ import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
-import javafx.scene.control.CheckMenuItem
 import javafx.scene.control.ChoiceBox
 import javafx.scene.control.Menu
 import javafx.scene.control.MenuBar
@@ -25,7 +24,7 @@ import maunaloa.controllers.ChartCanvasController
 import maunaloa.controllers.DerivativesController
 import maunaloa.controllers.MainFrameController
 import maunaloa.domain.MaunaloaContext
-import maunaloa.events.FibonacciEvent
+import maunaloa.events.ChartCanvasLineEvent
 import maunaloa.events.MainFrameControllerListener
 import maunaloa.events.mongodb.FetchFromMongoDBEvent
 import maunaloa.events.mongodb.SaveToMongoDBEvent
@@ -168,9 +167,9 @@ class MainFrameController2  implements MainFrameController {
             m.setOnAction(new EventHandler<ActionEvent>() {
                 @Override public void handle(ActionEvent e) {
                     int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                    FibonacciEvent evt = new FibonacciEvent(curloc,fibEvent);
+                    ChartCanvasLineEvent evt = new ChartCanvasLineEvent(curloc,fibEvent);
                     for (MainFrameControllerListener listener : myListeners) {
-                        listener.onFibonacciEvent(evt);
+                        listener.onChartCanvasLineEvent(evt);
                     }
                 }
             })
@@ -244,13 +243,13 @@ class MainFrameController2  implements MainFrameController {
         fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem())*/
 
         fibonacciMenu.getItems().addAll(
-                createFibonacciMenuItem("New Line", FibonacciEvent.NEW_LINE),
+                createFibonacciMenuItem("New Line", ChartCanvasLineEvent.NEW_LINE),
                 new SeparatorMenuItem(),
-                createFibonacciMenuItem("Hide selected Lines", FibonacciEvent.HODE_SEL_LINES),
-                createFibonacciMenuItem("Hide all Lines", FibonacciEvent.HODE_ALL_LINES),
+                createFibonacciMenuItem("Hide selected Lines", ChartCanvasLineEvent.HODE_SEL_LINES),
+                createFibonacciMenuItem("Hide all Lines", ChartCanvasLineEvent.HODE_ALL_LINES),
                 new SeparatorMenuItem(),
-                createFibonacciMenuItem("Delete selected Lines", FibonacciEvent.DELETE_SEL_LINES),
-                createFibonacciMenuItem("Delete all Lines", FibonacciEvent.DELETE_ALL_LINES))
+                createFibonacciMenuItem("Delete selected Lines", ChartCanvasLineEvent.DELETE_SEL_LINES),
+                createFibonacciMenuItem("Delete all Lines", ChartCanvasLineEvent.DELETE_ALL_LINES))
 
         mongodbMenu.getItems().addAll(
                 createMongoDBMenuItem("Fetch from datastore", FETCH_FROM_DATASTORE),

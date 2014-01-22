@@ -1,40 +1,24 @@
 package maunaloa.controllers.groovy
 
-import com.mongodb.DBObject
-import com.mongodb.WriteResult
 import javafx.beans.InvalidationListener
-import javafx.beans.property.BooleanProperty
-import javafx.beans.property.ObjectProperty
-import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleObjectProperty
-import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.canvas.Canvas
-import javafx.scene.input.MouseEvent
 import javafx.scene.layout.Pane
 import javafx.scene.layout.VBox
-import javafx.scene.shape.Line
 import maunaloa.controllers.ChartCanvasController
 import maunaloa.events.DerivativesCalculatedEvent
-import maunaloa.events.FibonacciEvent
+import maunaloa.events.ChartCanvasLineEvent
 import maunaloa.events.NewLevelEvent
 import maunaloa.events.StockPriceAssignedEvent
 import maunaloa.events.mongodb.FetchFromMongoDBEvent
 import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.models.MaunaloaFacade
 import maunaloa.views.CanvasGroup
-import maunaloa.views.FibonacciDraggableLine
-import maunaloa.views.Level
-import maunaloa.views.MongodbLine
-import maunaloa.views.RiscLines
-import maunaloax.domain.MongoDBResult
 import oahu.financial.Stock
 import oahu.financial.StockPrice
 import oahux.chart.IRuler
 import oahux.chart.MaunaloaChart
-import oahux.domain.DerivativeFx
 import org.apache.log4j.Logger
-import org.bson.types.ObjectId
 
 class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
@@ -110,17 +94,19 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     }
 
     @Override
-    void onFibonacciEvent(FibonacciEvent event) {
+    void onChartCanvasLineEvent(ChartCanvasLineEvent event) {
         if (event.getLocation() != this.location) return
         switch  (event.getAction()) {
-            case FibonacciEvent.NEW_LINE:
+            case ChartCanvasLineEvent.NEW_LINE:
                 fibController.activateFibonacci()
                 break
-            case FibonacciEvent.DELETE_SEL_LINES:
+            case ChartCanvasLineEvent.DELETE_SEL_LINES:
                 fibController.deleteLines(false)
+                levelsController.deleteLines(false)
                 break
-            case FibonacciEvent.DELETE_ALL_LINES:
+            case ChartCanvasLineEvent.DELETE_ALL_LINES:
                 fibController.deleteLines(true)
+                levelsController.deleteLines(true)
                 break
         }
     }

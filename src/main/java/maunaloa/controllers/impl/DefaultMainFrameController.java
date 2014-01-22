@@ -14,7 +14,7 @@ import maunaloa.controllers.ChartCanvasController;
 import maunaloa.controllers.DerivativesController;
 import maunaloa.controllers.MainFrameController;
 import maunaloa.domain.MaunaloaContext;
-import maunaloa.events.FibonacciEvent;
+import maunaloa.events.ChartCanvasLineEvent;
 import maunaloa.events.MainFrameControllerListener;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
@@ -200,11 +200,11 @@ public class DefaultMainFrameController implements MainFrameController {
         fib1272extCheckMenu.setSelected(false);
         fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem());
 
-        MenuItem m1 = createFibonacciMenuItem("New Line", FibonacciEvent.NEW_LINE);
-        MenuItem m2 = createFibonacciMenuItem("Hide selected Lines", FibonacciEvent.HODE_SEL_LINES);
-        MenuItem m3 = createFibonacciMenuItem("Hide all Lines", FibonacciEvent.HODE_ALL_LINES);
-        MenuItem m4 = createFibonacciMenuItem("Delete selected Lines", FibonacciEvent.DELETE_SEL_LINES);
-        MenuItem m5 = createFibonacciMenuItem("Delete all Lines", FibonacciEvent.DELETE_ALL_LINES);
+        MenuItem m1 = createFibonacciMenuItem("New Line", ChartCanvasLineEvent.NEW_LINE);
+        MenuItem m2 = createFibonacciMenuItem("Hide selected Lines", ChartCanvasLineEvent.HODE_SEL_LINES);
+        MenuItem m3 = createFibonacciMenuItem("Hide all Lines", ChartCanvasLineEvent.HODE_ALL_LINES);
+        MenuItem m4 = createFibonacciMenuItem("Delete selected Lines", ChartCanvasLineEvent.DELETE_SEL_LINES);
+        MenuItem m5 = createFibonacciMenuItem("Delete all Lines", ChartCanvasLineEvent.DELETE_ALL_LINES);
         fibonacciMenu.getItems().addAll(m1,
                                         new SeparatorMenuItem(),
                                         m2,m3,
@@ -308,9 +308,9 @@ public class DefaultMainFrameController implements MainFrameController {
         m.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 int curloc = myTabPane.getSelectionModel().getSelectedIndex();
-                FibonacciEvent evt = new FibonacciEvent(curloc,fibEvent);
+                ChartCanvasLineEvent evt = new ChartCanvasLineEvent(curloc,fibEvent);
                 for (MainFrameControllerListener listener : myListeners) {
-                    listener.onFibonacciEvent(evt);
+                    listener.onChartCanvasLineEvent(evt);
                 }
             }
         });

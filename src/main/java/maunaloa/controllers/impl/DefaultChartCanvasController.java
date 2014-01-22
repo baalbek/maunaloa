@@ -4,9 +4,7 @@ import com.mongodb.DBObject;
 import com.mongodb.WriteResult;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,10 +19,8 @@ import maunaloa.events.*;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.views.*;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
-import oahux.chart.IDateBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.domain.DerivativeFx;
@@ -415,17 +411,17 @@ public class DefaultChartCanvasController implements ChartCanvasController {
 
     //region  MainFrameControllerListener Interface methods
     @Override
-    public void onFibonacciEvent(FibonacciEvent event) {
+    public void onChartCanvasLineEvent(ChartCanvasLineEvent event) {
         if (event.getLocation() != this.location) return;
 
         switch  (event.getAction()) {
-            case FibonacciEvent.NEW_LINE:
+            case ChartCanvasLineEvent.NEW_LINE:
                 activateFibonacci();
                 break;
-            case FibonacciEvent.DELETE_SEL_LINES:
+            case ChartCanvasLineEvent.DELETE_SEL_LINES:
                 deleteLines(fibLines,false);
                 break;
-            case FibonacciEvent.DELETE_ALL_LINES:
+            case ChartCanvasLineEvent.DELETE_ALL_LINES:
                 deleteLines(fibLines,true);
                 break;
         }

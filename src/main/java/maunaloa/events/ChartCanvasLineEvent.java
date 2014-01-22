@@ -6,7 +6,7 @@ package maunaloa.events;
  * Date: 10/9/13
  * Time: 11:18 PM
  */
-public class FibonacciEvent {
+public class ChartCanvasLineEvent {
     public final static int NEW_LINE = 1;
     public final static int HODE_SEL_LINES = 2;
     public final static int HODE_ALL_LINES = 3;
@@ -16,7 +16,7 @@ public class FibonacciEvent {
     private final int location;
     private final int action;
 
-    public FibonacciEvent(int location, int action) {
+    public ChartCanvasLineEvent(int location, int action) {
         this.location = location;
         this.action = action;
     }

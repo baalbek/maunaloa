@@ -10,7 +10,7 @@ import maunaloa.events.mongodb.SaveToMongoDBEvent;
  * Time: 10:48 PM
  */
 public interface MainFrameControllerListener {
-    void onFibonacciEvent(FibonacciEvent event);
+    void onChartCanvasLineEvent(ChartCanvasLineEvent event);
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event);
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event);
     void onNewLevelEvent(NewLevelEvent evt);

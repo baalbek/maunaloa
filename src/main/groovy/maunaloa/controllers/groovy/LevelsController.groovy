@@ -6,7 +6,6 @@ import maunaloa.events.NewLevelEvent
 import maunaloa.events.mongodb.FetchFromMongoDBEvent
 import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.views.CanvasGroup
-import maunaloa.views.FibonacciDraggableLine
 import maunaloa.views.Level
 import maunaloa.views.MongodbLine
 import oahu.financial.Stock
@@ -20,7 +19,8 @@ class LevelsController extends ChartCanvasControllerHelper {
     private Map<Stock,List<CanvasGroup>> levels = new HashMap<>()
 
     public void onNewLevelEvent(NewLevelEvent evt) {
-
+        Level level = new Level(evt.getValue(), parent.getVruler())
+        updateMyPaneLines(level, levels)
     }
 
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
