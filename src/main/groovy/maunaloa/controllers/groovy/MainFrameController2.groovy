@@ -70,7 +70,7 @@ class MainFrameController2  implements MainFrameController {
             controller.setLocation(location)
             controller.setChart(chart)
             controller.setModel(facade)
-            controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty())
+            //controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty())
             myListeners.add(controller);
         }
 
@@ -239,9 +239,9 @@ class MainFrameController2  implements MainFrameController {
             return m
         }
 
-        fib1272extCheckMenu = new CheckMenuItem("1.272 extension")
+/*        fib1272extCheckMenu = new CheckMenuItem("1.272 extension")
         fib1272extCheckMenu.setSelected(false)
-        fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem())
+        fibonacciMenu.getItems().addAll(fib1272extCheckMenu, new SeparatorMenuItem())*/
 
         fibonacciMenu.getItems().addAll(
                 createFibonacciMenuItem("New Line", FibonacciEvent.NEW_LINE),
@@ -288,6 +288,6 @@ class MainFrameController2  implements MainFrameController {
     ChartWindowDressingModel windowDressingModel
 
     private Logger log = Logger.getLogger(getClass().getPackage().getName())
-    private CheckMenuItem fib1272extCheckMenu
+    //private CheckMenuItem fib1272extCheckMenu
     private List<MainFrameControllerListener> myListeners = new ArrayList<>()
 }

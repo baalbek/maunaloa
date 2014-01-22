@@ -32,7 +32,7 @@ public interface ChartCanvasController extends
     void setName(String name);
     void setLocation(long loc);
     long getLocation();
-    BooleanProperty fibonacci1272extProperty();
+    //BooleanProperty fibonacci1272extProperty();
     List<CanvasGroup> getLines();
 
     Pane getMyPane();

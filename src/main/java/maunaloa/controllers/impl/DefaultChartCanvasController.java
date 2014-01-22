@@ -128,15 +128,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 Line line = lineA.get();
                 if (line != null) {
                     myPane.getChildren().remove(line);
-                    if (log.isDebugEnabled()) {
-                        log.debug(String.format("Has Fibonacci extension: %s", fibonacci1272extProperty().get()));
-                    }
                     line.setStartX(getHruler().snapTo(line.getStartX()));
                     line.setEndX(getHruler().snapTo(line.getEndX()));
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
                             getHruler(),
-                            getVruler(),
-                            fibonacci1272extProperty().get());
+                            getVruler());
                     updateMyPaneLines(fibLine,fibLines);
                 }
                 lineA.set(null);
@@ -251,11 +247,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
         return location;
     }
 
-    private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true);
+/*  private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true);
     @Override
     public BooleanProperty fibonacci1272extProperty() {
         return _fibonacci1272extProperty;
-    }
+    }*/
 
     @Override
     public List<CanvasGroup> getLines() {
@@ -312,8 +308,7 @@ public class DefaultChartCanvasController implements ChartCanvasController {
             Line line = createLineFromDBObject(o);
             MongodbLine fibLine = new FibonacciDraggableLine(line,
                     getHruler(),
-                    getVruler(),
-                    fibonacci1272extProperty().get());
+                    getVruler());
 
             fibLine.setMongodbId((ObjectId)o.get("_id"));
 

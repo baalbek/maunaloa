@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.shape.Line
 import maunaloa.controllers.ChartCanvasController
 import maunaloa.events.mongodb.FetchFromMongoDBEvent
+import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.views.CanvasGroup
 import maunaloa.views.FibonacciDraggableLine
 import maunaloa.views.MongodbLine
@@ -26,6 +27,9 @@ class FibonacciController {
 
     ChartCanvasController parent
 
+    void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
+
+    }
 
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
@@ -52,8 +56,7 @@ class FibonacciController {
             Line line = createLineFromDBObject(o)
             MongodbLine fibLine = new FibonacciDraggableLine(line,
                     hruler,
-                    vruler,
-                    parent.fibonacci1272extProperty().get())
+                    vruler)
 
             fibLine.setMongodbId((ObjectId)o.get("_id"))
 
@@ -94,8 +97,7 @@ class FibonacciController {
                     line.setEndX(parent.getHruler().snapTo(line.getEndX()))
                     final CanvasGroup fibLine = new FibonacciDraggableLine(line,
                             parent.getHruler(),
-                            parent.getVruler(),
-                            parent.fibonacci1272extProperty().get())
+                            parent.getVruler())
                     updateMyPaneLines(fibLine)
                 }
                 lineA.set(null)

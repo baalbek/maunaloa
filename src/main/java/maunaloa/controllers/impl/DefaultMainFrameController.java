@@ -326,7 +326,7 @@ public class DefaultMainFrameController implements MainFrameController {
         controller.setLocation(location);
         controller.setChart(chart);
         controller.setModel(getFacade());
-        controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty());
+        //controller.fibonacci1272extProperty().bind(fib1272extCheckMenu.selectedProperty());
 
         myListeners.add(controller);
 

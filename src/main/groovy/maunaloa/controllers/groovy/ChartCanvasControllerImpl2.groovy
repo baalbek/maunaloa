@@ -133,6 +133,10 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @Override
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
+        if (event.getLocation() != this.location) return
+        fibController.onSaveToMongoDBEvent(event)
+        levelsController.onSaveToMongoDBEvent(event)
+
         /*if (event.getLocation() != this.location) return
 
         List<CanvasGroup> lines = fibLines.get(getTicker())
@@ -200,11 +204,11 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     private MaunaloaChart chart
 
-    private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true)
+/*    private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true)
     @Override
     BooleanProperty fibonacci1272extProperty() {
         return _fibonacci1272extProperty
-    }
+    }*/
 
     private Logger log = Logger.getLogger(getClass().getPackage().getName())
     private FibonacciController fibController = null

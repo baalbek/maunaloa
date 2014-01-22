@@ -81,8 +81,8 @@ public class FibonacciDraggableLine extends DraggableLine {
     */
 
 
-    public FibonacciDraggableLine(Line line, IRuler hruler, IRuler vruler, boolean fib1272Extensions) {
-        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, hruler, vruler, fib1272Extensions);
+    public FibonacciDraggableLine(Line line, IRuler hruler, IRuler vruler) {
+        this(line.getStartX(),line.getStartY(),line.getEndX(),line.getEndY(), 7, hruler, vruler);
     }
 
 
@@ -92,16 +92,15 @@ public class FibonacciDraggableLine extends DraggableLine {
                                   double endY,
                                   double anchorRadius,
                                   IRuler hruler,
-                                  IRuler vruler,
-                                  boolean fib1272Extensions) {
+                                  IRuler vruler) {
 
 
         super(startX, startY, endX, endY, anchorRadius,hruler,vruler);
 
-        init(startX, startY, endX, endY, fib1272Extensions);
+        init(startX, startY, endX, endY);
     }
 
-    private void init(double startX, double startY, double endX, double endY, boolean fib1272Extensions) {
+    private void init(double startX, double startY, double endX, double endY) {
         double x = Math.max(startX, endX);
 
         double y = Math.min(startY, endY);
