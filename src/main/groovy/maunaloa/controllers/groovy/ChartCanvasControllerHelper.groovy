@@ -52,4 +52,24 @@ class ChartCanvasControllerHelper {
             lines.remove(l)
         }
     }
+
+    protected void clearLines(Map<Stock,List<CanvasGroup>> myLines) {
+        List<CanvasGroup> lines = myLines.get(parent.getTicker())
+
+        if (lines == null) return
+
+        for (CanvasGroup l : lines) {
+            parent.getMyPane().getChildren().remove(l.view())
+        }
+    }
+
+    protected void refreshLines(Map<Stock,List<CanvasGroup>> myLines) {
+        List<CanvasGroup> lines = myLines.get(parent.getTicker())
+
+        if (lines == null) return
+
+        for (CanvasGroup l : lines) {
+            parent.getMyPane().getChildren().add(l.view())
+        }
+    }
 }

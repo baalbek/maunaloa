@@ -22,6 +22,14 @@ class LevelsController extends ChartCanvasControllerHelper {
         deleteLines(deleteAll, levels)
     }
 
+    void clearLines() {
+        clearLines(levels)
+    }
+
+    void refreshLines() {
+        refreshLines(levels)
+    }
+
     public void onNewLevelEvent(NewLevelEvent evt) {
         Level level = new Level(evt.getValue(), parent.getVruler())
         updateMyPaneLines(level, levels)

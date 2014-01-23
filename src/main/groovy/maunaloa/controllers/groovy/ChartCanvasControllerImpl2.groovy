@@ -157,13 +157,14 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     private Stock ticker
     @Override
     void setTicker(Stock ticker) {
-        /*clearLines(fibLines)
-        clearLines(riscLevels)*/
+        fibController.clearLines()
+        levelsController.clearLines()
         this.ticker = ticker
         chart.draw(myCanvas)
-        /*refreshLines(fibLines)
-        refreshLines(riscLevels)*/
+        fibController.refreshLines()
+        levelsController.refreshLines()
     }
+
     @Override
     Stock getTicker() {
         return ticker

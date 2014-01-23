@@ -25,6 +25,14 @@ class FibonacciController extends ChartCanvasControllerHelper {
 
     ObjectProperty<Line> lineA = new SimpleObjectProperty<>()
 
+    void clearLines() {
+        clearLines(fibLines)
+    }
+
+    void refreshLines() {
+        refreshLines(fibLines)
+    }
+
     void deleteLines(boolean deleteAll) {
         deleteLines(deleteAll, fibLines)
     }
@@ -32,6 +40,7 @@ class FibonacciController extends ChartCanvasControllerHelper {
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
 
     }
+
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
         IRuler hruler = parent.getHruler()
