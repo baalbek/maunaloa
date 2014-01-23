@@ -13,6 +13,7 @@ import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.views.CanvasGroup
 import maunaloa.views.FibonacciDraggableLine
 import maunaloa.views.MongodbLine
+import maunaloax.domain.MongoDBResult
 import oahu.financial.Stock
 import oahux.chart.IRuler
 import org.apache.log4j.Logger
@@ -38,7 +39,24 @@ class FibonacciController extends ChartCanvasControllerHelper {
     }
 
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
-
+        Stock stock = parent.getTicker()
+        List<CanvasGroup> lines = fibLines.get(stock)
+        lines.each  { CanvasGroup line ->
+            MongodbLine mongoLine = (MongodbLine)line
+            MongoDBResult result = mongoLine.save(parent)
+            if (result.isOk()) {
+                log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
+                        stock.getTicker(),
+                        result.getObjectId(),
+                        event.getLocation()))
+            }
+            else {
+                log.error(String.format("(Saving fibline %s, %d) %s",
+                        stock.getTicker(),
+                        event.getLocation(),
+                        result.getWriteResult().getError()))
+            }
+        }
     }
 
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {

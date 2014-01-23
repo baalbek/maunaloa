@@ -189,13 +189,6 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     MaunaloaFacade model
 
     private MaunaloaChart chart
-
-/*    private BooleanProperty _fibonacci1272extProperty= new SimpleBooleanProperty(true)
-    @Override
-    BooleanProperty fibonacci1272extProperty() {
-        return _fibonacci1272extProperty
-    }*/
-
     private Logger log = Logger.getLogger(getClass().getPackage().getName())
     private FibonacciController fibController = null
     private LevelsController levelsController = null
