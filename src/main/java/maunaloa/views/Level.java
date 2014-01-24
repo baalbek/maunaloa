@@ -1,6 +1,7 @@
 package maunaloa.views;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -15,11 +16,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import maunaloa.controllers.ChartCanvasController;
+import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
+import org.joda.time.DateMidnight;
 
 import java.util.List;
 
@@ -135,6 +138,14 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
         });
         return anchor;
     }
+
+    private BasicDBObject coord(Circle anchor) {
+        DateMidnight dx = (DateMidnight)ruler.calcValue(anchor.getCenterX());
+        double valY = (Double)ruler.calcValue(anchor.getCenterY());
+        BasicDBObject curCoord = new BasicDBObject("x", dx.toDate());
+        curCoord.append("y", valY);
+        return curCoord;
+    }
     //endregion Private Methods
 
     //region interface CanvasGroup
@@ -202,6 +213,26 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
 
     @Override
     public MongoDBResult save(ChartCanvasController controller) {
+/*        DBObject p0 = coord(anchor);
+        MongoDBResult result = null;
+        MaunaloaFacade facade = controller.getModel();
+        String ticker = controller.getTicker().getTicker();
+        long curLoc = controller.getLocation();
+        switch (getStatus()) {
+            case CanvasGroup.SELECTED:
+                result = facade.getWindowDressingModel().saveFibonacci(ticker,curLoc,p1,p2);
+                break;
+            case CanvasGroup.SAVED_TO_DB_SELECTED:
+                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(getMongodbId(),p1,p2));
+                break;
+            default:
+                result = null;
+                break;
+        }
+        if ((result != null) && (result.isOk() == true)) {
+            setStatus(CanvasGroup.SAVED_TO_DB);
+        }
+        return result;*/
         return null;
     }
     //endregion interface MongodbLine

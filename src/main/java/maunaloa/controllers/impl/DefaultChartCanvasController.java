@@ -19,6 +19,7 @@ import maunaloa.events.*;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.events.mongodb.SaveToMongoDBEvent;
 import maunaloa.views.*;
+import maunaloax.models.ChartWindowDressingModel;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -342,7 +343,11 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 DBObject p2 = mongoLine.coord(MongodbLine.P2);
                 String tix = getTicker().getTicker();
 
-                WriteResult result = model.getWindowDressingModel().updateCoord(mongoLine.getMongodbId(),p1,p2);
+                WriteResult result = model.getWindowDressingModel().updateCoord(
+                        ChartWindowDressingModel.MONGO_FIBONACCI,
+                        mongoLine.getMongodbId(),
+                        p1,
+                        p2);
                 if (result.getLastError().ok()) {
                     log.info(String.format("(%s) Successfully updated fibline with _id: %s to location: %d",
                             tix,

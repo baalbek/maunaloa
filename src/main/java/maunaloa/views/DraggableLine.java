@@ -14,6 +14,7 @@ import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
+import maunaloax.models.ChartWindowDressingModel;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
@@ -97,6 +98,7 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
     //public abstract void onMousePressed();
     protected abstract void onMouseReleased(MouseEvent event, Circle anchor);
     protected abstract void onMouseDragged(MouseEvent event);
+    protected abstract int getMongoCollectionId();
     //endregion
 
     //region Interface CanvasGroup
@@ -182,7 +184,11 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
                 result = facade.getWindowDressingModel().saveFibonacci(ticker,curLoc,p1,p2);
                 break;
             case CanvasGroup.SAVED_TO_DB_SELECTED:
-                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(getMongodbId(),p1,p2));
+                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(
+                        getMongoCollectionId(),
+                        getMongodbId(),
+                        p1,
+                        p2));
                 break;
             default:
                 result = null;

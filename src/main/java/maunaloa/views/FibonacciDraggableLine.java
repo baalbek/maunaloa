@@ -9,6 +9,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
+import maunaloax.models.ChartWindowDressingModel;
 import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
@@ -170,7 +171,10 @@ public class FibonacciDraggableLine extends DraggableLine {
         setAnchorsVisible(false);
     }
 
-
+    @Override
+    protected int getMongoCollectionId() {
+        return ChartWindowDressingModel.MONGO_FIBONACCI;
+    }
 
     //endregion
 
