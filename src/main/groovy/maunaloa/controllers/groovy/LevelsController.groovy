@@ -8,6 +8,7 @@ import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.views.CanvasGroup
 import maunaloa.views.Level
 import maunaloa.views.MongodbLine
+import maunaloax.domain.MongoDBResult
 import oahu.financial.Stock
 import oahux.chart.IRuler
 import org.bson.types.ObjectId
@@ -36,7 +37,24 @@ class LevelsController extends ChartCanvasControllerHelper {
     }
 
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
-
+        Stock stock = parent.getTicker()
+        List<CanvasGroup> lines = levels.get(stock)
+        lines.each  { CanvasGroup line ->
+            MongodbLine mongoLine = (MongodbLine)line
+            MongoDBResult result = mongoLine.save(parent)
+            if (result.isOk()) {
+                log.info(String.format("(%s) Successfully saved level with _id: %s to location: %d",
+                        stock.getTicker(),
+                        result.getObjectId(),
+                        event.getLocation()))
+            }
+            else {
+                log.error(String.format("(Saving level %s, %d) %s",
+                        stock.getTicker(),
+                        event.getLocation(),
+                        result.getWriteResult().getError()))
+            }
+        }
     }
 
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
