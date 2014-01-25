@@ -1,22 +1,15 @@
 package maunaloa.views;
 
-import com.mongodb.BasicDBObject;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import maunaloa.models.MaunaloaFacade;
-import maunaloax.domain.MongoDBResult;
 import maunaloax.models.ChartWindowDressingModel;
-import oahu.exceptions.NotImplementedException;
-import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

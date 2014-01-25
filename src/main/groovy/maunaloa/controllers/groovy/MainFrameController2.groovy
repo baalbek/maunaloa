@@ -189,7 +189,8 @@ class MainFrameController2  implements MainFrameController {
                         case FETCH_FROM_DATASTORE:
                             MainFrameControllerListener curListener = myListeners.find { ChartCanvasController x -> x.location == curloc }
                             if (curListener != null) {
-                                List<DBObject> lines = facade.getWindowDressingModel().fetchFibonacci(
+                                List<DBObject> lines = facade.getWindowDressingModel().fetch(
+                                        ChartWindowDressingModel.MONGO_FIBONACCI,
                                         currentTicker.getTicker(),
                                         curloc,
                                         null,

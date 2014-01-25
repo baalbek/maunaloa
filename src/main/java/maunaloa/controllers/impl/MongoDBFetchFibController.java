@@ -11,6 +11,7 @@ import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.utils.DateUtils;
 import maunaloa.utils.FxUtils;
+import maunaloax.models.ChartWindowDressingModel;
 import org.apache.log4j.Logger;
 
 import java.util.Date;
@@ -69,7 +70,8 @@ public class MongoDBFetchFibController implements MongoDBController {
                 }
 
 
-                List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetchFibonacci(
+                List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetch(
+                        ChartWindowDressingModel.MONGO_FIBONACCI,
                         ctx.getStock().getTicker(),
                         ctx.getLocation(),
                         d1,

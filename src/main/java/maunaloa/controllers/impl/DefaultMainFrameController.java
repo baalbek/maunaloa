@@ -262,7 +262,8 @@ public class DefaultMainFrameController implements MainFrameController {
                         break;
                     case FETCH_FROM_DATASTORE:
                         MainFrameControllerListener curListener = findListener(curloc);
-                        List<DBObject> lines = getFacade().getWindowDressingModel().fetchFibonacci(
+                        List<DBObject> lines = getFacade().getWindowDressingModel().fetch(
+                                ChartWindowDressingModel.MONGO_FIBONACCI,
                                 currentTicker.getTicker(),
                                 curloc,
                                 null, // dbr.getStartDate(),

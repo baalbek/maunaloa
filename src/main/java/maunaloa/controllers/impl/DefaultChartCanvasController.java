@@ -324,7 +324,12 @@ public class DefaultChartCanvasController implements ChartCanvasController {
                 DBObject p1 = mongoLine.coord(MongodbLine.P1);
                 DBObject p2 = mongoLine.coord(MongodbLine.P2);
                 String tix = getTicker().getTicker();
-                MongoDBResult result = model.getWindowDressingModel().saveFibonacci(tix,location,p1,p2);
+                MongoDBResult result = model.getWindowDressingModel().save(
+                        ChartWindowDressingModel.MONGO_FIBONACCI,
+                        tix,
+                        location,
+                        p1,
+                        p2);
                 if (result.isOk()) {
                     log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
                             tix,
