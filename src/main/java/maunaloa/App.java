@@ -28,26 +28,11 @@ public class App extends Application {
 
         Locale.setDefault(Locale.US);
 
-        /*
-        ApplicationContext factory = new ClassPathXmlApplicationContext("maunaloa.xml");
-
-        MaunaloaFacade facade = factory.getBean("facade",MaunaloaFacade.class);
-
-        java.util.Collection<oahu.financial.Derivative> calls = facade.calls("YAR");
-
-        for (oahu.financial.Derivative d : calls) {
-            System.out.println(String.format("%s",d.getTicker()));
-        }
-        //*/
-
         if (args.length > 0) {
             springXmlFileName = args[0];
         }
 
         System.out.println("Xml file: " + springXmlFileName);
-        /*
-        ApplicationContext factory = new ClassPathXmlApplicationContext(springXmlFileName);
-        */
         launch(args);
     }
 
@@ -71,6 +56,7 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(url);
 
         final MainFrameController controller = factory.getBean("mainframe-controller",MainFrameController.class);
+        controller.setSqldbUrl(getSqldbUrl());
 
         loader.setController(controller);
 
@@ -89,5 +75,17 @@ public class App extends Application {
             e.printStackTrace();
         }
         PropertyConfigurator.configure(props);
+    }
+    private static String getSqldbUrl() {
+        Properties props = new Properties();
+        try {
+            props.load(App.class.getClassLoader().getResourceAsStream("dbcp.properties"));
+            String dburl = props.getProperty("db.url");
+            String[] dburlSplit = dburl.split("://");
+            return dburlSplit[1];
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

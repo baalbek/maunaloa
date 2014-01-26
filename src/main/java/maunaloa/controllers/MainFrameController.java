@@ -7,4 +7,5 @@ package maunaloa.controllers;
  * Time: 2:51 PM
  */
 public interface MainFrameController {
+    void setSqldbUrl(String value);
 }

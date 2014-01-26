@@ -12,6 +12,7 @@ import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
 import javafx.scene.control.ChoiceBox
+import javafx.scene.control.Label
 import javafx.scene.control.Menu
 import javafx.scene.control.MenuBar
 import javafx.scene.control.MenuItem
@@ -35,6 +36,8 @@ import oahu.exceptions.NotImplementedException
 import oahu.financial.Stock
 import oahux.chart.MaunaloaChart
 import org.apache.log4j.Logger
+import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationEventPublisher
 
 class MainFrameController2  implements MainFrameController {
     //region FXML
@@ -51,14 +54,19 @@ class MainFrameController2  implements MainFrameController {
     @FXML private CheckBox cxLoadOptionsHtml
     @FXML private CheckBox cxLoadStockHtml
     @FXML private TabPane myTabPane
+    @FXML private CheckBox cxIsCloud
+    @FXML private Label lblLocalMongodbUrl
+    @FXML private Label lblSqlUrl
     //endregion
 
     final static int SAVE_TO_DATASTORE  = 1;
     final static int FETCH_FROM_DATASTORE  = 2;
     final static int COMMENTS  = 3;
 
+
     //region FXML Methods
     public void initialize() {
+        initContextInfo()
         initChoiceBoxTickers()
         initMenus()
 
@@ -85,7 +93,17 @@ class MainFrameController2  implements MainFrameController {
     }
     //endregion FXML Methods
 
-
+    private void initContextInfo() {
+        cxIsCloud.selected = windowDressingModel.cloud
+        lblLocalMongodbUrl.text = 'MongoDB:' + windowDressingModel.mongodbHost
+        lblSqlUrl.text = 'SQL: ' + sqldbUrl
+        cxIsCloud.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean aBoolean2) {
+                windowDressingModel.cloud = cxIsCloud.selected
+            }
+        });
+    }
     private void initChoiceBoxTickers() {
         final ObservableList<Stock> cbitems = FXCollections.observableArrayList(facade.getTickers())
         cbTickers.setConverter(new StringConverter<Stock>() {
@@ -281,9 +299,11 @@ class MainFrameController2  implements MainFrameController {
     MaunaloaChart obxCandlesticksChart
     MaunaloaChart obxWeeklyChart
     MaunaloaFacade facade
+    String sqldbUrl
     ChartWindowDressingModel windowDressingModel
 
     private Logger log = Logger.getLogger(getClass().getPackage().getName())
     //private CheckMenuItem fib1272extCheckMenu
     private List<MainFrameControllerListener> myListeners = new ArrayList<>()
+
 }
