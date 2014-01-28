@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.MongoDBResult;
+import maunaloax.models.ChartWindowDressingModel;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
@@ -197,11 +198,6 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
     }
 
     @Override
-    public long getLocation() {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public void addComment(String comment) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -213,17 +209,26 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
 
     @Override
     public MongoDBResult save(ChartCanvasController controller) {
-/*        DBObject p0 = coord(anchor);
+        DBObject p0 = coord(anchor);
         MongoDBResult result = null;
         MaunaloaFacade facade = controller.getModel();
         String ticker = controller.getTicker().getTicker();
         long curLoc = controller.getLocation();
         switch (getStatus()) {
             case CanvasGroup.SELECTED:
-                result = facade.getWindowDressingModel().saveFibonacci(ticker,curLoc,p1,p2);
+                result = facade.getWindowDressingModel().save(
+                        ChartWindowDressingModel.MONGO_LEVELS,
+                        ticker,
+                        curLoc,
+                        p0,
+                        null);
                 break;
             case CanvasGroup.SAVED_TO_DB_SELECTED:
-                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(getMongodbId(),p1,p2));
+                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(
+                        ChartWindowDressingModel.MONGO_LEVELS,
+                        getMongodbId(),
+                        p0,
+                        null));
                 break;
             default:
                 result = null;
@@ -232,8 +237,7 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
         if ((result != null) && (result.isOk() == true)) {
             setStatus(CanvasGroup.SAVED_TO_DB);
         }
-        return result;*/
-        return null;
+        return result;
     }
     //endregion interface MongodbLine
 }

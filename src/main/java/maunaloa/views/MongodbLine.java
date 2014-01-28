@@ -24,7 +24,6 @@ public interface MongodbLine {
     boolean getActive();
     void setActive(boolean value);
     BasicDBObject coord(int pt);
-    long getLocation();
     void addComment(String comment);
     List<String> getComments();
     MongoDBResult save(ChartCanvasController controller);

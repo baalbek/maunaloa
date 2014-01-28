@@ -154,13 +154,6 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
     }
 
     @Override
-    public long getLocation() {
-        return location;
-    }
-    public void setLocation(long value) {
-        location = value;
-    }
-    @Override
     public void addComment(String comment) {
         getComments().add(comment);
     }
