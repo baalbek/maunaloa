@@ -11,6 +11,7 @@ import maunaloa.domain.MaunaloaContext;
 import maunaloa.events.mongodb.FetchFromMongoDBEvent;
 import maunaloa.utils.DateUtils;
 import maunaloa.utils.FxUtils;
+import maunaloax.domain.ChartWindowsDressingContext;
 import maunaloax.models.ChartWindowDressingModel;
 import org.apache.log4j.Logger;
 
@@ -69,13 +70,19 @@ public class MongoDBFetchFibController implements MongoDBController {
                     d2 = DateUtils.parse(txToDate.getText());
                 }
 
-
-                List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetch(
+                ChartWindowsDressingContext param = new ChartWindowsDressingContext(
                         ChartWindowDressingModel.MONGO_FIBONACCI,
+                        ctx.getStock().getTicker(),
+                        ctx.getLocation());
+                param.setFromDate(d1);
+                param.setToDate(d2);
+                List<DBObject> lines = ctx.getFacade().getWindowDressingModel().fetch(param);
+
+/*                        ChartWindowDressingModel.MONGO_FIBONACCI,
                         ctx.getStock().getTicker(),
                         ctx.getLocation(),
                         d1,
-                        d2);
+                        d2);*/
 
                 log.info(String.format("Fetched %d lines for ticker %s, location: %d between %s and %s",
                         lines.size(),

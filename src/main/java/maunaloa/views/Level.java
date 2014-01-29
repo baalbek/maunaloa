@@ -17,6 +17,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.models.MaunaloaFacade;
+import maunaloax.domain.ChartWindowsDressingContext;
 import maunaloax.domain.MongoDBResult;
 import maunaloax.models.ChartWindowDressingModel;
 import oahux.chart.IBoundaryRuler;
@@ -216,12 +217,17 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
         long curLoc = controller.getLocation();
         switch (getStatus()) {
             case CanvasGroup.SELECTED:
-                result = facade.getWindowDressingModel().save(
+                ChartWindowsDressingContext param = new ChartWindowsDressingContext(
                         ChartWindowDressingModel.MONGO_LEVELS,
+                        ticker,
+                        curLoc);
+                param.setP1(p0);
+                result = facade.getWindowDressingModel().save(param);
+/*                        ChartWindowDressingModel.MONGO_LEVELS,
                         ticker,
                         curLoc,
                         p0,
-                        null);
+                        null);*/
                 break;
             case CanvasGroup.SAVED_TO_DB_SELECTED:
                 result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(

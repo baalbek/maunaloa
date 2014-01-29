@@ -13,6 +13,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.models.MaunaloaFacade;
+import maunaloax.domain.ChartWindowsDressingContext;
 import maunaloax.domain.MongoDBResult;
 import maunaloax.models.ChartWindowDressingModel;
 import oahux.chart.IBoundaryRuler;
@@ -174,12 +175,18 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
         long curLoc = controller.getLocation();
         switch (getStatus()) {
             case CanvasGroup.SELECTED:
-                result = facade.getWindowDressingModel().save(
+                ChartWindowsDressingContext param = new ChartWindowsDressingContext(
                         ChartWindowDressingModel.MONGO_FIBONACCI,
+                        ticker,
+                        curLoc);
+                param.setP1(p1);
+                param.setP2(p2);
+                result = facade.getWindowDressingModel().save(param);
+/*                        ChartWindowDressingModel.MONGO_FIBONACCI,
                         ticker,
                         curLoc,
                         p1,
-                        p2);
+                        p2);*/
                 break;
             case CanvasGroup.SAVED_TO_DB_SELECTED:
                 result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(

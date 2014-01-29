@@ -31,6 +31,7 @@ import maunaloa.events.mongodb.FetchFromMongoDBEvent
 import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.models.MaunaloaFacade
 import maunaloa.utils.FxUtils
+import maunaloax.domain.ChartWindowsDressingContext
 import maunaloax.models.ChartWindowDressingModel
 import oahu.exceptions.NotImplementedException
 import oahu.financial.Stock
@@ -208,11 +209,15 @@ class MainFrameController2  implements MainFrameController {
                             MainFrameControllerListener curListener = myListeners.find { ChartCanvasController x -> x.location == curloc }
                             if (curListener != null) {
                                 List<DBObject> lines = facade.getWindowDressingModel().fetch(
-                                        ChartWindowDressingModel.MONGO_FIBONACCI,
+                                        new ChartWindowsDressingContext(
+                                                collection: ChartWindowDressingModel.MONGO_FIBONACCI,
+                                                ticker: currentTicker.getTicker(),
+                                                loc: curloc))
+/*                                        ChartWindowDressingModel.MONGO_FIBONACCI,
                                         currentTicker.getTicker(),
                                         curloc,
                                         null,
-                                        null)
+                                        null)*/
                                 log.info(String.format("Fetching from mongodb lines for ticker: %s, location: %d, num lines: %d",
                                         currentTicker.getTicker(),
                                         curloc,
