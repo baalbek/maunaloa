@@ -208,21 +208,16 @@ class MainFrameController2  implements MainFrameController {
                         case FETCH_FROM_DATASTORE:
                             MainFrameControllerListener curListener = myListeners.find { ChartCanvasController x -> x.location == curloc }
                             if (curListener != null) {
-                                List<DBObject> lines = facade.getWindowDressingModel().fetch(
+                                List<DBObject> fibLines = facade.getWindowDressingModel().fetch(
                                         new ChartWindowsDressingContext(
-                                                collection: ChartWindowDressingModel.MONGO_FIBONACCI,
+                                                collection: ChartWindowDressingModel.MONGO_ALL,
                                                 ticker: currentTicker.getTicker(),
                                                 loc: curloc))
-/*                                        ChartWindowDressingModel.MONGO_FIBONACCI,
+                                log.info(String.format("Fetching Fibonacci lines from mongodb for ticker: %s, location: %d, num lines: %d",
                                         currentTicker.getTicker(),
                                         curloc,
-                                        null,
-                                        null)*/
-                                log.info(String.format("Fetching from mongodb lines for ticker: %s, location: %d, num lines: %d",
-                                        currentTicker.getTicker(),
-                                        curloc,
-                                        lines == null ? 0 : lines.size()));
-                                curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(lines,null))
+                                        fibLines == null ? 0 : fibLines.size()));
+                                curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(fibLines,null))
                             }
                             break
                         case COMMENTS:
