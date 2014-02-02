@@ -65,4 +65,4 @@ task prncp {
     println clazzPath()
 }
 
-task quick(dependsOn: [build, cj])
+task quick(dependsOn: [build, cj, copydeps])

@@ -210,14 +210,23 @@ class MainFrameController2  implements MainFrameController {
                             if (curListener != null) {
                                 List<DBObject> fibLines = facade.getWindowDressingModel().fetch(
                                         new ChartWindowsDressingContext(
-                                                collection: ChartWindowDressingModel.MONGO_ALL,
+                                                collection: ChartWindowDressingModel.MONGO_FIBONACCI,
                                                 ticker: currentTicker.getTicker(),
                                                 loc: curloc))
                                 log.info(String.format("Fetching Fibonacci lines from mongodb for ticker: %s, location: %d, num lines: %d",
                                         currentTicker.getTicker(),
                                         curloc,
-                                        fibLines == null ? 0 : fibLines.size()));
-                                curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(fibLines,null))
+                                        fibLines == null ? 0 : fibLines.size()))
+                                List<DBObject> levelLines = facade.getWindowDressingModel().fetch(
+                                        new ChartWindowsDressingContext(
+                                                collection: ChartWindowDressingModel.MONGO_LEVELS,
+                                                ticker: currentTicker.getTicker(),
+                                                loc: curloc))
+                                log.info(String.format("Fetching Level lines from mongodb for ticker: %s, location: %d, num lines: %d",
+                                        currentTicker.getTicker(),
+                                        curloc,
+                                        levelLines == null ? 0 : levelLines.size()))
+                                curListener.onFetchFromMongoDBEvent(new FetchFromMongoDBEvent(fibLines,levelLines))
                             }
                             break
                         case COMMENTS:
