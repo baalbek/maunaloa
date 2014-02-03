@@ -223,18 +223,6 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
                         curLoc);
                 param.setP1(p0);
                 result = facade.getWindowDressingModel().save(param);
-/*                        ChartWindowDressingModel.MONGO_LEVELS,
-                        ticker,
-                        curLoc,
-                        p0,
-                        null);*/
-                break;
-            case CanvasGroup.SAVED_TO_DB_SELECTED:
-                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(
-                        ChartWindowDressingModel.MONGO_LEVELS,
-                        getMongodbId(),
-                        p0,
-                        null));
                 break;
             default:
                 result = null;

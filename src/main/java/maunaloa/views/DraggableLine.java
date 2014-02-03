@@ -189,11 +189,12 @@ public abstract class DraggableLine extends AbstractSelectable implements Canvas
                         p2);*/
                 break;
             case CanvasGroup.SAVED_TO_DB_SELECTED:
-                result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(
+                result = null;
+                /*result = new MongoDBResult(facade.getWindowDressingModel().updateCoord(
                         getMongoCollectionId(),
                         getMongodbId(),
                         p1,
-                        p2));
+                        p2));*/
                 break;
             default:
                 result = null;

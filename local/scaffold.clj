@@ -22,11 +22,15 @@
 
 (defn model[] (.getBean (gfm) "windowdressingmodel"))
 
-(defn xf [tix loc]
-  (ChartWindowsDressingContext. ChartWindowDressingModel/MONGO_FIBONACCI tix loc))
+(defn xf [tix loc val]
+  (let [ctx (ChartWindowsDressingContext. ChartWindowDressingModel/MONGO_FIBONACCI tix loc)]
+    (.setValue ctx val)
+    ctx))
 
-(defn xl [tix loc]
-  (ChartWindowsDressingContext. ChartWindowDressingModel/MONGO_LEVELS tix loc))
+(defn xl [tix loc val]
+  (let [ctx (ChartWindowsDressingContext. ChartWindowDressingModel/MONGO_LEVELS tix loc)]
+    (.setValue ctx val)
+    ctx))
 
 (defn xa [tix loc]
   (ChartWindowsDressingContext. ChartWindowDressingModel/MONGO_ALL tix loc))
@@ -37,12 +41,12 @@
 
 (def leff (partial lvl/fetch c))
 
+(def fiss (partial fib/save c))
+
+(def less (partial lvl/save c))
+
 (defn bitx [collection]
   (bit-and ChartWindowDressingModel/MONGO_FIBONACCI collection))
 
-(def mfib ChartWindowDressingModel/MONGO_FIBONACCI)
 
-(def mlvl ChartWindowDressingModel/MONGO_LEVELS)
-
-(def mall ChartWindowDressingModel/MONGO_ALL)
 
