@@ -141,13 +141,6 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
         return anchor;
     }
 
-    private BasicDBObject coord(Circle anchor) {
-        DateMidnight dx = (DateMidnight)ruler.calcValue(anchor.getCenterX());
-        double valY = (Double)ruler.calcValue(anchor.getCenterY());
-        BasicDBObject curCoord = new BasicDBObject("x", dx.toDate());
-        curCoord.append("y", valY);
-        return curCoord;
-    }
     //endregion Private Methods
 
     //region interface CanvasGroup
@@ -210,7 +203,6 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
 
     @Override
     public MongoDBResult save(ChartCanvasController controller) {
-        DBObject p0 = coord(anchor);
         MongoDBResult result = null;
         MaunaloaFacade facade = controller.getModel();
         String ticker = controller.getTicker().getTicker();
@@ -221,7 +213,7 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
                         ChartWindowDressingModel.MONGO_LEVELS,
                         ticker,
                         curLoc);
-                param.setP1(p0);
+                param.setValue((Double)ruler.calcValue(anchor.getCenterY()));
                 result = facade.getWindowDressingModel().save(param);
                 break;
             default:
