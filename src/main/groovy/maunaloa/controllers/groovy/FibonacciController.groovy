@@ -38,26 +38,6 @@ class FibonacciController extends ChartCanvasControllerHelper {
         deleteLines(deleteAll, fibLines)
     }
 
-    void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
-        Stock stock = parent.getTicker()
-        List<CanvasGroup> lines = fibLines.get(stock)
-        lines.each  { CanvasGroup line ->
-            MongodbLine mongoLine = (MongodbLine)line
-            MongoDBResult result = mongoLine.save(parent)
-            if (result.isOk()) {
-                log.info(String.format("(%s) Successfully saved fibline with _id: %s to location: %d",
-                        stock.getTicker(),
-                        result.getObjectId(),
-                        event.getLocation()))
-            }
-            else {
-                log.error(String.format("(Saving fibline %s, %d) %s",
-                        stock.getTicker(),
-                        event.getLocation(),
-                        result.getWriteResult().getError()))
-            }
-        }
-    }
 
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
@@ -135,6 +115,10 @@ class FibonacciController extends ChartCanvasControllerHelper {
                 myPane.setOnMouseReleased(null)
             }
         })
+    }
+
+    void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
+        onSaveToMongoDBEvent(event, fibLines)
     }
 
     private Map<Stock,List<CanvasGroup>> fibLines = new HashMap<>()

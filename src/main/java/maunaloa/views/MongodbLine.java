@@ -27,4 +27,5 @@ public interface MongodbLine {
     void addComment(String comment);
     List<String> getComments();
     MongoDBResult save(ChartCanvasController controller);
+    String whoAmI();
 }

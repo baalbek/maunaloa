@@ -20,6 +20,7 @@ import maunaloa.models.MaunaloaFacade;
 import maunaloax.domain.ChartWindowsDressingContext;
 import maunaloax.domain.MongoDBResult;
 import maunaloax.models.ChartWindowDressingModel;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
@@ -213,7 +214,7 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
                         ChartWindowDressingModel.MONGO_LEVELS,
                         ticker,
                         curLoc);
-                param.setValue((Double)ruler.calcValue(anchor.getCenterY()));
+                param.setValue((Double) ruler.calcValue(anchor.getCenterY()));
                 result = facade.getWindowDressingModel().save(param);
                 break;
             default:
@@ -224,6 +225,11 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
             setStatus(CanvasGroup.SAVED_TO_DB);
         }
         return result;
+    }
+
+    @Override
+    public String whoAmI() {
+        return "Level";
     }
     //endregion interface MongodbLine
 }

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import maunaloax.models.ChartWindowDressingModel;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 
 import java.util.ArrayList;
@@ -167,6 +168,11 @@ public class FibonacciDraggableLine extends DraggableLine {
     @Override
     protected int getMongoCollectionId() {
         return ChartWindowDressingModel.MONGO_FIBONACCI;
+    }
+
+    @Override
+    public String whoAmI() {
+        return "Fibonacci Line";
     }
 
     //endregion

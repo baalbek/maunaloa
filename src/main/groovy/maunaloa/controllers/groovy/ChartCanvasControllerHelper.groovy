@@ -1,7 +1,10 @@
 package maunaloa.controllers.groovy
 
 import maunaloa.controllers.ChartCanvasController
+import maunaloa.events.mongodb.SaveToMongoDBEvent
 import maunaloa.views.CanvasGroup
+import maunaloa.views.MongodbLine
+import maunaloax.domain.MongoDBResult
 import oahu.financial.Stock
 import org.apache.log4j.Logger
 
@@ -70,6 +73,31 @@ class ChartCanvasControllerHelper {
 
         for (CanvasGroup l : lines) {
             parent.getMyPane().getChildren().add(l.view())
+        }
+    }
+
+    protected void onSaveToMongoDBEvent(SaveToMongoDBEvent event, Map<Stock,List<CanvasGroup>> myLines) {
+        Stock stock = parent.getTicker()
+        List<CanvasGroup> lines = myLines.get(stock)
+        lines.each  { CanvasGroup line ->
+            if (line.status != CanvasGroup.NORMAL) {
+                MongodbLine mongoLine = (MongodbLine)line
+                MongoDBResult result = mongoLine.save(parent)
+                if (result.isOk()) {
+                    log.info(String.format("(%s) Successfully saved %s with _id: %s to location: %d",
+                            stock.getTicker(),
+                            mongoLine.whoAmI(),
+                            result.getObjectId(),
+                            event.getLocation()))
+                }
+                else {
+                    log.error(String.format("(Saving %s %s, %d) %s",
+                            mongoLine.whoAmI(),
+                            stock.getTicker(),
+                            event.getLocation(),
+                            result.getWriteResult().getError()))
+                }
+            }
         }
     }
 }

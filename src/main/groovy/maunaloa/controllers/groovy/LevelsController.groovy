@@ -36,40 +36,24 @@ class LevelsController extends ChartCanvasControllerHelper {
         updateMyPaneLines(level, levels)
     }
 
-    void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
-        Stock stock = parent.getTicker()
-        List<CanvasGroup> lines = levels.get(stock)
-        lines.each  { CanvasGroup line ->
-            MongodbLine mongoLine = (MongodbLine)line
-            MongoDBResult result = mongoLine.save(parent)
-            if (result.isOk()) {
-                log.info(String.format("(%s) Successfully saved level with _id: %s to location: %d",
-                        stock.getTicker(),
-                        result.getObjectId(),
-                        event.getLocation()))
-            }
-            else {
-                log.error(String.format("(Saving level %s, %d) %s",
-                        stock.getTicker(),
-                        event.getLocation(),
-                        result.getWriteResult().getError()))
-            }
-        }
-    }
-
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
-        IRuler hruler = parent.getHruler()
-        def createLineFromDBObject = { DBObject obj ->
-            return null
+        def createLevelFromDBObject = { DBObject obj ->
+            double y = vruler.calcPix(obj.get("value"))
+            log.info(String.format("Fetched Level from MongoDb with value: %.2f", y))
+            new Level(y, vruler)
         }
         for (DBObject o : event.getLevels()) {
-            Line line = createLineFromDBObject(o)
-            MongodbLine level = null
+
+            Level level = createLevelFromDBObject(o)
 
             level.setMongodbId((ObjectId)o.get("_id"))
 
-            updateMyPaneLines((CanvasGroup) level, levels)
+            updateMyPaneLines(level, levels)
         }
+    }
+
+    void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
+        onSaveToMongoDBEvent(event, levels)
     }
 }
