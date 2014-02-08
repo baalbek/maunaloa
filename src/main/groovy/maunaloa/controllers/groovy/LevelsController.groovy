@@ -39,7 +39,8 @@ class LevelsController extends ChartCanvasControllerHelper {
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
         def createLevelFromDBObject = { DBObject obj ->
-            double y = vruler.calcPix(obj.get("value"))
+            //double y = vruler.calcPix(obj.get("value"))
+            double y = obj.get("value")
             log.info(String.format("Fetched Level from MongoDb with value: %.2f", y))
             new Level(y, vruler)
         }
