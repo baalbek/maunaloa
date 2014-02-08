@@ -38,6 +38,9 @@ class FibonacciController extends ChartCanvasControllerHelper {
         deleteLines(deleteAll, fibLines)
     }
 
+    List<CanvasGroup> getLines() {
+        return null
+    }
 
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {
         IRuler vruler = parent.getVruler()
@@ -120,6 +123,7 @@ class FibonacciController extends ChartCanvasControllerHelper {
     void onSaveToMongoDBEvent(SaveToMongoDBEvent event) {
         onSaveToMongoDBEvent(event, fibLines)
     }
+
 
     private Map<Stock,List<CanvasGroup>> fibLines = new HashMap<>()
 }

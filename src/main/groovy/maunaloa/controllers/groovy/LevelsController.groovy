@@ -31,6 +31,10 @@ class LevelsController extends ChartCanvasControllerHelper {
         refreshLines(levels)
     }
 
+    List<CanvasGroup> getLines() {
+        return null
+    }
+
     public void onNewLevelEvent(NewLevelEvent evt) {
         Level level = new Level(evt.getValue(), parent.getVruler())
         updateMyPaneLines(level, levels)
