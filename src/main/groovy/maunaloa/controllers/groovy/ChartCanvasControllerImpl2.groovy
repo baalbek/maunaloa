@@ -69,8 +69,14 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
     @Override
     List<CanvasGroup> getLines() {
-        //return fibLines.get(getTicker())
-        return null
+        def fibs = fibController.getLines()
+        def levels = levelsController.getLines()
+        if (fibs == null) {
+            return levels == null ? null : levels
+        }
+        else {
+            return levels == null ? fibs : fibs + levels
+        }
     }
 
     //region Events

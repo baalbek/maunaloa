@@ -29,14 +29,15 @@ public class TreeViewItemWrapper {
         }
         else if (wrapped instanceof MongodbLine) {
             MongodbLine line = (MongodbLine)wrapped;
-            BasicDBObject p1 = line.coord(MongodbLine.P1);
+            /*BasicDBObject p1 = line.coord(MongodbLine.P1);
             BasicDBObject p2 = line.coord(MongodbLine.P2);
 
             return String.format("x1: %s, y1: %.1f, x2: %s, y2: %.1f",
                     p1.get("x"),
                     p1.get("y"),
                     p2.get("x"),
-                    p2.get("y"));
+                    p2.get("y"));*/
+            return line.whoAmI();
         }
         else {
             return wrapped.toString();

@@ -39,7 +39,7 @@ class FibonacciController extends ChartCanvasControllerHelper {
     }
 
     List<CanvasGroup> getLines() {
-        return null
+        return fibLines.get(parent.ticker)
     }
 
     void onFetchFromMongoDBEvent(FetchFromMongoDBEvent event) {

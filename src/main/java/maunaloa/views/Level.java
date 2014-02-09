@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 import org.joda.time.DateMidnight;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,8 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
     private double valueLabelDeltaY = 8.0;
     private final Color lineColor;
     private Line line;
+    private List<String> comments;
+    private ObjectId mongodbId;
 
     public Level(double levelValue, IRuler ruler) {
         this(levelValue, ruler, Color.BLACK);
@@ -169,12 +172,12 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
     //region interface MongodbLine
     @Override
     public ObjectId getMongodbId() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return mongodbId;
     }
 
     @Override
     public void setMongodbId(ObjectId id) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        mongodbId = id;
     }
 
     @Override
@@ -194,12 +197,15 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
 
     @Override
     public void addComment(String comment) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        getComments().add(comment);
     }
 
     @Override
     public List<String> getComments() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (comments == null) {
+            comments = new ArrayList<>();
+        }
+        return comments;
     }
 
     @Override
@@ -229,7 +235,7 @@ public class Level extends AbstractSelectable implements CanvasGroup, MongodbLin
 
     @Override
     public String whoAmI() {
-        return "Level";
+        return String.format("Level %s", levelValue);
     }
     //endregion interface MongodbLine
 }

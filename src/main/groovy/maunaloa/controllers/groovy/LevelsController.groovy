@@ -32,7 +32,7 @@ class LevelsController extends ChartCanvasControllerHelper {
     }
 
     List<CanvasGroup> getLines() {
-        return null
+        return levels.get(parent.ticker)
     }
 
     public void onNewLevelEvent(NewLevelEvent evt) {

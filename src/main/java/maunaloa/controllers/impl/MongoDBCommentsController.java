@@ -90,6 +90,7 @@ public class MongoDBCommentsController implements MongoDBController {
                         log.info(String.format("Insert comment [%s]: %s ",s, wr.getError()));
                     }
                 }
+                newComments.clear();
             }
         });
     }

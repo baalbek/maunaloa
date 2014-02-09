@@ -9,6 +9,7 @@ import javafx.scene.shape.Line;
 import maunaloax.models.ChartWindowDressingModel;
 import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
+import org.joda.time.DateMidnight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,7 +173,9 @@ public class FibonacciDraggableLine extends DraggableLine {
 
     @Override
     public String whoAmI() {
-        return "Fibonacci Line";
+        DateMidnight dx = (DateMidnight)hruler.calcValue(startAnchor.getCenterX());
+        double valY = (Double)vruler.calcValue(startAnchor.getCenterY());
+        return String.format("Fibonacci Line from %s - %.2f", dx, valY);
     }
 
     //endregion
