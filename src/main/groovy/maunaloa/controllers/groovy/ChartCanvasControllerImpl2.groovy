@@ -44,6 +44,7 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
 
         fibController = new FibonacciController(parent: this)
         levelsController = new LevelsController(parent: this)
+        riscLevelsController = new RiscLevelsController(parent: this)
     }
     //endregion
 
@@ -92,11 +93,14 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
         }
         riscLevels.put(getTicker(), lines)
         refreshLines(riscLevels)*/
+
+        riscLevelsController.onDerivativeCalculatedEvent(event)
     }
 
     @Override
     void notify(StockPriceAssignedEvent event) {
-        StockPrice sp = event.getStockPrice()
+        //StockPrice sp = event.getStockPrice()
+        riscLevelsController.onStockPriceAssignedEvent(event)
     }
 
     @Override
@@ -109,10 +113,12 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
             case ChartCanvasLineEvent.DELETE_SEL_LINES:
                 fibController.deleteLines(false)
                 levelsController.deleteLines(false)
+                //riscLevelsController.deleteLines(false)
                 break
             case ChartCanvasLineEvent.DELETE_ALL_LINES:
                 fibController.deleteLines(true)
                 levelsController.deleteLines(true)
+                //riscLevelsController.deleteLines(true)
                 break
         }
     }
@@ -165,10 +171,12 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     void setTicker(Stock ticker) {
         fibController.clearLines()
         levelsController.clearLines()
+        riscLevelsController.clearLines()
         this.ticker = ticker
         chart.draw(myCanvas)
         fibController.refreshLines()
         levelsController.refreshLines()
+        riscLevelsController.refreshLines()
     }
 
     @Override
@@ -198,4 +206,5 @@ class ChartCanvasControllerImpl2 implements ChartCanvasController {
     private Logger log = Logger.getLogger(getClass().getPackage().getName())
     private FibonacciController fibController = null
     private LevelsController levelsController = null
+    private RiscLevelsController riscLevelsController = null
 }

@@ -21,6 +21,7 @@ class ChartCanvasControllerHelper {
     protected Logger log = Logger.getLogger(getClass().getPackage().getName())
 
     protected void updateMyPaneLines(CanvasGroup line, Map<Stock,List<CanvasGroup>> myLines) {
+        if (myLines == null) return
         Stock curTicker = parent.getTicker()
         List<CanvasGroup> lines = myLines.get(curTicker)
         if (lines == null) {
@@ -32,6 +33,7 @@ class ChartCanvasControllerHelper {
     }
 
     protected void deleteLines(boolean deleteAll,  Map<Stock,List<CanvasGroup>> myLines) {
+        if (myLines == null) return
         List<CanvasGroup> lines = myLines.get(parent.getTicker())
 
         if (lines == null) {
@@ -57,6 +59,7 @@ class ChartCanvasControllerHelper {
     }
 
     protected void clearLines(Map<Stock,List<CanvasGroup>> myLines) {
+        //if (myLines == null) return
         List<CanvasGroup> lines = myLines.get(parent.getTicker())
 
         if (lines == null) return
@@ -67,6 +70,7 @@ class ChartCanvasControllerHelper {
     }
 
     protected void refreshLines(Map<Stock,List<CanvasGroup>> myLines) {
+        if (myLines == null) return
         List<CanvasGroup> lines = myLines.get(parent.getTicker())
 
         if (lines == null) return
