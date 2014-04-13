@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import maunaloa.controllers.MainframeController;
 import org.apache.log4j.PropertyConfigurator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,7 +19,19 @@ public class App extends Application {
 
     private static String springXmlFileName = "maunaloa.xml";
 
+
+    /*
     public static void main(String[] args) {
+        java.util.List<Integer> list = java.util.Arrays.asList(1,2,3,4,5,6,7);
+        list.stream().map((x) -> x*x).forEach(System.out::println);
+
+        int sum = list.stream().map(x -> x*x).reduce((x,y) -> x + y).get();
+        System.out.println(sum);
+    }
+    */
+
+    //*
+    public static void xmain(String[] args) {
 
         Locale.setDefault(Locale.US);
 
@@ -40,12 +53,10 @@ public class App extends Application {
 
         FXMLLoader loader = new FXMLLoader(url);
 
-        /*
-        final MainFrameController controller = factory.getBean("mainframe-controller",MainFrameController.class);
-        controller.setSqldbUrl(getSqldbUrl());
+        final MainframeController controller = factory.getBean("mainframe-controller",MainframeController.class);
+        //controller.setSqldbUrl(getSqldbUrl());
 
         loader.setController(controller);
-        */
 
         Parent parent = (Parent)loader.load();
 
@@ -75,4 +86,5 @@ public class App extends Application {
             return null;
         }
     }
+    //*/
 }

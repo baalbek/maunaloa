@@ -4,7 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml" fx:controller="maunaloa.controllers.impl.DerivativesControllerImpl">
+<BorderPane prefHeight="-1.0"
+            prefWidth="-1.0"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="maunaloa.controllers.DerivativesController">
   <center>
     <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="-1.0" prefWidth="-1.0">
       <columns>

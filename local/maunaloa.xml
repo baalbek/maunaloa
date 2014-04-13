@@ -4,10 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+    <!--
     <import resource="classpath:aop.xml"  />
+    -->
 
 
     <!-- Converters -->
+    <!--
     <bean id="dateEditor"
           class="org.springframework.beans.propertyeditors.CustomDateEditor">
 
@@ -31,10 +34,12 @@
     </bean>
 
 
-
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
+    -->
+
     <!--<bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>-->
+    <!--
     <bean id="downloader" class="maunaloa.dummy.Downloader">
         <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
     </bean>
@@ -81,15 +86,27 @@
         <property name="calculator" ref="calculator" />
         <property name="defaultStartDate" value="2011-01-01" />
     </bean>
+    -->
+
+    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
+
+    <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
+
+    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" />
+
+    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" />
 
     <bean id="mainframe-controller"
-          class="maunaloa.controllers.groovy.MainFrameController2">
+          class="maunaloa.controllers.MainframeController">
+
         <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="weeklyChart" ref="chartWeeks" />
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
+        <!--
         <property name="facade" ref="facade" />
         <property name="windowDressingModel" ref="windowdressingmodel" />
+        -->
     </bean>
 </beans>
 

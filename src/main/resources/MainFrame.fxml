@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="750.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml">
+
+<BorderPane prefHeight="750.0"
+            prefWidth="1200.0"
+            xmlns:fx="http://javafx.com/fxml">
+            <!-- fx:controller="maunaloa.controllers.MainframeController" -->
   <center>
     <TabPane fx:id="myTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
