@@ -1,12 +1,21 @@
 package maunaloa.controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
+import maunaloa.repository.StockRepository;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
+
+import java.util.function.Consumer;
 
 /**
  * Created by rcs on 4/12/14.
@@ -36,7 +45,6 @@ public class MainframeController {
         System.exit(0);
     }
     //endregion Events
-
 
     //region Initialize
     public void initialize() {
@@ -93,16 +101,56 @@ public class MainframeController {
         }
     }
     private void initChoiceBoxTickers() {
-        //final ObservableList<Stock> cbitems = FXCollections.observableArrayList(facade.getStocks());
+        final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());
+        cbTickers.setConverter(new StringConverter<Stock>() {
+            @Override
+            public String toString(Stock o) {
+                return String.format("[%s] %s",o.getTicker(),o.getCompanyName());
+            }
+
+            @Override
+            public Stock fromString(String s) {
+                throw new NotImplementedException();
+            }
+        });
+        cbTickers.getItems().addAll(cbitems);
+        Consumer<Stock> setStock = (Stock s) -> {
+            System.out.println(s.getCompanyName());
+            currentStock = s;
+            switch (s.getTickerCategory()) {
+                case 1:
+                    candlesticksController.setStock(s);
+                    weeksController.setStock(s);
+                    optionsController.setStock(s);
+                    break;
+                case 2:
+                    obxCandlesticksController.setStock(s);
+                    obxWeeksController.setStock(s);
+                    break;
+            }
+        };
+        cbTickers.getSelectionModel().selectedIndexProperty().addListener(
+            new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue,
+                                    Number value,
+                                    Number newValue) {
+                    setStock.accept(cbitems.get(newValue.intValue()));
+                }
+            }
+        );
+
     }
     //endregion Initialize
 
 
     //region Properties
+    private Stock currentStock;
     private MaunaloaChart candlesticksChart;
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxCandlesticksChart;
     private MaunaloaChart obxWeeklyChart;
+    private StockRepository stockRepository;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -134,6 +182,14 @@ public class MainframeController {
 
     public void setObxWeeklyChart(MaunaloaChart obxWeeklyChart) {
         this.obxWeeklyChart = obxWeeklyChart;
+    }
+
+    public StockRepository getStockRepository() {
+        return stockRepository;
+    }
+
+    public void setStockRepository(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
     }
 
     //endregion Properties

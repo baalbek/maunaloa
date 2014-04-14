@@ -87,6 +87,11 @@
         <property name="defaultStartDate" value="2011-01-01" />
     </bean>
     -->
+    <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl" />
+
+    <bean id="stockRepository" class="maunaloa.repository.StockRepository">
+        <property name="locator" ref="locator" />
+    </bean>
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
 
@@ -103,6 +108,7 @@
         <property name="weeklyChart" ref="chartWeeks" />
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
+        <property name="stockRepository" ref="stockRepository" />
         <!--
         <property name="facade" ref="facade" />
         <property name="windowDressingModel" ref="windowdressingmodel" />
