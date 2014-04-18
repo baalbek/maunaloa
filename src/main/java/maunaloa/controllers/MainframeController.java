@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
+import maunaloa.repository.DerivativeRepository;
 import maunaloa.repository.StockRepository;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
@@ -57,7 +58,7 @@ public class MainframeController {
                     controller.setName(name);
                     controller.setLocation(location);
                     controller.setChart(chart);
-                    //controller.setModel(facade);
+                    controller.setStockRepository(getStockRepository());
                     System.out.println("Setting up controller " + name);
                 };
 
@@ -90,11 +91,11 @@ public class MainframeController {
         });
 
         if (optionsController != null) {
-            /*
             optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
-            optionsController.setModel(facade);
+            optionsController.setDerivativeRepository(getDerivativeRepository());
+            /*
             optionsController.addDerivativesControllerListener(candlesticksController);
             optionsController.addDerivativesControllerListener(weeksController);
             */
@@ -129,17 +130,11 @@ public class MainframeController {
                     break;
             }
         };
-        cbTickers.getSelectionModel().selectedIndexProperty().addListener(
-            new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue,
-                                    Number value,
-                                    Number newValue) {
-                    setStock.accept(cbitems.get(newValue.intValue()));
-                }
-            }
-        );
 
+        cbTickers.getSelectionModel().selectedIndexProperty().addListener(
+            (ObservableValue<? extends Number> observableValue, Number value, Number newValue) -> {
+                setStock.accept(cbitems.get(newValue.intValue()));
+        });
     }
     //endregion Initialize
 
@@ -151,6 +146,7 @@ public class MainframeController {
     private MaunaloaChart obxCandlesticksChart;
     private MaunaloaChart obxWeeklyChart;
     private StockRepository stockRepository;
+    private DerivativeRepository derivativeRepository;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -190,6 +186,14 @@ public class MainframeController {
 
     public void setStockRepository(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
+    }
+
+    public DerivativeRepository getDerivativeRepository() {
+        return derivativeRepository;
+    }
+
+    public void setDerivativeRepository(DerivativeRepository derivativeRepository) {
+        this.derivativeRepository = derivativeRepository;
     }
 
     //endregion Properties

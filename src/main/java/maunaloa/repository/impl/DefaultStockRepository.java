@@ -4,7 +4,7 @@ package maunaloa.repository.impl;
  * Created by rcs on 4/14/14.
  */
 import maunaloa.repository.StockRepository;
-import maunaloa.services.MyBatisUtils;
+import maunaloa.service.MyBatisUtils;
 import oahu.financial.Stock;
 import oahu.financial.StockLocator;
 import oahu.financial.StockPrice;

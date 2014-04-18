@@ -32,10 +32,12 @@
             </map>
         </property>
     </bean>
+    -->
 
 
+
+    <!--
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
-
     -->
 
     <!--<bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>-->
@@ -87,10 +89,29 @@
         <property name="defaultStartDate" value="2011-01-01" />
     </bean>
     -->
-    <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl" />
+    <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl"></bean>
 
-    <bean id="stockRepository" class="maunaloa.repository.StockRepository">
+    <bean id="stockRepository" class="maunaloa.repository.impl.DefaultStockRepository">
         <property name="locator" ref="locator" />
+    </bean>
+
+    <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
+
+    <bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>
+    <!--
+    <bean id="downloader" class="maunaloa.dummy.Downloader">
+        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
+    </bean>
+    -->
+
+    <bean id="etrade" class="maunakea.financial.Netfonds2">
+        <property name="downloader" ref="downloader" />
+        <property name="calculator" ref="calculator" />
+        <property name="stockLocator" ref="locator" />
+    </bean>
+
+    <bean id="derivativeRepository" class="maunaloa.repository.impl.DefaultDerivativeRepository">
+        <property name="etrade" ref="etrade" />
     </bean>
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
@@ -109,6 +130,7 @@
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="stockRepository" ref="stockRepository" />
+        <property name="derivativeRepository" ref="derivativeRepository" />
         <!--
         <property name="facade" ref="facade" />
         <property name="windowDressingModel" ref="windowdressingmodel" />
