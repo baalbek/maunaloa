@@ -72,22 +72,25 @@ public class MainframeController {
     }
 
     private void initOptionsController() {
-        Procedure0 notifyOptionsController = () -> {
+
+        Procedure0 setStock = () -> {
             Object prop = cbTickers.valueProperty().get();
             if (prop == null) return;
             Stock stock = (Stock)prop;
             System.out.println(stock.getTicker());
-            //optionsController.setStock(stock);
+            optionsController.setStock(stock);
         };
 
-        rgDerivatives.selectedToggleProperty().addListener(e -> {
-            notifyOptionsController.call();
+        rgDerivatives.selectedToggleProperty().addListener(e -> setStock.call());
+        cxLoadOptionsHtml.selectedProperty().addListener(e -> {
+            if (cxLoadOptionsHtml.isSelected()) {
+                setStock.call();
+            }
         });
-        cxLoadOptionsHtml.selectedProperty().addListener( e -> {
-            notifyOptionsController.call();
-        });
-        cxLoadStockHtml.selectedProperty().addListener( e -> {
-            notifyOptionsController.call();
+        cxLoadStockHtml.selectedProperty().addListener(e -> {
+            if (cxLoadStockHtml.isSelected()) {
+                setStock.call();
+            }
         });
 
         if (optionsController != null) {
