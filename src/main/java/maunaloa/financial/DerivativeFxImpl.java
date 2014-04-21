@@ -1,4 +1,4 @@
-package maunaloa.domain.impl;
+package maunaloa.financial;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
@@ -9,7 +9,7 @@ import oahu.exceptions.NotImplementedException;
 import oahu.financial.Derivative;
 import oahu.financial.OptionCalculator;
 import oahu.financial.StockPrice;
-import oahux.domain.DerivativeFx;
+import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
 import java.util.Date;

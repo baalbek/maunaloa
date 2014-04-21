@@ -1,4 +1,8 @@
-package maunaloa.utils;
+package maunaloa.service;
+
+/**
+ * Created by rcs on 4/14/14.
+ */
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -10,12 +14,6 @@ import java.io.Reader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Created with IntelliJ IDEA.
- * User: rcs
- * Date: 22.11.12
- * Time: 13:30
- */
 public class MyBatisUtils {
 
     private static final String conf = "mybatis.conf.xml";

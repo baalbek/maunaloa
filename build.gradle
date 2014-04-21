@@ -1,15 +1,18 @@
 apply plugin: 'java'
-apply plugin: 'groovy'
+//apply plugin: 'groovy'
 
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
-version = '2.4'
+version = '3.0'
 
 //ext.springVersion = '4.0.0.RELEASE'
 ext.springVersion = '3.2.6.RELEASE'
 
 repositories {
     mavenCentral()
+    maven {
+        url 'http://clojars.org/repo'
+    }
 }
 
 dependencies {
@@ -35,7 +38,19 @@ dependencies {
     runtime project(':waimea')
     runtime project(':maunaloaq')
     //compile files('../libs/javafx-2.2.jar')
-    compile files('../libs/jfxrt.jar')
+    //compile files('../libs/jfxrt.jar')
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://clojars.org/repo'
+        }
+    }
+
+    dependencies {
+        classpath 'clojuresque:clojuresque:1.5.8'
+    }
 }
 
 String clazzPath() {
@@ -66,3 +81,5 @@ task prncp {
 }
 
 task quick(dependsOn: [build, cj, copydeps])
+
+task local(dependsOn: [build, cj])

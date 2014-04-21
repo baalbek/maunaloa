@@ -5,7 +5,7 @@
 
 <VBox fx:id="myContainer"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="maunaloa.controllers.groovy.ChartCanvasControllerImpl2">
+      fx:controller="maunaloa.controllers.ChartCanvasController">
     <children>
         <Pane fx:id="myPane" maxHeight="-Infinity"
               maxWidth="-Infinity" minHeight="-Infinity"

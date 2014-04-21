@@ -8,6 +8,7 @@
 
 
     <!-- Converters -->
+    <!--
     <bean id="dateEditor"
           class="org.springframework.beans.propertyeditors.CustomDateEditor">
 
@@ -29,46 +30,9 @@
             </map>
         </property>
     </bean>
+    -->
 
-
-
-    <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
-
-    <!--<bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>-->
-    <bean id="downloader" class="maunaloa.dummy.Downloader">
-        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
-    </bean>
-
-    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
-
-    <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
-
-    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" />
-
-    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" />
-
-    <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl" />
-
-    <bean id="stockprice-factory" class="maunakea.financial.DefaultHtmlStockPriceFactory" >
-        <property name="stockLocator"  ref="locator" ></property>
-    </bean>
-
-    <bean id="derivative-factory" class="maunakea.financial.HtmlCalculatedDerivativeBeanFactory">
-    </bean>
-
-    <bean id="html-parser" class="maunakea.financial.DefaultHtmlParser">
-        <property name="derivativeFactory" ref="derivative-factory" ></property>
-        <property name="stockBeanFactory" ref="stockprice-factory" ></property>
-        <property name="calculator" ref="calculator" />
-    </bean>
-
-
-    <bean id="etrade" class="maunakea.financial.Netfonds">
-        <property name="downloader" ref="downloader" />
-        <property name="htmlParser" ref="html-parser" />
-    </bean>
-
-
+    <!--
     <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel">
         <property name="cloud" value="false" />
         <property name="mongodbHost" value="xochitecatl" />
@@ -81,15 +45,52 @@
         <property name="calculator" ref="calculator" />
         <property name="defaultStartDate" value="2011-01-01" />
     </bean>
+    -->
+    <bean id="locator" class="ranoraraku.models.impl.StockLocatorImpl"></bean>
+
+    <bean id="stockRepository" class="maunaloa.repository.impl.DefaultStockRepository">
+        <property name="locator" ref="locator" />
+    </bean>
+
+    <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
+
+    <!--<bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>-->
+    <bean id="downloader" class="maunakea.financial.mocks.MockRollingDownloader">
+        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
+    </bean>
+
+    <bean id="etrade" class="maunakea.financial.Netfonds2">
+        <property name="downloader" ref="downloader" />
+        <property name="calculator" ref="calculator" />
+        <property name="stockLocator" ref="locator" />
+    </bean>
+
+    <bean id="derivativeRepository" class="maunaloa.repository.impl.DefaultDerivativeRepository">
+        <property name="etrade" ref="etrade" />
+        <property name="calculator" ref="calculator" />
+    </bean>
+
+    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
+
+    <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
+
+    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" />
+
+    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" />
 
     <bean id="mainframe-controller"
-          class="maunaloa.controllers.groovy.MainFrameController2">
+          class="maunaloa.controllers.MainframeController">
+
         <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="weeklyChart" ref="chartWeeks" />
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
+        <property name="stockRepository" ref="stockRepository" />
+        <property name="derivativeRepository" ref="derivativeRepository" />
+        <!--
         <property name="facade" ref="facade" />
         <property name="windowDressingModel" ref="windowdressingmodel" />
+        -->
     </bean>
 </beans>
 
