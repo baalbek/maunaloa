@@ -1,6 +1,5 @@
 package maunaloa.aspects;
 
-import maunakea.aspects.AbstractDownloadManagerAspect;
 import oahu.annotations.StoreHtmlPage;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,19 +13,11 @@ import org.aspectj.lang.annotation.Aspect;
  */
 
 @Aspect
-public class DownloadMaintenanceAspect extends AbstractDownloadManagerAspect {
+public class DownloadMaintenanceAspect  {
 
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
     private String storeDir;
-
-    //region Overridden Methods
-    @Override
-    protected String fileNameFor(ProceedingJoinPoint proceedingJoinPoint, StoreHtmlPage storeHtmlPage) {
-        Object[] args = proceedingJoinPoint.getArgs();
-        return String.format("%s/%s.%s", getStoreDir(), args[0], "html");
-    }
-    //endregion Overridden Methods
 
     //region Properties
     public String getStoreDir() {
