@@ -1,6 +1,5 @@
 package maunaloa.controllers;
 
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.repository.StockRepository;
+import maunaloa.repository.WindowDressingRepository;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.functional.Procedure0;
@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 /**
  * Created by rcs on 4/12/14.
  */
-public class MainframeController {
+public class MainframeController implements ControllerHub {
     //region FXML
     @FXML private ChartCanvasController obxCandlesticksController;
     @FXML private ChartCanvasController obxWeeksController;
@@ -141,7 +141,6 @@ public class MainframeController {
     }
     //endregion Initialize
 
-
     //region Properties
     private Stock currentStock;
     private MaunaloaChart candlesticksChart;
@@ -150,6 +149,7 @@ public class MainframeController {
     private MaunaloaChart obxWeeklyChart;
     private StockRepository stockRepository;
     private DerivativeRepository derivativeRepository;
+    private WindowDressingRepository windowDressingRepository;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -198,6 +198,12 @@ public class MainframeController {
     public void setDerivativeRepository(DerivativeRepository derivativeRepository) {
         this.derivativeRepository = derivativeRepository;
     }
+
+    public void setWindowDressingRepository(WindowDressingRepository windowDressingRepository) {
+        this.windowDressingRepository = windowDressingRepository;
+        this.windowDressingRepository.setControllerHub(this);
+    }
+
 
     //endregion Properties
 }
