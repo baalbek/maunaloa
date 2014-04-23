@@ -3,6 +3,7 @@ package maunaloa.repository;
 import maunaloa.entities.windowdressing.FibLine;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +18,6 @@ public interface WindowDressingRepository {
     public static final int FIBLINES = 1;
     public static final int LEVEL = 2;
     public static final int ALL_ITEMS = 3;
-    Collection<FibLine> fetchFibLines(String ticker, int location, int status);
+    List<FibLine> fetchFibLines(String ticker, int location, int status);
     // void invalidate(int whichOnes);
 }

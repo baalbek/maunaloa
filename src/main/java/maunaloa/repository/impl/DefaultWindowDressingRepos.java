@@ -1,31 +1,27 @@
 package maunaloa.repository.impl;
 
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
+import com.mongodb.*;
 import maunaloa.entities.windowdressing.FibLine;
 import maunaloa.repository.WindowDressingRepository;
+import oahux.controllers.MaunaloaChartViewModel;
 import org.apache.log4j.Logger;
 
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 4/22/14.
  */
 public class DefaultWindowDressingRepos implements WindowDressingRepository {
     //region Private Stuff
-    /*{ "_id" : ObjectId("531877ed389056a05cd67f79"),
-    "tix" : "OSEBX",
-    "active" : true,
-    "loc" : NumberLong(4),
-    "p1" : { "x" : ISODate("2013-06-27T22:00:00Z"), "y" : 456.1936726241462 },
-    "p2" : { "x" : ISODate("2014-01-16T23:00:00Z"), "y" : 563.0399627169718 }
-    */
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
-    private Map<String,Collection<FibLine>> fibLines;
+    private Map<String,List<FibLine>> fibLines;
     private String makeKey(String ticker, int location) {
         return String.format("%s:%d", ticker, location);
     }
@@ -65,17 +61,37 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     //region Interface WindowDressingRepository
     @Override
-    public Collection<FibLine> fetchFibLines(String ticker, int location, int status) {
+    public List<FibLine> fetchFibLines(String ticker, int location, int status) {
         if (fibLines == null) {
             fibLines = new HashMap<>();
         }
         String key = makeKey(ticker,location);
-        Collection<FibLine> result = null;
+        List<FibLine> result = null;
         if (fibLines.containsKey(key)) {
             result = fibLines.get(key);
         }
         else {
-
+            try {
+                Function<DBObject,FibLine> mongo2fibline = o -> {
+                    /*{ "_id" : ObjectId("531877ed389056a05cd67f79"),
+                    "tix" : "OSEBX",
+                    "active" : true,
+                    "loc" : NumberLong(4),
+                    "p1" : { "x" : ISODate("2013-06-27T22:00:00Z"), "y" : 456.1936726241462 },
+                    "p2" : { "x" : ISODate("2014-01-16T23:00:00Z"), "y" : 563.0399627169718 }
+                    */
+                    return null; //new FibLine();
+                };
+                DBCollection collection = getConnection().getCollection("fibonacci");
+                BasicDBObject query = new BasicDBObject("tix",ticker);
+                query.append("loc",location);
+                query.append("active",true);
+                DBCursor cursor = collection.find(query);
+                List<DBObject> objs = cursor.toArray();
+                result = objs.stream().map(mongo2fibline).collect(Collectors.toList());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
         }
         return result;
     }
@@ -101,6 +117,12 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     public void setMongodbHost(String mongodbHost) {
         this.mongodbHost = mongodbHost;
+    }
+
+    private MaunaloaChartViewModel viewModel;
+
+    public void setViewModel(MaunaloaChartViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     //endregion Properties
