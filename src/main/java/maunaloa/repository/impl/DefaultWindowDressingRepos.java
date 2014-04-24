@@ -4,7 +4,13 @@ import com.mongodb.*;
 import maunaloa.controllers.ControllerHub;
 import maunaloa.entities.windowdressing.FibLine;
 import maunaloa.repository.WindowDressingRepository;
+import maunaloa.views.charts.ChartItem;
+import maunaloa.views.charts.FinancialCoord;
+import oahu.domain.Tuple;
+import oahux.chart.IRuler;
+import oahux.controllers.MaunaloaChartViewModel;
 import org.apache.log4j.Logger;
+import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -20,7 +26,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     //region Private Stuff
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
-    private Map<String,List<FibLine>> fibLines;
+    private Map<String,List<ChartItem>> fibLines;
     private String makeKey(String ticker, int location) {
         return String.format("%s:%d", ticker, location);
     }
@@ -60,12 +66,12 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     //region Interface WindowDressingRepository
     @Override
-    public List<FibLine> fetchFibLines(String ticker, int location, int status) {
+    public List<ChartItem> fetchFibLines(String ticker, int location, int status) {
         if (fibLines == null) {
             fibLines = new HashMap<>();
         }
         String key = makeKey(ticker,location);
-        List<FibLine> result = null;
+        List<ChartItem> result = null;
         if (fibLines.containsKey(key)) {
             result = fibLines.get(key);
         }
@@ -80,11 +86,24 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     "p2" : { "x" : ISODate("2014-01-16T23:00:00Z"), "y" : 563.0399627169718 }
                     */
                     /*
-                    int loc =
-                    IRuler vruler = hub.getVruler(loc);
-                    IRuler hruler = hub.getVruler(loc);
+                    DBObject p1 = (DBObject)obj.get("p1")
+                    DBObject p2 = (DBObject)obj.get("p2")
+
+                    double p1x = hruler.calcPix(p1.get("x"))
+                    double p1y = vruler.calcPix(p1.get("y"))
+
+                    double p2x = hruler.calcPix(p2.get("x"))
+                    double p2y = vruler.calcPix(p2.get("y"))
                      */
-                    return null; //new FibLine();
+                    ObjectId oid = (ObjectId)o.get("_id");
+                    MaunaloaChartViewModel vm = hub.getViewModel(location);
+                    FinancialCoord p1 = FinancialCoord.create((DBObject) o.get("p1"));
+                    FinancialCoord p2 = FinancialCoord.create((DBObject)o.get("p2"));
+
+                    /*double p1x = hruler.calcPix(p1.get("x"));
+                    double p1y = vruler.calcPix(p1.get("y"));*/
+
+                    return new FibLine(oid,ticker,location,p1,p2,vm);
                 };
                 DBCollection collection = getConnection().getCollection("fibonacci");
                 BasicDBObject query = new BasicDBObject("tix",ticker);

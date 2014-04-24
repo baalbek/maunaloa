@@ -2,6 +2,7 @@ package maunaloa.repository;
 
 import maunaloa.controllers.ControllerHub;
 import maunaloa.entities.windowdressing.FibLine;
+import maunaloa.views.charts.ChartItem;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface WindowDressingRepository {
     public static final int FIBLINES = 1;
     public static final int LEVEL = 2;
     public static final int ALL_ITEMS = 3;
-    List<FibLine> fetchFibLines(String ticker, int location, int status);
+    List<ChartItem> fetchFibLines(String ticker, int location, int status);
     // void invalidate(int whichOnes);
     void setControllerHub(ControllerHub hub);
 }

@@ -10,12 +10,16 @@ import javafx.util.StringConverter;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.repository.StockRepository;
 import maunaloa.repository.WindowDressingRepository;
+import oahu.domain.Tuple;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
+import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
+import oahux.controllers.MaunaloaChartViewModel;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -203,8 +207,29 @@ public class MainframeController implements ControllerHub {
         this.windowDressingRepository = windowDressingRepository;
         this.windowDressingRepository.setControllerHub(this);
     }
-
-
     //endregion Properties
+
+    //region Private Methods
+    private ChartCanvasController chartCanvasControllerFor(int location) {
+        switch (location) {
+            case 1: return candlesticksController;
+            case 2: return weeksController;
+            case 3: return obxCandlesticksController;
+            case 4: return obxWeeksController;
+            default: return null;
+        }
+    }
+    //endregion Private Methods
+
+    //region Interface ControllerHub
+    @Override
+    public MaunaloaChartViewModel getViewModel(int location) {
+        return chartCanvasControllerFor(location);
+
+/*        ChartCanvasController curC = chartCanvasControllerFor(location);
+        return curC == null ? null : new Tuple<IRuler>(curC.getHruler(), curC.getVruler());*/
+    }
+
+    //endregion Interface ControllerHub
 }
 

@@ -1,6 +1,9 @@
 package maunaloa.entities.windowdressing;
 
+import javafx.scene.Node;
+import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
+import oahux.controllers.MaunaloaChartViewModel;
 import org.bson.types.ObjectId;
 
 /**
@@ -9,12 +12,13 @@ import org.bson.types.ObjectId;
  * Date: 22.04.14
  * Time: 13:34
  */
-public class FibLine {
+public class FibLine implements ChartItem {
     //region Properties
-    private ObjectId oid;
-    private String ticker;
-    private int location;
-    private FinancialCoord p1, p2;
+    private final MaunaloaChartViewModel viewModel;
+    private final ObjectId oid;
+    private final String ticker;
+    private final int location;
+    private final FinancialCoord p1, p2;
 
     public ObjectId getOid() {
         return oid;
@@ -33,19 +37,29 @@ public class FibLine {
     public FibLine(String ticker,
                    int location,
                    FinancialCoord p1,
-                   FinancialCoord p2) {
-        this(null,ticker,location,p1,p2);
+                   FinancialCoord p2,
+                   MaunaloaChartViewModel viewModel) {
+        this(null,ticker,location,p1,p2,viewModel);
     }
     public FibLine(ObjectId oid,
                    String ticker,
                    int location,
                    FinancialCoord p1,
-                   FinancialCoord p2) {
+                   FinancialCoord p2,
+                   MaunaloaChartViewModel viewModel) {
         this.oid = oid;
         this.ticker = ticker;
         this.location = location;
         this.p1 = p1;
         this.p2 = p2;
+        this.viewModel = viewModel;
     }
     //endregion Create
+
+    //region Interface ChartItem
+    @Override
+    public Node view() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+    //region Interface ChartItem
 }

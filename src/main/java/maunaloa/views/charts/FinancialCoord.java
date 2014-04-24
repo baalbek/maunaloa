@@ -1,5 +1,7 @@
 package maunaloa.views.charts;
 
+import com.mongodb.DBObject;
+
 import java.util.Date;
 
 /**
@@ -10,12 +12,28 @@ import java.util.Date;
  */
 public class FinancialCoord {
     //region Properties
-    private Date x;
-    private double y;
+    private final Date x;
+    private final double y;
+
+    public Date getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
     //endregion Properties
+
+    //region Create
 
     public FinancialCoord(Date x, double y) {
         this.x = x;
         this.y = y;
     }
+
+    public static FinancialCoord create(DBObject obj) {
+        return null;
+    }
+
+    //endregion Create
 }
