@@ -2,6 +2,7 @@ package maunaloa.entities.windowdressing;
 
 import javafx.scene.Node;
 import maunaloa.views.charts.ChartItem;
+import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
 import oahux.controllers.MaunaloaChartViewModel;
 import org.bson.types.ObjectId;
@@ -19,6 +20,7 @@ public class FibLine implements ChartItem {
     private final String ticker;
     private final int location;
     private final FinancialCoord p1, p2;
+    private DraggableLine dragLine;
 
     public ObjectId getOid() {
         return oid;
@@ -57,9 +59,13 @@ public class FibLine implements ChartItem {
     //endregion Create
 
     //region Interface ChartItem
+    private Node _view;
     @Override
     public Node view() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        if (_view == null) {
+            dragLine = new DraggableLine(0,0,200,200);
+        }
+        return _view;
     }
     //region Interface ChartItem
 }

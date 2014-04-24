@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -17,20 +18,20 @@ import javafx.scene.shape.Line;
  */
 public class DraggableLine {
     //region Init
-    private Line line ;
-    private Circle startAnchor ;
-    private Circle endAnchor ;
-    private Group group ;
-    private DoubleProperty anchorRadius;
-    private BooleanProperty anchorsVisible ;
+    private final Line line ;
+    private final Circle startAnchor ;
+    private final Circle endAnchor ;
+    private final Group group ;
+    private final DoubleProperty anchorRadius;
+    private final BooleanProperty anchorsVisible ;
 
     private static double STROKE_WIDTH_NORMAL = 1.0;
     private static double STROKE_WIDTH_SELECTED = 4.0;
 
-    public DraggableLine(double startX, double startY, double endX, double endY) {
-        anchorRadius = new SimpleDoubleProperty(5);
-        line = new Line(startX, startY, endX, endY);
+    public DraggableLine(double x1, double y1, double x2, double y2) {
+        line = new Line(x1, y1, x2, y2);
         line.setStrokeWidth(STROKE_WIDTH_NORMAL);
+        anchorRadius = new SimpleDoubleProperty(5);
         anchorsVisible = new SimpleBooleanProperty(true);
         startAnchor = createAnchor(line.startXProperty(), line.startYProperty());
         endAnchor = createAnchor(line.endXProperty(), line.endYProperty());
@@ -38,6 +39,21 @@ public class DraggableLine {
         group.getChildren().addAll(line, startAnchor, endAnchor);
     }
     //endregion Init
+
+    //region Public Methods
+    public Node view() {
+        return group;
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    /*public void addNode(Node node) {
+        group.getChildren().add(node);
+    }*/
+
+    //endregion Public Methods
 
     //region Private Methods
     private Circle createAnchor(DoubleProperty x, DoubleProperty y) {
@@ -51,7 +67,6 @@ public class DraggableLine {
         anchor.setStroke(Color.BLACK);
         //anchor.getStyleClass().add("draggable-line-anchor");
 
-        /*
         final ObjectProperty<Point2D> mousePressPoint = new SimpleObjectProperty<>();
         anchor.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
@@ -71,8 +86,8 @@ public class DraggableLine {
                     double oldCenterX = anchor.getCenterX() ;
                     double oldCenterY = anchor.getCenterY();
                     anchor.setCenterX(oldCenterX+deltaX);
-                    anchor.setCenterY(oldCenterY+deltaY);
-                    onMouseDragged(event);
+                    anchor.setCenterY(oldCenterY + deltaY);
+                    //onMouseDragged(event);
                     event.consume();
                 }
             }
@@ -81,13 +96,13 @@ public class DraggableLine {
             @Override
             public void handle(MouseEvent event) {
                 mousePressPoint.set(null) ;
-                onMouseReleased(event,anchor);
+                //onMouseReleased(event,anchor);
                 event.consume();
             }
         });
-        //*/
         return anchor;
     }
+
     //endregion Private Methods
 
 }
