@@ -10,4 +10,6 @@ import javafx.scene.Node;
  */
 public interface ChartItem {
     Node view();
+    int getStatus();
+    void setStatus(int value);
 }
