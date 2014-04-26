@@ -32,7 +32,9 @@ public class FinancialCoord {
     }
 
     public static FinancialCoord create(DBObject obj) {
-        return null;
+        double y = (Double)obj.get("y");
+        Date x = (Date)obj.get("x");
+        return new FinancialCoord(x,y);
     }
 
     //endregion Create

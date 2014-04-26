@@ -70,6 +70,11 @@
         <property name="calculator" ref="calculator" />
     </bean>
 
+    <bean id="windowdressing" class="maunaloa.repository.impl.DefaultWindowDressingRepos">
+        <property name="cloud" value="true" />
+    </bean>
+
+
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
@@ -87,6 +92,7 @@
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="stockRepository" ref="stockRepository" />
         <property name="derivativeRepository" ref="derivativeRepository" />
+        <property name="windowDressingRepository" ref="windowdressing" />
         <!--
         <property name="facade" ref="facade" />
         <property name="windowDressingModel" ref="windowdressingmodel" />

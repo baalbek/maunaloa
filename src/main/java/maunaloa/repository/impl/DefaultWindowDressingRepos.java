@@ -97,6 +97,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                      */
                     ObjectId oid = (ObjectId)o.get("_id");
                     MaunaloaChartViewModel vm = hub.getViewModel(location);
+                    System.out.println("View Model: " + vm);
                     FinancialCoord p1 = FinancialCoord.create((DBObject) o.get("p1"));
                     FinancialCoord p2 = FinancialCoord.create((DBObject)o.get("p2"));
 
