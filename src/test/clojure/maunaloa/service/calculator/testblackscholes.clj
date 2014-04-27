@@ -82,9 +82,9 @@
         x 100.0
         t 0.5
         f (partial B/call-price spot x t)]
-    (is (=z (B/binary-search f 0.4 6.88 tol) 0.2 tol) "call iv binary search 1")
-    (is (=z (B/binary-search f 0.4 2.97 tol) 0.05 tol) "call iv binary search 2")
-    (is (=z (B/binary-search f 0.4 13.78 tol) 0.45 tol) "call iv binary search 3")))
+    (is (=z (B/binary-search f 0.4 6.88 tol) 0.2 tol) "apply iv binary search 1")
+    (is (=z (B/binary-search f 0.4 2.97 tol) 0.05 tol) "apply iv binary search 2")
+    (is (=z (B/binary-search f 0.4 13.78 tol) 0.45 tol) "apply iv binary search 3")))
 
 (deftest binary-search-iv-calls-itm []
   (let [tol 0.01
@@ -92,9 +92,9 @@
         x 100.0
         t 0.5
         f (partial B/call-price spot x t)]
-    (is (=z (B/binary-search f 0.4 22.96 tol) 0.2 tol) "call iv binary search 4")
-    (is (=z (B/binary-search f 0.4 22.4690 0.001) 0.05 tol) "call iv binary search 5")
-    (is (=z (B/binary-search f 0.4 35.68 tol) 0.75 tol) "call iv binary search 6")))
+    (is (=z (B/binary-search f 0.4 22.96 tol) 0.2 tol) "apply iv binary search 4")
+    (is (=z (B/binary-search f 0.4 22.4690 0.001) 0.05 tol) "apply iv binary search 5")
+    (is (=z (B/binary-search f 0.4 35.68 tol) 0.75 tol) "apply iv binary search 6")))
 
 (deftest binary-search-iv-calls-otm []
   (let [tol 0.01
@@ -102,9 +102,9 @@
         x 100.0
         t 0.5
         f (partial B/call-price spot x t)]
-    (is (=z (B/binary-search f 0.4 0.4594 tol) 0.2 tol) "call iv binary search 7")
-    (is (=z (B/binary-search f 0.4 0.0 0.001) 0.05 tol) "call iv binary search 8")
-    (is (=z (B/binary-search f 0.4 11.06 tol) 0.75 tol) "call iv binary search 9")))
+    (is (=z (B/binary-search f 0.4 0.4594 tol) 0.2 tol) "apply iv binary search 7")
+    (is (=z (B/binary-search f 0.4 0.0 0.001) 0.05 tol) "apply iv binary search 8")
+    (is (=z (B/binary-search f 0.4 11.06 tol) 0.75 tol) "apply iv binary search 9")))
 
 (deftest binary-search-iv-puts-atm []
   (let [tol 0.01

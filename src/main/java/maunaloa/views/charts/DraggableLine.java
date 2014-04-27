@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import oahu.functional.Procedure2;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,6 +58,9 @@ public class DraggableLine {
         group.getChildren().add(node);
     }*/
 
+    public void setAnchorsVisible(boolean visible) {
+        anchorsVisible.set(visible);
+    }
     //endregion Public Methods
 
     //region Private Methods
@@ -84,6 +88,7 @@ public class DraggableLine {
             @Override
             public void handle(MouseEvent event) {
                 if (mousePressPoint.get() != null) {
+                    setAnchorsVisible(false);
                     double deltaX = event.getX()-mousePressPoint.get().getX();
                     double deltaY = event.getY()-mousePressPoint.get().getY();
                     mousePressPoint.set(new Point2D(event.getX(), event.getY()));
@@ -99,14 +104,24 @@ public class DraggableLine {
         anchor.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                setAnchorsVisible(true);
                 mousePressPoint.set(null) ;
-                //onMouseReleased(event,anchor);
+                if (onMouseReleased != null) {
+                    onMouseReleased.apply(event, anchor);
+                }
                 event.consume();
             }
         });
         return anchor;
     }
 
+
     //endregion Private Methods
 
+
+    private Procedure2<MouseEvent,Circle> onMouseReleased;
+
+    public void setOnMouseReleased(Procedure2<MouseEvent,Circle> onMouseReleased) {
+        this.onMouseReleased = onMouseReleased;
+    }
 }

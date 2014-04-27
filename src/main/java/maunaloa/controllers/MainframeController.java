@@ -10,16 +10,12 @@ import javafx.util.StringConverter;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.repository.StockRepository;
 import maunaloa.repository.WindowDressingRepository;
-import oahu.domain.Tuple;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
-import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
-import oahux.controllers.MaunaloaChartViewModel;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -93,10 +89,10 @@ public class MainframeController {
                 };
 
 
-        initController.call(candlesticksController, "Candlesticks", 1, candlesticksChart);
-        initController.call(weeksController,"Weeks",2,weeklyChart);
-        initController.call(obxCandlesticksController,"OBX Candlest.",3,obxCandlesticksChart);
-        initController.call(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
+        initController.apply(candlesticksController, "Candlesticks", 1, candlesticksChart);
+        initController.apply(weeksController, "Weeks", 2, weeklyChart);
+        initController.apply(obxCandlesticksController, "OBX Candlest.", 3, obxCandlesticksChart);
+        initController.apply(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
 
         initOptionsController();
 
@@ -112,15 +108,15 @@ public class MainframeController {
             optionsController.setStock(stock);
         };
 
-        rgDerivatives.selectedToggleProperty().addListener(e -> setStock.call());
+        rgDerivatives.selectedToggleProperty().addListener(e -> setStock.apply());
         cxLoadOptionsHtml.selectedProperty().addListener(e -> {
             if (cxLoadOptionsHtml.isSelected()) {
-                setStock.call();
+                setStock.apply();
             }
         });
         cxLoadStockHtml.selectedProperty().addListener(e -> {
             if (cxLoadStockHtml.isSelected()) {
-                setStock.call();
+                setStock.apply();
             }
         });
 

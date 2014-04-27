@@ -1,6 +1,7 @@
 package maunaloa.entities.windowdressing;
 
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
@@ -8,6 +9,10 @@ import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,6 +50,35 @@ public class FibLine implements ChartItem {
     //public FinancialCoord financialCoord()
     //endregion Properties
 
+    //region Private Methods
+    private void setupDraglineEvents() {
+        dragLine.setOnMouseReleased((evt,anchor) -> {
+            anchor.setCenterX(rulers.first().snapTo(anchor.getCenterX()));
+        });
+
+    }
+    static List<Color> _colors;
+    static int colorsIndex = 0;
+    static double PHI = 0.618034;
+    static double PHI_EXT = 1.272;
+    private static int getColorsIndex() {
+        if (colorsIndex >= _colors.size()) {
+            colorsIndex = 0;
+        }
+        return colorsIndex++;
+    }
+    private static Color getCurrentColor() {
+        if (_colors == null) {
+            _colors = new ArrayList<>();
+            _colors.add(Color.BLUEVIOLET);
+            _colors.add(Color.BROWN);
+            _colors.add(Color.CHOCOLATE);
+            _colors.add(Color.GREEN);
+        }
+        return _colors.get(getColorsIndex());
+    }
+    //endregion Private Methods
+
     //region Create
 
     public FibLine(String ticker,
@@ -55,6 +89,7 @@ public class FibLine implements ChartItem {
         this.location = location;
         this.rulers = rulers;
         this.dragLine = new DraggableLine(line);
+        setupDraglineEvents();
     }
 
 
@@ -93,8 +128,8 @@ public class FibLine implements ChartItem {
         if (_view == null) {
             if (dragLine == null) {
                 if (p1 == null) {
-                    IRuler hruler = rulers.first(); //viewModel.getHruler();
-                    IRuler vruler = rulers.second(); //viewModel.getVruler();
+                    IRuler hruler = rulers.first();
+                    IRuler vruler = rulers.second();
                     double p1x = hruler.calcPix(fp1.getX());
                     double p1y = vruler.calcPix(fp1.getY());
                     double p2x = hruler.calcPix(fp2.getX());
@@ -104,6 +139,7 @@ public class FibLine implements ChartItem {
                 else {
                     dragLine = new DraggableLine(p1.first(),p1.second(),p2.first(),p2.second());
                 }
+                setupDraglineEvents();
             }
             _view = dragLine.view();
         }
