@@ -66,7 +66,10 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     //region Interface WindowDressingRepository
     @Override
-    public List<ChartItem> fetchFibLines(String ticker, int location, int status) {
+    public List<ChartItem> fetchFibLines(String ticker,
+                                         int location,
+                                         int status,
+                                         Tuple<IRuler> rulers) {
         if (fibLines == null) {
             fibLines = new HashMap<>();
         }
@@ -85,26 +88,10 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     "p1" : { "x" : ISODate("2013-06-27T22:00:00Z"), "y" : 456.1936726241462 },
                     "p2" : { "x" : ISODate("2014-01-16T23:00:00Z"), "y" : 563.0399627169718 }
                     */
-                    /*
-                    DBObject p1 = (DBObject)obj.get("p1")
-                    DBObject p2 = (DBObject)obj.get("p2")
-
-                    double p1x = hruler.calcPix(p1.get("x"))
-                    double p1y = vruler.calcPix(p1.get("y"))
-
-                    double p2x = hruler.calcPix(p2.get("x"))
-                    double p2y = vruler.calcPix(p2.get("y"))
-                     */
                     ObjectId oid = (ObjectId)o.get("_id");
-                    MaunaloaChartViewModel vm = hub.getViewModel(location);
-                    System.out.println("View Model: " + vm);
                     FinancialCoord p1 = FinancialCoord.create((DBObject) o.get("p1"));
                     FinancialCoord p2 = FinancialCoord.create((DBObject)o.get("p2"));
-
-                    /*double p1x = hruler.calcPix(p1.get("x"));
-                    double p1y = vruler.calcPix(p1.get("y"));*/
-
-                    return new FibLine(oid,ticker,location,p1,p2,vm);
+                    return new FibLine(oid,ticker,location,p1,p2,rulers);
                 };
                 DBCollection collection = getConnection().getCollection("fibonacci");
                 BasicDBObject query = new BasicDBObject("tix",ticker);
@@ -120,11 +107,6 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         return result;
     }
 
-    private ControllerHub hub;
-    @Override
-    public void setControllerHub(ControllerHub hub) {
-        this.hub = hub;
-    }
     //endregion Interface WindowDressingRepository
 
 

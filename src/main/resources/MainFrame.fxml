@@ -50,8 +50,12 @@
                 <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Lines" fx:id="linesMenu" />
-            <Menu mnemonicParsing="false" text="MongoDB" fx:id="mongodbMenu" />
+            <Menu mnemonicParsing="false" text="Lines" fx:id="linesMenu">
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#onNewFibonacciLine" text="New Fibonacci line" />
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Repository" fx:id="reposMenu" />
           </menus>
         </MenuBar>
         <HBox prefHeight="-1.0" prefWidth="-1.0">

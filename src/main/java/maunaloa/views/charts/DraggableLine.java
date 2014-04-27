@@ -28,8 +28,8 @@ public class DraggableLine {
     private static double STROKE_WIDTH_NORMAL = 1.0;
     private static double STROKE_WIDTH_SELECTED = 4.0;
 
-    public DraggableLine(double x1, double y1, double x2, double y2) {
-        line = new Line(x1, y1, x2, y2);
+    public DraggableLine(Line line) {
+        this.line = line;
         line.setStrokeWidth(STROKE_WIDTH_NORMAL);
         anchorRadius = new SimpleDoubleProperty(5);
         anchorsVisible = new SimpleBooleanProperty(true);
@@ -37,6 +37,10 @@ public class DraggableLine {
         endAnchor = createAnchor(line.endXProperty(), line.endYProperty());
         group = new Group();
         group.getChildren().addAll(line, startAnchor, endAnchor);
+    }
+
+    public DraggableLine(double x1, double y1, double x2, double y2) {
+        this(new Line(x1, y1, x2, y2));
     }
     //endregion Init
 

@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 /**
  * Created by rcs on 4/12/14.
  */
-public class MainframeController implements ControllerHub {
+public class MainframeController {
     //region FXML
     @FXML private ChartCanvasController obxCandlesticksController;
     @FXML private ChartCanvasController obxWeeksController;
@@ -33,9 +33,6 @@ public class MainframeController implements ControllerHub {
     @FXML private ChartCanvasController weeksController;
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
-    @FXML private MenuBar myMenuBar;
-    @FXML private Menu linesMenu;
-    @FXML private Menu mongodbMenu;
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
@@ -43,11 +40,40 @@ public class MainframeController implements ControllerHub {
     @FXML private CheckBox cxIsCloud;
     @FXML private Label lblLocalMongodbUrl;
     @FXML private Label lblSqlUrl;
+
+   /* @FXML private MenuBar myMenuBar;
+    @FXML private Menu linesMenu;
+    @FXML private Menu mongodbMenu;
+    */
+
     //endregion FXML
+
+    //region Private Methods
+    private ChartCanvasController currentController(int location) {
+        ChartCanvasController result = null;
+        switch (location) {
+            case 1: result = candlesticksController;
+                break;
+            case 2: result = weeksController;
+                break;
+            case 3: result = obxCandlesticksController;
+                break;
+            case 4: result = obxWeeksController;
+        }
+        return result;
+    }
+    //endregion Private Methods
 
     //region Events
     public void close(ActionEvent event)  {
         System.exit(0);
+    }
+    public void onNewFibonacciLine(ActionEvent event)  {
+        int index =  myTabPane.getSelectionModel().getSelectedIndex();
+        ChartCanvasController curC = currentController(index);
+        if (curC != null) {
+            curC.onNewFibonacciLine();
+        }
     }
     //endregion Events
 
@@ -73,6 +99,7 @@ public class MainframeController implements ControllerHub {
         initController.call(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
 
         initOptionsController();
+
     }
 
     private void initOptionsController() {
@@ -205,31 +232,7 @@ public class MainframeController implements ControllerHub {
 
     public void setWindowDressingRepository(WindowDressingRepository windowDressingRepository) {
         this.windowDressingRepository = windowDressingRepository;
-        this.windowDressingRepository.setControllerHub(this);
     }
     //endregion Properties
-
-    //region Private Methods
-    private ChartCanvasController chartCanvasControllerFor(int location) {
-        switch (location) {
-            case 1: return candlesticksController;
-            case 2: return weeksController;
-            case 3: return obxCandlesticksController;
-            case 4: return obxWeeksController;
-            default: return null;
-        }
-    }
-    //endregion Private Methods
-
-    //region Interface ControllerHub
-    @Override
-    public MaunaloaChartViewModel getViewModel(int location) {
-        return chartCanvasControllerFor(location);
-
-/*        ChartCanvasController curC = chartCanvasControllerFor(location);
-        return curC == null ? null : new Tuple<IRuler>(curC.getHruler(), curC.getVruler());*/
-    }
-
-    //endregion Interface ControllerHub
 }
 

@@ -3,6 +3,8 @@ package maunaloa.repository;
 import maunaloa.controllers.ControllerHub;
 import maunaloa.entities.windowdressing.FibLine;
 import maunaloa.views.charts.ChartItem;
+import oahu.domain.Tuple;
+import oahux.chart.IRuler;
 
 import java.util.List;
 
@@ -19,7 +21,6 @@ public interface WindowDressingRepository {
     public static final int FIBLINES = 1;
     public static final int LEVEL = 2;
     public static final int ALL_ITEMS = 3;
-    List<ChartItem> fetchFibLines(String ticker, int location, int status);
+    List<ChartItem> fetchFibLines(String ticker, int location, int status, Tuple<IRuler> rulers);
     // void invalidate(int whichOnes);
-    void setControllerHub(ControllerHub hub);
 }

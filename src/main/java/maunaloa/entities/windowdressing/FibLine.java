@@ -1,12 +1,12 @@
 package maunaloa.entities.windowdressing;
 
 import javafx.scene.Node;
+import javafx.scene.shape.Line;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
 import oahux.chart.IRuler;
-import oahux.controllers.MaunaloaChartViewModel;
 import org.bson.types.ObjectId;
 
 /**
@@ -17,7 +17,8 @@ import org.bson.types.ObjectId;
  */
 public class FibLine implements ChartItem {
     //region Properties
-    private final MaunaloaChartViewModel viewModel;
+    //private final MaunaloaChartViewModel viewModel;
+    private final Tuple<IRuler> rulers;
     private ObjectId oid;
     private final String ticker;
     private final int location;
@@ -48,14 +49,26 @@ public class FibLine implements ChartItem {
 
     public FibLine(String ticker,
                    int location,
-                   Tuple<Double> p1,
-                   Tuple<Double> p2,
-                   MaunaloaChartViewModel viewModel) {
-        this.p1 = p1;
-        this.p2 = p2;
-        this.viewModel = viewModel;
+                   Line line,
+                   Tuple<IRuler> rulers) {
         this.ticker = ticker;
         this.location = location;
+        this.rulers = rulers;
+        this.dragLine = new DraggableLine(line);
+    }
+
+
+
+    public FibLine(String ticker,
+                   int location,
+                   Tuple<Double> p1,
+                   Tuple<Double> p2,
+                   Tuple<IRuler> rulers) {
+        this.p1 = p1;
+        this.p2 = p2;
+        this.ticker = ticker;
+        this.location = location;
+        this.rulers = rulers;
     }
 
     public FibLine(ObjectId oid,
@@ -63,13 +76,13 @@ public class FibLine implements ChartItem {
                    int location,
                    FinancialCoord fp1,
                    FinancialCoord fp2,
-                   MaunaloaChartViewModel viewModel) {
+                   Tuple<IRuler> rulers) {
         this.oid = oid;
         this.ticker = ticker;
         this.location = location;
         this.fp1 = fp1;
         this.fp2 = fp2;
-        this.viewModel = viewModel;
+        this.rulers = rulers;
     }
     //endregion Create
 
@@ -78,18 +91,21 @@ public class FibLine implements ChartItem {
     @Override
     public Node view() {
         if (_view == null) {
-            if (p1 == null) {
-                IRuler hruler = viewModel.getHruler();
-                IRuler vruler = viewModel.getVruler();
-                double p1x = hruler.calcPix(fp1.getX());
-                double p1y = vruler.calcPix(fp1.getY());
-                double p2x = hruler.calcPix(fp2.getX());
-                double p2y = vruler.calcPix(fp2.getY());
-                dragLine = new DraggableLine(p1x,p1y,p2x,p2y);
+            if (dragLine == null) {
+                if (p1 == null) {
+                    IRuler hruler = rulers.first(); //viewModel.getHruler();
+                    IRuler vruler = rulers.second(); //viewModel.getVruler();
+                    double p1x = hruler.calcPix(fp1.getX());
+                    double p1y = vruler.calcPix(fp1.getY());
+                    double p2x = hruler.calcPix(fp2.getX());
+                    double p2y = vruler.calcPix(fp2.getY());
+                    dragLine = new DraggableLine(p1x,p1y,p2x,p2y);
+                }
+                else {
+                    dragLine = new DraggableLine(p1.first(),p1.second(),p2.first(),p2.second());
+                }
             }
-            else {
-                dragLine = new DraggableLine(p1.first(),p1.second(),p2.first(),p2.second());
-            }
+            _view = dragLine.view();
         }
         return _view;
     }
