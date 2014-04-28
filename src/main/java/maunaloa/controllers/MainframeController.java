@@ -16,6 +16,7 @@ import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -45,9 +46,10 @@ public class MainframeController {
     //endregion FXML
 
     //region Private Methods
-    private ChartCanvasController currentController(int location) {
+    private Optional<ChartCanvasController> currentController() {
+        int index =  myTabPane.getSelectionModel().getSelectedIndex();
         ChartCanvasController result = null;
-        switch (location) {
+        switch (index) {
             case 1: result = candlesticksController;
                 break;
             case 2: result = weeksController;
@@ -56,7 +58,7 @@ public class MainframeController {
                 break;
             case 4: result = obxWeeksController;
         }
-        return result;
+        return result == null ? Optional.empty() : Optional.of(result);
     }
     //endregion Private Methods
 
@@ -65,11 +67,10 @@ public class MainframeController {
         System.exit(0);
     }
     public void onNewFibonacciLine(ActionEvent event)  {
-        int index =  myTabPane.getSelectionModel().getSelectedIndex();
-        ChartCanvasController curC = currentController(index);
-        if (curC != null) {
-            curC.onNewFibonacciLine();
-        }
+        currentController().ifPresent(ChartCanvasController::onNewFibonacciLine);
+    }
+    public void onFibLinesFromRepos(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
     }
     //endregion Events
 
