@@ -46,7 +46,7 @@ public class DraggableLine {
     //endregion Init
 
     //region Public Methods
-    public Node view() {
+    public Group view() {
         return group;
     }
 
