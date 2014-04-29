@@ -100,16 +100,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
     public void onFibLinesFromRepos() {
         List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
-
         if ((items != null) && (items.size() > 0)) {
             List<Node> chartItems = items.stream().map(ChartItem::view).collect(Collectors.toList());
             myPane.getChildren().addAll(chartItems);
-
-            //myPane.getChildren().addAll(items.stream().map(ChartItem::view).collect(Collectors.toList()));
         }
-    }
-    public void addFibLines(List<ChartItem> items) {
-        //myPane.getChildren().addAll(items.stream().map(ChartItem::view).collect(Collectors.toList()));
     }
     //endregion Events
 

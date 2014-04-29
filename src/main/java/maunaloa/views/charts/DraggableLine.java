@@ -16,7 +16,7 @@ import oahu.functional.Procedure2;
  * Date: 22.04.14
  * Time: 15:58
  */
-public class DraggableLine {
+public class DraggableLine extends AbstractSelectableLine {
     //region Init
     private final Line line ;
     private final Circle startAnchor ;
