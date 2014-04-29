@@ -9,6 +9,7 @@ import javafx.scene.Node;
  * Time: 15:14
  */
 public interface ChartItem {
+    public static int NA = 0;
     Node view();
     int getStatus();
     void setStatus(int value);

@@ -25,9 +25,6 @@ public class DraggableLine extends AbstractSelectableLine {
     private final DoubleProperty anchorRadius;
     private final BooleanProperty anchorsVisible ;
 
-    private static double STROKE_WIDTH_NORMAL = 1.0;
-    private static double STROKE_WIDTH_SELECTED = 4.0;
-
     public DraggableLine(Line line) {
         this.line = line;
         line.setStrokeWidth(STROKE_WIDTH_NORMAL);
@@ -37,6 +34,7 @@ public class DraggableLine extends AbstractSelectableLine {
         endAnchor = createAnchor(line.endXProperty(), line.endYProperty());
         group = new Group();
         group.getChildren().addAll(line, startAnchor, endAnchor);
+        addMouseEvents(line);
     }
 
     public DraggableLine(double x1, double y1, double x2, double y2) {
@@ -49,16 +47,13 @@ public class DraggableLine extends AbstractSelectableLine {
         return group;
     }
 
-    public Line getLine() {
-        return line;
-    }
-
-    /*public void addNode(Node node) {
-        group.getChildren().add(node);
-    }*/
-
     public void setAnchorsVisible(boolean visible) {
         anchorsVisible.set(visible);
+    }
+
+    @Override
+    public Line getLine() {
+        return line;
     }
     //endregion Public Methods
 
@@ -118,9 +113,11 @@ public class DraggableLine extends AbstractSelectableLine {
     //endregion Private Methods
 
 
+    //region Events
     private Procedure2<MouseEvent,Circle> onMouseReleased;
 
     public void setOnMouseReleased(Procedure2<MouseEvent,Circle> onMouseReleased) {
         this.onMouseReleased = onMouseReleased;
     }
+    //endregion Events
 }

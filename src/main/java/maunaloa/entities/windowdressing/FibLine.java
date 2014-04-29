@@ -34,7 +34,7 @@ public class FibLine implements ChartItem {
     private Tuple<Double> p1,p2;
 
     private DraggableLine dragLine;
-    private int status;
+    private int status = ChartItem.NA;
 
     public ObjectId getOid() {
         return oid;
