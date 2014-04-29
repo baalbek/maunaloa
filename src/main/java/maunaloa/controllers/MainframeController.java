@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 /**
  * Created by rcs on 4/12/14.
  */
-public class MainframeController {
+public class MainframeController implements ControllerHub {
     //region FXML
     @FXML private ChartCanvasController obxCandlesticksController;
     @FXML private ChartCanvasController obxWeeksController;
@@ -85,7 +85,7 @@ public class MainframeController {
                     controller.setName(name);
                     controller.setLocation(location);
                     controller.setChart(chart);
-                    controller.setStockRepository(getStockRepository());
+                    controller.setHub(this);
                     System.out.println("Setting up controller " + name);
                 };
 
@@ -211,6 +211,7 @@ public class MainframeController {
         this.obxWeeklyChart = obxWeeklyChart;
     }
 
+    @Override
     public StockRepository getStockRepository() {
         return stockRepository;
     }
@@ -230,6 +231,26 @@ public class MainframeController {
     public void setWindowDressingRepository(WindowDressingRepository windowDressingRepository) {
         this.windowDressingRepository = windowDressingRepository;
     }
+    @Override
+    public WindowDressingRepository getWindowDressingRepository() {
+        return windowDressingRepository;
+    }
+
     //endregion Properties
+
+    //region REPL Demo Methods
+    //*
+    public java.util.List<javafx.scene.Node> fetchNodes(String ticker, int location) {
+        oahu.domain.Tuple<oahux.chart.IRuler> rulers = new oahu.domain.Tuple<>(
+                                                maunaloax.views.chart.DefaultDateRuler.createDummy(),
+                                                maunaloax.views.chart.DefaultVRuler.createDummy());
+        java.util.List<maunaloa.views.charts.ChartItem> items =
+            windowDressingRepository.fetchFibLines(ticker,location,0,rulers);
+        return items.stream().map(maunaloa.views.charts.ChartItem::view).collect(java.util.stream.Collectors.toList());
+    }
+
+
+    //*/
+    //endregion REPL Demo Methods
 }
 

@@ -4,6 +4,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,7 @@ import oahux.controllers.MaunaloaChartViewModel;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
@@ -31,7 +33,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     @FXML private Canvas myCanvas;
     @FXML private VBox myContainer;
     @FXML private Pane myPane;
-    private WindowDressingRepository windowDressingRepository;
     //endregion FXML
 
     //region Init
@@ -98,13 +99,17 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         });
     }
     public void onFibLinesFromRepos() {
-        List<ChartItem> items = windowDressingRepository.fetchFibLines(stock.getTicker(),location,0,getRulers());
-        items.stream().forEach(item -> {
-            System.out.println(item.view());
-        });
+        List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
+
+        if ((items != null) && (items.size() > 0)) {
+            List<Node> chartItems = items.stream().map(ChartItem::view).collect(Collectors.toList());
+            myPane.getChildren().addAll(chartItems);
+
+            //myPane.getChildren().addAll(items.stream().map(ChartItem::view).collect(Collectors.toList()));
+        }
     }
     public void addFibLines(List<ChartItem> items) {
-        myPane.getChildren().addAll(items.stream().map(ChartItem::view).collect(Collectors.toList()));
+        //myPane.getChildren().addAll(items.stream().map(ChartItem::view).collect(Collectors.toList()));
     }
     //endregion Events
 
@@ -115,6 +120,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private Stock stock;
     private IRuler vruler;
     private IRuler hruler;
+    private ControllerHub hub;
 
     private StockRepository stockRepository;
     public void setName(String name) {
@@ -134,23 +140,20 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             chart.draw(myCanvas);
         }
     }
-    public StockRepository getStockRepository() {
-        return stockRepository;
+    public ControllerHub getHub() {
+        return hub;
     }
 
-    public void setStockRepository(StockRepository stockRepository) {
-        this.stockRepository = stockRepository;
+    public void setHub(ControllerHub hub) {
+        this.hub = hub;
     }
 
-    public void setWindowDressingRepository(WindowDressingRepository windowDressingRepository) {
-        this.windowDressingRepository = windowDressingRepository;
-    }
     //endregion Properties
 
     //region MaunaloaChartViewModel
     @Override
     public Collection<StockPrice> stockPrices(int period) {
-        return getStockRepository().stockPrices(getStock().getTicker(),-1);
+        return hub.getStockRepository().stockPrices(getStock().getTicker(),-1);
     }
 
     @Override
@@ -177,6 +180,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     public void setHruler(IRuler ruler) {
         this.hruler = ruler;
     }
+
+
 
     //endregion MaunaloaChartViewModel
 }
