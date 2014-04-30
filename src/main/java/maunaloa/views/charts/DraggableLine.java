@@ -1,7 +1,6 @@
 package maunaloa.views.charts;
 
 import javafx.beans.property.*;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -70,41 +69,32 @@ public class DraggableLine extends AbstractSelectableLine {
         //anchor.getStyleClass().add("draggable-line-anchor");
 
         final ObjectProperty<Point2D> mousePressPoint = new SimpleObjectProperty<>();
-        anchor.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        anchor.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            mousePressPoint.set(new Point2D(event.getX(), event.getY()));
+            //onMousePressed();
+            event.consume();
+        });
+        anchor.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
+            if (mousePressPoint.get() != null) {
+                setAnchorsVisible(false);
+                double deltaX = event.getX()-mousePressPoint.get().getX();
+                double deltaY = event.getY()-mousePressPoint.get().getY();
                 mousePressPoint.set(new Point2D(event.getX(), event.getY()));
-                //onMousePressed();
+                double oldCenterX = anchor.getCenterX() ;
+                double oldCenterY = anchor.getCenterY();
+                anchor.setCenterX(oldCenterX+deltaX);
+                anchor.setCenterY(oldCenterY + deltaY);
+                //onMouseDragged(event);
                 event.consume();
             }
         });
-        anchor.addEventHandler(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (mousePressPoint.get() != null) {
-                    setAnchorsVisible(false);
-                    double deltaX = event.getX()-mousePressPoint.get().getX();
-                    double deltaY = event.getY()-mousePressPoint.get().getY();
-                    mousePressPoint.set(new Point2D(event.getX(), event.getY()));
-                    double oldCenterX = anchor.getCenterX() ;
-                    double oldCenterY = anchor.getCenterY();
-                    anchor.setCenterX(oldCenterX+deltaX);
-                    anchor.setCenterY(oldCenterY + deltaY);
-                    //onMouseDragged(event);
-                    event.consume();
-                }
+        anchor.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
+            setAnchorsVisible(true);
+            mousePressPoint.set(null) ;
+            if (onMouseReleased != null) {
+                onMouseReleased.apply(event, anchor);
             }
-        });
-        anchor.addEventHandler(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setAnchorsVisible(true);
-                mousePressPoint.set(null) ;
-                if (onMouseReleased != null) {
-                    onMouseReleased.apply(event, anchor);
-                }
-                event.consume();
-            }
+            event.consume();
         });
         return anchor;
     }

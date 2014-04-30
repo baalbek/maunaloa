@@ -5,6 +5,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import maunaloa.MaunaloaStatus;
+import maunaloa.StatusCodes;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
@@ -34,7 +36,6 @@ public class FibLine implements ChartItem {
     private Tuple<Double> p1,p2;
 
     private DraggableLine dragLine;
-    private int status = ChartItem.NA;
 
     public ObjectId getOid() {
         return oid;
@@ -190,14 +191,36 @@ public class FibLine implements ChartItem {
         return _view;
     }
 
+    private MaunaloaStatus status;
+    @Override
+    public MaunaloaStatus getStatus() {
+        if (status == null) {
+            return new MaunaloaStatus(StatusCodes.NA,
+                                      dragLine.getStatus());
+        }
+        return status;
+    }
+
+
+    /*
     @Override
     public int getStatus() {
-        return status;
+        if (oid == null) {
+            if (dragLine.getStatus() == ChartStatusCodes.SELECTED) {
+                return ChartItem.SELECTED;
+            }
+            else {
+                return ChartItem.NA;
+            }
+        }
+        else {
+            return ChartItem.NA;
+        }
     }
 
     @Override
     public void setStatus(int value) {
         this.status = value;
-    }
+    }*/
     //region Interface ChartItem
 }

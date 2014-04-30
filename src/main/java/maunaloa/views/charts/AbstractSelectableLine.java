@@ -1,8 +1,12 @@
 package maunaloa.views.charts;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import maunaloa.MaunaloaStatus;
+import maunaloa.StatusCodes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,17 +23,15 @@ public abstract class AbstractSelectableLine {
     public static double STROKE_WIDTH_SELECTED = 2.0;
     public static double STROKE_WIDTH_ENTERED = 4.0;
 
-    //region Status Codes
-    //endregion Status Codes
+    //region MaunaloaStatus Codes
+    //endregion MaunaloaStatus Codes
 
 
     protected static Map<Integer,Color> statusColors;
     static {
         statusColors = new HashMap<>();
-        statusColors.put(ChartStatusCodes.NORMAL, Color.BLACK);
-        statusColors.put(ChartStatusCodes.SELECTED, Color.RED);
-        statusColors.put(ChartStatusCodes.SAVED_TO_DB, Color.GREEN);
-        statusColors.put(ChartStatusCodes.SAVED_TO_DB_SELECTED, Color.AQUAMARINE);
+        statusColors.put(StatusCodes.UNSELECTED, Color.BLACK);
+        statusColors.put(StatusCodes.SELECTED, Color.RED);
     }
 
 
@@ -38,35 +40,35 @@ public abstract class AbstractSelectableLine {
             line.setStrokeWidth(STROKE_WIDTH_ENTERED);
         });
         line.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
-            double sw = getStatus() == ChartStatusCodes.NORMAL ? STROKE_WIDTH_NORMAL : STROKE_WIDTH_SELECTED;
+            double sw = getStatus() == StatusCodes.UNSELECTED ? STROKE_WIDTH_NORMAL : STROKE_WIDTH_SELECTED;
             line.setStrokeWidth(sw);
         });
         line.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             switch (getStatus()) {
-                case ChartStatusCodes.NORMAL:
-                    setStatus(ChartStatusCodes.SELECTED);
+                case StatusCodes.UNSELECTED:
+                    setStatus(StatusCodes.SELECTED);
                     break;
-                case ChartStatusCodes.SELECTED:
-                    setStatus(ChartStatusCodes.NORMAL);
-                    break;
-                case ChartStatusCodes.SAVED_TO_DB:
-                    setStatus(ChartStatusCodes.SAVED_TO_DB_SELECTED);
-                    break;
-                case ChartStatusCodes.SAVED_TO_DB_SELECTED:
-                    setStatus(ChartStatusCodes.SAVED_TO_DB);
+                case StatusCodes.SELECTED:
+                    setStatus(StatusCodes.UNSELECTED);
                     break;
             }
         });
     }
 
-    private int status = ChartStatusCodes.NORMAL;
-    public void setStatus(int status) {
-        this.status = status;
+    //private int status = StatusCodes.UNSELECTED;
+    private IntegerProperty status = new SimpleIntegerProperty(StatusCodes.UNSELECTED);
+
+    public void setStatus(int value) {
+        status.set(value);
         Line line = getLine();
-        line.setStroke(statusColors.get(status));
+        line.setStroke(statusColors.get(status.get()));
         //line.setStrokeWidth(STROKE_WIDTH_SELECTED);
     }
     public int getStatus() {
+        return status.get();
+    }
+
+    public IntegerProperty  getStatusProperty() {
         return status;
     }
 
