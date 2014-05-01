@@ -53,6 +53,8 @@
             <Menu mnemonicParsing="false" text="Lines" fx:id="linesMenu">
                 <items>
                     <MenuItem mnemonicParsing="false" onAction="#onNewFibonacciLine" text="New Fibonacci Line" />
+                    <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Delete Selected" />
+                    <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="Delete All" />
                 </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Repository">

@@ -56,7 +56,7 @@ public class FibonacciHelper extends AbstractControllerHelper {
                 line.setStartX(hruler.snapTo(line.getStartX()));
                 line.setEndX(hruler.snapTo(line.getEndX()));
 
-                FibLine fibline = new FibLine(stock.getTicker(),boss.getLocation(),line,boss.getRulers());
+                FibLine fibline = new FibLine(stock.getTicker(), boss.getLocation(), line, boss.getRulers());
 
                 //myPane.getChildren().add(fibline.view());
                 updateMyPaneLines(fibline, lineMap());
@@ -78,6 +78,12 @@ public class FibonacciHelper extends AbstractControllerHelper {
     public void notifyStockChanged() {
         refreshLines(lineMap());
     }
+    public void onDeleteSelLines() {
+
+    }
+    public void onDeleteAllLines() {
+
+    }
     //endregion Events
 
     private Map<Stock,List<ChartItem>> _lineMap;
@@ -87,4 +93,5 @@ public class FibonacciHelper extends AbstractControllerHelper {
         }
         return _lineMap;
     }
+
 }

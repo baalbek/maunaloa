@@ -72,6 +72,14 @@ public class MainframeController implements ControllerHub {
     public void onFibLinesFromRepos(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
     }
+
+    public void onDeleteSelLines(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onDeleteSelLines);
+    }
+    public void onDeleteAllLines(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onDeleteAllLines);
+    }
+
     //endregion Events
 
     //region Initialize

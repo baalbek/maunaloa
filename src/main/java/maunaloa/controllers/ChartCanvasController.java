@@ -57,6 +57,13 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
         fibonacciHelper.onFibLinesFromRepos(items);
     }
+    public void onDeleteSelLines() {
+        fibonacciHelper.onDeleteSelLines();
+    }
+    public void onDeleteAllLines() {
+        fibonacciHelper.onDeleteAllLines();
+
+    }
     //endregion Events
 
     //region Properties
