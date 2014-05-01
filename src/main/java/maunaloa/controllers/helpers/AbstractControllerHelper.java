@@ -1,5 +1,6 @@
 package maunaloa.controllers.helpers;
 
+import javafx.scene.Node;
 import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import oahu.financial.Stock;
@@ -9,7 +10,9 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 5/1/14.
@@ -23,36 +26,42 @@ public abstract class AbstractControllerHelper {
         this.boss = boss;
     }
 
+    protected void updateMyPaneLines(List<ChartItem> newLines, Map<Stock,List<ChartItem>> linesMap) {
+        getOrCreateEntry("lines from repos",linesMap).ifPresent(lines -> {
+            lines.addAll(newLines);
+            List<Node> chartItems = newLines.stream().map(ChartItem::view).collect(Collectors.toList());
+            boss.getPane().getChildren().addAll(chartItems);
+        });
+    }
     protected void updateMyPaneLines(ChartItem line, Map<Stock,List<ChartItem>> linesMap) {
+        getOrCreateEntry("line",linesMap).ifPresent(lines -> {
+            lines.add(line);
+            boss.getPane().getChildren().add(line.view());
+        });
+    }
+
+    private Optional<List<ChartItem>> getOrCreateEntry(String msg, Map<Stock,List<ChartItem>> linesMap) {
         if (linesMap == null) {
-            log.warn("My lines was null");
-            return;
+            log.warn("My lines was null!");
+            return Optional.empty();
         }
-        Stock curTicker = boss.getStock();
-        List<ChartItem> lines = linesMap.get(curTicker);
-        if (lines == null) {
-            lines = new ArrayList<>();
-            linesMap.put(curTicker, lines);
+
+        Stock stock = boss.getStock();
+
+        if (stock == null) {
+            log.warn("Stock was null!");
+            return Optional.empty();
         }
-        lines.add(line);
-        boss.getPane().getChildren().add(line.view());
-        Logx.debug(log, () -> String.format("Added line %s to %s", line, curTicker.getTicker()));
+        List<ChartItem> curLines = linesMap.get(stock);
+        if (curLines == null) {
+            curLines = new ArrayList<>();
+            linesMap.put(stock, curLines);
+            Logx.debug(log, () -> String.format("Added %s to %s", msg, stock.getTicker()));
+        }
+        return Optional.of(curLines);
     }
 
     protected void clearLines(Map<Stock,List<ChartItem>> myLines) {
-        /*
-        List<ChartItem> lines = myLines.get(boss.getStock());
-
-        if (lines == null) {
-            log.warn("My lines was null");
-            return;
-        }
-
-        for (ChartItem l : lines) {
-            boss.getPane().getChildren().remove(l.view());
-            Logx.debug(log, () -> String.format("Removed line %s from %s",l, boss.getStock().getTicker()));
-        }
-        */
         processLines("Deleted", myLines, l -> {
             boss.getPane().getChildren().remove(l.view());
         });

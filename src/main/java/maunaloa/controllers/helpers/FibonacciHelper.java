@@ -69,8 +69,7 @@ public class FibonacciHelper extends AbstractControllerHelper {
     }
     public void onFibLinesFromRepos(List<ChartItem> items) {
         if ((items != null) && (items.size() > 0)) {
-            List<Node> chartItems = items.stream().map(ChartItem::view).collect(Collectors.toList());
-            boss.getPane().getChildren().addAll(chartItems);
+            updateMyPaneLines(items,lineMap());
         }
     }
     public void notifyStockChanging() {
