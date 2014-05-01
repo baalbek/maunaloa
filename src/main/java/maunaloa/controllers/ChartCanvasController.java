@@ -1,17 +1,12 @@
 package maunaloa.controllers;
 
 import javafx.beans.InvalidationListener;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
-import maunaloa.entities.windowdressing.FibLine;
+import maunaloa.controllers.helpers.FibonacciHelper;
 import maunaloa.repository.StockRepository;
-import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
 import oahu.financial.Stock;
@@ -22,8 +17,6 @@ import oahux.controllers.MaunaloaChartViewModel;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 4/13/14.
@@ -36,6 +29,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     //endregion FXML
 
     //region Init
+    private FibonacciHelper fibonacciHelper;
     public void initialize() {
         InvalidationListener listener = e -> {
             if (stock == null) return;
@@ -46,64 +40,22 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
+        fibonacciHelper = new FibonacciHelper(this);
     }
 
     //endregion Init
 
     //region Private Methods
-    private Tuple<IRuler> _rulers;
-    private Tuple<IRuler> getRulers() {
-        if (_rulers == null) {
-            _rulers = new Tuple<>(getHruler(),getVruler());
-        }
-        return _rulers;
-    }
     //endregion Private Methods
 
     //region Events
-    ObjectProperty<Line> lineA = new SimpleObjectProperty<>();
+
     public void onNewFibonacciLine() {
-        if (stock == null) {
-            return;
-        }
-        myPane.setOnMousePressed(e -> {
-            double x = getHruler().snapTo(e.getX());
-            double y = e.getY();
-            Line line = new Line(x, y, x, y);
-            myPane.getChildren().add(line);
-            lineA.set(line);
-        });
-        myPane.setOnMouseDragged(e -> {
-            Line line = lineA.get();
-            if (line != null) {
-                line.setEndX(e.getX());
-                line.setEndY(e.getY());
-            }
-        });
-        myPane.setOnMouseReleased(e -> {
-            Line line = lineA.get();
-            if (line != null) {
-                myPane.getChildren().remove(line);
-
-                line.setStartX(getHruler().snapTo(line.getStartX()));
-                line.setEndX(getHruler().snapTo(line.getEndX()));
-
-                FibLine fibline = new FibLine(stock.getTicker(),location,line,getRulers());
-
-                myPane.getChildren().add(fibline.view());
-            }
-            lineA.set(null);
-            myPane.setOnMousePressed(null);
-            myPane.setOnMouseDragged(null);
-            myPane.setOnMouseReleased(null);
-        });
+        fibonacciHelper.onNewFibonacciLine();
     }
     public void onFibLinesFromRepos() {
         List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
-        if ((items != null) && (items.size() > 0)) {
-            List<Node> chartItems = items.stream().map(ChartItem::view).collect(Collectors.toList());
-            myPane.getChildren().addAll(chartItems);
-        }
+        fibonacciHelper.onFibLinesFromRepos(items);
     }
     //endregion Events
 
@@ -129,9 +81,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         chart.setViewModel(this);
     }
     public void setStock(Stock stock) {
-        this.stock = stock;
         if (stock != null) {
+            fibonacciHelper.notifyStockChanging();
+            this.stock = stock;
             chart.draw(myCanvas);
+            fibonacciHelper.notifyStockChanged();
         }
     }
     public ControllerHub getHub() {
@@ -175,7 +129,24 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         this.hruler = ruler;
     }
 
+    @Override
+    public Pane getPane() {
+        return myPane;
+    }
 
+    @Override
+    public int getLocation() {
+        return location;
+    }
+
+    private Tuple<IRuler> _rulers;
+    @Override
+    public Tuple<IRuler> getRulers() {
+        if (_rulers == null) {
+            _rulers = new Tuple<>(getHruler(),getVruler());
+        }
+        return _rulers;
+    }
 
     //endregion MaunaloaChartViewModel
 }
