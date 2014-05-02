@@ -1,5 +1,8 @@
 package maunaloa;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * Created with IntelliJ IDEA.
  * User: rcs
@@ -8,11 +11,15 @@ package maunaloa;
  */
 public class MaunaloaStatus {
     private int entityStatus;
-    private int chartLineStatus;
+    private final IntegerProperty chartLineStatusProperty;
 
-    public MaunaloaStatus(int entityStatus, int chartLineStatus) {
+    public MaunaloaStatus(int entityStatus, IntegerProperty chartLineStatusProperty) {
         this.entityStatus = entityStatus;
-        this.chartLineStatus = chartLineStatus;
+        this.chartLineStatusProperty = new SimpleIntegerProperty(StatusCodes.NA);
+
+        if (chartLineStatusProperty != null) {
+            this.chartLineStatusProperty.bind(chartLineStatusProperty);
+        }
     }
     public int getEntityStatus() {
         return entityStatus;
@@ -21,4 +28,9 @@ public class MaunaloaStatus {
     public void setEntityStatus(int entityStatus) {
         this.entityStatus = entityStatus;
     }
+
+    public int getChartLineStatus() {
+        return chartLineStatusProperty.get();
+    }
+
 }

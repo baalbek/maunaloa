@@ -82,7 +82,7 @@ public class FibonacciHelper extends AbstractControllerHelper {
 
     }
     public void onDeleteAllLines() {
-        clearLines(lineMap());
+        deleteAllLines(lineMap());
     }
     //endregion Events
 

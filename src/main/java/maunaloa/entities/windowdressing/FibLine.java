@@ -196,7 +196,7 @@ public class FibLine implements ChartItem {
     public MaunaloaStatus getStatus() {
         if (status == null) {
             return new MaunaloaStatus(StatusCodes.NA,
-                                      dragLine.getStatus());
+                                      dragLine.getStatusProperty());
         }
         return status;
     }

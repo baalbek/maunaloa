@@ -1,9 +1,13 @@
 package maunaloa.controllers.helpers;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import maunaloa.StatusCodes;
 import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
+import oahu.domain.Tuple2;
 import oahu.financial.Stock;
+import oahu.functional.Procedure2;
 import oahux.controllers.MaunaloaChartViewModel;
 import org.apache.log4j.Logger;
 
@@ -61,26 +65,75 @@ public abstract class AbstractControllerHelper {
         return Optional.of(curLines);
     }
 
-    protected void clearLines(Map<Stock,List<ChartItem>> myLines) {
-        processLines("Cleared", myLines, l -> {
-            boss.getPane().getChildren().remove(l.view());
-        }, null);
+    protected void deleteSelectedLines(Map<Stock,List<ChartItem>> chartItemsMap) {
+        processWith(chartItemsMap, (curlines,s) -> {
+            ObservableList<Node> container = boss.getPane().getChildren();
+            List<ChartItem> selectedLines =
+                    curlines.stream().
+                    filter(l -> l.getStatus().getChartLineStatus() == StatusCodes.SELECTED).
+                    collect(Collectors.toList());
+            selectedLines.forEach(l -> {
+                container.remove(l.view());
+                curlines.remove(l);
+            });
+        });
     }
-    protected void deleteLines(Map<Stock,List<ChartItem>> myLines) {
-        processLines("Deleted",
-                myLines,
-                l -> {
-                    boss.getPane().getChildren().remove(l.view());
-                },
-                lx -> {
-                    System.out.println("Postprocessing " + lx);
-                });
+
+    protected void deleteAllLines(Map<Stock,List<ChartItem>> chartItemsMap) {
+        processWith(chartItemsMap, (curlines,s) -> {
+            ObservableList<Node> container = boss.getPane().getChildren();
+            curlines.forEach(l -> {
+                container.remove(l.view());
+                Logx.debug(log, () -> String.format("Deleted line %s from %s", l, s.getTicker()));
+            });
+            chartItemsMap.remove(s);
+        });
+        /*Logx.debug(log, () -> {
+            StringBuffer buf = new StringBuffer("Remaining entries:").append("\n");
+            for (Stock s : chartItemsMap.keySet()) {
+                buf.append(s.getTicker()).append("\n");
+            }
+            return buf.toString();
+        });*/
     }
-    protected void refreshLines(Map<Stock,List<ChartItem>> myLines) {
-        processLines("Added", myLines, l -> {
-            boss.getPane().getChildren().add(l.view());
-        }, null);
+
+    protected void clearLines(Map<Stock,List<ChartItem>> chartItemsMap) {
+        processWith(chartItemsMap, (curlines,s) -> {
+            ObservableList<Node> container = boss.getPane().getChildren();
+            curlines.forEach(l -> {
+                container.remove(l.view());
+                Logx.debug(log, () -> String.format("Cleared line %s from %s", l, s.getTicker()));
+            });
+        });
     }
+    protected void refreshLines(Map<Stock,List<ChartItem>> chartItemsMap) {
+        processWith(chartItemsMap, (curlines,s) -> {
+            ObservableList<Node> container = boss.getPane().getChildren();
+            curlines.forEach(l -> {
+                container.add(l.view());
+                Logx.debug(log, () -> String.format("Refreshed line %s from %s", l, s.getTicker()));
+            });
+        });
+
+    }
+    private void processWith(Map<Stock, List<ChartItem>> myLines,
+                             Procedure2<List<ChartItem>,Stock> fn) {
+        Stock s = boss.getStock();
+        if (s == null) {
+            log.warn("Stock was null!");
+            return;
+        }
+        List<ChartItem> curlines = myLines.get(s);
+        if (curlines == null) {
+
+            if (s != null) {
+                log.warn(String.format("[%s] My lines was null. ", boss.getStock().getTicker()));
+            }
+            return;
+        }
+        fn.apply(curlines,s);
+    }
+    /*
     protected void processLines(String action,
                                 Map<Stock,List<ChartItem>> myLines,
                                 Consumer<ChartItem> fn,
@@ -103,4 +156,5 @@ public abstract class AbstractControllerHelper {
             postProcess.accept(lines);
         }
     }
+    */
 }
