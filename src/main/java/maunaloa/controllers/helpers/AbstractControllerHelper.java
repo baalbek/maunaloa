@@ -62,18 +62,30 @@ public abstract class AbstractControllerHelper {
     }
 
     protected void clearLines(Map<Stock,List<ChartItem>> myLines) {
-        processLines("Deleted", myLines, l -> {
+        processLines("Cleared", myLines, l -> {
             boss.getPane().getChildren().remove(l.view());
-        });
+        }, null);
+    }
+    protected void deleteLines(Map<Stock,List<ChartItem>> myLines) {
+        processLines("Deleted",
+                myLines,
+                l -> {
+                    boss.getPane().getChildren().remove(l.view());
+                },
+                lx -> {
+                    System.out.println("Postprocessing " + lx);
+                });
     }
     protected void refreshLines(Map<Stock,List<ChartItem>> myLines) {
         processLines("Added", myLines, l -> {
             boss.getPane().getChildren().add(l.view());
-        });
+        }, null);
     }
     protected void processLines(String action,
                                 Map<Stock,List<ChartItem>> myLines,
-                                Consumer<ChartItem> fn) {
+                                Consumer<ChartItem> fn,
+                                Consumer<List<ChartItem>> postProcess)
+                                 {
         List<ChartItem> lines = myLines.get(boss.getStock());
 
         if (lines == null) {
@@ -86,6 +98,9 @@ public abstract class AbstractControllerHelper {
         for (ChartItem l : lines) {
             fn.accept(l);
             Logx.debug(log, () -> String.format("%s line %s from %s",action, l, boss.getStock().getTicker()));
+        }
+        if (postProcess != null) {
+            postProcess.accept(lines);
         }
     }
 }
