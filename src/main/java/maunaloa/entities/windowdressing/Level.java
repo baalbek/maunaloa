@@ -11,7 +11,15 @@ import oahu.exceptions.NotImplementedException;
  * Date: 22.04.14
  * Time: 13:35
  */
-public class Level implements ChartItem {
+public class Level extends AbstractWindowDressingItem implements ChartItem {
+
+    //region Create
+    public Level(String ticker, int location) {
+        super(ticker,location);
+    }
+    //endregion Create
+
+    //region Interface ChartItem
     @Override
     public Node view() {
         throw new NotImplementedException();
@@ -21,4 +29,5 @@ public class Level implements ChartItem {
     public MaunaloaStatus getStatus() {
         throw new NotImplementedException();
     }
+    //endregion Interface ChartItem
 }

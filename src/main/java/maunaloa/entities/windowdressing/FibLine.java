@@ -25,32 +25,16 @@ import java.util.List;
  * Date: 22.04.14
  * Time: 13:34
  */
-public class FibLine implements ChartItem {
+public class FibLine extends AbstractWindowDressingItem implements ChartItem {
     //region Properties
     //private final MaunaloaChartViewModel viewModel;
     private final Tuple<IRuler> rulers;
-    private ObjectId oid;
-    private final String ticker;
-    private final int location;
+
     private FinancialCoord fp1, fp2;
     private Tuple<Double> p1,p2;
 
     private DraggableLine dragLine;
 
-    public ObjectId getOid() {
-        return oid;
-    }
-    public void setOid(ObjectId oid) {
-        this.oid = oid;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public int getLocation() {
-        return location;
-    }
     //public FinancialCoord financialCoord()
     //endregion Properties
 
@@ -130,8 +114,7 @@ public class FibLine implements ChartItem {
                    int location,
                    Line line,
                    Tuple<IRuler> rulers) {
-        this.ticker = ticker;
-        this.location = location;
+        super(ticker,location);
         this.rulers = rulers;
         this.dragLine = new DraggableLine(line);
         setupDragLine();
@@ -144,10 +127,9 @@ public class FibLine implements ChartItem {
                    Tuple<Double> p1,
                    Tuple<Double> p2,
                    Tuple<IRuler> rulers) {
+        super(ticker,location);
         this.p1 = p1;
         this.p2 = p2;
-        this.ticker = ticker;
-        this.location = location;
         this.rulers = rulers;
     }
 
@@ -157,9 +139,8 @@ public class FibLine implements ChartItem {
                    FinancialCoord fp1,
                    FinancialCoord fp2,
                    Tuple<IRuler> rulers) {
+        super(ticker,location);
         this.oid = oid;
-        this.ticker = ticker;
-        this.location = location;
         this.fp1 = fp1;
         this.fp2 = fp2;
         this.rulers = rulers;
@@ -200,27 +181,5 @@ public class FibLine implements ChartItem {
         }
         return status;
     }
-
-
-    /*
-    @Override
-    public int getStatus() {
-        if (oid == null) {
-            if (dragLine.getStatus() == ChartStatusCodes.SELECTED) {
-                return ChartItem.SELECTED;
-            }
-            else {
-                return ChartItem.NA;
-            }
-        }
-        else {
-            return ChartItem.NA;
-        }
-    }
-
-    @Override
-    public void setStatus(int value) {
-        this.status = value;
-    }*/
-    //region Interface ChartItem
+    //endregion Interface ChartItem
 }
