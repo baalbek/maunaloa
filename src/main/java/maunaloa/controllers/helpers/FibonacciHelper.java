@@ -2,7 +2,6 @@ package maunaloa.controllers.helpers;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import maunaloa.entities.windowdressing.FibLine;
@@ -14,7 +13,6 @@ import oahux.controllers.MaunaloaChartViewModel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 5/1/14.
@@ -79,7 +77,7 @@ public class FibonacciHelper extends AbstractControllerHelper {
         refreshLines(lineMap());
     }
     public void onDeleteSelLines() {
-
+        deleteSelectedLines(lineMap());
     }
     public void onDeleteAllLines() {
         deleteAllLines(lineMap());

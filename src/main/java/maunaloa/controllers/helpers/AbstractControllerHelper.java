@@ -133,28 +133,4 @@ public abstract class AbstractControllerHelper {
         }
         fn.apply(curlines,s);
     }
-    /*
-    protected void processLines(String action,
-                                Map<Stock,List<ChartItem>> myLines,
-                                Consumer<ChartItem> fn,
-                                Consumer<List<ChartItem>> postProcess)
-                                 {
-        List<ChartItem> lines = myLines.get(boss.getStock());
-
-        if (lines == null) {
-            Stock s = boss.getStock();
-            if (s != null) {
-                log.warn(String.format("[%s] My lines was null. ", boss.getStock().getTicker()));
-            }
-            return;
-        }
-        for (ChartItem l : lines) {
-            fn.accept(l);
-            Logx.debug(log, () -> String.format("%s line %s from %s",action, l, boss.getStock().getTicker()));
-        }
-        if (postProcess != null) {
-            postProcess.accept(lines);
-        }
-    }
-    */
 }
