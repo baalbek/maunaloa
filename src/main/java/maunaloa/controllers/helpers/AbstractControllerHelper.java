@@ -11,10 +11,7 @@ import oahu.functional.Procedure2;
 import oahux.controllers.MaunaloaChartViewModel;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -28,6 +25,14 @@ public abstract class AbstractControllerHelper {
 
     public AbstractControllerHelper(MaunaloaChartViewModel boss) {
         this.boss = boss;
+    }
+
+    private Map<Stock,List<ChartItem>> _lineMap;
+    protected Map<Stock,List<ChartItem>> lineMap() {
+        if (_lineMap  == null) {
+            _lineMap = new HashMap<>();
+        }
+        return _lineMap;
     }
 
     protected void updateMyPaneLines(List<ChartItem> newLines, Map<Stock,List<ChartItem>> linesMap) {

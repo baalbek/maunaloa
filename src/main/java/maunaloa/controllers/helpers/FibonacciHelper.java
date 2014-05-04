@@ -84,12 +84,5 @@ public class FibonacciHelper extends AbstractControllerHelper {
     }
     //endregion Events
 
-    private Map<Stock,List<ChartItem>> _lineMap;
-    private Map<Stock,List<ChartItem>> lineMap() {
-        if (_lineMap  == null) {
-            _lineMap = new HashMap<>();
-        }
-        return _lineMap;
-    }
 
 }
