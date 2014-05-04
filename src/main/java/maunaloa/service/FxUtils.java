@@ -1,17 +1,8 @@
 package maunaloa.service;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-import maunaloa.controllers.MongoDBController;
-import maunaloa.controllers.impl.MongoDBFetchFibController;
-import maunaloa.domain.MaunaloaContext;
-
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,6 +11,7 @@ import java.net.URL;
  * Time: 11:55
  */
 public class FxUtils {
+    /*
     public static void loadApp(MaunaloaContext ctx, String fxml, String title) {
         try {
             URL url = MongoDBFetchFibController.class.getResource(fxml);
@@ -41,6 +33,7 @@ public class FxUtils {
             e.printStackTrace();
         }
     }
+    //*/
     public static void closeView(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();

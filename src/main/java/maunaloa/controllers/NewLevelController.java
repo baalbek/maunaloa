@@ -1,16 +1,9 @@
 package maunaloa.controllers;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import maunaloa.controllers.MongoDBController;
-import maunaloa.domain.MaunaloaContext;
-import maunaloa.events.MainFrameControllerListener;
-import maunaloa.events.NewLevelEvent;
-import maunaloa.utils.FxUtils;
-import oahu.exceptions.NotImplementedException;
+import maunaloa.service.FxUtils;
 import org.apache.log4j.Logger;
 
 /**
@@ -28,31 +21,21 @@ public class NewLevelController {
     @FXML
     private TextField txLevel;
 
-    private MaunaloaContext ctx;
-
     public void initialize() {
-        btnCancel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                FxUtils.closeView(actionEvent);
-            }
+        btnCancel.setOnAction(event -> {
+            FxUtils.closeView(event);
         });
-        btnOk.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                fireNewLevelEvent();
-            }
+        btnOk.setOnAction(event -> {
+            fireNewLevelEvent();
         });
-        txLevel.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                fireNewLevelEvent();
-                FxUtils.closeView(actionEvent);
-            }
+        txLevel.setOnAction(event -> {
+            fireNewLevelEvent();
+            FxUtils.closeView(event);
         });
     }
 
     private void fireNewLevelEvent() {
+        /*
         NewLevelEvent evt =
                 new NewLevelEvent(
                         ctx.getLocation(),
@@ -61,10 +44,6 @@ public class NewLevelController {
         for (MainFrameControllerListener listener : ctx.getListeners()) {
             listener.onNewLevelEvent(evt);
         }
-    }
-
-    @Override
-    public void setContext(MaunaloaContext ctx) {
-        this.ctx = ctx;
+        //*/
     }
 }
