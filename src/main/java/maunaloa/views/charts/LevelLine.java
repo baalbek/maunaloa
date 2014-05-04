@@ -42,14 +42,15 @@ public class LevelLine extends AbstractSelectableLine {
     //endregion Init
 
     //region Private Methods
-    private void createLevel(double value, Color lineColor, String text){
+    private void createLevel(){
         Point2D pt0 = ruler.getUpperLeft();
         Point2D pt = ruler.getLowerRight();
-        double yBe = ruler.calcPix(value);
+        double yBe = ruler.calcPix(levelValue);
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
         line.setStroke(lineColor);
 
-        Text valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,text);
+        String labelText = "12.22";
+        Text valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,labelText);
         Circle anchor = createAnchor(line, valueLabel);
 
         group.getChildren().addAll(line,anchor);
@@ -110,6 +111,9 @@ public class LevelLine extends AbstractSelectableLine {
     //endregion Private Methods
 
     public Group view() {
+        if (group == null) {
+            createLevel();
+        }
         return group;
     }
 

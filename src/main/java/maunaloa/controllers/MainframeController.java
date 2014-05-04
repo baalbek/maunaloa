@@ -69,6 +69,9 @@ public class MainframeController implements ControllerHub {
     public void onNewFibonacciLine(ActionEvent event)  {
         currentController().ifPresent(ChartCanvasController::onNewFibonacciLine);
     }
+    public void onNewLevel(ActionEvent event)  {
+        currentController().ifPresent(ChartCanvasController::onNewLevel);
+    }
     public void onFibLinesFromRepos(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
     }

@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.controllers.helpers.FibonacciHelper;
+import maunaloa.controllers.helpers.LevelHelper;
 import maunaloa.repository.StockRepository;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
@@ -30,6 +31,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
     //region Init
     private FibonacciHelper fibonacciHelper;
+    private LevelHelper levelHelper;
     public void initialize() {
         InvalidationListener listener = e -> {
             if (stock == null) return;
@@ -41,6 +43,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
         fibonacciHelper = new FibonacciHelper(this);
+        levelHelper = new LevelHelper(this);
     }
 
     //endregion Init
@@ -52,6 +55,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
     public void onNewFibonacciLine() {
         fibonacciHelper.onNewFibonacciLine();
+    }
+    public void onNewLevel() {
+        levelHelper.onNewLevel();
     }
     public void onFibLinesFromRepos() {
         List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
