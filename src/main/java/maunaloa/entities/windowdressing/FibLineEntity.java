@@ -25,7 +25,7 @@ import java.util.List;
  * Date: 22.04.14
  * Time: 13:34
  */
-public class FibLine extends AbstractWindowDressingItem implements ChartItem {
+public class FibLineEntity extends AbstractWindowDressingItem implements ChartItem {
     //region Properties
     //private final MaunaloaChartViewModel viewModel;
     private final Tuple<IRuler> rulers;
@@ -110,10 +110,10 @@ public class FibLine extends AbstractWindowDressingItem implements ChartItem {
 
     //region Create
 
-    public FibLine(String ticker,
-                   int location,
-                   Line line,
-                   Tuple<IRuler> rulers) {
+    public FibLineEntity(String ticker,
+                         int location,
+                         Line line,
+                         Tuple<IRuler> rulers) {
         super(ticker,location);
         this.rulers = rulers;
         this.dragLine = new DraggableLine(line);
@@ -122,23 +122,23 @@ public class FibLine extends AbstractWindowDressingItem implements ChartItem {
 
 
 
-    public FibLine(String ticker,
-                   int location,
-                   Tuple<Double> p1,
-                   Tuple<Double> p2,
-                   Tuple<IRuler> rulers) {
+    public FibLineEntity(String ticker,
+                         int location,
+                         Tuple<Double> p1,
+                         Tuple<Double> p2,
+                         Tuple<IRuler> rulers) {
         super(ticker,location);
         this.p1 = p1;
         this.p2 = p2;
         this.rulers = rulers;
     }
 
-    public FibLine(ObjectId oid,
-                   String ticker,
-                   int location,
-                   FinancialCoord fp1,
-                   FinancialCoord fp2,
-                   Tuple<IRuler> rulers) {
+    public FibLineEntity(ObjectId oid,
+                         String ticker,
+                         int location,
+                         FinancialCoord fp1,
+                         FinancialCoord fp2,
+                         Tuple<IRuler> rulers) {
         super(ticker,location);
         this.oid = oid;
         this.fp1 = fp1;

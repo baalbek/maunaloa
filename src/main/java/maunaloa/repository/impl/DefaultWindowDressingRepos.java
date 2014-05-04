@@ -1,14 +1,12 @@
 package maunaloa.repository.impl;
 
 import com.mongodb.*;
-import maunaloa.controllers.ControllerHub;
-import maunaloa.entities.windowdressing.FibLine;
+import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
 import oahux.chart.IRuler;
-import oahux.controllers.MaunaloaChartViewModel;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
@@ -80,7 +78,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         }
         else {
             try {
-                Function<DBObject,FibLine> mongo2fibline = o -> {
+                Function<DBObject,FibLineEntity> mongo2fibline = o -> {
                     /*{ "_id" : ObjectId("531877ed389056a05cd67f79"),
                     "tix" : "OSEBX",
                     "active" : true,
@@ -91,7 +89,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     ObjectId oid = (ObjectId)o.get("_id");
                     FinancialCoord p1 = FinancialCoord.create((DBObject) o.get("p1"));
                     FinancialCoord p2 = FinancialCoord.create((DBObject)o.get("p2"));
-                    return new FibLine(oid,ticker,location,p1,p2,rulers);
+                    return new FibLineEntity(oid,ticker,location,p1,p2,rulers);
                 };
                 DBCollection collection = getConnection().getCollection("fibonacci");
                 BasicDBObject query = new BasicDBObject("tix",ticker);

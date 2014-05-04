@@ -4,15 +4,13 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
-import maunaloa.entities.windowdressing.FibLine;
+import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.views.charts.ChartItem;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by rcs on 5/1/14.
@@ -54,7 +52,7 @@ public class FibonacciHelper extends AbstractControllerHelper {
                 line.setStartX(hruler.snapTo(line.getStartX()));
                 line.setEndX(hruler.snapTo(line.getEndX()));
 
-                FibLine fibline = new FibLine(stock.getTicker(), boss.getLocation(), line, boss.getRulers());
+                FibLineEntity fibline = new FibLineEntity(stock.getTicker(), boss.getLocation(), line, boss.getRulers());
 
                 //myPane.getChildren().add(fibline.view());
                 updateMyPaneLines(fibline, lineMap());

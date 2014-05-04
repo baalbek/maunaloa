@@ -14,24 +14,24 @@ import org.bson.types.ObjectId;
  * Date: 22.04.14
  * Time: 13:35
  */
-public class Level extends AbstractWindowDressingItem implements ChartItem {
+public class LevelEntity extends AbstractWindowDressingItem implements ChartItem {
 
     private final double levelValue;
     private final IRuler vruler;
 
-    public Level(ObjectId oid,
-                 String ticker,
-                 int location,
-                 double levelValue,
-                 IRuler vruler) {
+    public LevelEntity(ObjectId oid,
+                       String ticker,
+                       int location,
+                       double levelValue,
+                       IRuler vruler) {
         this(ticker,location,levelValue,vruler);
         this.oid = oid;
     }
 
-    public Level(String ticker,
-                 int location,
-                 double levelValue,
-                 IRuler vruler) {
+    public LevelEntity(String ticker,
+                       int location,
+                       double levelValue,
+                       IRuler vruler) {
         super(ticker,location);
         this.levelValue = levelValue;
         this.vruler = vruler;
