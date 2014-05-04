@@ -1,6 +1,7 @@
 package maunaloa.controllers.helpers;
 
 import javafx.scene.layout.Pane;
+import maunaloa.entities.windowdressing.LevelEntity;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
@@ -21,5 +22,8 @@ public class LevelHelper extends AbstractControllerHelper {
         Pane myPane = boss.getPane();
         IRuler vruler = boss.getVruler();
 
+        LevelEntity levelEntity = new LevelEntity(stock.getTicker(),
+                                                  boss.getLocation(),
+                                                  )
     }
 }
