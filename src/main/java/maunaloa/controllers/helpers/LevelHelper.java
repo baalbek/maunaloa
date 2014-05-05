@@ -14,7 +14,10 @@ public class LevelHelper extends AbstractControllerHelper {
         super(boss);
     }
 
-    public void onNewLevel() {
+    public void addNewLevel(LevelEntity entity) {
+
+    }
+    /*public void onNewLevel() {
         Stock stock = boss.getStock();
         if (stock == null) {
             return;
@@ -25,5 +28,5 @@ public class LevelHelper extends AbstractControllerHelper {
         LevelEntity levelEntity = new LevelEntity(stock.getTicker(),
                                                   boss.getLocation(),
                                                   )
-    }
+    }*/
 }

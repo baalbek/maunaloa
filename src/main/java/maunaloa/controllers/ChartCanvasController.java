@@ -7,7 +7,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.controllers.helpers.FibonacciHelper;
 import maunaloa.controllers.helpers.LevelHelper;
+import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.StockRepository;
+import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
 import oahu.financial.Stock;
@@ -57,7 +59,14 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         fibonacciHelper.onNewFibonacciLine();
     }
     public void onNewLevel() {
-        levelHelper.onNewLevel();
+        NewLevelController controller = new NewLevelController((v) -> {
+            Stock stock = getStock();
+            if (stock != null) {
+                LevelEntity entity = new LevelEntity(stock.getTicker(),location,v,getVruler());
+                levelHelper.addNewLevel(entity);
+            }
+        });
+        FxUtils.loadApp("/NewLevelDialog.fxml", "New Level", controller);
     }
     public void onFibLinesFromRepos() {
         List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
@@ -68,7 +77,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
     public void onDeleteAllLines() {
         fibonacciHelper.onDeleteAllLines();
-
     }
     //endregion Events
 

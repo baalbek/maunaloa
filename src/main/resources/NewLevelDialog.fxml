@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox padding="$x2" prefHeight="100.0" prefWidth="219.0" xmlns:fx="http://javafx.com/fxml" fx:controller="maunaloa.controllers.NewLevelController">
+<VBox padding="$x2" prefHeight="100.0" prefWidth="219.0" xmlns:fx="http://javafx.com/fxml">
   <children>
     <HBox prefHeight="100.0" prefWidth="259.0">
       <children>
