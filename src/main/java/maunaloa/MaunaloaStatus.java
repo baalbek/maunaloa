@@ -10,11 +10,11 @@ import javafx.beans.property.SimpleIntegerProperty;
  * Time: 11:34
  */
 public class MaunaloaStatus {
-    private int entityStatus;
+    private IntegerProperty entityStatus;
     private final IntegerProperty chartLineStatusProperty;
 
-    public MaunaloaStatus(int entityStatus, IntegerProperty chartLineStatusProperty) {
-        this.entityStatus = entityStatus;
+    public MaunaloaStatus(IntegerProperty entityStatusProperty, IntegerProperty chartLineStatusProperty) {
+        this.entityStatus = entityStatusProperty;
         this.chartLineStatusProperty = new SimpleIntegerProperty(StatusCodes.NA);
 
         if (chartLineStatusProperty != null) {
@@ -22,11 +22,11 @@ public class MaunaloaStatus {
         }
     }
     public int getEntityStatus() {
-        return entityStatus;
+        return entityStatus.get();
     }
 
     public void setEntityStatus(int entityStatus) {
-        this.entityStatus = entityStatus;
+        this.entityStatus.set(entityStatus);
     }
 
     public int getChartLineStatus() {

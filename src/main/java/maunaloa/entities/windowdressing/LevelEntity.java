@@ -2,9 +2,9 @@ package maunaloa.entities.windowdressing;
 
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
+import maunaloa.StatusCodes;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.LevelLine;
-import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
 
@@ -18,6 +18,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
 
     private final double levelValue;
     private final IRuler vruler;
+    private LevelLine levelLine;
 
     public LevelEntity(ObjectId oid,
                        String ticker,
@@ -43,15 +44,29 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     @Override
     public Node view() {
         if (_view == null) {
-            LevelLine levelLine = new LevelLine(levelValue, vruler);
+            levelLine = new LevelLine(levelValue, vruler);
+            levelLine.setOnMouseReleased((evt,anchor) -> {
+                statusProperty().set(getEntityStatus());
+            });
             _view = levelLine.view();
         }
         return _view;
     }
 
+    private MaunaloaStatus status;
     @Override
     public MaunaloaStatus getStatus() {
-        throw new NotImplementedException();
+        if (status == null) {
+            return new MaunaloaStatus(statusProperty(),
+                                      levelLine.statusProperty());
+        }
+        return status;
     }
     //endregion Interface ChartItem
+
+    //region Private/Protected
+    protected int getEntityStatus() {
+       return StatusCodes.ENTITY_CLEAN;
+    }
+    //endregion
 }

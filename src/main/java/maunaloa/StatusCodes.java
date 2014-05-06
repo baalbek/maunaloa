@@ -11,5 +11,6 @@ public interface StatusCodes {
     public static int UNSELECTED = 1;
     public static int SELECTED = 2;
     public static int ENTITY_NEW = 3;
-    public static int ENTITY_DIRTY = 4;
+    public static int ENTITY_CLEAN = 4;
+    public static int ENTITY_DIRTY = 5;
 }

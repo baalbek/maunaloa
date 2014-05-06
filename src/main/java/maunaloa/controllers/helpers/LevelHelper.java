@@ -2,9 +2,12 @@ package maunaloa.controllers.helpers;
 
 import javafx.scene.layout.Pane;
 import maunaloa.entities.windowdressing.LevelEntity;
+import maunaloa.views.charts.ChartItem;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
+
+import java.util.List;
 
 /**
  * Created by rcs on 5/4/14.
@@ -17,16 +20,15 @@ public class LevelHelper extends AbstractControllerHelper {
     public void addNewLevel(LevelEntity entity) {
 
     }
-    /*public void onNewLevel() {
-        Stock stock = boss.getStock();
-        if (stock == null) {
-            return;
-        }
-        Pane myPane = boss.getPane();
-        IRuler vruler = boss.getVruler();
 
-        LevelEntity levelEntity = new LevelEntity(stock.getTicker(),
-                                                  boss.getLocation(),
-                                                  )
-    }*/
+    public void onDeleteSelLines() {
+        
+    }
+
+    public void onDeleteAllLines() {
+    }
+
+    public void onFibLinesFromRepos(List<ChartItem> items) {
+        
+    }
 }

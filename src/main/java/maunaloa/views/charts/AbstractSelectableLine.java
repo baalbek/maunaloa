@@ -4,8 +4,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import maunaloa.StatusCodes;
+import oahu.functional.Procedure2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,9 +63,16 @@ public abstract class AbstractSelectableLine {
         return status.get();
     }
 
-    public IntegerProperty  getStatusProperty() {
+    public IntegerProperty statusProperty() {
         return status;
     }
+
+    //region Events
+    protected Procedure2<MouseEvent,Circle> onMouseReleased;
+    public void setOnMouseReleased(Procedure2<MouseEvent,Circle> onMouseReleased) {
+        this.onMouseReleased = onMouseReleased;
+    }
+    //endregion Events
 
     public abstract Line getLine();
 }

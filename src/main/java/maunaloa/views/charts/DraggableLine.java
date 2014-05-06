@@ -7,7 +7,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import oahu.functional.Procedure2;
 
 /**
  * Created with IntelliJ IDEA.
@@ -99,15 +98,5 @@ public class DraggableLine extends AbstractSelectableLine {
         return anchor;
     }
 
-
     //endregion Private Methods
-
-
-    //region Events
-    private Procedure2<MouseEvent,Circle> onMouseReleased;
-
-    public void setOnMouseReleased(Procedure2<MouseEvent,Circle> onMouseReleased) {
-        this.onMouseReleased = onMouseReleased;
-    }
-    //endregion Events
 }

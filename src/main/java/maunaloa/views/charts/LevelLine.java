@@ -4,7 +4,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
@@ -49,10 +48,13 @@ public class LevelLine extends AbstractSelectableLine {
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
         line.setStroke(lineColor);
 
-        String labelText = "12.22";
+        //double yVal = (Double) ruler.calcValue(anchor.getCenterY());
+
+        String labelText = String.format("%.1f", levelValue);
         Text valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,labelText);
         Circle anchor = createAnchor(line, valueLabel);
 
+        group = new Group();
         group.getChildren().addAll(line,anchor);
         group.getChildren().add(valueLabel);
 
@@ -102,7 +104,9 @@ public class LevelLine extends AbstractSelectableLine {
         });
         anchor.addEventHandler(MouseEvent.MOUSE_RELEASED, event -> {
             mousePressPoint.set(null) ;
-            // onMouseReleased(event,anchor);
+            if (onMouseReleased != null) {
+                onMouseReleased.apply(event, anchor);
+            }
             event.consume();
         });
         return anchor;

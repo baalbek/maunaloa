@@ -1,5 +1,8 @@
 package maunaloa.entities.windowdressing;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import maunaloa.StatusCodes;
 import org.bson.types.ObjectId;
 
 /**
@@ -12,6 +15,7 @@ public abstract class AbstractWindowDressingItem {
     protected ObjectId oid;
     protected final String ticker;
     protected final int location;
+    private IntegerProperty status;
 
     public AbstractWindowDressingItem(String ticker,
                                       int location) {
@@ -32,4 +36,11 @@ public abstract class AbstractWindowDressingItem {
     public int getLocation() {
         return location;
     }
+    public IntegerProperty statusProperty() {
+        if (status == null) {
+            status = new SimpleIntegerProperty(getEntityStatus());
+        }
+        return status;
+    }
+    protected abstract int getEntityStatus();
 }
