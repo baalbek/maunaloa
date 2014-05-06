@@ -2,10 +2,12 @@ package maunaloa.repository.impl;
 
 import com.mongodb.*;
 import maunaloa.entities.windowdressing.FibLineEntity;
+import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
@@ -25,6 +27,8 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
     private Map<String,List<ChartItem>> fibLines;
+    private HashMap<String, List<ChartItem>> levels;
+
     private String makeKey(String ticker, int location) {
         return String.format("%s:%d", ticker, location);
     }
@@ -63,6 +67,44 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     //endregion Private Stuff
 
     //region Interface WindowDressingRepository
+    @Override
+    public List<ChartItem> fetchLevels(String ticker,
+                                       int location,
+                                       int status,
+                                       IRuler vruler) {
+        if (levels == null) {
+            levels = new HashMap<>();
+        }
+        String key = makeKey(ticker,location);
+        List<ChartItem> result = null;
+        if (levels.containsKey(key)) {
+            result = levels.get(key);
+        }
+        else {
+            Function<DBObject,LevelEntity> mongo2level = o -> {
+                /*{ "_id" : ObjectId("52f1494744aeff728437e6c9"),
+                    "tix" : "STL",
+                    "active" : true,
+                    "loc" : NumberLong(1),
+                    "value" : 140 }*/
+                ObjectId oid = (ObjectId)o.get("_id");
+                double level = (Double)o.get("value");
+                return new LevelEntity(oid,ticker,location,level,vruler);
+            };
+            try {
+                DBCollection collection = getConnection().getCollection("levels");
+                BasicDBObject query = new BasicDBObject("tix",ticker);
+                query.append("loc",location);
+                query.append("active",true);
+                DBCursor cursor = collection.find(query);
+                List<DBObject> objs = cursor.toArray();
+                result = objs.stream().map(mongo2level).collect(Collectors.toList());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
     @Override
     public List<ChartItem> fetchFibLines(String ticker,
                                          int location,
@@ -105,19 +147,22 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         return result;
     }
 
+
+    @Override
+    public boolean isCloud() {
+        return isCloud;
+    }
+    @Override
+    public void setCloud(boolean isCloud) {
+        this.isCloud = isCloud;
+    }
+
     //endregion Interface WindowDressingRepository
 
 
     //region Properties
 
     private boolean isCloud = false;
-
-    public boolean isCloud() {
-        return isCloud;
-    }
-    public void setCloud(boolean isCloud) {
-        this.isCloud = isCloud;
-    }
 
     private String mongodbHost;
 

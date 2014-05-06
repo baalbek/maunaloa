@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import maunaloa.MaunaloaStatus;
 import maunaloa.controllers.helpers.FibonacciHelper;
 import maunaloa.controllers.helpers.LevelHelper;
 import maunaloa.entities.windowdressing.LevelEntity;
@@ -17,6 +18,7 @@ import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
+import org.bson.types.ObjectId;
 
 import java.util.Collection;
 import java.util.List;
@@ -64,18 +66,27 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             if (stock != null) {
                 LevelEntity entity = new LevelEntity(stock.getTicker(),location,v,getVruler());
                 levelHelper.addNewLevel(entity);
-                myPane.getChildren().add(entity.view());
             }
         });
         FxUtils.loadApp("/NewLevelDialog.fxml", "New Level", controller);
     }
     public void onFibLinesFromRepos() {
-        List<ChartItem> items = hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
-        fibonacciHelper.onFibLinesFromRepos(items);
+        List<ChartItem> items =
+                hub.getWindowDressingRepository().fetchFibLines(
+                        stock.getTicker(),
+                        location,
+                        0,
+                        getRulers());
+        fibonacciHelper.onLinesFromRepos(items);
     }
     public void onLevelsFromRepos() {
-        List<ChartItem> items = null; //hub.getWindowDressingRepository().fetchFibLines(stock.getTicker(), location, 0, getRulers());
-        levelHelper.onFibLinesFromRepos(items);
+        List<ChartItem> items =
+                hub.getWindowDressingRepository().fetchLevels(
+                        stock.getTicker(),
+                        location,
+                        0,
+                        vruler);
+        levelHelper.onLinesFromRepos(items);
     }
     public void onDeleteSelLines() {
         fibonacciHelper.onDeleteSelLines();
@@ -86,10 +97,22 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         levelHelper.onDeleteAllLines();
     }
     public void onSaveAllToRepos() {
-
+        List<ChartItem> levels = levelHelper.items();
+        levels.forEach(l -> {
+            MaunaloaStatus stat = l.getStatus();
+            System.out.println(String.format("Ent. stat: %d, line stat: %d",
+                    stat.getEntityStatus(),
+                    stat.getChartLineStatus()));
+        });
     }
     public void onSaveSelectedToRepos() {
-
+        List<ChartItem> levels = levelHelper.items();
+        levels.forEach(l -> {
+            MaunaloaStatus stat = l.getStatus();
+            System.out.println(String.format("Ent. stat: %d, line stat: %d",
+                                              stat.getEntityStatus(),
+                                              stat.getChartLineStatus()));
+        });
     }
 
     //endregion Events
@@ -118,9 +141,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     public void setStock(Stock stock) {
         if (stock != null) {
             fibonacciHelper.notifyStockChanging();
+            levelHelper.notifyStockChanging();
             this.stock = stock;
             chart.draw(myCanvas);
             fibonacciHelper.notifyStockChanged();
+            levelHelper.notifyStockChanged();
         }
     }
     public ControllerHub getHub() {

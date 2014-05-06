@@ -2,7 +2,6 @@ package maunaloa.entities.windowdressing;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import maunaloa.StatusCodes;
 import org.bson.types.ObjectId;
 
 /**

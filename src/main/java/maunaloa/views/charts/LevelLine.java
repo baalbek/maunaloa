@@ -21,7 +21,7 @@ public class LevelLine extends AbstractSelectableLine {
 
     //region Init
     private final IBoundaryRuler ruler;
-    private final double levelValue;
+    private double levelValue;
     private final Color lineColor;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
@@ -92,9 +92,10 @@ public class LevelLine extends AbstractSelectableLine {
                 anchor.setCenterX(oldCenterX+deltaX);
                 anchor.setCenterY(oldCenterY+deltaY);
 
-                double yVal = (Double) ruler.calcValue(anchor.getCenterY());
+                levelValue = (Double) ruler.calcValue(anchor.getCenterY());
+                //double yVal = (Double) ruler.calcValue(anchor.getCenterY());
 
-                label.setText(String.format("%.1f", yVal));
+                label.setText(String.format("%.1f", levelValue));
                 label.setX(anchor.getCenterX()+valueLabelDeltaX);
                 label.setY(anchor.getCenterY()-valueLabelDeltaY);
                 // onMouseDragged(event);
@@ -114,6 +115,7 @@ public class LevelLine extends AbstractSelectableLine {
 
     //endregion Private Methods
 
+    //region Private Methods
     public Group view() {
         if (group == null) {
             createLevel();
@@ -121,8 +123,15 @@ public class LevelLine extends AbstractSelectableLine {
         return group;
     }
 
+    public double getLevelValue() {
+        return levelValue;
+    }
+    //endregion Private Methods
+
+    //region AbstractSelectableLine
     @Override
     public Line getLine() {
         return line;
     }
+    //endregion AbstractSelectableLine
 }

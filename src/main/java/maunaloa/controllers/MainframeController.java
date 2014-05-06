@@ -75,18 +75,26 @@ public class MainframeController implements ControllerHub {
     public void onFibLinesFromRepos(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
     }
-
+    public void onLevelsFromRepos(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onLevelsFromRepos);
+    }
     public void onDeleteSelLines(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onDeleteSelLines);
     }
     public void onDeleteAllLines(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onDeleteAllLines);
     }
-
+    public void onSaveSelectedToRepos(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onSaveSelectedToRepos);
+    }
+    public void onSaveAllToRepos(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onSaveAllToRepos);
+    }
     //endregion Events
 
     //region Initialize
     public void initialize() {
+        initContextInfo();
         initChoiceBoxTickers();
         Procedure4<ChartCanvasController,String,Integer,MaunaloaChart>  initController =
                 (ChartCanvasController controller,
@@ -143,6 +151,16 @@ public class MainframeController implements ControllerHub {
             */
         }
     }
+    private void initContextInfo() {
+        cxIsCloud.setSelected(windowDressingRepository.isCloud());
+
+        //lblLocalMongodbUrl.text = 'MongoDB:' + windowDressingModel.mongodbHost
+        //lblSqlUrl.text = 'SQL: ' + sqldbUrl
+
+        cxIsCloud.selectedProperty().addListener(event -> {
+                windowDressingRepository.setCloud(cxIsCloud.isSelected());
+        });
+    }
     private void initChoiceBoxTickers() {
         final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());
         cbTickers.setConverter(new StringConverter<Stock>() {
@@ -159,7 +177,7 @@ public class MainframeController implements ControllerHub {
         cbTickers.getItems().addAll(cbitems);
         Consumer<Stock> setStock = (Stock s) -> {
             System.out.println(s.getCompanyName());
-            currentStock = s;
+            //currentStock = s;
             switch (s.getTickerCategory()) {
                 case 1:
                     candlesticksController.setStock(s);
@@ -181,7 +199,7 @@ public class MainframeController implements ControllerHub {
     //endregion Initialize
 
     //region Properties
-    private Stock currentStock;
+    //private Stock currentStock;
     private MaunaloaChart candlesticksChart;
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxCandlesticksChart;
@@ -250,7 +268,7 @@ public class MainframeController implements ControllerHub {
     //endregion Properties
 
     //region REPL Demo Methods
-    //*
+    /*
     public java.util.List<javafx.scene.Node> fetchNodes(String ticker, int location) {
         oahu.domain.Tuple<oahux.chart.IRuler> rulers = new oahu.domain.Tuple<>(
                                                 maunaloax.views.chart.DefaultDateRuler.createDummy(),

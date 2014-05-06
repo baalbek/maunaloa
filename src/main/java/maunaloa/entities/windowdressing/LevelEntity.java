@@ -64,9 +64,26 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     }
     //endregion Interface ChartItem
 
+    //region Public Methods
+    public double getLevelValue() {
+        return levelLine.getLevelValue();
+    }
+    //endregion Public Methods
+
     //region Private/Protected
     protected int getEntityStatus() {
-       return StatusCodes.ENTITY_CLEAN;
+        if (oid == null) {
+            return StatusCodes.ENTITY_NEW;
+        }
+        else {
+            if (Math.abs(levelLine.getLevelValue() - levelValue) >= 0.05) {
+                return StatusCodes.ENTITY_DIRTY;
+            }
+            else {
+
+                return StatusCodes.ENTITY_CLEAN;
+            }
+        }
     }
     //endregion
 }

@@ -20,5 +20,8 @@ public interface WindowDressingRepository {
     public static final int LEVEL = 2;
     public static final int ALL_ITEMS = 3;
     List<ChartItem> fetchFibLines(String ticker, int location, int status, Tuple<IRuler> rulers);
+    List<ChartItem> fetchLevels(String ticker, int location, int status, IRuler vruler);
+    boolean isCloud();
+    void setCloud(boolean isCloud);
     // void invalidate(int whichOnes);
 }

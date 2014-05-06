@@ -63,23 +63,6 @@ public class FibonacciHelper extends AbstractControllerHelper {
             myPane.setOnMouseReleased(null);
         });
     }
-    public void onFibLinesFromRepos(List<ChartItem> items) {
-        if ((items != null) && (items.size() > 0)) {
-            updateMyPaneLines(items,lineMap());
-        }
-    }
-    public void notifyStockChanging() {
-        clearLines(lineMap());
-    }
-    public void notifyStockChanged() {
-        refreshLines(lineMap());
-    }
-    public void onDeleteSelLines() {
-        deleteSelectedLines(lineMap());
-    }
-    public void onDeleteAllLines() {
-        deleteAllLines(lineMap());
-    }
     //endregion Events
 
 

@@ -5,14 +5,12 @@ import javafx.scene.Node;
 import maunaloa.StatusCodes;
 import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
-import oahu.domain.Tuple2;
 import oahu.financial.Stock;
 import oahu.functional.Procedure2;
 import oahux.controllers.MaunaloaChartViewModel;
 import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -27,6 +25,41 @@ public abstract class AbstractControllerHelper {
         this.boss = boss;
     }
 
+    //region Public Methods
+    public void onLinesFromRepos(List<ChartItem> items) {
+        if ((items != null) && (items.size() > 0)) {
+            updateMyPaneLines(items,lineMap());
+        }
+    }
+    public void notifyStockChanging() {
+        clearLines(lineMap());
+    }
+    public void notifyStockChanged() {
+        refreshLines(lineMap());
+    }
+    public void onDeleteSelLines() {
+        deleteSelectedLines(lineMap());
+    }
+    public void onDeleteAllLines() {
+        deleteAllLines(lineMap());
+    }
+    public List<ChartItem> items() {
+        Stock stock = boss.getStock();
+        if (stock == null) return null;
+        return lineMap().get(stock);
+    }
+    public List<ChartItem> items(int entityStatus, int lineStatus) {
+        return null;
+    }
+    public List<ChartItem> itemsWithEntityStatus(int entityStatus) {
+        return null;
+    }
+    public List<ChartItem> itemsWithLineStatus(int lineStatus) {
+        return null;
+    }
+    //endregion Public Methods
+
+    //region Private/Protected Methods
     private Map<Stock,List<ChartItem>> _lineMap;
     protected Map<Stock,List<ChartItem>> lineMap() {
         if (_lineMap  == null) {
@@ -138,4 +171,5 @@ public abstract class AbstractControllerHelper {
         }
         fn.apply(curlines,s);
     }
+    //endregion Private/Protected Methods
 }
