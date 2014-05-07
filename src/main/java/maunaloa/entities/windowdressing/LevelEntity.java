@@ -86,7 +86,6 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                 return StatusCodes.ENTITY_DIRTY;
             }
             else {
-
                 return StatusCodes.ENTITY_CLEAN;
             }
         }

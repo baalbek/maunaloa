@@ -154,27 +154,6 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     @Override
     public void saveOrUpdate(ChartItem item) {
-        /*int curEntStat = item.getStatus().getEntityStatus();
-        if (item instanceof FibLineEntity) {
-            switch (curEntStat) {
-                case StatusCodes.ENTITY_NEW:
-                    break;
-                case StatusCodes.ENTITY_CLEAN:
-                    break;
-                case StatusCodes.ENTITY_DIRTY:
-                    break;
-            }
-        }
-        else {
-            switch (curEntStat) {
-                case StatusCodes.ENTITY_NEW:
-                    break;
-                case StatusCodes.ENTITY_CLEAN:
-                    break;
-                case StatusCodes.ENTITY_DIRTY:
-                    break;
-            }
-        }*/
         item.saveToRepos(this);
     }
 
@@ -185,7 +164,33 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     @Override
     public void saveLevel(LevelEntity entity) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        try {
+            int curEntStat = entity.getStatus().getEntityStatus();
+            DBCollection coll = getConnection().getCollection("levels");
+            switch (curEntStat) {
+                case StatusCodes.ENTITY_NEW: {
+                    BasicDBObject newEnt =
+                            new BasicDBObject("tix", entity.getTicker()).
+                            append("active", true).
+                            append("loc", entity.getLocation()).
+                            append("value", entity.getLevelValue());
+                    WriteResult wr = coll.save(newEnt);
+                }
+                break;
+                /*case StatusCodes.ENTITY_CLEAN:
+                    break;*/
+                case StatusCodes.ENTITY_DIRTY: {
+
+                }
+                break;
+                case StatusCodes.ENTITY_INACTIVE: {
+
+                }
+                break;
+            }
+        } catch (UnknownHostException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     @Override

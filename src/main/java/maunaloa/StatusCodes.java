@@ -13,4 +13,5 @@ public interface StatusCodes {
     public static int ENTITY_NEW = 3;
     public static int ENTITY_CLEAN = 4;
     public static int ENTITY_DIRTY = 5;
+    public static int ENTITY_INACTIVE = 6;
 }
