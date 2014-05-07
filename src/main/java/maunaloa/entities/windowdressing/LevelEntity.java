@@ -17,7 +17,7 @@ import org.bson.types.ObjectId;
  */
 public class LevelEntity extends AbstractWindowDressingItem implements ChartItem {
 
-    private final double levelValue;
+    private double levelValue;
     private final IRuler vruler;
     private LevelLine levelLine;
 
@@ -58,8 +58,12 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     @Override
     public MaunaloaStatus getStatus() {
         if (status == null) {
-            return new MaunaloaStatus(statusProperty(),
-                                      levelLine.statusProperty());
+            return new MaunaloaStatus(
+                    statusProperty(),
+                    levelLine.statusProperty(),
+                    newStatus -> {
+                        System.out.println("Entity status changed -> " + newStatus);
+                    });
         }
         return status;
     }

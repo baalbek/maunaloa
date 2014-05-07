@@ -1,6 +1,7 @@
 package maunaloa.repository.impl;
 
 import com.mongodb.*;
+import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
@@ -8,7 +9,6 @@ import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
-import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
@@ -165,31 +165,49 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     @Override
     public void saveLevel(LevelEntity entity) {
         try {
-            int curEntStat = entity.getStatus().getEntityStatus();
             DBCollection coll = getConnection().getCollection("levels");
-            switch (curEntStat) {
+
+            Function<BasicDBObject,WriteResult> saveFn = o -> {
+                BasicDBObject setObj = new BasicDBObject("$set", o);
+                BasicDBObject query = new BasicDBObject("_id", entity.getOid());
+                return coll.update(query, setObj);
+            };
+
+            MaunaloaStatus stat = entity.getStatus();
+            WriteResult wr = null;
+            switch (stat.getEntityStatus()) {
                 case StatusCodes.ENTITY_NEW: {
                     BasicDBObject newEnt =
                             new BasicDBObject("tix", entity.getTicker()).
                             append("active", true).
                             append("loc", entity.getLocation()).
                             append("value", entity.getLevelValue());
-                    WriteResult wr = coll.save(newEnt);
+                    wr = coll.save(newEnt);
+                    entity.setOid((ObjectId)newEnt.get("_id"));
+                    stat.setEntityStatus(StatusCodes.ENTITY_CLEAN);
                 }
                 break;
-                /*case StatusCodes.ENTITY_CLEAN:
-                    break;*/
                 case StatusCodes.ENTITY_DIRTY: {
-
+                    wr = saveFn.apply(new BasicDBObject("value", entity.getLevelValue()));
+                    stat.setEntityStatus(StatusCodes.ENTITY_CLEAN);
                 }
                 break;
-                case StatusCodes.ENTITY_INACTIVE: {
-
+                case StatusCodes.ENTITY_TO_BE_INACTIVE: {
+                    wr = saveFn.apply(new BasicDBObject("active", false));
+                    stat.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
                 }
                 break;
             }
+            if (wr != null) {
+                if (wr.getLastError().ok() == true) {
+                    log.info(String.format("Saved ok for object with id: %s",entity.getOid()));
+                }
+                else {
+                    log.error(String.format("Save failed with error: %s", wr.getError()));
+                }
+            }
         } catch (UnknownHostException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 

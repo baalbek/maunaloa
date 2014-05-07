@@ -155,7 +155,7 @@ public class MainframeController implements ControllerHub {
         cxIsCloud.setSelected(windowDressingRepository.isCloud());
 
         //lblLocalMongodbUrl.text = 'MongoDB:' + windowDressingModel.mongodbHost
-        //lblSqlUrl.text = 'SQL: ' + sqldbUrl
+        lblSqlUrl.setText("SQL: " + sqldbUrl);
 
         cxIsCloud.selectedProperty().addListener(event -> {
                 windowDressingRepository.setCloud(cxIsCloud.isSelected());
@@ -207,6 +207,7 @@ public class MainframeController implements ControllerHub {
     private StockRepository stockRepository;
     private DerivativeRepository derivativeRepository;
     private WindowDressingRepository windowDressingRepository;
+    private String sqldbUrl;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -263,6 +264,10 @@ public class MainframeController implements ControllerHub {
     @Override
     public WindowDressingRepository getWindowDressingRepository() {
         return windowDressingRepository;
+    }
+
+    public void setSqldbUrl(String sqldbUrl) {
+        this.sqldbUrl = sqldbUrl;
     }
 
     //endregion Properties
