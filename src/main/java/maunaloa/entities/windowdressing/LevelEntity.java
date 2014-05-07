@@ -3,6 +3,7 @@ package maunaloa.entities.windowdressing;
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
+import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.LevelLine;
 import oahux.chart.IRuler;
@@ -61,6 +62,11 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                                       levelLine.statusProperty());
         }
         return status;
+    }
+
+    @Override
+    public void saveToRepos(WindowDressingRepository repos) {
+        repos.saveLevel(this);
     }
     //endregion Interface ChartItem
 

@@ -65,5 +65,4 @@ public class FibonacciHelper extends AbstractControllerHelper {
     }
     //endregion Events
 
-
 }

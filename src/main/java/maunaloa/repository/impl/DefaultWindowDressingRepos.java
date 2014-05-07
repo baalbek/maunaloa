@@ -1,6 +1,7 @@
 package maunaloa.repository.impl;
 
 import com.mongodb.*;
+import maunaloa.StatusCodes;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.WindowDressingRepository;
@@ -64,6 +65,8 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     private DB getConnection() throws UnknownHostException {
         return isCloud ? cloudConnection() : localConnection();
     }
+
+
     //endregion Private Stuff
 
     //region Interface WindowDressingRepository
@@ -105,6 +108,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         }
         return result;
     }
+
     @Override
     public List<ChartItem> fetchFibLines(String ticker,
                                          int location,
@@ -147,6 +151,42 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         return result;
     }
 
+
+    @Override
+    public void saveOrUpdate(ChartItem item) {
+        /*int curEntStat = item.getStatus().getEntityStatus();
+        if (item instanceof FibLineEntity) {
+            switch (curEntStat) {
+                case StatusCodes.ENTITY_NEW:
+                    break;
+                case StatusCodes.ENTITY_CLEAN:
+                    break;
+                case StatusCodes.ENTITY_DIRTY:
+                    break;
+            }
+        }
+        else {
+            switch (curEntStat) {
+                case StatusCodes.ENTITY_NEW:
+                    break;
+                case StatusCodes.ENTITY_CLEAN:
+                    break;
+                case StatusCodes.ENTITY_DIRTY:
+                    break;
+            }
+        }*/
+        item.saveToRepos(this);
+    }
+
+    @Override
+    public void saveFibonacci(FibLineEntity entity) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void saveLevel(LevelEntity entity) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 
     @Override
     public boolean isCloud() {

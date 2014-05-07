@@ -22,6 +22,7 @@ public class DraggableLine extends AbstractSelectableLine {
     private final Group group ;
     private final DoubleProperty anchorRadius;
     private final BooleanProperty anchorsVisible ;
+    private final double startX, startY, endX, endY;
 
     public DraggableLine(Line line) {
         this.line = line;
@@ -30,6 +31,10 @@ public class DraggableLine extends AbstractSelectableLine {
         anchorsVisible = new SimpleBooleanProperty(true);
         startAnchor = createAnchor(line.startXProperty(), line.startYProperty());
         endAnchor = createAnchor(line.endXProperty(), line.endYProperty());
+        startX = line.startXProperty().get();
+        startY = line.startYProperty().get();
+        endX = line.endXProperty().get();
+        endY = line.endYProperty().get();
         group = new Group();
         group.getChildren().addAll(line, startAnchor, endAnchor);
         addMouseEvents(line);
@@ -53,6 +58,21 @@ public class DraggableLine extends AbstractSelectableLine {
     public Line getLine() {
         return line;
     }
+    public Circle getStartAnchor() {
+        return startAnchor;
+    }
+
+    public Circle getEndAnchor() {
+        return endAnchor;
+    }
+
+    public boolean isDirty() {
+        return (Math.abs(startX - startAnchor.getCenterX()) > 0.01)
+                || (Math.abs(startY - startAnchor.getCenterY()) > 0.05)
+                || (Math.abs(endX - endAnchor.getCenterY()) > 0.01)
+                || (Math.abs(endY - endAnchor.getCenterY()) > 0.05);
+    }
+
     //endregion Public Methods
 
     //region Private Methods
@@ -97,6 +117,7 @@ public class DraggableLine extends AbstractSelectableLine {
         });
         return anchor;
     }
+
 
     //endregion Private Methods
 }

@@ -2,6 +2,7 @@ package maunaloa.views.charts;
 
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
+import maunaloa.repository.WindowDressingRepository;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,4 +18,5 @@ public interface ChartItem {
 /*    int getStatus();
     void setStatus(int value);*/
     MaunaloaStatus getStatus();
+    void saveToRepos(WindowDressingRepository repos);
 }

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
+import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
@@ -182,10 +183,21 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         }
         return status;
     }
-    //endregion Interface ChartItem 
+
+    @Override
+    public void saveToRepos(WindowDressingRepository repos) {
+        repos.saveFibonacci(this);
+    }
+    //endregion Interface ChartItem
+
     //region Private/Protected
     protected int getEntityStatus() {
-        return StatusCodes.ENTITY_CLEAN;
+        if (oid == null) {
+            return StatusCodes.ENTITY_NEW;
+        }
+        else {
+            return dragLine.isDirty() == true ? StatusCodes.ENTITY_DIRTY : StatusCodes.ENTITY_CLEAN;
+        }
     }
     //endregion
 }

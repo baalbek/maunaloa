@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.MaunaloaStatus;
+import maunaloa.StatusCodes;
 import maunaloa.controllers.helpers.FibonacciHelper;
 import maunaloa.controllers.helpers.LevelHelper;
 import maunaloa.entities.windowdressing.LevelEntity;
@@ -109,9 +110,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         List<ChartItem> levels = levelHelper.items();
         levels.forEach(l -> {
             MaunaloaStatus stat = l.getStatus();
-            System.out.println(String.format("Ent. stat: %d, line stat: %d",
-                                              stat.getEntityStatus(),
-                                              stat.getChartLineStatus()));
+            if (stat.getChartLineStatus() == StatusCodes.SELECTED) {
+                hub.getWindowDressingRepository().saveOrUpdate(l);
+            }
         });
     }
 
