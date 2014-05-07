@@ -47,25 +47,22 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         if (_view == null) {
             levelLine = new LevelLine(levelValue, vruler);
             levelLine.setOnMouseReleased((evt,anchor) -> {
-                statusProperty().set(getEntityStatus());
+                entityStatusProperty().set(getEntityStatus());
             });
             _view = levelLine.view();
         }
         return _view;
     }
 
-    private MaunaloaStatus status;
+    private MaunaloaStatus maunaloaStatus;
     @Override
     public MaunaloaStatus getStatus() {
-        if (status == null) {
+        if (maunaloaStatus == null) {
             return new MaunaloaStatus(
-                    statusProperty(),
-                    levelLine.statusProperty(),
-                    newStatus -> {
-                        System.out.println("Entity status changed -> " + newStatus);
-                    });
+                    entityStatusProperty(),
+                    levelLine.statusProperty());
         }
-        return status;
+        return maunaloaStatus;
     }
 
     @Override
@@ -77,6 +74,10 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     //region Public Methods
     public double getLevelValue() {
         return levelLine.getLevelValue();
+    }
+    public void setEntityStatus(int value) {
+        entityStatusProperty().set(value);
+        levelLine.updateColorFor(value);
     }
     //endregion Public Methods
 

@@ -184,17 +184,17 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                             append("value", entity.getLevelValue());
                     wr = coll.save(newEnt);
                     entity.setOid((ObjectId)newEnt.get("_id"));
-                    stat.setEntityStatus(StatusCodes.ENTITY_CLEAN);
+                    entity.setEntityStatus(StatusCodes.ENTITY_CLEAN);
                 }
                 break;
                 case StatusCodes.ENTITY_DIRTY: {
                     wr = saveFn.apply(new BasicDBObject("value", entity.getLevelValue()));
-                    stat.setEntityStatus(StatusCodes.ENTITY_CLEAN);
+                    entity.setEntityStatus(StatusCodes.ENTITY_CLEAN);
                 }
                 break;
                 case StatusCodes.ENTITY_TO_BE_INACTIVE: {
                     wr = saveFn.apply(new BasicDBObject("active", false));
-                    stat.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
+                    entity.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
                 }
                 break;
             }

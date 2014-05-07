@@ -29,6 +29,11 @@ public abstract class AbstractSelectableLine {
         statusColors = new HashMap<>();
         statusColors.put(StatusCodes.UNSELECTED, Color.BLACK);
         statusColors.put(StatusCodes.SELECTED, Color.RED);
+        statusColors.put(StatusCodes.ENTITY_CLEAN, Color.BLACK);
+        statusColors.put(StatusCodes.ENTITY_DIRTY, Color.BROWN);
+        statusColors.put(StatusCodes.ENTITY_IS_INACTIVE, Color.BLUEVIOLET);
+        statusColors.put(StatusCodes.ENTITY_TO_BE_INACTIVE, Color.AZURE);
+        statusColors.put(StatusCodes.ENTITY_NEW, Color.ORANGERED);
     }
 
 

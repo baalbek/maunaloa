@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import maunaloa.StatusCodes;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 
@@ -22,7 +23,7 @@ public class LevelLine extends AbstractSelectableLine {
     //region Init
     private final IBoundaryRuler ruler;
     private double levelValue;
-    private final Color lineColor;
+    //private final Color lineColor;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
     private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
@@ -30,15 +31,25 @@ public class LevelLine extends AbstractSelectableLine {
     private Line line;
 
     public LevelLine(double levelValue, IRuler ruler) {
-        this(levelValue, ruler, Color.BLACK);
+        //this(levelValue, ruler, Color.BLACK);
+        this.ruler = (IBoundaryRuler)ruler;
+        this.levelValue = levelValue;
+        //jthis.lineColor = statusColors.get(StatusCodes.ENTITY_NEW);
     }
 
-    public LevelLine(double levelValue, IRuler ruler, Color lineColor) {
+    /*public LevelLine(double levelValue, IRuler ruler, Color lineColor) {
         this.ruler = (IBoundaryRuler)ruler;
         this.levelValue = levelValue;
         this.lineColor = lineColor;
-    }
+    }*/
     //endregion Init
+
+    //region Public Methods
+    public void updateColorFor(int statusCode) {
+        line.setStroke(statusColors.get(statusCode));
+    }
+    //endregion Public Methods
+
 
     //region Private Methods
     private void createLevel(){
@@ -46,7 +57,7 @@ public class LevelLine extends AbstractSelectableLine {
         Point2D pt = ruler.getLowerRight();
         double yBe = ruler.calcPix(levelValue);
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
-        line.setStroke(lineColor);
+        line.setStroke(statusColors.get(StatusCodes.ENTITY_NEW));
 
         //double yVal = (Double) ruler.calcValue(anchor.getCenterY());
 

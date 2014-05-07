@@ -43,7 +43,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     private void setupDragLine() {
         dragLine.setOnMouseReleased((evt, anchor) -> {
             anchor.setCenterX(rulers.first().snapTo(anchor.getCenterX()));
-            statusProperty().set(getEntityStatus());
+            entityStatusProperty().set(getEntityStatus());
         });
         Color curColor = getCurrentColor();
         dragLine.view().getChildren().add(createFibLine(createBinding(0.5,false), curColor));
@@ -178,7 +178,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     @Override
     public MaunaloaStatus getStatus() {
         if (status == null) {
-            return new MaunaloaStatus(statusProperty(),
+            return new MaunaloaStatus(entityStatusProperty(),
                                       dragLine.statusProperty());
         }
         return status;

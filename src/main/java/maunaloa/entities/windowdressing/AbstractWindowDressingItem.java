@@ -35,7 +35,7 @@ public abstract class AbstractWindowDressingItem {
     public int getLocation() {
         return location;
     }
-    public IntegerProperty statusProperty() {
+    public IntegerProperty entityStatusProperty() {
         if (status == null) {
             status = new SimpleIntegerProperty(getEntityStatus());
         }
