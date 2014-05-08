@@ -66,7 +66,11 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         return isCloud ? cloudConnection() : localConnection();
     }
 
-
+    /*WriteResult saveEntityProperty(DBCollection coll, ObjectId oid, BasicDBObject newValue) {
+        BasicDBObject setObj = new BasicDBObject("$set", newValue);
+        BasicDBObject query = new BasicDBObject("_id", oid);
+        return coll.update(query, setObj);
+    };*/
     //endregion Private Stuff
 
     //region Interface WindowDressingRepository

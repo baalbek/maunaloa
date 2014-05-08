@@ -90,6 +90,12 @@ public class MainframeController implements ControllerHub {
     public void onSaveAllToRepos(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onSaveAllToRepos);
     }
+    public void onSetInactiveSelLines(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::setInactiveSelected);
+    }
+    public void onSetInactiveAllLines(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::setInactiveAll);
+    }
     //endregion Events
 
     //region Initialize

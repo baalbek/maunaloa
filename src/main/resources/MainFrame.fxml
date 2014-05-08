@@ -52,19 +52,32 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Lines" fx:id="linesMenu">
                 <items>
-                    <MenuItem mnemonicParsing="false" onAction="#onNewLevel" text="New Level" />
-                    <MenuItem mnemonicParsing="false" onAction="#onNewFibonacciLine" text="New Fibonacci Line" />
-                    <SeparatorMenuItem />
-                    <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Delete Selected" />
-                    <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="Delete All" />
+                    <Menu mnemonicParsing="false" text="New">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
+                            <MenuItem mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Set inactive">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#onSetInactiveSelLines" text="Selected" />
+                            <MenuItem mnemonicParsing="false" onAction="#onSetInactiveAllLines" text="All" />
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Delete">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Selected" />
+                            <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="All" />
+                        </items>
+                    </Menu>
                 </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Repository">
                 <MenuItem mnemonicParsing="false" onAction="#onLevelsFromRepos" text="Fetch Levels" />
                 <MenuItem mnemonicParsing="false" onAction="#onFibLinesFromRepos" text="Fetch Fibonacci" />
                 <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" onAction="#onSaveSelectedToRepos" text="Save Selected" />
-                <MenuItem mnemonicParsing="false" onAction="#onSaveAllToRepos" text="Save All" />
+                <MenuItem mnemonicParsing="false" onAction="#onSaveSelectedToRepos" text="Save selected" />
+                <MenuItem mnemonicParsing="false" onAction="#onSaveAllToRepos" text="Save all" />
             </Menu>
           </menus>
         </MenuBar>

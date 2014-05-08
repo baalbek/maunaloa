@@ -98,24 +98,25 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         levelHelper.onDeleteAllLines();
     }
     public void onSaveAllToRepos() {
-        List<ChartItem> levels = levelHelper.items();
-        levels.forEach(l -> {
-            MaunaloaStatus stat = l.getStatus();
-            System.out.println(String.format("Ent. stat: %d, line stat: %d",
-                    stat.getEntityStatus(),
-                    stat.getChartLineStatus()));
-        });
+        levelHelper.items().forEach(hub.getWindowDressingRepository()::saveOrUpdate);
+        fibonacciHelper.items().forEach(hub.getWindowDressingRepository()::saveOrUpdate);
     }
     public void onSaveSelectedToRepos() {
-        List<ChartItem> levels = levelHelper.items();
-        levels.forEach(l -> {
+        List<ChartItem> allitems = levelHelper.items();
+        allitems.addAll(fibonacciHelper.items());
+        allitems.forEach(l -> {
             MaunaloaStatus stat = l.getStatus();
             if (stat.getChartLineStatus() == StatusCodes.SELECTED) {
                 hub.getWindowDressingRepository().saveOrUpdate(l);
             }
         });
     }
+    public void setInactiveSelected() {
 
+    }
+    public void setInactiveAll() {
+
+    }
     //endregion Events
 
     //region Properties

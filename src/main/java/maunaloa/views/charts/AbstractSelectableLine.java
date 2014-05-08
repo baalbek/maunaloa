@@ -42,8 +42,8 @@ public abstract class AbstractSelectableLine {
             line.setStrokeWidth(STROKE_WIDTH_ENTERED);
         });
         line.addEventFilter(MouseEvent.MOUSE_EXITED, e -> {
-            double sw = getStatus() == StatusCodes.UNSELECTED ? STROKE_WIDTH_NORMAL : STROKE_WIDTH_SELECTED;
-            line.setStrokeWidth(sw);
+            //double sw = getStatus() == StatusCodes.UNSELECTED ? STROKE_WIDTH_NORMAL : STROKE_WIDTH_SELECTED;
+            line.setStrokeWidth(STROKE_WIDTH_NORMAL);
         });
         line.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             switch (getStatus()) {
@@ -62,7 +62,13 @@ public abstract class AbstractSelectableLine {
     public void setStatus(int value) {
         status.set(value);
         Line line = getLine();
-        line.setStroke(statusColors.get(status.get()));
+        //line.setStroke(statusColors.get(status.get()));
+        if (value == StatusCodes.SELECTED) {
+            line.getStrokeDashArray().addAll(10d,10d);
+        }
+        else {
+            line.getStrokeDashArray().clear();
+        }
     }
     public int getStatus() {
         return status.get();
