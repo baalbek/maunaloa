@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
+import maunaloa.controllers.helpers.AbstractControllerHelper;
 import maunaloa.controllers.helpers.FibonacciHelper;
 import maunaloa.controllers.helpers.LevelHelper;
 import maunaloa.entities.windowdressing.LevelEntity;
@@ -23,6 +24,8 @@ import org.bson.types.ObjectId;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Created by rcs on 4/13/14.
@@ -98,18 +101,29 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         levelHelper.onDeleteAllLines();
     }
     public void onSaveAllToRepos() {
-        levelHelper.items().forEach(hub.getWindowDressingRepository()::saveOrUpdate);
-        fibonacciHelper.items().forEach(hub.getWindowDressingRepository()::saveOrUpdate);
+        Consumer<AbstractControllerHelper> myUpdate = helper -> {
+            Optional<List<ChartItem>> items = helper.items();
+            if (items.isPresent()) {
+                items.get().forEach(hub.getWindowDressingRepository()::saveOrUpdate);
+            }
+        };
+        myUpdate.accept(levelHelper);
+        myUpdate.accept(fibonacciHelper);
     }
     public void onSaveSelectedToRepos() {
-        List<ChartItem> allitems = levelHelper.items();
-        allitems.addAll(fibonacciHelper.items());
-        allitems.forEach(l -> {
-            MaunaloaStatus stat = l.getStatus();
-            if (stat.getChartLineStatus() == StatusCodes.SELECTED) {
-                hub.getWindowDressingRepository().saveOrUpdate(l);
+        Consumer<AbstractControllerHelper> myUpdate = helper -> {
+            Optional<List<ChartItem>> items = helper.items();
+            if (items.isPresent()) {
+                items.get().forEach(l -> {
+                    MaunaloaStatus stat = l.getStatus();
+                    if (stat.getChartLineStatus() == StatusCodes.SELECTED) {
+                        hub.getWindowDressingRepository().saveOrUpdate(l);
+                    }
+                });
             }
-        });
+        };
+        myUpdate.accept(levelHelper);
+        myUpdate.accept(fibonacciHelper);
     }
     public void setInactiveSelected() {
 

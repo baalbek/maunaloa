@@ -23,7 +23,6 @@ public class LevelLine extends AbstractSelectableLine {
     //region Init
     private final IBoundaryRuler ruler;
     private double levelValue;
-    //private final Color lineColor;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
     private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
@@ -37,11 +36,6 @@ public class LevelLine extends AbstractSelectableLine {
         //jthis.lineColor = statusColors.get(StatusCodes.ENTITY_NEW);
     }
 
-    /*public LevelLine(double levelValue, IRuler ruler, Color lineColor) {
-        this.ruler = (IBoundaryRuler)ruler;
-        this.levelValue = levelValue;
-        this.lineColor = lineColor;
-    }*/
     //endregion Init
 
     //region Public Methods
@@ -58,8 +52,6 @@ public class LevelLine extends AbstractSelectableLine {
         double yBe = ruler.calcPix(levelValue);
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
         line.setStroke(statusColors.get(StatusCodes.ENTITY_NEW));
-
-        //double yVal = (Double) ruler.calcValue(anchor.getCenterY());
 
         String labelText = String.format("%.1f", levelValue);
         Text valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,labelText);

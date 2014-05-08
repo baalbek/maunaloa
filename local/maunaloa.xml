@@ -71,7 +71,8 @@
     </bean>
 
     <bean id="windowdressing" class="maunaloa.repository.impl.DefaultWindowDressingRepos">
-        <property name="cloud" value="true" />
+        <property name="cloud" value="false" />
+        <!--<property name="mongodbHost" value="palenque" />-->
         <property name="mongodbHost" value="xochitecatl" />
     </bean>
 

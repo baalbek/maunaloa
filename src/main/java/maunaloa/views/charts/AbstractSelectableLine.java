@@ -11,6 +11,7 @@ import oahu.functional.Procedure2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +31,7 @@ public abstract class AbstractSelectableLine {
         statusColors.put(StatusCodes.UNSELECTED, Color.BLACK);
         statusColors.put(StatusCodes.SELECTED, Color.RED);
         statusColors.put(StatusCodes.ENTITY_CLEAN, Color.BLACK);
-        statusColors.put(StatusCodes.ENTITY_DIRTY, Color.BROWN);
+        statusColors.put(StatusCodes.ENTITY_DIRTY, Color.YELLOWGREEN);
         statusColors.put(StatusCodes.ENTITY_IS_INACTIVE, Color.BLUEVIOLET);
         statusColors.put(StatusCodes.ENTITY_TO_BE_INACTIVE, Color.AZURE);
         statusColors.put(StatusCodes.ENTITY_NEW, Color.ORANGERED);
@@ -46,13 +47,20 @@ public abstract class AbstractSelectableLine {
             line.setStrokeWidth(STROKE_WIDTH_NORMAL);
         });
         line.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-            switch (getStatus()) {
-                case StatusCodes.UNSELECTED:
-                    setStatus(StatusCodes.SELECTED);
-                    break;
-                case StatusCodes.SELECTED:
-                    setStatus(StatusCodes.UNSELECTED);
-                    break;
+            if (e.isShiftDown()) {
+                if (onMouseReleasedShift != null) {
+                    onMouseReleasedShift.accept(e);
+                }
+            }
+            else {
+                switch (getStatus()) {
+                    case StatusCodes.UNSELECTED:
+                        setStatus(StatusCodes.SELECTED);
+                        break;
+                    case StatusCodes.SELECTED:
+                        setStatus(StatusCodes.UNSELECTED);
+                        break;
+                }
             }
         });
     }
@@ -79,6 +87,11 @@ public abstract class AbstractSelectableLine {
     }
 
     //region Events
+    private Consumer<MouseEvent> onMouseReleasedShift;
+
+    public void setOnMouseReleasedShift(Consumer<MouseEvent> onMouseReleasedShift) {
+        this.onMouseReleasedShift = onMouseReleasedShift;
+    }
     protected Procedure2<MouseEvent,Circle> onMouseReleased;
     public void setOnMouseReleased(Procedure2<MouseEvent,Circle> onMouseReleased) {
         this.onMouseReleased = onMouseReleased;
@@ -86,4 +99,5 @@ public abstract class AbstractSelectableLine {
     //endregion Events
 
     public abstract Line getLine();
+
 }

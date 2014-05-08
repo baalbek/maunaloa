@@ -47,7 +47,12 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         if (_view == null) {
             levelLine = new LevelLine(levelValue, vruler);
             levelLine.setOnMouseReleased((evt,anchor) -> {
-                entityStatusProperty().set(getEntityStatus());
+                int curStatus = getEntityStatus();
+                entityStatusProperty().set(curStatus);
+                levelLine.updateColorFor(curStatus);
+            });
+            levelLine.setOnMouseReleasedShift(evt -> {
+                System.out.println(levelLine);
             });
             _view = levelLine.view();
         }

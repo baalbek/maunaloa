@@ -43,10 +43,11 @@ public abstract class AbstractControllerHelper {
     public void onDeleteAllLines() {
         deleteAllLines(lineMap());
     }
-    public List<ChartItem> items() {
+    public Optional<List<ChartItem>> items() {
         Stock stock = boss.getStock();
-        if (stock == null) return null;
-        return lineMap().get(stock);
+        if (stock == null) return Optional.empty();
+        List<ChartItem> items = lineMap().get(stock);
+        return items == null ? Optional.empty() : Optional.of(items);
     }
     public List<ChartItem> items(int entityStatus, int lineStatus) {
         return null;
