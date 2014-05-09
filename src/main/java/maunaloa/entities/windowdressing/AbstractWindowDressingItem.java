@@ -14,7 +14,7 @@ public abstract class AbstractWindowDressingItem {
     protected ObjectId oid;
     protected final String ticker;
     protected final int location;
-    private IntegerProperty status;
+
 
     public AbstractWindowDressingItem(String ticker,
                                       int location) {
@@ -35,11 +35,13 @@ public abstract class AbstractWindowDressingItem {
     public int getLocation() {
         return location;
     }
+
+    protected IntegerProperty _entityStatusProperty;
     public IntegerProperty entityStatusProperty() {
-        if (status == null) {
-            status = new SimpleIntegerProperty(getEntityStatus());
+        if (_entityStatusProperty == null) {
+            _entityStatusProperty = new SimpleIntegerProperty(recalcEntityStatus());
         }
-        return status;
+        return _entityStatusProperty;
     }
-    protected abstract int getEntityStatus();
+    protected abstract int recalcEntityStatus();
 }

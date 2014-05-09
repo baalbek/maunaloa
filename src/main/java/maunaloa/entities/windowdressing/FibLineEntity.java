@@ -43,7 +43,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     private void setupDragLine() {
         dragLine.setOnMouseReleased((evt, anchor) -> {
             anchor.setCenterX(rulers.first().snapTo(anchor.getCenterX()));
-            entityStatusProperty().set(getEntityStatus());
+            entityStatusProperty().set(recalcEntityStatus());
         });
         Color curColor = getCurrentColor();
         dragLine.view().getChildren().add(createFibLine(createBinding(0.5,false), curColor));
@@ -191,7 +191,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     //endregion Interface ChartItem
 
     //region Private/Protected
-    protected int getEntityStatus() {
+    protected int recalcEntityStatus() {
         if (oid == null) {
             return StatusCodes.ENTITY_NEW;
         }

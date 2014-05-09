@@ -47,7 +47,10 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         if (_view == null) {
             levelLine = new LevelLine(levelValue, vruler);
             levelLine.setOnMouseReleased((evt,anchor) -> {
-                int curStatus = getEntityStatus();
+                if (entityStatusProperty().get() == StatusCodes.ENTITY_TO_BE_INACTIVE) {
+                    return;
+                }
+                int curStatus = recalcEntityStatus();
                 entityStatusProperty().set(curStatus);
                 levelLine.updateColorFor(curStatus);
             });
@@ -81,13 +84,17 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         return levelLine.getLevelValue();
     }
     public void setEntityStatus(int value) {
+        if ((value == StatusCodes.ENTITY_TO_BE_INACTIVE) &&
+                (oid == null)) {
+            return;
+        }
         entityStatusProperty().set(value);
         levelLine.updateColorFor(value);
     }
     //endregion Public Methods
 
     //region Private/Protected
-    protected int getEntityStatus() {
+    protected int recalcEntityStatus() {
         if (oid == null) {
             return StatusCodes.ENTITY_NEW;
         }
