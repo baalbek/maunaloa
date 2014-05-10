@@ -38,12 +38,6 @@ public class LevelLine extends AbstractSelectableLine {
 
     //endregion Init
 
-    //region Public Methods
-    public void updateColorFor(int statusCode) {
-        line.setStroke(statusColors.get(statusCode));
-    }
-    //endregion Public Methods
-
 
     //region Private Methods
     private void createLevel(){
@@ -118,7 +112,7 @@ public class LevelLine extends AbstractSelectableLine {
 
     //endregion Private Methods
 
-    //region Private Methods
+    //region Public |Methods
     public Group view() {
         if (group == null) {
             createLevel();
@@ -129,7 +123,10 @@ public class LevelLine extends AbstractSelectableLine {
     public double getLevelValue() {
         return levelValue;
     }
-    //endregion Private Methods
+    public void updateColorFor(int statusCode) {
+        line.setStroke(statusColors.get(statusCode));
+    }
+    //endregion Public Methods
 
     //region AbstractSelectableLine
     @Override

@@ -55,7 +55,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                 levelLine.updateColorFor(curStatus);
             });
             levelLine.setOnMouseReleasedShift(evt -> {
-                System.out.println(levelLine);
+                System.out.println(levelLine + ", " + getOid());
             });
             _view = levelLine.view();
         }

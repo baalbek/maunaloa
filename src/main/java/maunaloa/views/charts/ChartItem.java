@@ -3,6 +3,7 @@ package maunaloa.views.charts;
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.repository.WindowDressingRepository;
+import org.bson.types.ObjectId;
 
 /**
  * Created with IntelliJ IDEA.
