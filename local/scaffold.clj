@@ -1,7 +1,8 @@
 (ns scaffold
   (:import
     [org.springframework.context ApplicationContext]
-    [org.springframework.context.support ClassPathXmlApplicationContext])
+    [org.springframework.context.support ClassPathXmlApplicationContext]
+    [maunaloa.entities DummyEntity])
   (:require
     (maunaloa.service.mongodb
       [common :as comm]
@@ -16,4 +17,11 @@
     f))
 
 (def gfm (memoize gf))
+
+(def parent (DummyEntity.))
+
+(def repos
+  (memoize
+    (fn []
+      (.getBean (gfm) "windowdressing"))))
 

@@ -77,6 +77,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     public void saveToRepos(WindowDressingRepository repos) {
         repos.saveLevel(this);
     }
+
     //endregion Interface ChartItem
 
     //region Public Methods

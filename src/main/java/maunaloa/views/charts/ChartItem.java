@@ -2,8 +2,12 @@ package maunaloa.views.charts;
 
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
+import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
 import org.bson.types.ObjectId;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,4 +24,5 @@ public interface ChartItem {
     void setStatus(int value);*/
     MaunaloaStatus getStatus();
     void saveToRepos(WindowDressingRepository repos);
+    Optional<List<CommentEntity>> getComments();
 }

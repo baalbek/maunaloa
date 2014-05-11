@@ -3,20 +3,22 @@ package maunaloa.repository.impl;
 import com.mongodb.*;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
+import maunaloa.entities.MaunaloaEntity;
+import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     private Map<String,List<ChartItem>> fibLines;
     private HashMap<String, List<ChartItem>> levels;
+    private HashMap<ObjectId, List<CommentEntity>> commentsMap;
 
     private String makeKey(String ticker, int location) {
         return String.format("%s:%d", ticker, location);
@@ -96,7 +99,9 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     "value" : 140 }*/
                 ObjectId oid = (ObjectId)o.get("_id");
                 double level = (Double)o.get("value");
-                return new LevelEntity(oid,ticker,location,level,vruler);
+                LevelEntity levelResult = new LevelEntity(oid,ticker,location,level,vruler);
+                levelResult.setComments(fetchComments(levelResult));
+                return levelResult;
             };
             try {
                 DBCollection collection = getConnection().getCollection("levels");
@@ -106,6 +111,48 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                 DBCursor cursor = collection.find(query);
                 List<DBObject> objs = cursor.toArray();
                 result = objs.stream().map(mongo2level).collect(Collectors.toList());
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<CommentEntity> fetchComments(MaunaloaEntity parent) {
+        if (commentsMap == null) {
+            commentsMap = new HashMap<>();
+        }
+
+        ObjectId refId = parent.getOid();
+
+        List<CommentEntity> result = null;
+        if (commentsMap.containsKey(refId)) {
+            result = commentsMap.get(refId);
+        }
+        else {
+
+            Function<DBObject,CommentEntity> mongo2comment = o -> {
+                ObjectId oid = (ObjectId)o.get("_id");
+
+                Date dx = (Date)o.get("dx");
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(dx);
+                int y = cal.get(Calendar.YEAR);
+                int m = cal.get(Calendar.MONTH) + 1;
+                int d = cal.get(Calendar.DAY_OF_MONTH);
+                int hh = cal.get(Calendar.HOUR_OF_DAY);
+                int mm = cal.get(Calendar.MINUTE);
+                String oComment = (String)o.get("c");
+                return new CommentEntity(parent,oid,oComment,LocalDateTime.of(y,m,d,hh,mm));
+            };
+            try {
+                DBCollection collection = getConnection().getCollection("comments");
+
+                BasicDBObject query = new BasicDBObject("refid",refId);
+                DBCursor cursor = collection.find(query);
+                List<DBObject> objs = cursor.toArray();
+                result = objs.stream().map(mongo2comment).collect(Collectors.toList());
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
@@ -210,6 +257,18 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     log.error(String.format("Save failed with error: %s", wr.getError()));
                 }
             }
+
+            entity.getComments().ifPresent(this::saveComments);
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveComments(List<CommentEntity> comments) {
+        try {
+            DBCollection coll = getConnection().getCollection("comments");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
