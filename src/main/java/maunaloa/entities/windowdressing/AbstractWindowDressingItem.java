@@ -19,8 +19,8 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
     protected ObjectId oid;
     protected final String ticker;
     protected final int location;
-    protected List<CommentEntity> comments;
 
+    private List<CommentEntity> comments;
 
     public AbstractWindowDressingItem(String ticker,
                                       int location) {
@@ -50,22 +50,16 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
         }
         return _entityStatusProperty;
     }
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
     public Optional<List<CommentEntity>> getComments() {
         if ((comments == null) || (comments.size() == 0)) {
-            return Optional.empty();
+            return Optional.of(comments);
         }
         else {
             return Optional.of(comments);
         }
-    }
-    public void setComments(List<CommentEntity> comments) {
-        this.comments = comments;
-    }
-    public void addComment(CommentEntity newComment) {
-        if (comments == null) {
-            comments = new ArrayList<>();
-        }
-        comments.add(newComment);
     }
     protected abstract int recalcEntityStatus();
 }

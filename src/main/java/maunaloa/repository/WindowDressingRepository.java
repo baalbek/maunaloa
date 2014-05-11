@@ -29,6 +29,7 @@ public interface WindowDressingRepository {
     List<ChartItem> fetchLevels(String ticker, int location, int status, IRuler vruler);
     List<CommentEntity> fetchComments(MaunaloaEntity parent);
     //List<CommentEntity> fetchComments(LocalDateTime fromDate, LocalDateTime toDate);
+    void addComment(CommentEntity comment);
     void saveOrUpdate(ChartItem item);
     void saveFibonacci(FibLineEntity entity);
     void saveLevel(LevelEntity entity);

@@ -56,10 +56,6 @@ public class CommentEntity implements MaunaloaEntity {
         }
     }
 
-    public ObjectId getRefId() {
-        return parent.getOid();
-    }
-
     public LocalDateTime getCommentDate() {
         return commentDate;
     }
@@ -70,6 +66,10 @@ public class CommentEntity implements MaunaloaEntity {
 
     public void setEntityStatus(int entityStatus) {
         this.entityStatus = entityStatus;
+    }
+
+    public MaunaloaEntity getParent() {
+        return parent;
     }
     //endregion Properties
 
