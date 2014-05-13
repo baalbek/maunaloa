@@ -126,10 +126,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         myUpdate.accept(fibonacciHelper);
     }
     public void showComments() {
-        Optional<List<ChartItem>> items = levelHelper.items();
-        if (items.isPresent()) {
-
-        }
+        levelHelper.showComments();
     }
     public void setInactiveSelected() {
 

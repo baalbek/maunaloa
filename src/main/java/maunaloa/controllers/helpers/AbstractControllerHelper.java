@@ -58,6 +58,13 @@ public abstract class AbstractControllerHelper {
     public List<ChartItem> itemsWithLineStatus(int lineStatus) {
         return null;
     }
+    public void showComments() {
+        items().ifPresent(ix -> {
+            ix.forEach(l -> {
+                boss.getPane().getChildren().add(l.commentsView());
+            });
+        });
+    }
     //endregion Public Methods
 
     //region Private/Protected Methods

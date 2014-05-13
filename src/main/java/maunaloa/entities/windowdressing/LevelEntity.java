@@ -1,6 +1,10 @@
 package maunaloa.entities.windowdressing;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.repository.WindowDressingRepository;
@@ -65,7 +69,20 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
 
     @Override
     public Node commentsView() {
-        throw new NotImplementedException();
+        /*GridPane gridpane = new GridPane();
+        gridpane.setPadding(new Insets(5));
+        gridpane.setHgap(10);
+        gridpane.setVgap(10);*/
+        TextArea tx = new TextArea("Comment!");
+        tx.setPrefRowCount(2);
+        tx.setWrapText(true);
+        tx.setPrefWidth(300);
+        tx.setTranslateX(300);
+        tx.setTranslateY(400);
+        return tx;
+        /*GridPane.setHalignment(tx, HPos.CENTER);
+        gridpane.add(tx, 0, 1);
+        return gridpane;*/
     }
 
     private MaunaloaStatus maunaloaStatus;
