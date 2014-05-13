@@ -67,6 +67,7 @@
             <Menu mnemonicParsing="false" text="Repository">
                 <MenuItem mnemonicParsing="false" onAction="#onLevelsFromRepos" text="Fetch Levels" />
                 <MenuItem mnemonicParsing="false" onAction="#onFibLinesFromRepos" text="Fetch Fibonacci" />
+                <MenuItem mnemonicParsing="false" onAction="#onShowComments" text="Show Comments" />
                 <SeparatorMenuItem />
                 <MenuItem mnemonicParsing="false" onAction="#onSaveSelectedToRepos" text="Save selected" />
                 <MenuItem mnemonicParsing="false" onAction="#onSaveAllToRepos" text="Save all" />

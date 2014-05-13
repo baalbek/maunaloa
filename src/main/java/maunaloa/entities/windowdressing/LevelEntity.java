@@ -6,6 +6,7 @@ import maunaloa.StatusCodes;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.LevelLine;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
 
@@ -60,6 +61,11 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
             _view = levelLine.view();
         }
         return _view;
+    }
+
+    @Override
+    public Node commentsView() {
+        throw new NotImplementedException();
     }
 
     private MaunaloaStatus maunaloaStatus;

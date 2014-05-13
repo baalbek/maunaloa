@@ -12,6 +12,7 @@ import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
@@ -172,6 +173,11 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
             _view = dragLine.view();
         }
         return _view;
+    }
+
+    @Override
+    public Node commentsView() {
+        throw new NotImplementedException();
     }
 
     private MaunaloaStatus status;
