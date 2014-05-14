@@ -65,6 +65,13 @@ public abstract class AbstractControllerHelper {
             });
         });
     }
+    public void hideComments() {
+        items().ifPresent(ix -> {
+            ix.forEach(l -> {
+                boss.getPane().getChildren().remove(l.commentsView());
+            });
+        });
+    }
     //endregion Public Methods
 
     //region Private/Protected Methods

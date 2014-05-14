@@ -96,8 +96,11 @@ public class MainframeController implements ControllerHub {
     public void onSetInactiveAllLines(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::setInactiveAll);
     }
-    public void onShowComments(ActionEvent event) {
+    public void onShowAllComments(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::showComments);
+    }
+    public void onHideAllComments(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::hideComments);
     }
     //endregion Events
 

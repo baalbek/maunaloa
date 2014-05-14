@@ -128,6 +128,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     public void showComments() {
         levelHelper.showComments();
     }
+    public void hideComments() {
+        levelHelper.hideComments();
+    }
     public void setInactiveSelected() {
 
     }

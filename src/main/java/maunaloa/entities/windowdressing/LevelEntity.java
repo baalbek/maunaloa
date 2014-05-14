@@ -67,22 +67,25 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         return _view;
     }
 
+    private TextArea _commentsView;
     @Override
     public Node commentsView() {
-        /*GridPane gridpane = new GridPane();
-        gridpane.setPadding(new Insets(5));
-        gridpane.setHgap(10);
-        gridpane.setVgap(10);*/
-        TextArea tx = new TextArea("Comment!");
-        tx.setPrefRowCount(2);
-        tx.setWrapText(true);
-        tx.setPrefWidth(300);
-        tx.setTranslateX(300);
-        tx.setTranslateY(400);
-        return tx;
-        /*GridPane.setHalignment(tx, HPos.CENTER);
-        gridpane.add(tx, 0, 1);
-        return gridpane;*/
+        if (_commentsView == null) {
+            /*GridPane gridpane = new GridPane();
+            gridpane.setPadding(new Insets(5));
+            gridpane.setHgap(10);
+            gridpane.setVgap(10);*/
+            _commentsView = new TextArea("Comment!");
+            _commentsView.setPrefRowCount(2);
+            _commentsView.setWrapText(true);
+            _commentsView.setPrefWidth(300);
+            _commentsView.setTranslateX(300);
+            _commentsView.setTranslateY(400);
+            /*GridPane.setHalignment(tx, HPos.CENTER);
+            gridpane.add(tx, 0, 1);
+            return gridpane;*/
+        }
+        return _commentsView;
     }
 
     private MaunaloaStatus maunaloaStatus;
