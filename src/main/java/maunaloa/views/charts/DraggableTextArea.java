@@ -38,6 +38,11 @@ public class DraggableTextArea {
         anchor = createAnchor(x,y);
         textArea.translateXProperty().bind(anchor.centerXProperty());
         textArea.translateYProperty().bind(anchor.centerYProperty());
+        textArea.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+            if (onMouseDoubleClick != null && e.getClickCount() > 1) {
+                onMouseDoubleClick.accept(e);
+            }
+        });
         /*textArea.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
             if (e.isShiftDown()) {
                 if (onMouseReleased != null) {
@@ -58,10 +63,10 @@ public class DraggableTextArea {
         });*/
     }
     //region Events
-    /*private Consumer<MouseEvent> onMouseReleased;
-    public void setOnMouseReleased(Consumer<MouseEvent> onMouseReleased) {
-        this.onMouseReleased = onMouseReleased;
-    }*/
+    private Consumer<MouseEvent> onMouseDoubleClick;
+    public void setOnMouseDoubleClick(Consumer<MouseEvent> onMouseDoubleClick) {
+        this.onMouseDoubleClick =onMouseDoubleClick ;
+    }
     //eventsregion Events
 
     //region Public Methods

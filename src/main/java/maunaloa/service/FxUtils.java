@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -66,6 +67,11 @@ public class FxUtils {
     //*/
     public static void closeView(ActionEvent actionEvent) {
         Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
+    }
+    public static void closeView(KeyEvent keyEvent) {
+        Node source = (Node) keyEvent.getSource();
         Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }

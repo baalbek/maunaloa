@@ -76,7 +76,7 @@
                 <MenuItem mnemonicParsing="false" onAction="#onHideAllComments" text="Hide " />
             </Menu>
               <!--<Menu mnemonicParsing="false" text="Comments">
-                  <MenuItem mnemonicParsing="false" onAction="#onNewComment" text="New Comment" />
+                  <MenuItem mnemonicParsing="false" text="New Comment" />
               </Menu>-->
           </menus>
         </MenuBar>
@@ -101,11 +101,11 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </HBox.margin>
             </ChoiceBox>
-              <!--<CheckBox fx:id="cxComments" disable="false" mnemonicParsing="false" selected="false" text="Comments">
+              <CheckBox fx:id="cxComments" disable="false" mnemonicParsing="false" selected="false" text="Comments">
                   <HBox.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </HBox.margin>
-              </CheckBox>-->
+              </CheckBox>
             <CheckBox fx:id="cxLoadOptionsHtml" mnemonicParsing="false" selected="false" text="Load Derivatives">
               <HBox.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -33,7 +33,7 @@ public class MainframeController implements ControllerHub {
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
-    //@FXML private CheckBox cxComments;
+    @FXML private CheckBox cxComments;
     @FXML private CheckBox cxIsCloud;
     @FXML private TabPane myTabPane;
     @FXML private Label lblLocalMongodbUrl;
@@ -77,17 +77,17 @@ public class MainframeController implements ControllerHub {
         //currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
         currentController().ifPresent(c -> {
             c.onFibLinesFromRepos();
-            /*if (cxComments.isSelected()) {
+            if (cxComments.isSelected()) {
                 showComments();
-            }*/
+            }
         });
     }
     public void onLevelsFromRepos(ActionEvent event) {
         currentController().ifPresent(c -> {
             c.onLevelsFromRepos();
-            /*if (cxComments.isSelected()) {
+            if (cxComments.isSelected()) {
                 showComments();
-            }*/
+            }
         });
     }
     public void onDeleteSelLines(ActionEvent event) {

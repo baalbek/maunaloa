@@ -3,7 +3,9 @@ package maunaloa.entities.windowdressing;
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
+import maunaloa.controllers.CommentsController;
 import maunaloa.repository.WindowDressingRepository;
+import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
@@ -58,7 +60,10 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                 levelLine.updateColorFor(curStatus);
             });
             levelLine.setOnMouseReleasedShift(evt -> {
-                System.out.println(levelLine + ", " + getOid());
+                FxUtils.loadApp("/ChartCommentsDialog.fxml", "New Comment",
+                        new CommentsController(this, e -> {
+                            System.out.println(e.getCommentDate() + " " + e.getComment());
+                        }));
             });
             _view = levelLine.view();
         }
@@ -82,6 +87,12 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
             _commentsView = new DraggableTextArea(buf.toString(),
                                                     levelLine.getLine().getStartX()+15,
                                                     levelLine.getLine().getStartY()+5);
+            _commentsView.setOnMouseDoubleClick(e -> {
+                FxUtils.loadApp("/ChartCommentsDialog.fxml", "New Comment",
+                        new CommentsController(this, comment -> {
+                            System.out.println(comment.getCommentDate() + " " + comment.getComment());
+                        }));
+            });
         }
         return Optional.of(_commentsView.view());
     }
