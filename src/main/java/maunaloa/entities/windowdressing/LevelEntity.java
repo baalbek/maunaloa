@@ -9,6 +9,7 @@ import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
+import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
 import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
@@ -67,25 +68,23 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         return _view;
     }
 
-    private TextArea _commentsView;
+    private DraggableTextArea _commentsView;
     @Override
     public Node commentsView() {
         if (_commentsView == null) {
-            /*GridPane gridpane = new GridPane();
-            gridpane.setPadding(new Insets(5));
-            gridpane.setHgap(10);
-            gridpane.setVgap(10);*/
-            _commentsView = new TextArea("Comment!");
-            _commentsView.setPrefRowCount(2);
-            _commentsView.setWrapText(true);
-            _commentsView.setPrefWidth(300);
-            _commentsView.setTranslateX(300);
-            _commentsView.setTranslateY(400);
-            /*GridPane.setHalignment(tx, HPos.CENTER);
-            gridpane.add(tx, 0, 1);
-            return gridpane;*/
+            StringBuilder buf = new StringBuilder();
+            getComments().ifPresent(cs -> {
+                cs.stream().forEach(c -> {
+                    System.out.println(c);
+                    buf.append(c);
+                });
+            });
+
+            _commentsView = new DraggableTextArea(buf.toString(),
+                                                    levelLine.getLine().getStartX()+15,
+                                                    levelLine.getLine().getStartY()+5);
         }
-        return _commentsView;
+        return _commentsView.view();
     }
 
     private MaunaloaStatus maunaloaStatus;

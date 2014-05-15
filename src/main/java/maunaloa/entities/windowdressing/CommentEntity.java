@@ -37,6 +37,10 @@ public class CommentEntity implements MaunaloaEntity {
     //region Properties
 
     @Override
+    public String toString() {
+        return String.format("%s\n%s\n\n", commentDate, comment);
+    }
+    @Override
     public ObjectId getOid() {
         return oid;
     }
