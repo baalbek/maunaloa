@@ -55,7 +55,7 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
     }
     public Optional<List<CommentEntity>> getComments() {
         if ((comments == null) || (comments.size() == 0)) {
-            return Optional.of(comments);
+            return Optional.empty();
         }
         else {
             return Optional.of(comments);

@@ -33,8 +33,9 @@ public class MainframeController implements ControllerHub {
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
-    @FXML private TabPane myTabPane;
+    //@FXML private CheckBox cxComments;
     @FXML private CheckBox cxIsCloud;
+    @FXML private TabPane myTabPane;
     @FXML private Label lblLocalMongodbUrl;
     @FXML private Label lblSqlUrl;
 
@@ -73,10 +74,21 @@ public class MainframeController implements ControllerHub {
         currentController().ifPresent(ChartCanvasController::onNewLevel);
     }
     public void onFibLinesFromRepos(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
+        //currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
+        currentController().ifPresent(c -> {
+            c.onFibLinesFromRepos();
+            /*if (cxComments.isSelected()) {
+                showComments();
+            }*/
+        });
     }
     public void onLevelsFromRepos(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::onLevelsFromRepos);
+        currentController().ifPresent(c -> {
+            c.onLevelsFromRepos();
+            /*if (cxComments.isSelected()) {
+                showComments();
+            }*/
+        });
     }
     public void onDeleteSelLines(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onDeleteSelLines);
@@ -97,10 +109,10 @@ public class MainframeController implements ControllerHub {
         currentController().ifPresent(ChartCanvasController::setInactiveAll);
     }
     public void onShowAllComments(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::showComments);
+        showComments();
     }
     public void onHideAllComments(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::hideComments);
+        hideComments();
     }
     //endregion Events
 
@@ -151,6 +163,14 @@ public class MainframeController implements ControllerHub {
                 setStock.apply();
             }
         });
+        /*cxComments.selectedProperty().addListener(e -> {
+            if (cxComments.isSelected()) {
+                showComments();
+            }
+            else {
+                hideComments();
+            }
+        });*/
 
         if (optionsController != null) {
             optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
@@ -207,6 +227,12 @@ public class MainframeController implements ControllerHub {
             (ObservableValue<? extends Number> observableValue, Number value, Number newValue) -> {
                 setStock.accept(cbitems.get(newValue.intValue()));
         });
+    }
+    private void showComments() {
+        currentController().ifPresent(ChartCanvasController::showComments);
+    }
+    private void hideComments() {
+        currentController().ifPresent(ChartCanvasController::hideComments);
     }
     //endregion Initialize
 

@@ -20,7 +20,7 @@ public interface ChartItem {
     public static int SELECTED = 1;
     public static int DIRTY = 2;
     Node view();
-    Node commentsView();
+    Optional<Node> commentsView();
 /*    int getStatus();
     void setStatus(int value);*/
     MaunaloaStatus getStatus();

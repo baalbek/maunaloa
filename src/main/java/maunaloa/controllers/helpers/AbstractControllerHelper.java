@@ -61,14 +61,18 @@ public abstract class AbstractControllerHelper {
     public void showComments() {
         items().ifPresent(ix -> {
             ix.forEach(l -> {
-                boss.getPane().getChildren().add(l.commentsView());
+                l.commentsView().ifPresent(v -> {
+                    boss.getPane().getChildren().add(v);
+                });
             });
         });
     }
     public void hideComments() {
         items().ifPresent(ix -> {
             ix.forEach(l -> {
-                boss.getPane().getChildren().remove(l.commentsView());
+                l.commentsView().ifPresent(v -> {
+                    boss.getPane().getChildren().remove(v);
+                });
             });
         });
     }

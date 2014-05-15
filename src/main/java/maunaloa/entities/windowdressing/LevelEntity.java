@@ -1,19 +1,16 @@
 package maunaloa.entities.windowdressing;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
-import oahu.exceptions.NotImplementedException;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
+
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -70,21 +67,23 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
 
     private DraggableTextArea _commentsView;
     @Override
-    public Node commentsView() {
+    public Optional<Node> commentsView() {
         if (_commentsView == null) {
+            if (getComments().isPresent() == false) {
+                return Optional.empty();
+            }
+
             StringBuilder buf = new StringBuilder();
-            getComments().ifPresent(cs -> {
-                cs.stream().forEach(c -> {
-                    System.out.println(c);
-                    buf.append(c);
-                });
+
+            getComments().get().stream().forEach(c -> {
+                buf.append(c);
             });
 
             _commentsView = new DraggableTextArea(buf.toString(),
                                                     levelLine.getLine().getStartX()+15,
                                                     levelLine.getLine().getStartY()+5);
         }
-        return _commentsView.view();
+        return Optional.of(_commentsView.view());
     }
 
     private MaunaloaStatus maunaloaStatus;

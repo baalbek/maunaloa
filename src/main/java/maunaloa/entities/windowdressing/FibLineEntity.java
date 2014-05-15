@@ -19,6 +19,7 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -176,8 +177,8 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     }
 
     @Override
-    public Node commentsView() {
-        throw new NotImplementedException();
+    public Optional<Node> commentsView() {
+        return Optional.empty();
     }
 
     private MaunaloaStatus status;

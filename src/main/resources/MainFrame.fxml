@@ -101,6 +101,11 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </HBox.margin>
             </ChoiceBox>
+              <!--<CheckBox fx:id="cxComments" disable="false" mnemonicParsing="false" selected="false" text="Comments">
+                  <HBox.margin>
+                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  </HBox.margin>
+              </CheckBox>-->
             <CheckBox fx:id="cxLoadOptionsHtml" mnemonicParsing="false" selected="false" text="Load Derivatives">
               <HBox.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -116,11 +121,11 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </HBox.margin>
             </CheckBox>
-            <Label fx:id="lblLocalNoSQL" text="Local NoSQL:">
+            <!--<Label fx:id="lblLocalNoSQL" text="Local NoSQL:">
               <HBox.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </HBox.margin>
-            </Label>
+            </Label>-->
               <Label fx:id="lblSqlUrl" text="Local SQL url:">
                   <HBox.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

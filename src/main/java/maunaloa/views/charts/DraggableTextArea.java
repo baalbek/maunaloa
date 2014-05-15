@@ -5,11 +5,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.util.List;
+import java.awt.event.KeyEvent;
+import java.util.function.Consumer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,17 +22,49 @@ import java.util.List;
 public class DraggableTextArea {
     private Circle anchor;
     private TextArea textArea;
-    private static double MY_WIDTH = 180;
+    private static double MY_WIDTH = 230;
 
     public DraggableTextArea(String text, double x, double y) {
+        this(text,x,y,MY_WIDTH);
+    }
+    public DraggableTextArea(String text,
+                             double x,
+                             double y,
+                             double width) {
         textArea = new TextArea(text);
-        textArea.setPrefWidth(MY_WIDTH);
-        textArea.setPrefHeight(MY_WIDTH*0.6182);
+        textArea.setPrefWidth(width);
+        textArea.setPrefHeight(width * 0.6182);
+        textArea.setEditable(false);
         anchor = createAnchor(x,y);
         textArea.translateXProperty().bind(anchor.centerXProperty());
         textArea.translateYProperty().bind(anchor.centerYProperty());
+        /*textArea.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
+            if (e.isShiftDown()) {
+                if (onMouseReleased != null) {
+                    onMouseReleased.accept(e);
+                }
+            }
+        });
+        textArea.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
+            if (e.isShiftDown()) {
+                textArea.setText("");
+            }
+        });
+        textArea.setOnKeyReleased(e -> {
+            System.out.println(textArea.getText());
+            if ((e.getCode() == KeyCode.ENTER) && (e.isShiftDown() == true)) {
+                System.out.println("SAVED!");
+            }
+        });*/
     }
+    //region Events
+    /*private Consumer<MouseEvent> onMouseReleased;
+    public void setOnMouseReleased(Consumer<MouseEvent> onMouseReleased) {
+        this.onMouseReleased = onMouseReleased;
+    }*/
+    //eventsregion Events
 
+    //region Public Methods
     private Group _view;
     public Group view() {
         if (_view == null) {
@@ -39,6 +73,7 @@ public class DraggableTextArea {
         }
         return _view;
     }
+    //endregion Public Methods
 
     //region Private Methods
     private Circle createAnchor(double x, double y) {
