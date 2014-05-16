@@ -3,6 +3,8 @@ package maunaloa.controllers.helpers;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.StatusCodes;
+import maunaloa.entities.windowdressing.CommentEntity;
+import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import oahu.financial.Stock;
@@ -57,6 +59,16 @@ public abstract class AbstractControllerHelper {
     }
     public List<ChartItem> itemsWithLineStatus(int lineStatus) {
         return null;
+    }
+
+    public void showComments(LevelEntity entity) {
+        entity.commentsView().ifPresent(v -> {
+            ObservableList<Node> children = boss.getPane().getChildren();
+           /* if (children.stream().filter(x -> x == v).findFirst().isPresent()) {
+                return;
+            }*/
+            children.add(v);
+        });
     }
     public void showComments() {
         items().ifPresent(ix -> {

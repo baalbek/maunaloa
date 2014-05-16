@@ -61,5 +61,14 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
             return Optional.of(comments);
         }
     }
+    protected boolean addComment(CommentEntity comment) {
+        boolean result = false;
+        if (comments == null) {
+            comments = new ArrayList<>();
+            result = true;
+        }
+        comments.add(comment);
+        return result;
+    }
     protected abstract int recalcEntityStatus();
 }

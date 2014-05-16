@@ -5,12 +5,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-import java.awt.event.KeyEvent;
 import java.util.function.Consumer;
 
 /**
@@ -32,13 +30,13 @@ public class DraggableTextArea {
                              double y,
                              double width) {
         textArea = new TextArea(text);
-        textArea.setPrefWidth(width);
-        textArea.setPrefHeight(width * 0.6182);
-        textArea.setEditable(false);
+        getTextArea().setPrefWidth(width);
+        getTextArea().setPrefHeight(width * 0.6182);
+        getTextArea().setEditable(false);
         anchor = createAnchor(x,y);
-        textArea.translateXProperty().bind(anchor.centerXProperty());
-        textArea.translateYProperty().bind(anchor.centerYProperty());
-        textArea.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+        getTextArea().translateXProperty().bind(anchor.centerXProperty());
+        getTextArea().translateYProperty().bind(anchor.centerYProperty());
+        getTextArea().addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
             if (onMouseDoubleClick != null && e.getClickCount() > 1) {
                 onMouseDoubleClick.accept(e);
             }
@@ -80,6 +78,12 @@ public class DraggableTextArea {
     }
     //endregion Public Methods
 
+    //region Properties
+    public TextArea getTextArea() {
+        return textArea;
+    }
+    //endregion Properties
+
     //region Private Methods
     private Circle createAnchor(double x, double y) {
         Circle a = new Circle();
@@ -117,6 +121,8 @@ public class DraggableTextArea {
         });
         return a;
     }
+
+
 
 
     //endregion Private Methods

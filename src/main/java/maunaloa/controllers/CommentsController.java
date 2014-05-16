@@ -40,7 +40,7 @@ public class CommentsController {
             FxUtils.closeView(event);
         });
         txComment.setOnKeyReleased(e -> {
-            if (e.getCode() == KeyCode.ENTER && e.isShiftDown()) {
+            if (e.getCode() == KeyCode.ENTER) {
                 acceptFn.accept(new CommentEntity(entity,txComment.getText(),LocalDateTime.now()));
                 FxUtils.closeView(e);
             }

@@ -9,10 +9,13 @@ import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
+import oahu.functional.Procedure2;
+import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,6 +48,13 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     }
     //endregion Init
 
+    //region Events
+    private Procedure3<LevelEntity,CommentEntity,Boolean> onAddedNewComment;
+    public void setOnAddedNewComment(Procedure3<LevelEntity,CommentEntity,Boolean> onAddedNewComment) {
+        this.onAddedNewComment = onAddedNewComment;
+    }
+    //endregion Events
+
     //region Interface ChartItem
     private Node _view;
     @Override
@@ -60,10 +70,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                 levelLine.updateColorFor(curStatus);
             });
             levelLine.setOnMouseReleasedShift(evt -> {
-                FxUtils.loadApp("/ChartCommentsDialog.fxml", "New Comment",
-                        new CommentsController(this, e -> {
-                            System.out.println(e.getCommentDate() + " " + e.getComment());
-                        }));
+                loadCommentsDialog();
             });
             _view = levelLine.view();
         }
@@ -88,10 +95,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                                                     levelLine.getLine().getStartX()+15,
                                                     levelLine.getLine().getStartY()+5);
             _commentsView.setOnMouseDoubleClick(e -> {
-                FxUtils.loadApp("/ChartCommentsDialog.fxml", "New Comment",
-                        new CommentsController(this, comment -> {
-                            System.out.println(comment.getCommentDate() + " " + comment.getComment());
-                        }));
+                loadCommentsDialog();
             });
         }
         return Optional.of(_commentsView.view());
@@ -130,6 +134,21 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     //endregion Public Methods
 
     //region Private/Protected
+    private void loadCommentsDialog() {
+        FxUtils.loadApp("/ChartCommentsDialog.fxml", "New Comment",
+                new CommentsController(this, comment -> {
+                    boolean wasFirstComment = addComment(comment);
+
+                    if (wasFirstComment == true) {
+                        if (onAddedNewComment != null) {
+                            onAddedNewComment.apply(this,comment,wasFirstComment);
+                        }
+                    }
+                    else {
+                        _commentsView.getTextArea().appendText(String.format("\n\n%s\n%s", comment.getCommentDate(), comment.getComment()));
+                    }
+                }));
+    }
     protected int recalcEntityStatus() {
         if (oid == null) {
             return StatusCodes.ENTITY_NEW;
@@ -143,5 +162,9 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
             }
         }
     }
+
+
+
+
     //endregion
 }

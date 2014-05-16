@@ -69,6 +69,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             Stock stock = getStock();
             if (stock != null) {
                 LevelEntity entity = new LevelEntity(stock.getTicker(),location,v,getVruler());
+                entity.setOnAddedNewComment((levelEnt,newComment,wasFirstComment) -> {
+                    System.out.println("NEW COMMENT: " + newComment.getCommentDate() + " " + newComment.getComment());
+                    levelHelper.showComments(levelEnt);
+                });
                 levelHelper.addNewLevel(entity);
             }
         });
