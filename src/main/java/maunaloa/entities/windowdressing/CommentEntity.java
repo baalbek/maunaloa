@@ -5,6 +5,7 @@ import maunaloa.entities.MaunaloaEntity;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by rcs on 5/10/14.
@@ -16,6 +17,8 @@ public class CommentEntity implements MaunaloaEntity {
 
     private final MaunaloaEntity parent;
     private final LocalDateTime commentDate;
+
+    private static DateTimeFormatter dtformatter = DateTimeFormatter.ofPattern("yy-MM-dd [HH:mm]");
 
     public CommentEntity(MaunaloaEntity parent,
                          String comment,
@@ -38,7 +41,7 @@ public class CommentEntity implements MaunaloaEntity {
 
     @Override
     public String toString() {
-        return String.format("%s\n%s\n\n", commentDate, comment);
+        return String.format("\t%s\n%s", dtformatter.format(commentDate), comment);
     }
     @Override
     public ObjectId getOid() {

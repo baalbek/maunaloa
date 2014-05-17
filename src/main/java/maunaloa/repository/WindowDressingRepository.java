@@ -6,6 +6,7 @@ import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
+import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
 
@@ -26,7 +27,11 @@ public interface WindowDressingRepository {
     public static final int LEVEL = 2;
     public static final int ALL_ITEMS = 3;
     List<ChartItem> fetchFibLines(String ticker, int location, int status, Tuple<IRuler> rulers);
-    List<ChartItem> fetchLevels(String ticker, int location, int status, IRuler vruler);
+    List<ChartItem> fetchLevels(String ticker,
+                                int location,
+                                int status,
+                                IRuler vruler,
+                                Procedure3<LevelEntity,CommentEntity,Boolean> onAddedNewComment);
     List<CommentEntity> fetchComments(MaunaloaEntity parent);
     //List<CommentEntity> fetchComments(LocalDateTime fromDate, LocalDateTime toDate);
     void addComment(CommentEntity comment);

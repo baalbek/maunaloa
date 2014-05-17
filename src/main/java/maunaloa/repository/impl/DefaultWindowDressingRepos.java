@@ -13,6 +13,7 @@ import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
 import oahu.exceptions.NotImplementedException;
+import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
@@ -82,7 +83,8 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     public List<ChartItem> fetchLevels(String ticker,
                                        int location,
                                        int status,
-                                       IRuler vruler) {
+                                       IRuler vruler,
+                                       Procedure3<LevelEntity,CommentEntity,Boolean> onAddedNewComment) {
         if (levels == null) {
             levels = new HashMap<>();
         }
@@ -102,6 +104,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                 double level = (Double)o.get("value");
                 LevelEntity levelResult = new LevelEntity(oid,ticker,location,level,vruler);
                 levelResult.setComments(fetchComments(levelResult));
+                levelResult.setOnAddedNewComment(onAddedNewComment);
                 return levelResult;
             };
             try {
@@ -165,25 +168,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     public void addComment(CommentEntity comment) {
         try {
             DBCollection coll = getConnection().getCollection("comments");
-            switch (comment.getEntityStatus()) {
-                case StatusCodes.ENTITY_NEW:
-                    BasicDBObject toBeSaved = new  BasicDBObject("refid", comment.getParent().getOid())
-                                                    .append("c", comment.getComment())
-                                                    .append("dx", comment.getCommentDate());
-                    WriteResult wr = save2mongo(coll,comment,toBeSaved);
-                    if (wr.getLastError().ok() == true) {
-                        List<CommentEntity> myComments = fetchComments(comment.getParent());
-                        comment.setOid((ObjectId)toBeSaved.get("_id"));
-                        comment.setEntityStatus(StatusCodes.ENTITY_CLEAN);
-                        myComments.add(comment);
-                    }
-                    logWriteResult(wr,String.format("New comment (%s) saved with oid: %s",
-                            comment.getComment(),comment.getOid()));
-                    break;
-                case StatusCodes.ENTITY_DIRTY:
-                    comment.setEntityStatus(StatusCodes.ENTITY_CLEAN);
-                    break;
-            }
+            saveCommentToMongo(comment, coll);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -193,6 +178,9 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     public void saveComments(List<CommentEntity> comments) {
         try {
             DBCollection coll = getConnection().getCollection("comments");
+            comments.stream().forEach(comment -> {
+                saveCommentToMongo(comment, coll);
+            });
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -275,22 +263,24 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     wr = coll.save(newEnt);
                     entity.setOid((ObjectId)newEnt.get("_id"));
                     entity.setEntityStatus(StatusCodes.ENTITY_CLEAN);
+                    logWriteResult(wr,String.format("(%s) New Level saved",entity.getOid()));
                 }
                 break;
                 case StatusCodes.ENTITY_DIRTY: {
                     //saveFn.apply(new BasicDBObject("value", entity.getLevelValue()));
                     wr = save2mongo(coll, entity, new BasicDBObject("value", entity.getLevelValue()));
                     entity.setEntityStatus(StatusCodes.ENTITY_CLEAN);
+                    logWriteResult(wr,String.format("(%s) Level updated (set to clean)",entity.getOid()));
                 }
                 break;
                 case StatusCodes.ENTITY_TO_BE_INACTIVE: {
                     //wr = saveFn.apply(new BasicDBObject("active", false));
                     wr = save2mongo(coll, entity, new BasicDBObject("active", false));
                     entity.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
+                    logWriteResult(wr,String.format("(%s) Level saved to inactive",entity.getOid()));
                 }
                 break;
             }
-            logWriteResult(wr,String.format("Level saved with oid: %s",entity.getOid()));
             entity.getComments().ifPresent(this::saveComments);
 
         } catch (UnknownHostException e) {
@@ -328,6 +318,28 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     //endregion Properties
 
     //region Private Methods
+    private void saveCommentToMongo(CommentEntity comment, DBCollection coll) {
+        switch (comment.getEntityStatus()) {
+            case StatusCodes.ENTITY_NEW:
+                BasicDBObject toBeSaved = new  BasicDBObject("refid", comment.getParent().getOid())
+                        .append("c", comment.getComment())
+                        .append("dx", comment.getCommentDate());
+                WriteResult wr = save2mongo(coll,comment,toBeSaved);
+                if (wr.getLastError().ok() == true) {
+                    List<CommentEntity> myComments = fetchComments(comment.getParent());
+                    comment.setOid((ObjectId)toBeSaved.get("_id"));
+                    comment.setEntityStatus(StatusCodes.ENTITY_CLEAN);
+                    myComments.add(comment);
+                }
+                logWriteResult(wr,String.format("New comment (%s) saved with oid: %s",
+                        comment.getComment(),comment.getOid()));
+                break;
+            case StatusCodes.ENTITY_DIRTY:
+                comment.setEntityStatus(StatusCodes.ENTITY_CLEAN);
+                break;
+        }
+    }
+
     private WriteResult save2mongo(DBCollection coll, MaunaloaEntity entity, BasicDBObject toBeSaved) {
         BasicDBObject setObj = new BasicDBObject("$set", toBeSaved);
         BasicDBObject query = new BasicDBObject("_id", entity.getOid());

@@ -6,12 +6,14 @@ import maunaloa.StatusCodes;
 import maunaloa.controllers.CommentsController;
 import maunaloa.repository.WindowDressingRepository;
 import maunaloa.service.FxUtils;
+import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
 import oahu.functional.Procedure2;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
+import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
@@ -25,6 +27,7 @@ import java.util.function.Consumer;
  */
 public class LevelEntity extends AbstractWindowDressingItem implements ChartItem {
 
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
     private double levelValue;
     private final IRuler vruler;
     private LevelLine levelLine;
@@ -131,6 +134,13 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         entityStatusProperty().set(value);
         levelLine.updateColorFor(value);
     }
+    @Override
+    public String toString() {
+        int numComments = comments == null ? 0 : comments.size();
+        return oid == null ?
+                String.format("New level, comments: %d", numComments) :
+                String.format("(%s) Level with status %d, comments: %d", oid, entityStatusProperty().get(),numComments);
+    }
     //endregion Public Methods
 
     //region Private/Protected
@@ -138,6 +148,9 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         FxUtils.loadApp("/ChartCommentsDialog.fxml", "New Comment",
                 new CommentsController(this, comment -> {
                     boolean wasFirstComment = addComment(comment);
+                    Logx.debug(log, () -> {
+                        return String.format("wasFirstComment %s", wasFirstComment);
+                    });
 
                     if (wasFirstComment == true) {
                         if (onAddedNewComment != null) {
@@ -145,7 +158,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                         }
                     }
                     else {
-                        _commentsView.getTextArea().appendText(String.format("\n\n%s\n%s", comment.getCommentDate(), comment.getComment()));
+                        _commentsView.getTextArea().appendText(comment.toString());
                     }
                 }));
     }
@@ -162,8 +175,6 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
             }
         }
     }
-
-
 
 
     //endregion

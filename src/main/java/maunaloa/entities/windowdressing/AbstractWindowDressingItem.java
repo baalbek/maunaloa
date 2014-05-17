@@ -3,6 +3,8 @@ package maunaloa.entities.windowdressing;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import maunaloa.entities.MaunaloaEntity;
+import maunaloa.service.Logx;
+import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -16,11 +18,12 @@ import java.util.Optional;
  * Time: 12:48
  */
 public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
     protected ObjectId oid;
     protected final String ticker;
     protected final int location;
 
-    private List<CommentEntity> comments;
+    protected List<CommentEntity> comments;
 
     public AbstractWindowDressingItem(String ticker,
                                       int location) {
@@ -66,6 +69,17 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
         if (comments == null) {
             comments = new ArrayList<>();
             result = true;
+            Logx.debug(log, () -> {
+                return oid == null ? "(New Level) Comments == null" :
+                        String.format("(%s) Comments == null", oid);
+            });
+        }
+        else if (comments.size() == 0) {
+            result = true;
+            Logx.debug(log, () -> {
+                return oid == null ? "(New Level) Comments size == 0" :
+                        String.format("(%s) Comments size == 0", oid);
+            });
         }
         comments.add(comment);
         return result;

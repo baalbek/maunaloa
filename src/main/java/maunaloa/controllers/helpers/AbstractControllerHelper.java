@@ -62,12 +62,11 @@ public abstract class AbstractControllerHelper {
     }
 
     public void showComments(LevelEntity entity) {
+        Logx.debug(log, () -> {
+            return String.format("[showComments] %s", entity);
+        });
         entity.commentsView().ifPresent(v -> {
-            ObservableList<Node> children = boss.getPane().getChildren();
-           /* if (children.stream().filter(x -> x == v).findFirst().isPresent()) {
-                return;
-            }*/
-            children.add(v);
+            boss.getPane().getChildren().add(v);
         });
     }
     public void showComments() {
