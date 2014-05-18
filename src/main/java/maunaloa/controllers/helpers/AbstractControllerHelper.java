@@ -141,7 +141,9 @@ public abstract class AbstractControllerHelper {
                     filter(l -> l.getStatus().getChartLineStatus() == StatusCodes.SELECTED).
                     collect(Collectors.toList());
             selectedLines.forEach(l -> {
-                container.remove(l.view());
+                /*container.remove(l.view());
+                container.remove(l.commentsView());*/
+                l.removeFrom(container);
                 curlines.remove(l);
             });
         });
@@ -151,25 +153,21 @@ public abstract class AbstractControllerHelper {
         processWith(chartItemsMap, (curlines,s) -> {
             ObservableList<Node> container = boss.getPane().getChildren();
             curlines.forEach(l -> {
-                container.remove(l.view());
+                /*container.remove(l.view());
+                container.remove(l.commentsView());*/
+                l.removeFrom(container);
                 Logx.debug(log, () -> String.format("Deleted line %s from %s", l, s.getTicker()));
             });
             chartItemsMap.remove(s);
         });
-        /*Logx.debug(log, () -> {
-            StringBuffer buf = new StringBuffer("Remaining entries:").append("\n");
-            for (Stock s : chartItemsMap.keySet()) {
-                buf.append(s.getTicker()).append("\n");
-            }
-            return buf.toString();
-        });*/
     }
 
     protected void clearLines(Map<Stock,List<ChartItem>> chartItemsMap) {
         processWith(chartItemsMap, (curlines,s) -> {
             ObservableList<Node> container = boss.getPane().getChildren();
             curlines.forEach(l -> {
-                container.remove(l.view());
+                /*container.remove(l.view());*/
+                l.removeFrom(container);
                 Logx.debug(log, () -> String.format("Cleared line %s from %s", l, s.getTicker()));
             });
         });

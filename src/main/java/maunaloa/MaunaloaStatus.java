@@ -47,7 +47,6 @@ public class MaunaloaStatus {
         return chartLineStatusProperty.get();
     }
 
-
     //region Events
     /*private Consumer<Integer> onEntityStatusChanged;
     public void setOnEntityStatusChanged(Consumer<Integer> onEntityStatusChanged) {

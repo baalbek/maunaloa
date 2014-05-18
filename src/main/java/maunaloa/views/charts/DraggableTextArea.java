@@ -31,7 +31,7 @@ public class DraggableTextArea {
                              double width) {
         textArea = new TextArea(text);
         getTextArea().setPrefWidth(width);
-        getTextArea().setPrefHeight(width * 0.6182);
+        getTextArea().setPrefHeight(width * 0.6182 * 0.6182);
         getTextArea().setEditable(false);
         anchor = createAnchor(x,y);
         getTextArea().translateXProperty().bind(anchor.centerXProperty());

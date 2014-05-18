@@ -1,5 +1,6 @@
 package maunaloa.entities.windowdressing;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
@@ -10,6 +11,7 @@ import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
+import oahu.exceptions.NotImplementedException;
 import oahu.functional.Procedure2;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
@@ -120,6 +122,16 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         repos.saveLevel(this);
     }
 
+    @Override
+    public void removeFrom(ObservableList<Node> container) {
+        if (_view != null) {
+            container.remove(_view);
+        }
+        if (_commentsView != null) {
+            container.remove(_commentsView.view());
+        }
+    }
+
     //endregion Interface ChartItem
 
     //region Public Methods
@@ -133,6 +145,9 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         }
         entityStatusProperty().set(value);
         levelLine.updateColorFor(value);
+        if (value == StatusCodes.ENTITY_CLEAN) {
+            levelLine.setStatus(StatusCodes.UNSELECTED);
+        }
     }
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package maunaloa.views.charts;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.entities.windowdressing.CommentEntity;
@@ -26,4 +27,5 @@ public interface ChartItem {
     MaunaloaStatus getStatus();
     void saveToRepos(WindowDressingRepository repos);
     Optional<List<CommentEntity>> getComments();
+    void removeFrom(ObservableList<Node> container);
 }

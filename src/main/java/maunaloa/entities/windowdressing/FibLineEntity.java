@@ -2,6 +2,7 @@ package maunaloa.entities.windowdressing;
 
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.property.DoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -194,6 +195,13 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     @Override
     public void saveToRepos(WindowDressingRepository repos) {
         repos.saveFibonacci(this);
+    }
+
+    @Override
+    public void removeFrom(ObservableList<Node> container) {
+        if (_view != null) {
+            container.remove(_view);
+        }
     }
     //endregion Interface ChartItem
 
