@@ -182,6 +182,9 @@ public class MainframeController implements ControllerHub {
             optionsController.addDerivativesControllerListener(weeksController);
             */
         }
+
+        optionsController.addDerivativesControllerListener(candlesticksController);
+        optionsController.addDerivativesControllerListener(weeksController);
     }
     private void initContextInfo() {
         cxIsCloud.setSelected(windowDressingRepository.isCloud());

@@ -12,15 +12,12 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import maunaloa.repository.DerivativeRepository;
-import oahu.financial.Derivative;
+import maunaloa.views.RiscItem;
 import oahu.financial.Stock;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.function.Consumer;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -59,10 +56,11 @@ public class DerivativesController {
     private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<Toggle>();
     private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
     private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
+    private List<DerivativesControllerListener> calculatedListeners;
 
     //region Initialization methods
     public void initialize() {
-        //initChoiceBoxRisc();
+        initChoiceBoxRisc();
         initGrid();
         //initStockPrice();
     }
@@ -96,6 +94,13 @@ public class DerivativesController {
     }
     //endregion Initialization methods
 
+    //endregion Public Methods
+    public void addDerivativesControllerListener(DerivativesControllerListener listener) {
+        if (calculatedListeners == null) {
+            calculatedListeners = new ArrayList<>();
+        }
+        calculatedListeners.add(listener);
+    }
     public void setStock(Stock stock) {
         if (stock == null) {
             log.warn("Stock was null");
@@ -123,12 +128,108 @@ public class DerivativesController {
                 break;
         }
     }
+    //endregion Public Methods
+    //region Private Methods
     private void load(Function<String,Collection<DerivativeFx>> action,String ticker) {
         if  (_selectedLoadDerivativesProperty.get() == true) {
             ObservableList<DerivativeFx> items = FXCollections.observableArrayList(action.apply(ticker));
             derivativesTableView.getItems().setAll(items);
+            //setChoiceBoxRiscValues(items);
         }
     }
+
+    private List<RiscItem> riscItems(double low, double hi) {
+        List<RiscItem> result = new ArrayList<>();
+
+        for (int i=1; i<11; ++i) {
+            result.add(new RiscItem(i));
+            result.add(new RiscItem(i+0.5));
+        }
+        for (int i=11; i<25; ++i) {
+            result.add(new RiscItem(i));
+        }
+        return result;
+    }
+    private List<RiscItem> riscItems() {
+        List<RiscItem> result = new ArrayList<>();
+
+        for (int i=1; i<11; ++i) {
+            result.add(new RiscItem(i));
+            result.add(new RiscItem(i+0.5));
+        }
+        for (int i=11; i<25; ++i) {
+            result.add(new RiscItem(i));
+        }
+        return result;
+    }
+
+    /*private void setChoiceBoxRiscValues(ObservableList<DerivativeFx> derivatives) {
+        Comparator<DerivativeFx> compFx = (a,b) -> {
+            double aVal = a.getSell();
+            double bVal = b.getSell();
+            if (aVal < bVal) {
+                return -1;
+            }
+            else if (aVal > bVal) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+        };
+        cbRisc.getItems().clear();
+
+        Optional<DerivativeFx> maxFxObj = derivatives.stream().max(compFx);
+        Optional<DerivativeFx> minFxObj = derivatives.stream().min(compFx);
+        double maxFx = maxFxObj.isPresent() ? maxFxObj.get().getSell() : 100.0;
+        double minFx = minFxObj.isPresent() ? minFxObj.get().getSell() : 0.0;
+        System.out.println("Min: " + minFx + ", max: " + maxFx);
+
+        final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(riscItems(maxFx,minFx));
+        cbRisc.getItems().addAll(cbitems);
+        cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable,value,newValue) -> {
+            calcRisc(cbitems.get(newValue.intValue()));
+        });
+    }*/
+    private void initChoiceBoxRisc() {
+        final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(riscItems());
+
+        cbRisc.getItems().addAll(cbitems);
+        cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable,value,newValue) -> {
+            calcRisc(cbitems.get(newValue.intValue()));
+        });
+    }
+    private void calcRisc(RiscItem riscItem) {
+        List<DerivativeFx> calculated = new ArrayList<>();
+
+        for (DerivativeFx fx : derivativesTableView.getItems()) {
+            if (fx.isCheckedProperty().get() == true) {
+                fx.setRisk(riscItem.getValue());
+                calculated.add(fx);
+            }
+        }
+
+        if (calculated.size() > 0) {
+            fireCalculatedEvent(calculated);
+        }
+    }
+
+    private void fireCalculatedEvent(List<DerivativeFx> calculated) {
+        /*if (log.isDebugEnabled()) {
+            log.debug(String.format("fireCalculatedEvent listeners: %d",calculatedListeners.size()));
+        }*/
+
+        if (calculatedListeners.size() == 0) return;
+
+        /*DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
+        for (DerivativesControllerListener l : calculatedListeners) {
+            l.notify(evt);
+        }*/
+        for (DerivativesControllerListener l : calculatedListeners) {
+            l.notifyDerivativesCalculated(calculated);
+        }
+    }
+    //endregion Private Methods
 
     //region Properties
 

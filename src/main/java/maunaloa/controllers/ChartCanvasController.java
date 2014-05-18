@@ -15,11 +15,13 @@ import maunaloa.repository.StockRepository;
 import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
+import oahux.financial.DerivativeFx;
 import org.bson.types.ObjectId;
 
 import java.util.Collection;
@@ -30,7 +32,7 @@ import java.util.function.Consumer;
 /**
  * Created by rcs on 4/13/14.
  */
-public class ChartCanvasController implements MaunaloaChartViewModel {
+public class ChartCanvasController implements MaunaloaChartViewModel, DerivativesControllerListener {
     //region FXML
     @FXML private Canvas myCanvas;
     @FXML private VBox myContainer;
@@ -239,4 +241,15 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
 
     //endregion MaunaloaChartViewModel
+
+    //region DerivativesControllerListener
+    @Override
+    public void notifyDerivativesCalculated(List<DerivativeFx> calculated) {
+        if (location > 2) return;
+
+        for (DerivativeFx fx : calculated) {
+            System.out.println(fx);
+        }
+    }
+    //endregion DerivativesControllerListener
 }
