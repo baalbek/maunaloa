@@ -1,5 +1,6 @@
 package maunaloa.controllers;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -11,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import javafx.util.converter.DoubleStringConverter;
+import maunaloa.financial.StockPriceFx;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.views.RiscItem;
 import oahu.financial.Stock;
@@ -57,12 +61,13 @@ public class DerivativesController {
     private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
     private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
     private List<DerivativesControllerListener> calculatedListeners;
+    private StockPriceFx stockPrice = new StockPriceFx();
 
     //region Initialization methods
     public void initialize() {
         initChoiceBoxRisc();
         initGrid();
-        //initStockPrice();
+        initStockPrice();
     }
     private void initGrid() {
         colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeFx, String>("ticker"));
@@ -130,6 +135,13 @@ public class DerivativesController {
     }
     //endregion Public Methods
     //region Private Methods
+    private void initStockPrice() {
+        StringConverter<? extends Number> converter =  new DoubleStringConverter();
+        Bindings.bindBidirectional(txSpot.textProperty(), stockPrice.clsProperty(), (StringConverter<Number>) converter);
+        Bindings.bindBidirectional(txOpen.textProperty(), stockPrice.opnProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txHi.textProperty(), stockPrice.hiProperty(),  (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(txLo.textProperty(), stockPrice.loProperty(),  (StringConverter<Number>)converter);
+    }
     private void load(Function<String,Collection<DerivativeFx>> action,String ticker) {
         if  (_selectedLoadDerivativesProperty.get() == true) {
             ObservableList<DerivativeFx> items = FXCollections.observableArrayList(action.apply(ticker));
