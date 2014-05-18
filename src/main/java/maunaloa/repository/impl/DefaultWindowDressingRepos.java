@@ -12,7 +12,6 @@ import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
-import oahu.exceptions.NotImplementedException;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
@@ -20,6 +19,7 @@ import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -178,9 +178,12 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     public void saveComments(List<CommentEntity> comments) {
         try {
             DBCollection coll = getConnection().getCollection("comments");
-            comments.stream().forEach(comment -> {
+            /*comments.stream().forEach(comment -> {
                 saveCommentToMongo(comment, coll);
-            });
+            });*/
+            for (CommentEntity c : comments) {
+                saveCommentToMongo(c, coll);
+            }
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
@@ -268,14 +271,14 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                 break;
                 case StatusCodes.ENTITY_DIRTY: {
                     //saveFn.apply(new BasicDBObject("value", entity.getLevelValue()));
-                    wr = save2mongo(coll, entity, new BasicDBObject("value", entity.getLevelValue()));
+                    wr = updateMongo(coll, entity, new BasicDBObject("value", entity.getLevelValue()));
                     entity.setEntityStatus(StatusCodes.ENTITY_CLEAN);
                     logWriteResult(wr,String.format("(%s) Level updated (set to clean)",entity.getOid()));
                 }
                 break;
                 case StatusCodes.ENTITY_TO_BE_INACTIVE: {
                     //wr = saveFn.apply(new BasicDBObject("active", false));
-                    wr = save2mongo(coll, entity, new BasicDBObject("active", false));
+                    wr = updateMongo(coll, entity, new BasicDBObject("active", false));
                     entity.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
                     logWriteResult(wr,String.format("(%s) Level saved to inactive",entity.getOid()));
                 }
@@ -323,13 +326,13 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
             case StatusCodes.ENTITY_NEW:
                 BasicDBObject toBeSaved = new  BasicDBObject("refid", comment.getParent().getOid())
                         .append("c", comment.getComment())
-                        .append("dx", comment.getCommentDate());
-                WriteResult wr = save2mongo(coll,comment,toBeSaved);
+                        .append("dx", Date.from(comment.getCommentDate().toInstant(ZoneOffset.ofHours(2))));
+                log.info("Trying to save comment: " + toBeSaved);
+                WriteResult wr = coll.save(toBeSaved);
+
                 if (wr.getLastError().ok() == true) {
-                    List<CommentEntity> myComments = fetchComments(comment.getParent());
                     comment.setOid((ObjectId)toBeSaved.get("_id"));
                     comment.setEntityStatus(StatusCodes.ENTITY_CLEAN);
-                    myComments.add(comment);
                 }
                 logWriteResult(wr,String.format("New comment (%s) saved with oid: %s",
                         comment.getComment(),comment.getOid()));
@@ -340,7 +343,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         }
     }
 
-    private WriteResult save2mongo(DBCollection coll, MaunaloaEntity entity, BasicDBObject toBeSaved) {
+    private WriteResult updateMongo(DBCollection coll, MaunaloaEntity entity, BasicDBObject toBeSaved) {
         BasicDBObject setObj = new BasicDBObject("$set", toBeSaved);
         BasicDBObject query = new BasicDBObject("_id", entity.getOid());
         return coll.update(query, setObj);

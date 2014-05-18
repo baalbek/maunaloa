@@ -101,7 +101,7 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
               </HBox.margin>
             </ChoiceBox>
-              <CheckBox fx:id="cxComments" disable="false" mnemonicParsing="false" selected="false" text="Comments">
+              <CheckBox fx:id="cxComments" disable="false" mnemonicParsing="false" selected="true" text="Comments">
                   <HBox.margin>
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </HBox.margin>
