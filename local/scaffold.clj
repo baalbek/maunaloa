@@ -12,7 +12,7 @@
 
 
 (defn gf [& [xml]]
-  (let [cur-xml (if (nil? xml)  "test-maunaloa.xml" xml)
+  (let [cur-xml (if (nil? xml)  "maunaloa.xml" xml)
       f ^ApplicationContext (ClassPathXmlApplicationContext. cur-xml)]
     f))
 
@@ -25,3 +25,8 @@
     (fn []
       (.getBean (gfm) "windowdressing"))))
 
+
+(def etrade
+  (memoize
+    (fn []
+      (.getBean (gfm) "etrade"))))
