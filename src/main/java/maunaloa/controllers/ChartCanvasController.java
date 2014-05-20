@@ -10,19 +10,18 @@ import maunaloa.StatusCodes;
 import maunaloa.controllers.helpers.AbstractControllerHelper;
 import maunaloa.controllers.helpers.FibonacciHelper;
 import maunaloa.controllers.helpers.LevelHelper;
+import maunaloa.controllers.helpers.RiscLinesHelper;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.StockRepository;
 import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
-import org.bson.types.ObjectId;
 
 import java.util.Collection;
 import java.util.List;
@@ -42,6 +41,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     //region Init
     private FibonacciHelper fibonacciHelper;
     private LevelHelper levelHelper;
+    private RiscLinesHelper riscLinesHelper;
     public void initialize() {
         InvalidationListener listener = e -> {
             if (stock == null) return;
@@ -54,6 +54,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         myCanvas.heightProperty().addListener(listener);
         fibonacciHelper = new FibonacciHelper(this);
         levelHelper = new LevelHelper(this);
+        riscLinesHelper = new RiscLinesHelper(this);
     }
 
     //endregion Init
@@ -247,9 +248,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     public void notifyDerivativesCalculated(List<DerivativeFx> calculated) {
         if (location > 2) return;
 
-        for (DerivativeFx fx : calculated) {
-            System.out.println(fx);
-        }
+        riscLinesHelper.updateRiscs(calculated);
     }
     //endregion DerivativesControllerListener
 }
