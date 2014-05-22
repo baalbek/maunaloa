@@ -6,9 +6,7 @@ import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by rcs on 5/20/14.

@@ -143,7 +143,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         levelHelper.hideComments();
     }
     public void setInactiveSelected() {
+        levelHelper.items().ifPresent(ix -> {
+            ix.stream().forEach(l -> {
 
+            });
+        });
     }
     public void setInactiveAll() {
 

@@ -299,7 +299,17 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     @Override
     public void setCloud(boolean isCloud) {
         this.isCloud = isCloud;
+        if (levels != null) {
+            levels.clear();
+        }
+        if (commentsMap != null) {
+            commentsMap.clear();
+        }
+        if (fibLines != null) {
+            fibLines.clear();
+        }
     }
+
 
     //endregion Interface WindowDressingRepository
 
