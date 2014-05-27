@@ -2,6 +2,7 @@ package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.RiscLines;
+import oahu.financial.StockPrice;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
@@ -35,4 +36,5 @@ public class RiscLinesHelper extends AbstractControllerHelper {
         }
         updateMyPaneLines(curLines, lineMap());
     }
+
 }

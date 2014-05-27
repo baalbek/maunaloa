@@ -18,6 +18,7 @@ import maunaloa.financial.StockPriceFx;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.views.RiscItem;
 import oahu.financial.Stock;
+import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
@@ -132,7 +133,19 @@ public class DerivativesController {
                 //loadAll();
                 break;
         }
+        if (_selectedLoadStockProperty.get() == true) {
+            StockPrice spot = derivativeRepository.spot(ticker);
+            stockPrice.setPrice(spot);
+            fireAssignStockPriceEvent(spot);
+        }
     }
+
+    private void fireAssignStockPriceEvent(StockPrice spot) {
+        if (calculatedListeners != null) {
+            calculatedListeners.stream().forEach(l -> l.notifySpotUpdated(spot));
+        }
+    }
+
     //endregion Public Methods
     //region Private Methods
     private void initStockPrice() {

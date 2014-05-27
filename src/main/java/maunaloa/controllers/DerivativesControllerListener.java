@@ -1,5 +1,6 @@
 package maunaloa.controllers;
 
+import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface DerivativesControllerListener {
     void notifyDerivativesCalculated(List<DerivativeFx> calculated);
+    void notifySpotUpdated(StockPrice spot);
 }

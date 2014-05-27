@@ -7,15 +7,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
-import maunaloa.controllers.helpers.AbstractControllerHelper;
-import maunaloa.controllers.helpers.FibonacciHelper;
-import maunaloa.controllers.helpers.LevelHelper;
-import maunaloa.controllers.helpers.RiscLinesHelper;
+import maunaloa.controllers.helpers.*;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.StockRepository;
 import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -42,6 +40,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     private FibonacciHelper fibonacciHelper;
     private LevelHelper levelHelper;
     private RiscLinesHelper riscLinesHelper;
+    private SpotHelper spotHelper;
+
     public void initialize() {
         InvalidationListener listener = e -> {
             if (stock == null) return;
@@ -55,6 +55,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         fibonacciHelper = new FibonacciHelper(this);
         levelHelper = new LevelHelper(this);
         riscLinesHelper = new RiscLinesHelper(this);
+        spotHelper = new SpotHelper(this);
     }
 
     //endregion Init
@@ -179,10 +180,14 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         if (stock != null) {
             fibonacciHelper.notifyStockChanging();
             levelHelper.notifyStockChanging();
+            riscLinesHelper.notifyStockChanging();
+            spotHelper.notifyStockChanging();
             this.stock = stock;
             chart.draw(myCanvas);
             fibonacciHelper.notifyStockChanged();
             levelHelper.notifyStockChanged();
+            riscLinesHelper.notifyStockChanged();
+            spotHelper.notifyStockChanged();
         }
     }
     public ControllerHub getHub() {
@@ -253,6 +258,13 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         if (location > 2) return;
 
         riscLinesHelper.updateRiscs(calculated);
+    }
+
+    @Override
+    public void notifySpotUpdated(StockPrice spot) {
+        if (location == 1) {
+            spotHelper.updateSpot(spot);
+        }
     }
     //endregion DerivativesControllerListener
 }

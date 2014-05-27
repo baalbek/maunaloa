@@ -1,5 +1,6 @@
 package maunaloa.repository;
 
+import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 
 import java.util.Collection;
@@ -10,4 +11,5 @@ import java.util.Collection;
 public interface DerivativeRepository {
     Collection<DerivativeFx> calls(String ticker);
     Collection<DerivativeFx> puts(String ticker);
+    StockPrice spot(String ticker);
 }
