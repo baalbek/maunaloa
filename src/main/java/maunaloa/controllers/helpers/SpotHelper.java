@@ -1,6 +1,7 @@
 package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
+import maunaloa.views.charts.SpotItem;
 import oahu.financial.StockPrice;
 import oahux.controllers.MaunaloaChartViewModel;
 
@@ -11,22 +12,19 @@ import java.util.List;
  * Created by rcs on 5/26/14.
  */
 public class SpotHelper extends AbstractControllerHelper {
-    private List<ChartItem> spots;
+    private ChartItem spotItem;
 
     public SpotHelper(MaunaloaChartViewModel boss) {
         super(boss);
     }
 
     public void updateSpot(StockPrice spot) {
-        if (spots == null) {
-            spots = new ArrayList<>();
+        if (spot == null) {
+            spotItem = new SpotItem(spot,boss.getHruler(),boss.getVruler());
         }
         else {
-            for (ChartItem item : spots) {
-                item.removeFrom(boss.getPane().getChildren());
-            }
-            spots.clear();
+            spotItem.removeFrom(boss.getPane().getChildren());
         }
-
+        updateMyPaneLines(spotItem, lineMap());
     }
 }
