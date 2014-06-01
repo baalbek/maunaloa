@@ -19,12 +19,17 @@ public class SpotHelper extends AbstractControllerHelper {
     }
 
     public void updateSpot(StockPrice spot) {
-        if (spot == null) {
+        /*if (spotItem == null) {
             spotItem = new SpotItem(spot,boss.getHruler(),boss.getVruler());
         }
         else {
             spotItem.removeFrom(boss.getPane().getChildren());
+            spotItem = new SpotItem(spot,boss.getHruler(),boss.getVruler());
+        }*/
+        if (spotItem != null) {
+            spotItem.removeFrom(boss.getPane().getChildren());
         }
+        spotItem = new SpotItem(spot,boss.getHruler(),boss.getVruler());
         updateMyPaneLines(spotItem, lineMap());
     }
 }

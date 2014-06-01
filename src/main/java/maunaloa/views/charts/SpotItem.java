@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
@@ -47,9 +48,22 @@ public class SpotItem implements ChartItem {
             Instant instant = dx.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
             Date legacyDx = Date.from(instant);
             double x = hruler.calcPix(legacyDx);
-            double yTop = vruler.calcPix(spot.getHi());
-            double yBottom = vruler.calcPix(spot.getLo());
-            Rectangle r = new Rectangle(x, yTop, 5, 20);
+            double yHi = vruler.calcPix(spot.getHi());
+            double yLo = vruler.calcPix(spot.getLo());
+
+            double opn = spot.getOpn();
+            double cls = spot.getCls();
+
+            Rectangle r = null;
+            if (cls > opn) { // Green candlestick
+                r = new Rectangle(x, cls, 5, cls-opn);
+                r.setFill(Color.GREEN);
+            }
+            else {
+                r = new Rectangle(x, opn, 5, opn-cls);
+                r.setFill(Color.RED);
+            }
+
             group.getChildren().add(r);
         }
         return group;
@@ -83,5 +97,8 @@ public class SpotItem implements ChartItem {
 
     @Override
     public void removeFrom(ObservableList<Node> container) {
+        if (group != null) {
+            container.remove(group);
+        }
     }
 }
