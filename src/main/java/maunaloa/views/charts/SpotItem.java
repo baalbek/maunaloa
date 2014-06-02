@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
@@ -64,7 +65,8 @@ public class SpotItem implements ChartItem {
                 r.setFill(Color.RED);
             }
 
-            group.getChildren().add(r);
+           Line wicks = new Line(x, yHi, x, yLo);
+            group.getChildren().addAll(wicks, r);
         }
         return group;
     }
