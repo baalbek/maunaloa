@@ -73,6 +73,9 @@ public class DraggableLine extends AbstractSelectableLine {
                 || (Math.abs(endY - endAnchor.getCenterY()) > 0.05);
     }
 
+    public void updateColorFor(int statusCode) {
+        line.setStroke(statusColors.get(statusCode));
+    }
     //endregion Public Methods
 
     //region Private Methods

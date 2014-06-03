@@ -11,15 +11,12 @@ import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
-import oahu.exceptions.NotImplementedException;
-import oahu.functional.Procedure2;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -67,12 +64,10 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         if (_view == null) {
             levelLine = new LevelLine(levelValue, vruler);
             levelLine.setOnMouseReleased((evt,anchor) -> {
-                if (entityStatusProperty().get() == StatusCodes.ENTITY_TO_BE_INACTIVE) {
-                    return;
-                }
-                int curStatus = recalcEntityStatus();
-                entityStatusProperty().set(curStatus);
-                levelLine.updateColorFor(curStatus);
+                //int curStatus = isClean();
+                //entityStatusProperty().set(curStatus);
+                //levelLine.updateColorFor(curStatus);
+                cleanStatusProperty().set(isClean());
             });
             levelLine.setOnMouseReleasedShift(evt -> {
                 loadCommentsDialog();
@@ -112,7 +107,8 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         if (maunaloaStatus == null) {
             return new MaunaloaStatus(
                     entityStatusProperty(),
-                    levelLine.statusProperty());
+                    levelLine.statusProperty(),
+                    cleanStatusProperty());
         }
         return maunaloaStatus;
     }
@@ -131,13 +127,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
             container.remove(_commentsView.view());
         }
     }
-
-    //endregion Interface ChartItem
-
-    //region Public Methods
-    public double getLevelValue() {
-        return levelLine.getLevelValue();
-    }
+    @Override
     public void setEntityStatus(int value) {
         if ((value == StatusCodes.ENTITY_TO_BE_INACTIVE) &&
                 (oid == null)) {
@@ -148,6 +138,13 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         if (value == StatusCodes.ENTITY_CLEAN) {
             levelLine.setStatus(StatusCodes.UNSELECTED);
         }
+    }
+
+    //endregion Interface ChartItem
+
+    //region Public Methods
+    public double getLevelValue() {
+        return levelLine.getLevelValue();
     }
     @Override
     public String toString() {
@@ -177,8 +174,9 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                     }
                 }));
     }
-    protected int recalcEntityStatus() {
-        if (oid == null) {
+
+    private boolean isClean() {
+        /*if (oid == null) {
             return StatusCodes.ENTITY_NEW;
         }
         else {
@@ -188,7 +186,8 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
             else {
                 return StatusCodes.ENTITY_CLEAN;
             }
-        }
+        }*/
+        return true;
     }
 
 

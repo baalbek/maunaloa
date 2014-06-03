@@ -1,7 +1,10 @@
 package maunaloa.entities.windowdressing;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import maunaloa.StatusCodes;
 import maunaloa.entities.MaunaloaEntity;
 import maunaloa.service.Logx;
 import org.apache.log4j.Logger;
@@ -49,10 +52,18 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
     protected IntegerProperty _entityStatusProperty;
     public IntegerProperty entityStatusProperty() {
         if (_entityStatusProperty == null) {
-            _entityStatusProperty = new SimpleIntegerProperty(recalcEntityStatus());
+            _entityStatusProperty = new SimpleIntegerProperty(StatusCodes.NA);
         }
         return _entityStatusProperty;
     }
+    protected BooleanProperty _cleanStatusProperty;
+    public BooleanProperty cleanStatusProperty() {
+        if (_cleanStatusProperty == null) {
+            _cleanStatusProperty = new SimpleBooleanProperty(true);
+        }
+        return _cleanStatusProperty;
+    }
+
     public void setComments(List<CommentEntity> comments) {
         this.comments = comments;
     }
@@ -84,5 +95,4 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
         comments.add(comment);
         return result;
     }
-    protected abstract int recalcEntityStatus();
 }

@@ -24,6 +24,7 @@ public interface ChartItem {
     Optional<Node> commentsView();
 /*    int getStatus();
     void setStatus(int value);*/
+    void setEntityStatus(int value);
     MaunaloaStatus getStatus();
     void saveToRepos(WindowDressingRepository repos);
     Optional<List<CommentEntity>> getComments();
