@@ -28,12 +28,12 @@ public abstract class AbstractSelectableLine {
     protected static Map<Integer,Color> statusColors;
     static {
         statusColors = new HashMap<>();
-        statusColors.put(StatusCodes.UNSELECTED, Color.BLACK);
-        statusColors.put(StatusCodes.SELECTED, Color.RED);
+        /*statusColors.put(StatusCodes.UNSELECTED, Color.BLACK);
+        statusColors.put(StatusCodes.SELECTED, Color.RED);*/
         statusColors.put(StatusCodes.ENTITY_CLEAN, Color.BLACK);
         statusColors.put(StatusCodes.ENTITY_DIRTY, Color.YELLOWGREEN);
         statusColors.put(StatusCodes.ENTITY_IS_INACTIVE, Color.BLUEVIOLET);
-        statusColors.put(StatusCodes.ENTITY_TO_BE_INACTIVE, Color.AZURE);
+        statusColors.put(StatusCodes.ENTITY_TO_BE_INACTIVE, Color.DARKCYAN);
         statusColors.put(StatusCodes.ENTITY_NEW, Color.ORANGERED);
     }
 

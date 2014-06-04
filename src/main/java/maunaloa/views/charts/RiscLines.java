@@ -13,6 +13,7 @@ import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
+import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.financial.DerivativeFx;
@@ -59,12 +60,16 @@ public class RiscLines implements ChartItem {
     }
 
     @Override
+    public void setEntityStatus(int value) {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public MaunaloaStatus getStatus() {
         if (maunaloaStatus == null) {
             IntegerProperty entStatus = new SimpleIntegerProperty(StatusCodes.NA);
-            IntegerProperty lineStatus = new SimpleIntegerProperty(StatusCodes.NA);
             if (maunaloaStatus == null) {
-                return new MaunaloaStatus(entStatus,lineStatus);
+                return new MaunaloaStatus(entStatus,null,null);
             }
         }
         return maunaloaStatus;

@@ -1,11 +1,9 @@
 package maunaloa;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import oahu.functional.Procedure0;
-import oahu.functional.Procedure2;
-
-import java.util.function.Consumer;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,27 +12,47 @@ import java.util.function.Consumer;
  * Time: 11:34
  */
 public class MaunaloaStatus {
-    private IntegerProperty entityStatus;
+    private final IntegerProperty entityStatus;
     private final IntegerProperty chartLineStatusProperty;
+    private final BooleanProperty cleanProperty;
 
     public MaunaloaStatus(IntegerProperty entityStatusProperty,
-                          IntegerProperty chartLineStatusProperty) {
+                          IntegerProperty chartLineStatusProperty,
+                          BooleanProperty cleanProperty) {
         this.entityStatus = entityStatusProperty;
         this.chartLineStatusProperty = new SimpleIntegerProperty(StatusCodes.NA);
+        this.cleanProperty = new SimpleBooleanProperty(true);
 
         if (chartLineStatusProperty != null) {
             this.chartLineStatusProperty.bind(chartLineStatusProperty);
         }
+        if (cleanProperty != null) {
+            this.cleanProperty.bind(cleanProperty);
+        }
     }
+    public int getEntityStatus() {
+        return entityStatus.get();
+    }
+    public int getChartLineStatus() {
+        return chartLineStatusProperty.get();
+    }
+    @Override
+    public String toString() {
+        return String.format("Entity status: %d, chart line status: %d, is clean: %s",
+                getEntityStatus(),
+                getChartLineStatus(),
+                cleanProperty.get()
+                );
+    }
+
+
+    //region Utgått
     /*public MaunaloaStatus(IntegerProperty entityStatusProperty,
                           IntegerProperty chartLineStatusProperty,
                           Consumer<Integer> onEntityStatusChanged) {
         this(entityStatusProperty,chartLineStatusProperty);
         this.onEntityStatusChanged = onEntityStatusChanged;
     }*/
-    public int getEntityStatus() {
-        return entityStatus.get();
-    }
 
     /*public void setEntityStatus(int entityStatus) {
         this.entityStatus.set(entityStatus);
@@ -43,9 +61,6 @@ public class MaunaloaStatus {
         }
     }*/
 
-    public int getChartLineStatus() {
-        return chartLineStatusProperty.get();
-    }
 
     //region Events
     /*private Consumer<Integer> onEntityStatusChanged;
@@ -54,4 +69,5 @@ public class MaunaloaStatus {
     }*/
     //endregion Events
 
+    //endregion Utgått
 }

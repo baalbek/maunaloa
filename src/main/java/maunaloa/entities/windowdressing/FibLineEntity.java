@@ -13,7 +13,6 @@ import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
-import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
@@ -46,7 +45,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     private void setupDragLine() {
         dragLine.setOnMouseReleased((evt, anchor) -> {
             anchor.setCenterX(rulers.first().snapTo(anchor.getCenterX()));
-            entityStatusProperty().set(recalcEntityStatus());
+            cleanStatusProperty().set(isClean());
         });
         Color curColor = getCurrentColor();
         dragLine.view().getChildren().add(createFibLine(createBinding(0.5,false), curColor));
@@ -182,12 +181,23 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         return Optional.empty();
     }
 
+    @Override
+    public void setEntityStatus(int value) {
+        if ((value == StatusCodes.ENTITY_TO_BE_INACTIVE) &&
+                (oid == null)) {
+            return;
+        }
+        entityStatusProperty().set(value);
+        dragLine.updateColorFor(value);
+    }
+
     private MaunaloaStatus status;
     @Override
     public MaunaloaStatus getStatus() {
         if (status == null) {
             return new MaunaloaStatus(entityStatusProperty(),
-                                      dragLine.statusProperty());
+                                      dragLine.statusProperty(),
+                                      cleanStatusProperty());
         }
         return status;
     }
@@ -206,13 +216,14 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     //endregion Interface ChartItem
 
     //region Private/Protected
-    protected int recalcEntityStatus() {
-        if (oid == null) {
+    private boolean isClean() {
+        return true;
+        /*if (oid == null) {
             return StatusCodes.ENTITY_NEW;
         }
         else {
             return dragLine.isDirty() == true ? StatusCodes.ENTITY_DIRTY : StatusCodes.ENTITY_CLEAN;
-        }
+        }*/
     }
     //endregion
 }

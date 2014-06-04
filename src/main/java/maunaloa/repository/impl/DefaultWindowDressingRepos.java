@@ -9,6 +9,7 @@ import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.repository.WindowDressingRepository;
+import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
@@ -239,20 +240,39 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     @Override
     public void saveFibonacci(FibLineEntity entity) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        try {
+            DBCollection coll = getConnection().getCollection("fibonacci");
+            MaunaloaStatus stat = entity.getStatus();
+            Logx.debug(log, () -> String.format("(saveFibonacci) %s", stat));
+            WriteResult wr = null;
+            switch (stat.getEntityStatus()) {
+                case StatusCodes.ENTITY_NEW: {
+
+                }
+                break;
+                case StatusCodes.ENTITY_DIRTY: {
+
+                }
+                break;
+                case StatusCodes.ENTITY_TO_BE_INACTIVE: {
+                    wr = updateMongo(coll, entity, new BasicDBObject("active", false));
+                    entity.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
+                    logWriteResult(wr,String.format("(%s) Fibonacci saved to inactive",entity.getOid()));
+                }
+            }
+            entity.getComments().ifPresent(this::saveComments);
+        }
+        catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
+
 
 
     @Override
     public void saveLevel(LevelEntity entity) {
         try {
             DBCollection coll = getConnection().getCollection("levels");
-
-            /*Function<BasicDBObject,WriteResult> saveFn = o -> {
-                BasicDBObject setObj = new BasicDBObject("$set", o);
-                BasicDBObject query = new BasicDBObject("_id", entity.getOid());
-                return coll.update(query, setObj);
-            };*/
 
             MaunaloaStatus stat = entity.getStatus();
             WriteResult wr = null;
@@ -270,14 +290,12 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                 }
                 break;
                 case StatusCodes.ENTITY_DIRTY: {
-                    //saveFn.apply(new BasicDBObject("value", entity.getLevelValue()));
                     wr = updateMongo(coll, entity, new BasicDBObject("value", entity.getLevelValue()));
                     entity.setEntityStatus(StatusCodes.ENTITY_CLEAN);
                     logWriteResult(wr,String.format("(%s) Level updated (set to clean)",entity.getOid()));
                 }
                 break;
                 case StatusCodes.ENTITY_TO_BE_INACTIVE: {
-                    //wr = saveFn.apply(new BasicDBObject("active", false));
                     wr = updateMongo(coll, entity, new BasicDBObject("active", false));
                     entity.setEntityStatus(StatusCodes.ENTITY_IS_INACTIVE);
                     logWriteResult(wr,String.format("(%s) Level saved to inactive",entity.getOid()));

@@ -146,12 +146,30 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     public void setInactiveSelected() {
         levelHelper.items().ifPresent(ix -> {
             ix.stream().forEach(l -> {
-
+                if (l.getStatus().getChartLineStatus() == StatusCodes.SELECTED) {
+                    l.setEntityStatus(StatusCodes.ENTITY_TO_BE_INACTIVE);
+                }
+            });
+        });
+        fibonacciHelper.items().ifPresent(ix -> {
+            ix.stream().forEach(l -> {
+                if (l.getStatus().getChartLineStatus() == StatusCodes.SELECTED) {
+                    l.setEntityStatus(StatusCodes.ENTITY_TO_BE_INACTIVE);
+                }
             });
         });
     }
     public void setInactiveAll() {
-
+        levelHelper.items().ifPresent(ix -> {
+            ix.stream().forEach(l -> {
+                l.setEntityStatus(StatusCodes.ENTITY_TO_BE_INACTIVE);
+            });
+        });
+        fibonacciHelper.items().ifPresent(ix -> {
+            ix.stream().forEach(l -> {
+                l.setEntityStatus(StatusCodes.ENTITY_TO_BE_INACTIVE);
+            });
+        });
     }
     //endregion Events
 

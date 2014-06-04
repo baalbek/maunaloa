@@ -13,8 +13,11 @@ import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
+import maunaloa.service.Logx;
+import oahu.exceptions.NotImplementedException;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
+import org.apache.log4j.Logger;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -28,6 +31,7 @@ import java.util.Optional;
  * Created by rcs on 5/27/14.
  */
 public class SpotItem implements ChartItem {
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
     private Group group ;
     private MaunaloaStatus maunaloaStatus;
     private final StockPrice spot;
@@ -55,18 +59,37 @@ public class SpotItem implements ChartItem {
             double opn = spot.getOpn();
             double cls = spot.getCls();
 
-            Rectangle r = null;
-            if (cls > opn) { // Green candlestick
-                r = new Rectangle(x, cls, 5, cls-opn);
+            double yOpn = vruler.calcPix(spot.getOpn());
+            double yCls = vruler.calcPix(spot.getCls());
+
+            Line wix = new Line(x, yHi, x, yLo);
+            double wixW = 8;
+            double xBody = x - 4;
+
+            if (Math.abs(cls-opn) < 0.1) {    // Green candlestick
+                Line dojiLine = new Line(x-5,yOpn,x+5,yOpn);
+                Logx.debug(log,
+                        () -> String.format("DOJI, yOpn: %.2f, yHi: %.2f, yLo: %.2f, yCls: %.2f",
+                                yOpn, yHi, yLo, yCls));
+                group.getChildren().addAll(wix, dojiLine);
+            }
+            else if (cls > opn) { // Green candlestick
+                Rectangle r = new Rectangle(xBody, yCls, wixW, yOpn-yCls);
                 r.setFill(Color.GREEN);
+                Logx.debug(log,
+                        () -> String.format("GREEN candlestick, yOpn: %.2f, yHi: %.2f, yLo: %.2f, yCls: %.2f",
+                                yOpn, yHi, yLo, yCls));
+                group.getChildren().addAll(wix, r);
             }
             else {
-                r = new Rectangle(x, opn, 5, opn-cls);
+                Rectangle r = new Rectangle(xBody, yOpn, wixW, yCls-yOpn);
                 r.setFill(Color.RED);
+                Logx.debug(log,
+                        () -> String.format("RED candlestick, yOpn: %.2f, yHi: %.2f, yLo: %.2f, yCls: %.2f",
+                                yOpn, yHi, yLo, yCls));
+                group.getChildren().addAll(wix, r);
             }
 
-           Line wicks = new Line(x, yHi, x, yLo);
-            group.getChildren().addAll(wicks, r);
         }
         return group;
     }
@@ -77,12 +100,17 @@ public class SpotItem implements ChartItem {
     }
 
     @Override
+    public void setEntityStatus(int value) {
+        throw new NotImplementedException();
+    }
+
+    @Override
     public MaunaloaStatus getStatus() {
         if (maunaloaStatus == null) {
             IntegerProperty entStatus = new SimpleIntegerProperty(StatusCodes.NA);
-            IntegerProperty lineStatus = new SimpleIntegerProperty(StatusCodes.NA);
+            //IntegerProperty lineStatus = new SimpleIntegerProperty(StatusCodes.NA);
             if (maunaloaStatus == null) {
-                return new MaunaloaStatus(entStatus,lineStatus);
+                return new MaunaloaStatus(entStatus,null,null);
             }
         }
         return maunaloaStatus;
