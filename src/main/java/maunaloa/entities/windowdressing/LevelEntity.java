@@ -38,6 +38,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
                        IRuler vruler) {
         this(ticker,location,levelValue,vruler);
         this.oid = oid;
+        entityStatusProperty().set(StatusCodes.ENTITY_CLEAN);
     }
 
     public LevelEntity(String ticker,
@@ -47,6 +48,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
         super(ticker,location);
         this.levelValue = levelValue;
         this.vruler = vruler;
+        entityStatusProperty().set(StatusCodes.ENTITY_NEW);
     }
     //endregion Init
 

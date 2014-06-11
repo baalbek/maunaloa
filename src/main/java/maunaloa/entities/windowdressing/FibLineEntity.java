@@ -122,6 +122,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         this.rulers = rulers;
         this.dragLine = new DraggableLine(line);
         setupDragLine();
+        entityStatusProperty().set(StatusCodes.ENTITY_NEW);
     }
 
 
@@ -135,6 +136,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         this.p1 = p1;
         this.p2 = p2;
         this.rulers = rulers;
+        entityStatusProperty().set(StatusCodes.ENTITY_NEW);
     }
 
     public FibLineEntity(ObjectId oid,
@@ -148,6 +150,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         this.fp1 = fp1;
         this.fp2 = fp2;
         this.rulers = rulers;
+        entityStatusProperty().set(StatusCodes.ENTITY_CLEAN);
     }
     //endregion Create
 
