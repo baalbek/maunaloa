@@ -13,13 +13,14 @@ import org.apache.log4j.Logger;
 import ranoraraku.models.mybatis.StockMapper;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class DefaultStockRepository implements StockRepository {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
     private StockLocator locator;
-    private Date defaultStartDate;
+    private LocalDate defaultStartDate;
 
     //region interface StockRepository
     @Override
@@ -27,7 +28,7 @@ public class DefaultStockRepository implements StockRepository {
         return getLocator().getTickers();
     }
     @Override
-    public Collection<StockPrice> stockPrices(String ticker, Date fromDx, int period) {
+    public Collection<StockPrice> stockPrices(String ticker, LocalDate fromDx, int period) {
         int tickId = getLocator().findId(ticker);
 
         log.debug(String.format("Ticker %s, ticker id %d, date %s", ticker,tickId, fromDx));
@@ -37,7 +38,7 @@ public class DefaultStockRepository implements StockRepository {
         try {
             StockMapper mapper = session.getMapper(StockMapper.class);
 
-            Stock stock = mapper.selectStockWithPrices(tickId, fromDx);
+            Stock stock = mapper.selectStockWithPrices(tickId, Date.valueOf(fromDx));
 
             result = stock.getPrices();
 
@@ -61,13 +62,13 @@ public class DefaultStockRepository implements StockRepository {
     public void setLocator(StockLocator locator) {
         this.locator = locator;
     }
-    public Date getDefaultStartDate() {
+    public LocalDate getDefaultStartDate() {
         if (defaultStartDate == null) {
-            defaultStartDate = new Date(2012-1900,2,1);
+            defaultStartDate = LocalDate.of(2012,2,1);
         }
         return defaultStartDate;
     }
-    public void setDefaultStartDate(Date defaultStartDate) {
+    public void setDefaultStartDate(LocalDate defaultStartDate) {
         this.defaultStartDate = defaultStartDate;
     }
     //endregion Properties

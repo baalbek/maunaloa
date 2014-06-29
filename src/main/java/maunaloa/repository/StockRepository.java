@@ -4,7 +4,7 @@ import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 
 import java.util.Collection;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface StockRepository {
     List<Stock> getStocks();
-    Collection<StockPrice> stockPrices(String ticker, Date fromDx, int period);
+    Collection<StockPrice> stockPrices(String ticker, LocalDate fromDx, int period);
     Collection<StockPrice> stockPrices(String ticker, int period);
 }
