@@ -1,8 +1,10 @@
 package maunaloa.mocks;
 
 import javafx.geometry.Point2D;
+import javafx.scene.layout.Pane;
 import maunaloax.views.chart.DefaultDateRuler;
 import maunaloax.views.chart.DefaultVRuler;
+import oahu.domain.Tuple;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
@@ -56,6 +58,21 @@ public class MockViewModel implements MaunaloaChartViewModel {
 
     @Override
     public void setHruler(IRuler ruler) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Tuple<IRuler> getRulers() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Pane getPane() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public int getLocation() {
         throw new NotImplementedException();
     }
 }

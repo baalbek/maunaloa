@@ -275,6 +275,8 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
             DBCollection coll = getConnection().getCollection("levels");
 
             MaunaloaStatus stat = entity.getStatus();
+
+
             WriteResult wr = null;
             switch (stat.getEntityStatus()) {
                 case StatusCodes.ENTITY_NEW: {
@@ -301,6 +303,9 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
                     logWriteResult(wr,String.format("(%s) Level saved to inactive",entity.getOid()));
                 }
                 break;
+                default: {
+                    log.warn(String.format("(%s) no save: entity status %d", entity,stat.getEntityStatus()));
+                }
             }
             entity.getComments().ifPresent(this::saveComments);
 

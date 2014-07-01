@@ -66,7 +66,7 @@ public class SpotItem implements ChartItem {
             double wixW = 8;
             double xBody = x - 4;
 
-            if (Math.abs(cls-opn) < 0.1) {    // Green candlestick
+            if (Math.abs(cls-opn) < 0.1) { // Doji
                 Line dojiLine = new Line(x-5,yOpn,x+5,yOpn);
                 Logx.debug(log,
                         () -> String.format("DOJI, yOpn: %.2f, yHi: %.2f, yLo: %.2f, yCls: %.2f",
