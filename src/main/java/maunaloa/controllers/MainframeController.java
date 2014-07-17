@@ -114,6 +114,15 @@ public class MainframeController implements ControllerHub {
     public void onHideAllComments(ActionEvent event) {
         hideComments();
     }
+    public void onFetchDerivatives(ActionEvent event) {
+
+    }
+    public void onLogin(ActionEvent event) {
+
+    }
+    public void onLogout(ActionEvent event) {
+
+    }
     //endregion Events
 
     //region Initialize
