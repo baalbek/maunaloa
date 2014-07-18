@@ -140,14 +140,18 @@ public class DerivativesController {
         }
     }
 
+    public void reload() {
+
+    }
+
+
+    //endregion Public Methods
+    //region Private Methods
     private void fireAssignStockPriceEvent(StockPrice spot) {
         if (calculatedListeners != null) {
             calculatedListeners.stream().forEach(l -> l.notifySpotUpdated(spot));
         }
     }
-
-    //endregion Public Methods
-    //region Private Methods
     private void initStockPrice() {
         StringConverter<? extends Number> converter =  new DoubleStringConverter();
         Bindings.bindBidirectional(txSpot.textProperty(), stockPrice.clsProperty(), (StringConverter<Number>) converter);
