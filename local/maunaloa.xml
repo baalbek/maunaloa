@@ -56,15 +56,18 @@
 
     <!-- Downloader -->
     <bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>
+
     <!--<bean id="downloader" class="maunakea.financial.mocks.MockRollingDownloader">
         <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
     </bean>-->
 
-    <!--<bean id="tickerFileNamer" class="maunaloa.financial.TickerFileNamer"></bean>
+    <!--
+    <bean id="tickerFileNamer" class="maunaloa.financial.TickerFileNamer"></bean>
     <bean id="downloader" class="maunakea.financial.mocks.MockDownloader">
-        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
+        <property name="htmlPath" value="file:///home/rcs/opt/java/netfondsjanitor/html" />
         <property name="tickerFileNamer" ref="tickerFileNamer" />
-    </bean>-->
+    </bean>
+    -->
     <!-- END Downloader -->
 
     <bean id="etrade" class="maunakea.financial.Netfonds2">

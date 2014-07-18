@@ -23,10 +23,15 @@
 (def repos
   (memoize
     (fn []
-      (.getBean (gfm) "windowdressing"))))
+      (.getBean (gfm) "stockRepository"))))
 
 
 (def etrade
   (memoize
     (fn []
       (.getBean (gfm) "etrade"))))
+
+(def dl
+  (memoize
+    (fn []
+      (.getBean (gfm) "downloader"))))

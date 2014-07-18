@@ -72,8 +72,13 @@
                 <MenuItem mnemonicParsing="false" onAction="#onSaveAllToRepos" text="Save all" />
             </Menu>
             <Menu mnemonicParsing="false" text="Comments">
-                <MenuItem mnemonicParsing="false" onAction="#onShowAllComments" text="Show " />
-                <MenuItem mnemonicParsing="false" onAction="#onHideAllComments" text="Hide " />
+                <MenuItem mnemonicParsing="false" onAction="#onShowAllComments" text="Show" />
+                <MenuItem mnemonicParsing="false" onAction="#onHideAllComments" text="Hide" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Etrade">
+                <MenuItem mnemonicParsing="false" onAction="#onLogin" text="Login Netfonds" />
+                <MenuItem mnemonicParsing="false" onAction="#onLogout" text="Logout Netfonds" />
+                <MenuItem mnemonicParsing="false" onAction="#onFetchDerivatives" text="Fetch Derivatives" />
             </Menu>
               <!--<Menu mnemonicParsing="false" text="Comments">
                   <MenuItem mnemonicParsing="false" text="New Comment" />
