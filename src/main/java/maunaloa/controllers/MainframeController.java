@@ -114,9 +114,15 @@ public class MainframeController implements ControllerHub {
     public void onHideAllComments(ActionEvent event) {
         hideComments();
     }
-    public void onFetchDerivatives(ActionEvent event) {
 
+    public void onUpdateDerivatives(ActionEvent event) {
+        optionsController.updateDerivatives();
     }
+
+    public void onUpdateSpot(ActionEvent event) {
+        optionsController.updateSpot();
+    }
+
     public void onLogin(ActionEvent event) {
 
     }

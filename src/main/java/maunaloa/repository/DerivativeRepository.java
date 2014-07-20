@@ -12,4 +12,5 @@ public interface DerivativeRepository {
     Collection<DerivativeFx> calls(String ticker);
     Collection<DerivativeFx> puts(String ticker);
     StockPrice spot(String ticker);
+    void invalidate();
 }

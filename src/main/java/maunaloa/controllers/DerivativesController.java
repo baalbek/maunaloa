@@ -63,6 +63,7 @@ public class DerivativesController {
     private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
     private List<DerivativesControllerListener> calculatedListeners;
     private StockPriceFx stockPrice = new StockPriceFx();
+    private Stock stock;
 
     //region Initialization methods
     public void initialize() {
@@ -113,13 +114,22 @@ public class DerivativesController {
             return;
         }
 
-        /*
-        Consumer<String> loadCalls = (String ticker) -> {
+        this.stock = stock;
 
-        };
-        */
-        String ticker = stock.getTicker();
+        _updateDerivatives();
+    }
 
+    public void updateSpot() {
+
+    }
+
+    public void updateDerivatives() {
+        derivativeRepository.invalidate();
+        _updateDerivatives();
+    }
+
+    private void _updateDerivatives() {
+        String ticker = this.stock.getTicker();
         switch (_selectedDerivativeProperty.get().getUserData().toString()) {
             case "calls":
                 log.info(String.format("Fetching calls for %s",ticker));
@@ -139,11 +149,6 @@ public class DerivativesController {
             fireAssignStockPriceEvent(spot);
         }
     }
-
-    public void reload() {
-
-    }
-
 
     //endregion Public Methods
     //region Private Methods

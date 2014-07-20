@@ -2,7 +2,6 @@ package maunaloa.repository.impl;
 
 import maunaloa.financial.DerivativeFxImpl;
 import maunaloa.repository.DerivativeRepository;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Derivative;
 import oahu.financial.Etrade;
 import oahu.financial.OptionCalculator;
@@ -38,6 +37,11 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
     @Override
     public StockPrice spot(String ticker) {
         return getEtrade().getSpot(ticker);
+    }
+
+    @Override
+    public void invalidate() {
+        getEtrade().invalidate();
     }
 
     //region Properties

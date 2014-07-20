@@ -55,11 +55,13 @@
     <bean id="calculator" class="maunaloa.service.calculator.BlackScholes" />
 
     <!-- Downloader -->
+    <!--
     <bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>
+    -->
 
-    <!--<bean id="downloader" class="maunakea.financial.mocks.MockRollingDownloader">
-        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
-    </bean>-->
+    <bean id="downloader" class="maunakea.financial.mocks.MockRollingDownloader">
+        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html/rolling" />
+    </bean>
 
     <!--
     <bean id="tickerFileNamer" class="maunaloa.financial.TickerFileNamer"></bean>

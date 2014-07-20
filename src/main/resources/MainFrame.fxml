@@ -79,7 +79,8 @@
                 <MenuItem mnemonicParsing="false" onAction="#onLogin" text="Login" />
                 <MenuItem mnemonicParsing="false" onAction="#onLogout" text="Logout" />
                 <SeparatorMenuItem />
-                <MenuItem mnemonicParsing="false" onAction="#onFetchDerivatives" text="Fetch Derivatives" />
+                <MenuItem mnemonicParsing="false" onAction="#onUpdateSpot" text="Update Spot" />
+                <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
             </Menu>
               <!--<Menu mnemonicParsing="false" text="Comments">
                   <MenuItem mnemonicParsing="false" text="New Comment" />
