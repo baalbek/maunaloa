@@ -16,11 +16,13 @@ import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import maunaloa.financial.StockPriceFx;
 import maunaloa.repository.DerivativeRepository;
+import maunaloa.views.PurchaseCategory;
 import maunaloa.views.RiscItem;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
+import ranoraraku.beans.OptionPurchaseWithDerivativeBean;
 
 import java.util.*;
 import java.util.function.Function;
@@ -50,7 +52,11 @@ public class DerivativesController {
     @FXML private TableColumn<DerivativeFx, Double> colRisc;
     @FXML private TableColumn<DerivativeFx, Double> colSpRisc;
 
+    @FXML private Button btnOptionPurchase;
     @FXML private ChoiceBox cbRisc;
+    @FXML private ChoiceBox cbPurchaseType;
+    @FXML private TextField txPurchaseAmount;
+    @FXML private TextField txRisc;
     @FXML private TextField txSpot;
     @FXML private TextField txOpen;
     @FXML private TextField txHi;
@@ -68,8 +74,44 @@ public class DerivativesController {
     //region Initialization methods
     public void initialize() {
         initChoiceBoxRisc();
+        initChoiceBoxPurchaseCategory();
         initGrid();
         initStockPrice();
+        btnOptionPurchase.setOnAction(event -> {
+            PurchaseCategory cat =
+                    (PurchaseCategory)cbPurchaseType.getSelectionModel().selectedItemProperty().get();
+
+            if (cat == null) return;
+
+            for (DerivativeFx fx : derivativesTableView.getItems()) {
+                if (fx.isCheckedProperty().get() == true) {
+
+                    OptionPurchaseWithDerivativeBean purchase = new OptionPurchaseWithDerivativeBean();
+                    purchase.setDerivative(fx);
+                    purchase.setStatus(1);
+                    purchase.setDx(new java.util.Date());
+                    purchase.setVolume(Integer.parseInt(txPurchaseAmount.getText()));
+                    purchase.setPurchaseType(cat.getValue());
+                    purchase.setSpotAtPurchase(Double.parseDouble(txSpot.getText()));
+
+                    System.out.println(purchase);
+
+                    System.out.println(purchase.getDerivative().getParent().getStock().getOid());
+                    //derivativeRepository.registerOptionPurchase(purchase);
+
+                    /*
+                    (.setStatus 1)
+                    (.setDx ~dx)
+                    (.setPrice ~price)
+                    (.setBuyAtPurchase ~buy)
+                    (.setVolume ~volume)
+                    (.setPurchaseType ~ptype)
+                    (.setSpotAtPurchase ~spot))
+                    */
+                }
+            }
+        });
+
     }
     private void initGrid() {
         colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeFx, String>("ticker"));
@@ -229,9 +271,27 @@ public class DerivativesController {
         final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(riscItems());
 
         cbRisc.getItems().addAll(cbitems);
-        cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable,value,newValue) -> {
+        cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable, value, newValue) -> {
             calcRisc(cbitems.get(newValue.intValue()));
         });
+        txRisc.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                double newRiscValue = Double.parseDouble(newValue.replace(",","."));
+                if (newRiscValue > 0) {
+                    calcRisc(new RiscItem(newRiscValue));
+                }
+            }
+            catch (Exception ex) {
+            }
+        });
+    }
+    private void initChoiceBoxPurchaseCategory(){
+        List<PurchaseCategory> items = new ArrayList<>();
+        items.add(new PurchaseCategory(3,"Real Trade"));
+        items.add(new PurchaseCategory(4,"Test Trade"));
+        items.add(new PurchaseCategory(11,"Paper Trade"));
+        final ObservableList<PurchaseCategory> cbitems = FXCollections.observableArrayList(items);
+        cbPurchaseType.getItems().addAll(cbitems);
     }
     private void calcRisc(RiscItem riscItem) {
         List<DerivativeFx> calculated = new ArrayList<>();
