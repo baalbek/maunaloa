@@ -82,6 +82,46 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
         }
     }
 
+    @Override
+    public void registerOptionPurchase(Derivative d, int purchaseType, int volume) {
+        SqlSession session = MyBatisUtils.getSession();
+        try {
+            DerivativeMapper dmapper = session.getMapper(DerivativeMapper.class);
+            DerivativeBean dbBean = dmapper.findDerivative(d.getTicker());
+            if (dbBean == null) {
+                //insert into stockmarket.optionx (opname, strike, exp_date, optype, stock_id, series)
+                //values (#{ticker}, #{x}, #{expiry}, #{opTypeStr}, #{stockId}, #{series})
+                /*
+                System.out.println("Ticker: " + d.getTicker() +
+                                   ", x: " + d.getExpiry() +
+                                    ", opTypeStr: " + d.getOpTypeStr() +
+                                    ", stockId: " + d.getParent().getStock().getOid() +
+                                    ", series: " + d.getSeries());
+                */
+                dbBean = new DerivativeBean();
+                dbBean.setTicker(d.getTicker());
+                dbBean.setExpiry(d.getExpiry());
+                dbBean.setOpTypeStr(d.getOpTypeStr());
+                dbBean.setParent(d.getParent());
+                dmapper.insertDerivative(dbBean);
+            }
+            CritterMapper cmapper = session.getMapper(CritterMapper.class);
+            OptionPurchaseWithDerivativeBean newPurchase = new OptionPurchaseWithDerivativeBean();
+            d.setOid(dbBean.getOid());
+            newPurchase.setDerivative(d);
+            newPurchase.setDx(new java.util.Date());
+            newPurchase.setVolume(volume);
+            newPurchase.setStatus(1);
+            newPurchase.setPurchaseType(purchaseType);
+            newPurchase.setSpotAtPurchase(d.getParent().getCls());
+            cmapper.insertPurchase(newPurchase);
+            session.commit();
+        }
+        finally {
+            session.close();
+        }
+    }
+
     //region Properties
     private Etrade etrade;
     private OptionCalculator calculator;

@@ -83,9 +83,13 @@ public class DerivativesController {
 
             if (cat == null) return;
 
+            int purchaseAmount = Integer.parseInt(txPurchaseAmount.getText());
+            //java.util.Date dx = new java.util.Date();
+
             for (DerivativeFx fx : derivativesTableView.getItems()) {
                 if (fx.isCheckedProperty().get() == true) {
 
+                    /*
                     OptionPurchaseWithDerivativeBean purchase = new OptionPurchaseWithDerivativeBean();
                     purchase.setDerivative(fx);
                     purchase.setStatus(1);
@@ -97,8 +101,8 @@ public class DerivativesController {
                     System.out.println(purchase);
 
                     System.out.println(purchase.getDerivative().getParent().getStock().getOid());
-                    //derivativeRepository.registerOptionPurchase(purchase);
 
+                    */
                     /*
                     (.setStatus 1)
                     (.setDx ~dx)
@@ -108,6 +112,9 @@ public class DerivativesController {
                     (.setPurchaseType ~ptype)
                     (.setSpotAtPurchase ~spot))
                     */
+
+
+                    derivativeRepository.registerOptionPurchase(fx, cat.getValue(), purchaseAmount);
                 }
             }
         });

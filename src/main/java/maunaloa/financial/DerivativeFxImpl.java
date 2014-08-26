@@ -170,6 +170,11 @@ public class DerivativeFxImpl implements DerivativeFx {
     }
 
     @Override
+    public void setOid(int oid) {
+        derivative.setOid(oid);
+    }
+
+    @Override
     public Date getExpiry() {
         return derivative.getExpiry();
     }

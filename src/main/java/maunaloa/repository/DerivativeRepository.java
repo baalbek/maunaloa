@@ -16,5 +16,5 @@ public interface DerivativeRepository {
     StockPrice spot(String ticker);
     void invalidate();
     void registerOptionPurchase(OptionPurchaseBean purchase);
-    void registerOptionPurchase(Derivative purchase, int volume);
+    void registerOptionPurchase(Derivative purchase, int purchaseType, int volume);
 }
