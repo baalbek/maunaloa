@@ -27,14 +27,24 @@
             <fx:include fx:id="weeks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
-        <Tab text="OBX Candlesticks">
+          <Tab text="OBX Candlesticks">
+              <content>
+                  <fx:include fx:id="obxCandlesticks" source="ChartCanvas.fxml" />
+              </content>
+          </Tab>
+          <Tab text="OBX Weeks">
+              <content>
+                  <fx:include fx:id="obxWeeks" source="ChartCanvas.fxml" />
+              </content>
+          </Tab>
+        <Tab text="OSEBX Candlesticks">
           <content>
-            <fx:include fx:id="obxCandlesticks" source="ChartCanvas.fxml" />
+            <fx:include fx:id="osebxCandlesticks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
-        <Tab text="OBX Weeks">
+        <Tab text="OSEBX Weeks">
           <content>
-            <fx:include fx:id="obxWeeks" source="ChartCanvas.fxml" />
+            <fx:include fx:id="osebxWeeks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
       </tabs>

@@ -24,6 +24,8 @@ import java.util.function.Consumer;
  */
 public class MainframeController implements ControllerHub {
     //region FXML
+    @FXML private ChartCanvasController osebxCandlesticksController;
+    @FXML private ChartCanvasController osebxWeeksController;
     @FXML private ChartCanvasController obxCandlesticksController;
     @FXML private ChartCanvasController obxWeeksController;
     @FXML private ChartCanvasController candlesticksController;
