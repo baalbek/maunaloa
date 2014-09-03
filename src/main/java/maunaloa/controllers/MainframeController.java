@@ -12,10 +12,12 @@ import maunaloa.repository.StockRepository;
 import maunaloa.repository.WindowDressingRepository;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
+import oahu.financial.StockPrice;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -60,6 +62,11 @@ public class MainframeController implements ControllerHub {
             case 3: result = obxCandlesticksController;
                 break;
             case 4: result = obxWeeksController;
+                break;
+            case 5: result = osebxCandlesticksController;
+                break;
+            case 6: result = osebxWeeksController;
+                break;
         }
         return result == null ? Optional.empty() : Optional.of(result);
     }
@@ -154,6 +161,8 @@ public class MainframeController implements ControllerHub {
         initController.apply(weeksController, "Weeks", 2, weeklyChart);
         initController.apply(obxCandlesticksController, "OBX Candlest.", 3, obxCandlesticksChart);
         initController.apply(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
+        initController.apply(osebxCandlesticksController, "OSEBX Candlest.", 5, osebxCandlesticksChart);
+        initController.apply(osebxWeeksController, "OSEBX Weeks", 6, osebxWeeklyChart);
 
         initOptionsController();
 
@@ -228,8 +237,7 @@ public class MainframeController implements ControllerHub {
         });
         cbTickers.getItems().addAll(cbitems);
         Consumer<Stock> setStock = (Stock s) -> {
-            System.out.println(s.getCompanyName());
-            //currentStock = s;
+            System.out.println(String.format("[ %d ] %s, category: %d",s.getOid(), s.getCompanyName(), s.getTickerCategory()));
             switch (s.getTickerCategory()) {
                 case 1:
                     candlesticksController.setStock(s);
@@ -237,10 +245,18 @@ public class MainframeController implements ControllerHub {
                     optionsController.setStock(s);
                     break;
                 case 2:
+                    osebxCandlesticksController.setStock(s);
+                    osebxWeeksController.setStock(s);
+                    break;
+                case 3:
                     obxCandlesticksController.setStock(s);
                     obxWeeksController.setStock(s);
                     break;
             }
+            /*
+            Collection<StockPrice> prices = getStockRepository().stockPrices(s.getTicker(), 1);
+            System.out.println(String.format("Num: %d", prices.size()));
+            */
         };
 
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(
@@ -262,6 +278,8 @@ public class MainframeController implements ControllerHub {
     private MaunaloaChart weeklyChart;
     private MaunaloaChart obxCandlesticksChart;
     private MaunaloaChart obxWeeklyChart;
+    private MaunaloaChart osebxCandlesticksChart;
+    private MaunaloaChart osebxWeeklyChart;
     private StockRepository stockRepository;
     private DerivativeRepository derivativeRepository;
     private WindowDressingRepository windowDressingRepository;
@@ -326,6 +344,22 @@ public class MainframeController implements ControllerHub {
 
     public void setSqldbUrl(String sqldbUrl) {
         this.sqldbUrl = sqldbUrl;
+    }
+
+    public MaunaloaChart getOsebxCandlesticksChart() {
+        return osebxCandlesticksChart;
+    }
+
+    public void setOsebxCandlesticksChart(MaunaloaChart osebxCandlesticksChart) {
+        this.osebxCandlesticksChart = osebxCandlesticksChart;
+    }
+
+    public MaunaloaChart getOsebxWeeklyChart() {
+        return osebxWeeklyChart;
+    }
+
+    public void setOsebxWeeklyChart(MaunaloaChart osebxWeeklyChart) {
+        this.osebxWeeklyChart = osebxWeeklyChart;
     }
 
     //endregion Properties
