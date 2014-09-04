@@ -280,7 +280,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
 
     @Override
     public void notifySpotUpdated(StockPrice spot) {
-        if (location == 1) {
+        if ((location == 1) || (location == 3)) {
             spotHelper.updateSpot(spot);
         }
     }

@@ -4,6 +4,7 @@
     [org.springframework.context.support ClassPathXmlApplicationContext]
     [maunaloa.entities DummyEntity])
   (:require
+    [net.cgrand.enlive-html :as html]
     (maunaloa.service.mongodb
       [common :as comm]
       [fibonacci :as fib]
@@ -35,3 +36,5 @@
   (memoize
     (fn []
       (.getBean (gfm) "downloader"))))
+
+(def sel html/select)
