@@ -59,17 +59,17 @@
     <bean id="downloader" class="maunakea.financial.NetfondsDownloader"></bean>
     -->
 
+    <!--
     <bean id="downloader" class="maunakea.financial.mocks.MockRollingDownloader">
         <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html/rolling" />
     </bean>
+    -->
 
-    <!--
     <bean id="tickerFileNamer" class="maunaloa.financial.TickerFileNamer"></bean>
     <bean id="downloader" class="maunakea.financial.mocks.MockDownloader">
-        <property name="htmlPath" value="file:///home/rcs/opt/java/netfondsjanitor/html" />
+        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html" />
         <property name="tickerFileNamer" ref="tickerFileNamer" />
     </bean>
-    -->
     <!-- END Downloader -->
 
     <bean id="etrade" class="maunakea.financial.Netfonds2">
@@ -94,9 +94,13 @@
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
 
-    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" />
+    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
 
-    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" />
+    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" scope="prototype" />
+
+    <bean id="osebxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
+
+    <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT4" scope="prototype" />
 
     <bean id="mainframe-controller"
           class="maunaloa.controllers.MainframeController">
@@ -105,6 +109,8 @@
         <property name="weeklyChart" ref="chartWeeks" />
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
+        <property name="osebxCandlesticksChart" ref="obxChartCandlesticks" />
+        <property name="osebxWeeklyChart" ref="obxChartWeeks" />
         <property name="stockRepository" ref="stockRepository" />
         <property name="derivativeRepository" ref="derivativeRepository" />
         <property name="windowDressingRepository" ref="windowdressing" />
