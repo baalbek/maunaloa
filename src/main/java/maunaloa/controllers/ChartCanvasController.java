@@ -273,7 +273,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     //region DerivativesControllerListener
     @Override
     public void notifyDerivativesCalculated(List<DerivativeFx> calculated) {
-        if (location > 2) return;
+        if (location > 4) return;
 
         riscLinesHelper.updateRiscs(calculated);
     }
