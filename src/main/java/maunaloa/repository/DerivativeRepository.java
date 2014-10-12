@@ -1,6 +1,7 @@
 package maunaloa.repository;
 
 import oahu.financial.Derivative;
+import oahu.financial.DerivativePrice;
 import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 import ranoraraku.beans.OptionPurchaseBean;
@@ -16,5 +17,5 @@ public interface DerivativeRepository {
     StockPrice spot(String ticker);
     void invalidate();
     void registerOptionPurchase(OptionPurchaseBean purchase);
-    void registerOptionPurchase(Derivative purchase, int purchaseType, int volume);
+    void registerOptionPurchase(DerivativePrice purchase, int purchaseType, int volume);
 }

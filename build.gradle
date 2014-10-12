@@ -3,7 +3,7 @@ apply plugin: 'java'
 
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
-version = '3.0'
+version = '4.0'
 
 ext.springVersion = '4.0.0.RELEASE'
 //ext.springVersion = '3.2.6.RELEASE'

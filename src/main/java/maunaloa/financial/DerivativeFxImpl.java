@@ -5,8 +5,8 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import oahu.exceptions.BinarySearchException;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Derivative;
+import oahu.financial.DerivativePrice;
 import oahu.financial.OptionCalculator;
 import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
@@ -25,11 +25,11 @@ public class DerivativeFxImpl implements DerivativeFx {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
     private final OptionCalculator calculator;
-    private final Derivative derivative;
+    private final DerivativePrice derivativePrice;
 
-    public DerivativeFxImpl(Derivative derivative,
+    public DerivativeFxImpl(DerivativePrice derivativePrice,
                             OptionCalculator calculator) {
-        this.derivative = derivative;
+        this.derivativePrice = derivativePrice;
         this.calculator = calculator;
     }
 
@@ -48,8 +48,8 @@ public class DerivativeFxImpl implements DerivativeFx {
     //--------------------------------------------------
     private void logSetRiskExeption(Exception ex, double value) {
         log.warn(String.format("(%s) spot: %.2f, sell: %.2f, value: %.2f, exeption: %s",
-                getTicker(),
-                getParent().getValue(),
+                "ticker", //TODO-rcs getTicker(),
+                0.0, //TODO-rcs getParent().getValue(),
                 getSell(),
                 value,
                 ex.getMessage()));
@@ -115,97 +115,47 @@ public class DerivativeFxImpl implements DerivativeFx {
     //------------- Parent
     //--------------------------------------------------
     @Override
-    public StockPrice getParent() {
-        return derivative.getParent();
+    public Derivative getDerivative() {
+        return null;
     }
 
     @Override
-    public int getOpType() {
-        return derivative.getOpType();
-    }
-
-    @Override
-    public String getOpTypeStr() {
-        return derivative.getOpTypeStr();
-    }
-
-    @Override
-    public double getX() {
-        return derivative.getX();
+    public StockPrice getStockPrice() {
+        return null;
     }
 
     @Override
     public double getDays() {
-        return derivative.getDays();
+        return derivativePrice.getDays();
     }
 
     @Override
     public double getIvBuy() {
-        return derivative.getIvBuy();
+        return derivativePrice.getIvBuy();
     }
 
     @Override
     public double getIvSell() {
-        return derivative.getIvSell();
+        return derivativePrice.getIvSell();
     }
 
     @Override
     public double getBuy() {
-        return derivative.getBuy();
+        return derivativePrice.getBuy();
     }
 
     @Override
     public double getSell() {
-        return derivative.getSell();
-    }
-
-    @Override
-    public String getTicker() {
-        return derivative.getTicker();
+        return derivativePrice.getSell();
     }
 
     @Override
     public int getOid() {
-        return derivative.getOid();
+        return derivativePrice.getOid();
     }
 
     @Override
     public void setOid(int oid) {
-        derivative.setOid(oid);
-    }
-
-    @Override
-    public Date getExpiry() {
-        return derivative.getExpiry();
-    }
-
-    @Override
-    public String getSeries() {
-        return derivative.getSeries();
-    }
-
-    @Override
-    public double getWatermark() {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void setWatermark(double v) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void updateWatermark(double v) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public double getDiffFromBought() {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public void setDiffFromBought(double v) {
-        throw new NotImplementedException();
+        derivativePrice.setOid(oid);
     }
 }

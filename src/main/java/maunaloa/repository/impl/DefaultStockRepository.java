@@ -3,33 +3,30 @@ package maunaloa.repository.impl;
 /**
  * Created by rcs on 4/14/14.
  */
-import maunaloa.repository.StockRepository;
-import maunaloa.service.MyBatisUtils;
-import oahu.financial.Stock;
-import oahu.financial.StockLocator;
-import oahu.financial.StockPrice;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
-import ranoraraku.models.mybatis.StockMapper;
+import ranoraraku.models.impl.StockMarketReposImpl;
 
-import java.util.Collection;
-import java.util.List;
-import java.sql.Date;
 import java.time.LocalDate;
 
-public class DefaultStockRepository implements StockRepository {
+public class DefaultStockRepository extends StockMarketReposImpl { // implements StockMarketRepository {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
-    private StockLocator locator;
     private LocalDate defaultStartDate;
+    
+    //region interface StockMarketRepository 
 
+    //endregion interface StockMarketRepository 
+    
     //region interface StockRepository
+    /*
     @Override
-    public List<Stock> getStocks() {
-        return getLocator().getTickers();
+    public Collection<Stock> getStocks() {
+        return null;
     }
     @Override
     public Collection<StockPrice> stockPrices(String ticker, LocalDate fromDx, int period) {
-        int tickId = getLocator().findId(ticker);
+
+        return null;
+        int tickId = repos.findId(ticker);
 
         log.debug(String.format("Ticker %s, ticker id %d, date %s", ticker,tickId, fromDx));
 
@@ -52,16 +49,10 @@ public class DefaultStockRepository implements StockRepository {
     public Collection<StockPrice> stockPrices(String ticker, int period) {
         return stockPrices(ticker,getDefaultStartDate(),period);
     }
+    //*/
     //endregion interface StockRepository
 
     //region Properties
-    public StockLocator getLocator() {
-        return locator;
-    }
-
-    public void setLocator(StockLocator locator) {
-        this.locator = locator;
-    }
     public LocalDate getDefaultStartDate() {
         if (defaultStartDate == null) {
             defaultStartDate = LocalDate.of(2012,2,1);

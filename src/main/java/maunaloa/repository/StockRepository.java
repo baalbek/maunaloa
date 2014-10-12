@@ -11,7 +11,7 @@ import java.util.List;
  * Created by rcs on 4/14/14.
  */
 public interface StockRepository {
-    List<Stock> getStocks();
+    Collection<Stock> getStocks();
     Collection<StockPrice> stockPrices(String ticker, LocalDate fromDx, int period);
     Collection<StockPrice> stockPrices(String ticker, int period);
 }

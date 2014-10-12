@@ -1,6 +1,5 @@
 package maunaloa.aspects;
 
-import oahu.exceptions.BinarySearchException;
 import oahu.financial.Derivative;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -76,6 +75,9 @@ public class ValidateBeansAspect {
     private boolean isOk(Derivative cb) {
         String ticker = cb.getTicker();
 
+        //TODO-rcs Derivative -> DerivativePrice
+
+        /*
         if (cb.getParent() == null) {
             log.warn(String.format("%s: parent is null",ticker));
             return false;
@@ -119,6 +121,7 @@ public class ValidateBeansAspect {
             log.warn(String.format("%s: %s",ticker,ex.getMessage()));
             return false;
         }
+        //*/
         return true;
     }
 

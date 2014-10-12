@@ -25,13 +25,13 @@ import java.util.Optional;
  * Created by rcs on 5/20/14.
  */
 public class RiscLines implements ChartItem {
-    private final DerivativeFx derivative;
+    private final DerivativeFx dpricefx;
     private final IBoundaryRuler ruler;
     private Group group ;
     private MaunaloaStatus maunaloaStatus;
 
     public RiscLines(DerivativeFx derivative, IRuler ruler) {
-        this.derivative = derivative;
+        this.dpricefx = derivative;
         this.ruler = (IBoundaryRuler)ruler;
 
     }
@@ -41,14 +41,14 @@ public class RiscLines implements ChartItem {
         if (group == null) {
             group = new Group();
 
-            createLevel(derivative.getBreakeven(), Color.GREEN,
+            createLevel(dpricefx.getBreakeven(), Color.GREEN,
                     String.format("(%s) Break-even: %.2f",
-                            derivative.getTicker(),
-                            derivative.getBreakeven()));
-            createLevel(derivative.stockPriceRiskProperty().get(), Color.RED,
+                            dpricefx.getDerivative().getTicker(),
+                            dpricefx.getBreakeven()));
+            createLevel(dpricefx.stockPriceRiskProperty().get(), Color.RED,
                     String.format("(%s) Risc: %.2f",
-                            derivative.getTicker(),
-                            derivative.stockPriceRiskProperty().get()));
+                            dpricefx.getDerivative().getTicker(),
+                            dpricefx.stockPriceRiskProperty().get()));
 
         }
         return group;
