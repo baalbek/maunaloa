@@ -21,6 +21,7 @@ import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -181,6 +182,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     private IRuler vruler;
     private IRuler hruler;
     private ControllerHub hub;
+    private LocalDate chartStartDate;
 
     private StockRepository stockRepository;
     public void setName(String name) {
@@ -221,7 +223,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     //region MaunaloaChartViewModel
     @Override
     public Collection<StockPrice> stockPrices(int period) {
-        return hub.getStockRepository().stockPrices(getStock().getTicker(),-1);
+        return hub.getStockRepository().findStockPrices(getStock().getTicker(),chartStartDate);
     }
 
     @Override
@@ -283,6 +285,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         if ((location == 1) || (location == 3)) {
             spotHelper.updateSpot(spot);
         }
+    }
+
+    public void setChartStartDate(LocalDate chartStartDate) {
+        this.chartStartDate = chartStartDate;
     }
     //endregion DerivativesControllerListener
 }

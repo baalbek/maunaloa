@@ -8,16 +8,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import maunaloa.repository.DerivativeRepository;
-import maunaloa.repository.StockRepository;
 import maunaloa.repository.WindowDressingRepository;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
-import oahu.financial.StockPrice;
+import oahu.financial.repository.StockMarketRepository;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -144,6 +143,7 @@ public class MainframeController implements ControllerHub {
     public void initialize() {
         initContextInfo();
         initChoiceBoxTickers();
+        LocalDate csd = LocalDate.of(2012,1,1);
         Procedure4<ChartCanvasController,String,Integer,MaunaloaChart>  initController =
                 (ChartCanvasController controller,
                                 String name,
@@ -153,6 +153,7 @@ public class MainframeController implements ControllerHub {
                     controller.setLocation(location);
                     controller.setChart(chart);
                     controller.setHub(this);
+                    controller.setChartStartDate(csd);
                     System.out.println("Setting up controller " + name);
                 };
 
@@ -281,10 +282,11 @@ public class MainframeController implements ControllerHub {
     private MaunaloaChart obxWeeklyChart;
     private MaunaloaChart osebxCandlesticksChart;
     private MaunaloaChart osebxWeeklyChart;
-    private StockRepository stockRepository;
+    private StockMarketRepository stockRepository;
     private DerivativeRepository derivativeRepository;
     private WindowDressingRepository windowDressingRepository;
     private String sqldbUrl;
+    private String chartStartDate;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -319,11 +321,11 @@ public class MainframeController implements ControllerHub {
     }
 
     @Override
-    public StockRepository getStockRepository() {
+    public StockMarketRepository getStockRepository() {
         return stockRepository;
     }
 
-    public void setStockRepository(StockRepository stockRepository) {
+    public void setStockRepository(StockMarketRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
@@ -361,6 +363,10 @@ public class MainframeController implements ControllerHub {
 
     public void setOsebxWeeklyChart(MaunaloaChart osebxWeeklyChart) {
         this.osebxWeeklyChart = osebxWeeklyChart;
+    }
+
+    public void setChartStartDate(String chartStartDate) {
+        this.chartStartDate = chartStartDate;
     }
 
     //endregion Properties

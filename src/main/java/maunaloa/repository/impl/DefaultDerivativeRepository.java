@@ -4,6 +4,7 @@ import maunaloa.financial.DerivativeFxImpl;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.service.MyBatisUtils;
 import oahu.financial.*;
+import oahu.financial.repository.EtradeDerivatives;
 import oahux.financial.DerivativeFx;
 import org.apache.ibatis.session.SqlSession;
 import ranoraraku.beans.DerivativeBean;
