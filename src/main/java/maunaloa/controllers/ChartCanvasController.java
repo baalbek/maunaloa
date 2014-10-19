@@ -9,13 +9,12 @@ import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.controllers.helpers.*;
 import maunaloa.entities.windowdressing.LevelEntity;
-import maunaloa.repository.StockRepository;
 import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
-import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
+import oahu.financial.repository.StockMarketRepository;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
@@ -184,7 +183,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     private ControllerHub hub;
     private LocalDate chartStartDate;
 
-    private StockRepository stockRepository;
     public void setName(String name) {
         this.name = name;
     }

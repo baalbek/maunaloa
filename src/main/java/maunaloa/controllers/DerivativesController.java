@@ -20,9 +20,9 @@ import maunaloa.views.PurchaseCategory;
 import maunaloa.views.RiscItem;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
+import oahu.financial.repository.StockMarketRepository;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
-import ranoraraku.beans.OptionPurchaseWithDerivativeBean;
 
 import java.util.*;
 import java.util.function.Function;
@@ -64,6 +64,7 @@ public class DerivativesController {
     //endregion FXML
 
     private DerivativeRepository derivativeRepository;
+    private StockMarketRepository stockMarketRepository;
     private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<Toggle>();
     private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
     private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
@@ -114,7 +115,7 @@ public class DerivativesController {
                     */
 
 
-                    derivativeRepository.registerOptionPurchase(fx, cat.getValue(), purchaseAmount);
+                    stockMarketRepository.registerOptionPurchase(fx, cat.getValue(), purchaseAmount);
                 }
             }
         });
@@ -182,18 +183,18 @@ public class DerivativesController {
         switch (_selectedDerivativeProperty.get().getUserData().toString()) {
             case "calls":
                 log.info(String.format("Fetching calls for %s",ticker));
-                load((s) -> { return derivativeRepository.calls(s); }, ticker);
+                load((s) -> { return derivativeRepository.getCalls(s); }, ticker);
                 break;
             case "puts":
                 log.info(String.format("Fetching puts for %s",ticker));
-                load((s) -> { return derivativeRepository.puts(s); }, ticker);
+                load((s) -> { return derivativeRepository.getPuts(s); }, ticker);
                 break;
             case "all":
                 //loadAll();
                 break;
         }
         if (_selectedLoadStockProperty.get() == true) {
-            StockPrice spot = derivativeRepository.spot(ticker);
+            StockPrice spot = derivativeRepository.getSpot(ticker);
             stockPrice.setPrice(spot);
             fireAssignStockPriceEvent(spot);
         }
@@ -348,6 +349,14 @@ public class DerivativesController {
 
     public BooleanProperty selectedLoadDerivativesProperty() {
         return _selectedLoadDerivativesProperty;
+    }
+
+    public StockMarketRepository getStockMarketRepository() {
+        return stockMarketRepository;
+    }
+
+    public void setStockMarketRepository(StockMarketRepository stockMarketRepository) {
+        this.stockMarketRepository = stockMarketRepository;
     }
     //endregion Properties
 }

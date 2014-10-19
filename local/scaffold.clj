@@ -1,14 +1,9 @@
 (ns scaffold
   (:import
     [org.springframework.context ApplicationContext]
-    [org.springframework.context.support ClassPathXmlApplicationContext]
-    [maunaloa.entities DummyEntity])
+    [org.springframework.context.support ClassPathXmlApplicationContext])
   (:require
-    [net.cgrand.enlive-html :as html]
-    (maunaloa.service.mongodb
-      [common :as comm]
-      [fibonacci :as fib]
-      [levels :as lvl])))
+    [net.cgrand.enlive-html :as html]))
 
 
 
@@ -19,22 +14,15 @@
 
 (def gfm (memoize gf))
 
-(def parent (DummyEntity.))
-
-(def repos
+(defn bean-fn [bean-name]
   (memoize
     (fn []
-      (.getBean (gfm) "stockRepository"))))
+      (.getBean (gfm) bean-name))))
 
+(def srepos (bean-fn "stockRepository"))
 
-(def etrade
-  (memoize
-    (fn []
-      (.getBean (gfm) "etrade"))))
+(def drepos (bean-fn "derivativeRepository"))
 
-(def dl
-  (memoize
-    (fn []
-      (.getBean (gfm) "downloader"))))
+(def etrade (bean-fn "etrade"))
 
 (def sel html/select)

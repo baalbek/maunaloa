@@ -109,19 +109,31 @@ public class DerivativeFxImpl implements DerivativeFx {
         return _breakEven;
     }
 
+    @Override
+    public String getTicker() {
+        return derivativePrice.getDerivative().getTicker();
+    }
+
+    @Override
+    public Date getExpiry() {
+        return derivativePrice.getDerivative().getExpiry();
+    }
 
 
     //--------------------------------------------------
     //------------- Parent
     //--------------------------------------------------
+    public DerivativePrice getDerivativePrice() {
+        return derivativePrice;
+    }
     @Override
     public Derivative getDerivative() {
-        return null;
+        return derivativePrice.getDerivative();
     }
 
     @Override
     public StockPrice getStockPrice() {
-        return null;
+        return derivativePrice.getStockPrice();
     }
 
     @Override

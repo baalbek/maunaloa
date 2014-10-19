@@ -14,12 +14,18 @@ import ranoraraku.models.mybatis.DerivativeMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by rcs on 4/15/14.
  *
  */
 public class DefaultDerivativeRepository implements DerivativeRepository {
+    private Map<String,Collection<DerivativeFx>> calls;
+    private Map<String,Collection<DerivativeFx>> puts;
+    private Map<String,StockPrice> spots;
+
     private Collection<DerivativeFx> toDerivativeFx(Collection<DerivativePrice> derivs) {
         Collection<DerivativeFx> result = new ArrayList<>();
 
@@ -30,17 +36,25 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
 
     }
     @Override
-    public Collection<DerivativeFx> calls(String ticker) {
-        return toDerivativeFx(getEtrade().getCalls(ticker));
+    public Collection<DerivativeFx> getCalls(String ticker) {
+        if (calls == null) {
+            calls = new HashMap<>();
+        }
+        Collection<DerivativeFx> result = calls.get(ticker);
+        if (result == null) {
+            result  = toDerivativeFx(getEtrade().getCalls(ticker));
+            calls.put(ticker,result);
+        }
+        return result;
     }
 
     @Override
-    public Collection<DerivativeFx> puts(String ticker) {
+    public Collection<DerivativeFx> getPuts(String ticker) {
         return toDerivativeFx(getEtrade().getPuts(ticker));
     }
 
     @Override
-    public StockPrice spot(String ticker) {
+    public StockPrice getSpot(String ticker) {
         return getEtrade().getSpot(ticker);
     }
 
@@ -49,20 +63,13 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
         //TODO-rcs DefaultDerivativeRepository.invalidate()
         //getEtrade().invalidate();
     }
-
+    /*
     @Override
     public void registerOptionPurchase(OptionPurchaseBean purchase) {
 
         SqlSession session = MyBatisUtils.getSession();
 
         try {
-            /*
-            CritterMapper mapper = session.getMapper(CritterMapper.class);
-
-            mapper.insertPurchase(purchase);
-
-            session.commit();
-            */
             DerivativeMapper dmapper = session.getMapper(DerivativeMapper.class);
 
             //int opid = dmapper.derivativeIdFor(purchase.getTicker());
@@ -83,8 +90,6 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
 
     @Override
     public void registerOptionPurchase(DerivativePrice d, int purchaseType, int volume) {
-        //TODO-rcs registerOptionPurchase put back
-        /*
         SqlSession session = MyBatisUtils.getSession();
         try {
             DerivativeMapper dmapper = session.getMapper(DerivativeMapper.class);
@@ -112,8 +117,8 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
         finally {
             session.close();
         }
-        //*/
     }
+    //*/
 
     //region Properties
     private EtradeDerivatives etrade;

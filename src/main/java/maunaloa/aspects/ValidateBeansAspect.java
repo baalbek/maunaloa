@@ -1,6 +1,7 @@
 package maunaloa.aspects;
 
-import oahu.financial.Derivative;
+import oahu.exceptions.BinarySearchException;
+import oahu.financial.DerivativePrice;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -25,27 +26,27 @@ public class ValidateBeansAspect {
     private Integer daysLimit = 0;
 
 
-    @Pointcut("execution(* oahu.financial.Etrade.getCalls(String))")
+    @Pointcut("execution(* oahu.financial.repository.EtradeDerivatives.getCalls(String))")
     public void getCallsPointcut() {
     }
 
 
-    @Pointcut("execution(* oahu.financial.Etrade.getPuts(String))")
+    @Pointcut("execution(* oahu.financial.repository.EtradeDerivatives.getPuts(String))")
     public void getPutsPointcut() {
     }
 
 
 
     @Around("getPutsPointcut()")
-    public Collection<Derivative> getPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
+    public Collection<DerivativePrice> getPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
 
-        Collection<Derivative> tmp = (Collection<Derivative>)jp.proceed();
+        Collection<DerivativePrice> tmp = (Collection<DerivativePrice>)jp.proceed();
 
-        Collection<Derivative> result = new ArrayList<>();
+        Collection<DerivativePrice> result = new ArrayList<>();
 
         log.info(String.format("%s\nNumber of puts: %d",jp.toString(),tmp.size()));
 
-        for (Derivative bean : tmp) {
+        for (DerivativePrice bean : tmp) {
 
             if (isOk(bean) == false) continue;
 
@@ -56,15 +57,15 @@ public class ValidateBeansAspect {
     }
 
     @Around("getCallsPointcut()")
-    public Collection<Derivative> getCallsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
+    public Collection<DerivativePrice> getCallsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
 
-        Collection<Derivative> tmp = (Collection<Derivative>)jp.proceed();
+        Collection<DerivativePrice> tmp = (Collection<DerivativePrice>)jp.proceed();
 
-        Collection<Derivative> result = new ArrayList<>();
+        Collection<DerivativePrice> result = new ArrayList<>();
 
         log.info(String.format("%s\nNumber of calls: %d",jp.toString(),tmp.size()));
 
-        for (Derivative bean : tmp) {
+        for (DerivativePrice bean : tmp) {
             if (isOk(bean) == false) continue;
 
             result.add(bean);
@@ -72,48 +73,50 @@ public class ValidateBeansAspect {
         return result;
     }
 
-    private boolean isOk(Derivative cb) {
-        String ticker = cb.getTicker();
+    private boolean isOk(DerivativePrice cb) {
+        String ticker = cb.getDerivative().getTicker();
 
-        //TODO-rcs Derivative -> DerivativePrice
+        if (cb.getDerivative() == null) {
+            log.warn(String.format("[isOk(DerivativePrice] %s: Derivative is null",ticker));
+            return false;
+        }
 
-        /*
-        if (cb.getParent() == null) {
-            log.warn(String.format("%s: parent is null",ticker));
+        if (cb.getStockPrice() == null) {
+            log.warn(String.format("[isOk(DerivativePrice] %s: StockPrice is null",ticker));
             return false;
         }
 
         if (cb.getDays() < daysLimit) {
-            log.info(String.format("%s has expired within %d days",ticker,daysLimit));
+            log.info(String.format("[isOk(DerivativePrice] %s has expired within %d days",ticker,daysLimit));
             return false;
         }
 
         if (cb.getBuy()<= 0) {
-            log.info(String.format("%s: buy <= 0.0",ticker));
+            log.info(String.format("[isOk(DerivativePrice] %s: buy <= 0.0",ticker));
             return false;
         }
 
         if (cb.getSell() <= 0) {
-            log.info(String.format("%s: sell <= 0.0",ticker));
+            log.info(String.format("[isOk(DerivativePrice] %s: sell <= 0.0",ticker));
             return false;
         }
 
         if (spreadLimit != null) {
             double spread = cb.getSell() - cb.getBuy();
             if (spread > spreadLimit.doubleValue()) {
-                log.info(String.format("%s: spread (%.2f) larger than allowed (%.2f)",ticker,spread,spreadLimit));
+                log.info(String.format("[isOk(DerivativePrice] %s: spread (%.2f) larger than allowed (%.2f)",ticker,spread,spreadLimit));
                 return false;
             }
         }
 
         try {
             if (cb.getIvSell() <= 0) {
-                log.info(String.format("%s: ivSell <= 0.0",ticker));
+                log.info(String.format("[isOk(DerivativePrice] %s: ivSell <= 0.0",ticker));
                 return false;
             }
 
             if (cb.getIvBuy() <= 0) {
-                log.info(String.format("%s: ivBuy <= 0.0",ticker));
+                log.info(String.format("[isOk(DerivativePrice] %s: ivBuy <= 0.0",ticker));
                 return false;
             }
         }
@@ -121,7 +124,7 @@ public class ValidateBeansAspect {
             log.warn(String.format("%s: %s",ticker,ex.getMessage()));
             return false;
         }
-        //*/
+
         return true;
     }
 
