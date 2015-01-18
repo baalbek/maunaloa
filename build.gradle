@@ -27,7 +27,7 @@ dependencies {
     compile 'org.aspectj:aspectjrt:1.7.4'
     compile 'org.aspectj:aspectjtools:1.7.4'
     compile 'org.aspectj:aspectjweaver:1.7.4'
-    compile 'joda-time:joda-time:2.3'
+    //compile 'joda-time:joda-time:2.3'
     compile 'org.mybatis:mybatis:3.2.3' 
     compile "org.springframework:spring-core:$springVersion"
     compile "org.springframework:spring-context:$springVersion"
