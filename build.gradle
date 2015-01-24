@@ -3,7 +3,7 @@ apply plugin: 'java'
 
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
-version = '4.0'
+version = '4.1'
 
 ext.springVersion = '4.0.0.RELEASE'
 //ext.springVersion = '3.2.6.RELEASE'
@@ -34,7 +34,7 @@ dependencies {
     compile "org.springframework:spring-aop:$springVersion"
     compile 'org.mongodb:mongo-java-driver:2.11.3'
     //compile 'org.codehaus.groovy:groovy-all:2.2.1'
-    runtime 'org.clojure:clojure:1.5.1'
+    runtime 'org.clojure:clojure:1.6.0'
     runtime 'org.clojure:clojure-contrib:1.2.0'
     runtime project(':waimea')
     runtime project(':maunaloaq')
