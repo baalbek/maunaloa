@@ -5,8 +5,7 @@ group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
 version = '4.1'
 
-ext.springVersion = '4.0.0.RELEASE'
-//ext.springVersion = '3.2.6.RELEASE'
+ext.springVersion = '4.1.4.RELEASE'
 
 repositories {
     mavenCentral()
