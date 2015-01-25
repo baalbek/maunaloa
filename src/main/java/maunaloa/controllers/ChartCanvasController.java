@@ -69,6 +69,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         fibonacciHelper.onNewFibonacciLine();
     }
     public void onNewLevel() {
+        /*
         NewLevelController controller = new NewLevelController((v) -> {
             Stock stock = getStock();
             if (stock != null) {
@@ -81,6 +82,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
             }
         });
         FxUtils.loadApp("/NewLevelDialog.fxml", "New Level", controller);
+        //*/
+        levelHelper.onNewLevel();
     }
     public void onFibLinesFromRepos() {
         List<ChartItem> items =

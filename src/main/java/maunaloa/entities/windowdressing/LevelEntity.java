@@ -1,6 +1,7 @@
 package maunaloa.entities.windowdressing;
 
 import javafx.collections.ObservableList;
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
