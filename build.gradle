@@ -1,11 +1,36 @@
 apply plugin: 'java'
-//apply plugin: 'groovy'
 
 group = 'rcstadheim'
 archivesBaseName = 'maunaloa'
-version = '4.1'
 
 ext.springVersion = '4.1.4.RELEASE'
+ext.htmlunitVersion = '2.15'
+ext.junitVersion = '4.11'
+ext.log4jVersion = '1.2.17'
+ext.aspectjVersion = '1.8.4'
+ext.mybatisVersion = '3.2.8'
+ext.mongoVersion = '2.12.5'
+ext.postgresVersion = '9.1-901.jdbc4'
+ext.commonsLangVersion = '20030203.000129'
+ext.enliveVersion = '1.1.5'
+ext.coltVersion = '1.2.0'
+
+
+//-------------------- clojure ---------------------
+ext.clojureVersion = '1.6.0'
+ext.clojureContribVersion = '1.2.0'
+ext.algoMonadsVersion = '0.1.5'
+ext.clojuresqueVersion = '1.5.8'
+
+
+ext.major = '5'
+ext.minor = '0'
+
+version = "$major.$minor.1"
+
+configurations {
+    sshAntTask
+}
 
 repositories {
     mavenCentral()
@@ -21,24 +46,21 @@ dependencies {
     compile project(':ranoraraku')
     compile project(':maunaloax')
     compile project(':vega')
-    compile 'junit:junit:4.11'
-    compile 'log4j:log4j:1.2.17'
-    compile 'org.aspectj:aspectjrt:1.7.4'
-    compile 'org.aspectj:aspectjtools:1.7.4'
-    compile 'org.aspectj:aspectjweaver:1.7.4'
-    //compile 'joda-time:joda-time:2.3'
-    compile 'org.mybatis:mybatis:3.2.3' 
+    compile "junit:junit:$junitVersion"
+    compile "log4j:log4j:$log4jVersion"
+    compile "org.aspectj:aspectjrt:$aspectjVersion"
+    compile "org.aspectj:aspectjtools:$aspectjVersion"
+    compile "org.aspectj:aspectjweaver:$aspectjVersion"
+    compile "org.mybatis:mybatis:$mybatisVersion"
     compile "org.springframework:spring-core:$springVersion"
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-aop:$springVersion"
-    compile 'org.mongodb:mongo-java-driver:2.11.3'
-    //compile 'org.codehaus.groovy:groovy-all:2.2.1'
-    runtime 'org.clojure:clojure:1.6.0'
-    runtime 'org.clojure:clojure-contrib:1.2.0'
+    compile "org.mongodb:mongo-java-driver:$mongoVersion"
+    runtime "org.clojure:clojure:$clojureVersion"
+    runtime "org.clojure:clojure-contrib:$clojureContribVersion"
     runtime project(':waimea')
     runtime project(':maunaloaq')
-    //compile files('../libs/javafx-2.2.jar')
-    //compile files('../libs/jfxrt.jar')
+    sshAntTask 'org.apache.ant:ant-jsch:1.9.4','com.jcraft:jsch:0.1.51'
 }
 
 buildscript {
@@ -52,6 +74,20 @@ buildscript {
         classpath 'clojuresque:clojuresque:1.5.8'
     }
 }
+
+task configureSshAntTask {
+    description = 'Scp task'
+    // Get passphrase from user input.
+    //def console = System.console()
+    //def passphrase = console.readPassword('%s: ', 'Please enter the passphrase for the keyfile')
+
+    // Redefine scp Ant task, with the classpath property set to our newly defined
+    // sshAntTask configuration classpath.
+    ant.taskdef(name: 'scp',
+            classname: 'org.apache.tools.ant.taskdefs.optional.ssh.Scp',
+            classpath: configurations.sshAntTask.asPath)
+}
+
 
 String clazzPath() {
     ((configurations.runtime.files.collect { f ->
@@ -76,10 +112,40 @@ task cj(type: Copy) {
 
 task copyall(dependsOn: [copydeps,cj])
 
-task prncp {
-    println clazzPath()
-}
-
 task quick(dependsOn: [build, cj, copydeps])
 
 task local(dependsOn: [build, cj])
+
+String myLibName(String pname) {
+    project(':'+pname).tasks['jar'].archiveName
+}
+
+task hilo << {
+    ant.scp(todir: 'rcs@hilo:/home/rcs/opt/java/develop/maunaloa/dist',
+            password: 'q2uebec9',
+            verbose: 'true') {
+        fileset(dir: 'dist') {
+            include(name: myLibName('maunaloa'))
+        }
+    }
+}
+
+task hilofull << {
+    ant.scp(todir: 'rcs@hilo:/home/rcs/opt/java/develop/maunaloa/dist',
+            //keyfile: '${user.home} /.ssh/id_rsa',
+            //passphrase: 'q2uebec9', // passphrase as String,
+            password: 'q2uebec9',
+            verbose: 'true') {
+                fileset(dir: 'dist') {
+                    include(name: myLibName('oahu'))
+                    include(name: myLibName('oahux'))
+                    include(name: myLibName('maunakea'))
+                    include(name: myLibName('maunaloa'))
+                    include(name: myLibName('maunaloax'))
+                    include(name: myLibName('ranoraraku'))
+                    include(name: myLibName('vega'))
+                    include(name: myLibName('waimea'))
+                    include(name: myLibName('maunaloaq'))
+                }
+            }
+}
