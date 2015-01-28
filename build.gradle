@@ -21,6 +21,7 @@ ext.clojureVersion = '1.6.0'
 ext.clojureContribVersion = '1.2.0'
 ext.algoMonadsVersion = '0.1.5'
 ext.clojuresqueVersion = '1.5.8'
+ext.numericTowerVersion = '0.0.2'
 
 
 ext.major = '5'
