@@ -29,6 +29,8 @@ ext.minor = '0'
 
 version = "$major.$minor.1"
 
+ext.myLibName = "maunaloa-${version}.jar"
+
 configurations {
     sshAntTask
 }
@@ -47,22 +49,28 @@ dependencies {
     compile project(':ranoraraku')
     compile project(':maunaloax')
     compile project(':vega')
-    compile "junit:junit:$junitVersion"
-    compile "log4j:log4j:$log4jVersion"
+    runtime project(':waimea')
+    runtime project(':maunaloaq')
+    //------------------- aspectj -------------------
     compile "org.aspectj:aspectjrt:$aspectjVersion"
     compile "org.aspectj:aspectjtools:$aspectjVersion"
     compile "org.aspectj:aspectjweaver:$aspectjVersion"
+    //------------------- mybatis -------------------
     compile "org.mybatis:mybatis:$mybatisVersion"
+    //------------------- spring -------------------
     compile "org.springframework:spring-core:$springVersion"
     compile "org.springframework:spring-context:$springVersion"
     compile "org.springframework:spring-aop:$springVersion"
+    //------------------- mongo-------------------
     compile "org.mongodb:mongo-java-driver:$mongoVersion"
+    //------------------- clojure-------------------
     runtime "org.clojure:clojure:$clojureVersion"
     runtime "org.clojure:clojure-contrib:$clojureContribVersion"
-    runtime project(':waimea')
-    runtime project(':maunaloaq')
+    //------------------- diverse -------------------
     sshAntTask 'org.apache.ant:ant-jsch:1.9.4'
     sshAntTask 'com.jcraft:jsch:0.1.51'
+    compile "junit:junit:$junitVersion"
+    compile "log4j:log4j:$log4jVersion"
 }
 
 buildscript {
@@ -160,4 +168,49 @@ task hilofullest << {
             include(name: "*.jar")
         }
     }
+}
+
+enum LibContext {
+    BARE,DIST,FULL_PATH
+}
+
+String myDepLibName(String pname, LibContext ctx) {
+    switch (ctx) {
+        case LibContext.BARE:
+            project(':' + pname).tasks['jar'].archiveName
+            break
+        case LibContext.DIST:
+            'dist/' + project(':' + pname).tasks['jar'].archiveName
+            break
+        case LibContext.FULL_PATH:
+            project(':' + pname).tasks['jar'].archivePath
+            break
+    }
+}
+
+task copyRcsLibs(type: Copy) {
+    description 'Copies all local (rcs) jar files into dist'
+    into 'dist' from new File("$libsDir/$myLibName")
+    into 'dist' from new File(myDepLibName('oahu',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('maunakea',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('vega',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('ranoraraku',LibContext.FULL_PATH))
+}
+
+task deleteRcsLibs(type: Delete) {
+    description 'Deletes all local (rcs) jar files from dist'
+    println myDepLibName('oahu',LibContext.DIST)
+    println myDepLibName('maunakea',LibContext.DIST)
+    println myDepLibName('vega',LibContext.DIST)
+    println myDepLibName('ranoraraku',LibContext.DIST)
+    delete "$libsDir/$myLibName",
+            myDepLibName('oahu',LibContext.DIST),
+            myDepLibName('maunakea',LibContext.DIST),
+            myDepLibName('vega',LibContext.DIST),
+            myDepLibName('ranoraraku',LibContext.DIST)
+}
+
+task buildAndCopy(type: Copy, dependsOn: build) {
+    description 'Builds netfondsjanitor jar and copies into dist'
+    into 'dist' from new File("$libsDir/$myLibName")
 }
