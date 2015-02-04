@@ -2,20 +2,17 @@ package maunaloa.repository.impl;
 
 import maunaloa.financial.DerivativeFxImpl;
 import maunaloa.repository.DerivativeRepository;
-import maunaloa.service.MyBatisUtils;
-import oahu.financial.*;
+import oahu.financial.DerivativePrice;
+import oahu.financial.OptionCalculator;
+import oahu.financial.StockPrice;
 import oahu.financial.repository.EtradeDerivatives;
 import oahux.financial.DerivativeFx;
-import org.apache.ibatis.session.SqlSession;
-import ranoraraku.beans.DerivativeBean;
-import ranoraraku.beans.OptionPurchaseBean;
-import ranoraraku.beans.OptionPurchaseWithDerivativeBean;
-import ranoraraku.models.mybatis.DerivativeMapper;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Created by rcs on 4/15/14.
@@ -35,33 +32,66 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
         return result;
 
     }
-    @Override
-    public Collection<DerivativeFx> getCalls(String ticker) {
-        if (calls == null) {
-            calls = new HashMap<>();
+    //*
+    private Collection<DerivativeFx> getItems(String ticker,
+                                              Map<String,Collection<DerivativeFx>> currentRepos,
+                                              Supplier<Collection<DerivativeFx>> factory) {
+        if (currentRepos == null) {
+            currentRepos = new HashMap<>();
         }
-        Collection<DerivativeFx> result = calls.get(ticker);
+        Collection<DerivativeFx> result = currentRepos.get(ticker);
         if (result == null) {
-            result  = toDerivativeFx(getEtrade().getCalls(ticker));
-            calls.put(ticker,result);
+            result  = factory.get();
+            currentRepos.put(ticker,result);
         }
         return result;
+    }
+    //*/
+    /*
+    private static <T> Collection<T> getItems(String ticker,
+                                   Map<String,Collection<T>> currentRepos,
+                                   Supplier<Collection<T>> factory) {
+        if (currentRepos == null) {
+            currentRepos = new HashMap<>();
+        }
+        Collection<T> result = currentRepos.get(ticker);
+        if (result == null) {
+            result  = factory.get();
+            currentRepos.put(ticker,result);
+        }
+        return result;
+    }
+    //*/
+
+    @Override
+    public Collection<DerivativeFx> getCalls(String ticker) {
+        return getItems(ticker,calls, () -> toDerivativeFx(getEtrade().getCalls(ticker)));
     }
 
     @Override
     public Collection<DerivativeFx> getPuts(String ticker) {
-        return toDerivativeFx(getEtrade().getPuts(ticker));
+        return getItems(ticker,puts, () -> toDerivativeFx(getEtrade().getPuts(ticker)));
     }
 
     @Override
     public StockPrice getSpot(String ticker) {
-        return getEtrade().getSpot(ticker);
+        if (spots == null) {
+            spots = new HashMap<>();
+        }
+        StockPrice result = spots.get(ticker);
+        if (result == null) {
+            result = getEtrade().getSpot(ticker);
+            spots.put(ticker,result);
+        }
+        //return getEtrade().getSpot(ticker);
+        return result;
     }
 
     @Override
     public void invalidate() {
-        //TODO-rcs DefaultDerivativeRepository.invalidate()
-        //getEtrade().invalidate();
+        if (spots != null) spots.clear();
+        if (calls != null) calls.clear();
+        if (puts != null) puts.clear();
     }
     /*
     @Override
