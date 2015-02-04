@@ -27,7 +27,7 @@ ext.numericTowerVersion = '0.0.2'
 ext.major = '5'
 ext.minor = '0'
 
-version = "$major.$minor.SNAPSHOT"
+version = "${major}.${minor}.SNAPSHOT"
 
 ext.myLibName = "maunaloa-${version}.jar"
 
@@ -126,8 +126,22 @@ task quick(dependsOn: [build, cj, copydeps])
 
 task local(dependsOn: [build, cj])
 
-String myLibName(String pname) {
-    project(':'+pname).tasks['jar'].archiveName
+String myDepLibName(String pname, LibContext ctx) {
+    switch (ctx) {
+        case LibContext.BARE:
+            project(':' + pname).tasks['jar'].archiveName
+            break
+        case LibContext.DIST:
+            'dist/' + project(':' + pname).tasks['jar'].archiveName
+            break
+        case LibContext.FULL_PATH:
+            project(':' + pname).tasks['jar'].archivePath
+            break
+    }
+}
+
+enum LibContext {
+    BARE,DIST,FULL_PATH
 }
 
 def scp2hilo(Closure fset) {
@@ -149,15 +163,15 @@ task hilo <<  {
 task hilofull << {
     scp2hilo {
         ant.fileset(dir: 'dist') {
-            include(name: myLibName('oahu'))
-            include(name: myLibName('oahux'))
-            include(name: myLibName('maunakea'))
-            include(name: myLibName('maunaloax'))
-            include(name: myLibName('ranoraraku'))
-            include(name: myLibName('vega'))
-            include(name: myLibName('waimea'))
-            include(name: myLibName('maunaloaq'))
-            include(name: "manuloa-$version.jar")
+            include(name: myDepLibName('oahu',LibContext.BARE))
+            include(name: myDepLibName('oahux',LibContext.BARE))
+            include(name: myDepLibName('maunakea',LibContext.BARE))
+            include(name: myDepLibName('maunaloax',LibContext.BARE))
+            include(name: myDepLibName('ranoraraku',LibContext.BARE))
+            include(name: myDepLibName('vega',LibContext.BARE))
+            include(name: myDepLibName('waimea',LibContext.BARE))
+            include(name: myDepLibName('maunaloaq',LibContext.BARE))
+            include(name: myLibName)
         }
     }
 }
@@ -170,23 +184,6 @@ task hilofullest << {
     }
 }
 
-enum LibContext {
-    BARE,DIST,FULL_PATH
-}
-
-String myDepLibName(String pname, LibContext ctx) {
-    switch (ctx) {
-        case LibContext.BARE:
-            project(':' + pname).tasks['jar'].archiveName
-            break
-        case LibContext.DIST:
-            'dist/' + project(':' + pname).tasks['jar'].archiveName
-            break
-        case LibContext.FULL_PATH:
-            project(':' + pname).tasks['jar'].archivePath
-            break
-    }
-}
 
 task copyRcsLibs(type: Copy) {
     description 'Copies all local (rcs) jar files into dist'
