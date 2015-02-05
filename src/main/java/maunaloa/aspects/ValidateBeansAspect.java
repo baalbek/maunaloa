@@ -1,7 +1,9 @@
 package maunaloa.aspects;
 
+import oahu.domain.Tuple3;
 import oahu.exceptions.BinarySearchException;
 import oahu.financial.DerivativePrice;
+import oahu.financial.StockPrice;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -35,7 +37,24 @@ public class ValidateBeansAspect {
     public void getPutsPointcut() {
     }
 
+    @Pointcut("execution(* oahu.financial.repository.EtradeDerivatives.getSpotCallsPuts(String))")
+    public void getSpotCallsPutsPointcut() {
+    }
 
+    @Around("getSpotCallsPutsPointcut()")
+    public Tuple3<StockPrice,Collection<DerivativePrice>,Collection<DerivativePrice>>
+    getSpotCallsPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
+        Tuple3<StockPrice,Collection<DerivativePrice>,Collection<DerivativePrice>> tmp
+                =(Tuple3<StockPrice,Collection<DerivativePrice>,Collection<DerivativePrice>> )jp.proceed();
+
+        Collection<DerivativePrice> validatedCalls = new ArrayList<>();
+        Collection<DerivativePrice> validatedPuts = new ArrayList<>();
+
+
+        return tmp;
+    }
+
+    //private Collection<DerivativePrice> validateItems
 
     @Around("getPutsPointcut()")
     public Collection<DerivativePrice> getPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
