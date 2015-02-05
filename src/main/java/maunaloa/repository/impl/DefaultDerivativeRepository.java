@@ -8,6 +8,7 @@ import oahu.financial.OptionCalculator;
 import oahu.financial.StockPrice;
 import oahu.financial.repository.EtradeDerivatives;
 import oahux.financial.DerivativeFx;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.function.Function;
  */
 public class DefaultDerivativeRepository implements DerivativeRepository {
     private Map<String,Tuple3<StockPrice,Collection<DerivativeFx>,Collection<DerivativeFx>>> items;
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
     private Collection<DerivativeFx> toDerivativeFx(Collection<DerivativePrice> derivs) {
         Collection<DerivativeFx> result = new ArrayList<>();
@@ -89,7 +91,6 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
     public void setCalculator(OptionCalculator calculator) {
         this.calculator = calculator;
     }
-
 
     //endregion Properties
 }
