@@ -28,6 +28,7 @@ public class ValidateBeansAspect {
     private Integer daysLimit = 0;
 
 
+    //region Pointcuts
     @Pointcut("execution(* oahu.financial.repository.EtradeDerivatives.getCalls(String))")
     public void getCallsPointcut() {
     }
@@ -47,48 +48,39 @@ public class ValidateBeansAspect {
         Tuple3<StockPrice,Collection<DerivativePrice>,Collection<DerivativePrice>> tmp
                 =(Tuple3<StockPrice,Collection<DerivativePrice>,Collection<DerivativePrice>> )jp.proceed();
 
-        Collection<DerivativePrice> validatedCalls = new ArrayList<>();
-        Collection<DerivativePrice> validatedPuts = new ArrayList<>();
+        Collection<DerivativePrice> validatedCalls = validateItems(tmp.second());
+        Collection<DerivativePrice> validatedPuts =  validateItems(tmp.third());
 
-
-        return tmp;
+        return new Tuple3<>(tmp.first(),validatedCalls,validatedPuts);
     }
-
-    //private Collection<DerivativePrice> validateItems
 
     @Around("getPutsPointcut()")
     public Collection<DerivativePrice> getPutsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
-
         Collection<DerivativePrice> tmp = (Collection<DerivativePrice>)jp.proceed();
-
-        Collection<DerivativePrice> result = new ArrayList<>();
-
         log.info(String.format("%s\nNumber of puts: %d",jp.toString(),tmp.size()));
+        return validateItems(tmp);
 
-        for (DerivativePrice bean : tmp) {
-
-            if (isOk(bean) == false) continue;
-
-            result.add(bean);
-        }
-
-        return result;
     }
 
     @Around("getCallsPointcut()")
     public Collection<DerivativePrice> getCallsPointcutMethod(ProceedingJoinPoint jp) throws Throwable {
-
         Collection<DerivativePrice> tmp = (Collection<DerivativePrice>)jp.proceed();
+        log.info(String.format("%s\nNumber of calls: %d",jp.toString(),tmp.size()));
+        return validateItems(tmp);
+    }
+    //endregion Pointcuts
 
+    //region Private Methods
+    private Collection<DerivativePrice> validateItems(Collection<DerivativePrice> origItems) {
         Collection<DerivativePrice> result = new ArrayList<>();
 
-        log.info(String.format("%s\nNumber of calls: %d",jp.toString(),tmp.size()));
+        for (DerivativePrice bean : origItems) {
 
-        for (DerivativePrice bean : tmp) {
             if (isOk(bean) == false) continue;
 
             result.add(bean);
         }
+
         return result;
     }
 
@@ -146,7 +138,9 @@ public class ValidateBeansAspect {
 
         return true;
     }
+    //endregion Private Methods
 
+    //region Properties
     public Double getSpreadLimit() {
         return spreadLimit;
     }
@@ -162,6 +156,7 @@ public class ValidateBeansAspect {
     public void setDaysLimit(Integer daysLimit) {
         this.daysLimit = daysLimit;
     }
+    //endregion Properties
 
 
     /*
