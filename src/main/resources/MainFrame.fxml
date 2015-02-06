@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="750.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane prefHeight="750.0" prefWidth="1200.0" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <!-- fx:controller="maunaloa.controllers.MainframeController" -->
   <center>
     <TabPane fx:id="myTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
@@ -102,9 +102,20 @@
             </Menu>
               <!--<Menu mnemonicParsing="false" text="Comments">
                   <MenuItem mnemonicParsing="false" text="New Comment" />
-              </Menu>-->
+                    </Menu>-->
           </menus>
         </MenuBar>
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+                  <MenuButton mnemonicParsing="false" text="MenuButton">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+              </items>
+            </ToolBar>
         <HBox prefHeight="-1.0" prefWidth="-1.0">
           <children>
             <RadioButton fx:id="rgCalls" mnemonicParsing="false" selected="true" text="Calls" userData="calls">
