@@ -117,7 +117,7 @@ task copydeps(type: Copy) {
 }
 
 task cj(type: Copy) {
-    into 'dist' from new File("$libsDir/maunaloa-${version}.jar")
+    into 'dist' from new File("$libsDir/$myLibName")
 }
 
 task copyall(dependsOn: [copydeps,cj])
@@ -155,7 +155,7 @@ def scp2hilo(Closure fset) {
 task hilo <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
-            include(name: "manuloa-$version.jar")
+            include(name: myLibName)
         }
     }
 }
