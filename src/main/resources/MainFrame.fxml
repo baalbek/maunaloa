@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="750.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<BorderPane prefHeight="750.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <!-- fx:controller="maunaloa.controllers.MainframeController" -->
   <center>
     <TabPane fx:id="myTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
@@ -51,60 +51,45 @@
   <top>
     <VBox prefHeight="-1.0" prefWidth="100.0">
       <children>
-        <MenuBar fx:id="myMenuBar">
-          <menus>
-            <Menu mnemonicParsing="false" text="File">
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+                  <MenuButton mnemonicParsing="false" text="Lines">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Delete Selected" />
+                      <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="Delete All" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSetInactiveSelLines" text="Set Inactive Selected" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSetInactiveAllLines" text="Set Inactive All" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton mnemonicParsing="false" text="Repository">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onLevelsFromRepos" text="Fetch Levels" />
+                      <MenuItem mnemonicParsing="false" onAction="#onFibLinesFromRepos" text="FEtch Fibonacci" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveSelectedToRepos" text="Save Selected" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveAllToRepos" text="Save All" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton mnemonicParsing="false" text="Comments">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onShowAllComments" text="Show" />
+                      <MenuItem mnemonicParsing="false" onAction="#onHideAllComments" text="Hide" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton mnemonicParsing="false" text="Etrade">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onLogin" text="Login" />
+                      <MenuItem mnemonicParsing="false" onAction="#onLogout" text="Logout" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onUpdateSpot" text="Update Spot" />
+                        <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
+                    </items>
+                  </MenuButton>
+                  <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
+                <Button mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />
               </items>
-            </Menu>
-            <Menu fx:id="linesMenu" mnemonicParsing="false" text="Lines">
-               <items>
-                    <MenuItem mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
-                    <MenuItem mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />
-                   <Menu mnemonicParsing="false" text="Set inactive">
-                      <items>
-                          <MenuItem mnemonicParsing="false" onAction="#onSetInactiveSelLines" text="Selected" />
-                          <MenuItem mnemonicParsing="false" onAction="#onSetInactiveAllLines" text="All" />
-                      </items>
-                   </Menu>
-                   <Menu mnemonicParsing="false" text="Delete">
-                      <items>
-                          <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Selected" />
-                          <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="All" />
-                      </items>
-                   </Menu>
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Repository">
-               <items>
-                   <MenuItem mnemonicParsing="false" onAction="#onLevelsFromRepos" text="Fetch Levels" />
-                   <MenuItem mnemonicParsing="false" onAction="#onFibLinesFromRepos" text="Fetch Fibonacci" />
-                   <SeparatorMenuItem />
-                   <MenuItem mnemonicParsing="false" onAction="#onSaveSelectedToRepos" text="Save selected" />
-                   <MenuItem mnemonicParsing="false" onAction="#onSaveAllToRepos" text="Save all" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Comments">
-               <items>
-                   <MenuItem mnemonicParsing="false" onAction="#onShowAllComments" text="Show" />
-                   <MenuItem mnemonicParsing="false" onAction="#onHideAllComments" text="Hide" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Etrade">
-               <items>
-                   <MenuItem mnemonicParsing="false" onAction="#onLogin" text="Login" />
-                   <MenuItem mnemonicParsing="false" onAction="#onLogout" text="Logout" />
-                   <SeparatorMenuItem />
-                   <MenuItem mnemonicParsing="false" onAction="#onUpdateSpot" text="Update Spot" />
-                   <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
-               </items>
-            </Menu>
-              <!--<Menu mnemonicParsing="false" text="Comments">
-                  <MenuItem mnemonicParsing="false" text="New Comment" />
-              </Menu>-->
-          </menus>
-        </MenuBar>
+            </ToolBar>
         <HBox prefHeight="-1.0" prefWidth="-1.0">
           <children>
             <RadioButton fx:id="rgCalls" mnemonicParsing="false" selected="true" text="Calls" userData="calls">
