@@ -27,7 +27,7 @@ ext.numericTowerVersion = '0.0.2'
 ext.major = '5'
 ext.minor = '0'
 
-version = "${major}.${minor}.SNAPSHOT"
+version = "${major}.${minor}.SNAPSHOT2"
 
 ext.myLibName = "maunaloa-${version}.jar"
 
