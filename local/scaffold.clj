@@ -5,9 +5,9 @@
     [java.time.temporal IsoFields]
     [java.time LocalDate])
   (:require
-    [maunaloa.utils.commonutils :as U]
+    ;[maunakea.financial.htmlutil :as hu]
     [waimea.filters.ehlers.itrend :as ITR]
-    ;[waimea.plotters.candlestickplotter :as CNDL]
+    [maunaloa.utils.commonutils :as U]
     [maunaloa.models.candlestickmodel :as CM]
     [net.cgrand.enlive-html :as html]))
 
@@ -25,50 +25,60 @@
     (fn []
       (.getBean (gfm) bean-name))))
 
+(def dl (bean-fn "downloader"))
+
 (def srepos (bean-fn "stockRepository"))
+
+(def sirepos (bean-fn "stockIndexRepository"))
 
 (def drepos (bean-fn "derivativeRepository"))
 
 (def etrade (bean-fn "etrade"))
 
-(def sel html/select)
+(comment
+  (defn snips [] (hu/snip-osebx (dl)))
 
-(defn fstock [ticker] (.findStock (srepos) ticker))
+  (defn spots [] (hu/spots-from-snip-osebx (snips) (srepos)))
+  )
 
-(def cndl-weeks-fn CM/candlestick-weeks-mem)
+(comment
+  (def sel html/select)
 
-(defn prices [ticker]
-  (.findStockPrices (srepos) ticker dx))
+  (defn fstock [ticker] (.findStock (srepos) ticker))
 
-(defn cndl-weeks [ticker]
-  (cndl-weeks-fn (.findStock (srepos) ticker) (prices ticker)))
+  (def cndl-weeks-fn CM/candlestick-weeks-mem)
 
-;(defn cndl-plotter [num-items beans]
-;  (CNDL/candlestick-plotter (take num-items (rseq (vec beans)))))
+  (defn prices [ticker]
+    (.findStockPrices (srepos) ticker dx))
 
-(defn itrend [prices]
-  (let [data-values (U/vec-map-beans .getValue prices)]
-    (ITR/calc-itrend data-values 200)))
-
-(defn week-of [price]
-  [(.getLocalDx price) (CM/extract-week price)])
-
-(defn year-of [prices year]
-  (CM/get-year prices year))
-
-(def by-week CM/by-week)
-
-(def y14 (year-of (prices "YAR") 2014))
-
-(def yw (filter #(seq %) (by-week y14)))
-
-(def yw1 (first yw))
-(def yw2 (last yw))
+  (defn cndl-weeks [ticker]
+    (cndl-weeks-fn (.findStock (srepos) ticker) (prices ticker)))
 
 
-(defn week-num [price]
+  (defn itrend [prices]
+    (let [data-values (U/vec-map-beans .getValue prices)]
+      (ITR/calc-itrend data-values 200)))
+
+  (defn week-of [price]
+    [(.getLocalDx price) (CM/extract-week price)])
+
+  (defn year-of [prices year]
+    (CM/get-year prices year))
+
+  (def by-week CM/by-week)
+
+  (def y14 (year-of (prices "YAR") 2014))
+
+  (def yw (filter #(seq %) (by-week y14)))
+
+  (def yw1 (first yw))
+  (def yw2 (last yw))
+
+
+  (defn week-num [price]
     (let [dx (.getLocalDx price)]
       (.get dx IsoFields/WEEK_OF_WEEK_BASED_YEAR)))
 
-(defn list-week-num [prices]
-  (map  week-num prices))
+  (defn list-week-num [prices]
+    (map week-num prices))
+  )

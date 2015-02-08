@@ -68,7 +68,7 @@ public class DefaultDerivativeRepository implements DerivativeRepository {
 
     @Override
     public void invalidate() {
-        if (items != null) items.clear();
+        items = null;
     }
     //endregion interface DerivativeRepository
 
