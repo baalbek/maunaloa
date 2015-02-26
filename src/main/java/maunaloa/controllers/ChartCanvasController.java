@@ -69,20 +69,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         fibonacciHelper.onNewFibonacciLine();
     }
     public void onNewLevel() {
-        /*
-        NewLevelController controller = new NewLevelController((v) -> {
-            Stock stock = getStock();
-            if (stock != null) {
-                LevelEntity entity = new LevelEntity(stock.getTicker(),location,v,getVruler());
-                entity.setOnAddedNewComment((levelEnt,newComment,wasFirstComment) -> {
-                    System.out.println("NEW COMMENT: " + newComment.getCommentDate() + " " + newComment.getComment());
-                    levelHelper.showComments(levelEnt);
-                });
-                levelHelper.addNewLevel(entity);
-            }
-        });
-        FxUtils.loadApp("/NewLevelDialog.fxml", "New Level", controller);
-        //*/
         levelHelper.onNewLevel();
     }
     public void onFibLinesFromRepos() {
@@ -173,6 +159,12 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
                 l.setEntityStatus(StatusCodes.ENTITY_TO_BE_INACTIVE);
             });
         });
+    }
+    public void shiftLeft() {
+
+    }
+    public void shiftRight() {
+
     }
     //endregion Events
 

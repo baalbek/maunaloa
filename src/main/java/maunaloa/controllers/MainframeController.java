@@ -137,6 +137,12 @@ public class MainframeController implements ControllerHub {
     public void onLogout(ActionEvent event) {
 
     }
+    public void onShiftLeft(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::shiftLeft);
+    }
+    public void onShiftRight(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::shiftRight);
+    }
     //endregion Events
 
     //region Initialize

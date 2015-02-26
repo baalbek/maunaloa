@@ -86,6 +86,12 @@
                         <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
                     </items>
                   </MenuButton>
+                  <MenuButton mnemonicParsing="false" text="Chart">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#onShiftLeft" text="Shift Left" />
+                      <MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" />
+                    </items>
+                  </MenuButton>
                   <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
                 <Button mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />
               </items>
