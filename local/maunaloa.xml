@@ -71,7 +71,7 @@
 
     <!-- END Downloader -->
 
-    <bean id="stockRepository" class="ranoraraku.models.impl.StockMarketReposImpl">
+    <bean id="stockRepository" class="ranoraraku.models.impl.CachedStockMarketReposImpl">
     </bean>
 
     <bean id="etrade" class="maunakea.financial.repository.NetfondsDerivatives">
@@ -103,6 +103,7 @@
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
 
+    <!--
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
 
     <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
@@ -113,23 +114,23 @@
 
     <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT4" scope="prototype" />
 
+    -->
+
     <bean id="mainframe-controller"
           class="maunaloa.controllers.MainframeController">
 
         <property name="candlesticksChart" ref="chartCandlesticks" />
+        <!--
         <property name="weeklyChart" ref="chartWeeks" />
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="osebxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="osebxWeeklyChart" ref="obxChartWeeks" />
+        -->
         <property name="stockRepository" ref="stockRepository" />
         <property name="derivativeRepository" ref="derivativeRepository" />
         <property name="windowDressingRepository" ref="windowdressing" />
         <property name="chartStartDate" value="2012-2-1" />
-        <!--
-        <property name="facade" ref="facade" />
-        <property name="windowDressingModel" ref="windowdressingmodel" />
-        -->
     </bean>
 </beans>
 

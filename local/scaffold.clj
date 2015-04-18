@@ -35,6 +35,20 @@
 
 (def etrade (bean-fn "etrade"))
 
+(def ct1 (bean-fn "chartCandlesticks"))
+
+(def cache (atom {}))
+
+(defn gi [ticker]
+  (let [cached (@cache ticker)]
+    (if (nil? cached)
+      (do
+        (println "Empty cache!")
+        (let [cached 2]
+          (swap! cache assoc ticker cached)
+          cached))
+      cached)))
+
 (comment
   (defn snips [] (hu/snip-osebx (dl)))
 

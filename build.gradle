@@ -208,6 +208,6 @@ task deleteRcsLibs(type: Delete) {
 }
 
 task buildAndCopy(type: Copy, dependsOn: build) {
-    description 'Builds netfondsjanitor jar and copies into dist'
+    description 'Builds maunaloa jar and copies into dist'
     into 'dist' from new File("$libsDir/$myLibName")
 }

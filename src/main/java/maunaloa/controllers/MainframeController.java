@@ -25,12 +25,14 @@ import java.util.function.Consumer;
  */
 public class MainframeController implements ControllerHub {
     //region FXML
+    @FXML private ChartCanvasController candlesticksController;
+    /*
     @FXML private ChartCanvasController osebxCandlesticksController;
     @FXML private ChartCanvasController osebxWeeksController;
     @FXML private ChartCanvasController obxCandlesticksController;
     @FXML private ChartCanvasController obxWeeksController;
-    @FXML private ChartCanvasController candlesticksController;
     @FXML private ChartCanvasController weeksController;
+    */
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
     @FXML private ToggleGroup rgDerivatives;
@@ -56,6 +58,7 @@ public class MainframeController implements ControllerHub {
         switch (index) {
             case 1: result = candlesticksController;
                 break;
+            /* --->>>
             case 2: result = weeksController;
                 break;
             case 3: result = obxCandlesticksController;
@@ -66,6 +69,7 @@ public class MainframeController implements ControllerHub {
                 break;
             case 6: result = osebxWeeksController;
                 break;
+            //*/
         }
         return result == null ? Optional.empty() : Optional.of(result);
     }
@@ -165,11 +169,13 @@ public class MainframeController implements ControllerHub {
 
 
         initController.apply(candlesticksController, "Candlesticks", 1, candlesticksChart);
+        /*--->>>
         initController.apply(weeksController, "Weeks", 2, weeklyChart);
         initController.apply(obxCandlesticksController, "OBX Candlest.", 3, obxCandlesticksChart);
         initController.apply(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
         initController.apply(osebxCandlesticksController, "OSEBX Candlest.", 5, osebxCandlesticksChart);
         initController.apply(osebxWeeksController, "OSEBX Weeks", 6, osebxWeeklyChart);
+        */
 
         initOptionsController();
 
@@ -216,9 +222,9 @@ public class MainframeController implements ControllerHub {
             */
         }
 
-        optionsController.addDerivativesControllerListener(candlesticksController);
-        optionsController.addDerivativesControllerListener(weeksController);
-        optionsController.addDerivativesControllerListener(obxCandlesticksController);
+        //--->>> optionsController.addDerivativesControllerListener(candlesticksController);
+        //--->>> optionsController.addDerivativesControllerListener(weeksController);
+        //--->>> optionsController.addDerivativesControllerListener(obxCandlesticksController);
     }
     private void initContextInfo() {
         cxIsCloud.setSelected(windowDressingRepository.isCloud());
@@ -249,16 +255,16 @@ public class MainframeController implements ControllerHub {
             switch (s.getTickerCategory()) {
                 case 1:
                     candlesticksController.setStock(s);
-                    weeksController.setStock(s);
                     optionsController.setStock(s);
+                    //--->>> weeksController.setStock(s);
                     break;
                 case 2:
-                    osebxCandlesticksController.setStock(s);
-                    osebxWeeksController.setStock(s);
+                    //--->>> osebxCandlesticksController.setStock(s);
+                    //--->>> osebxWeeksController.setStock(s);
                     break;
                 case 3:
-                    obxCandlesticksController.setStock(s);
-                    obxWeeksController.setStock(s);
+                    //--->>> obxCandlesticksController.setStock(s);
+                    //--->>> obxWeeksController.setStock(s);
                     break;
             }
             /*

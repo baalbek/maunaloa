@@ -20,6 +20,7 @@
             <fx:include fx:id="candlesticks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
+          <!--
         <Tab text="Weeks">
           <content>
             <fx:include fx:id="weeks" source="ChartCanvas.fxml" />
@@ -45,6 +46,7 @@
             <fx:include fx:id="osebxWeeks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
+        -->
       </tabs>
     </TabPane>
   </center>
