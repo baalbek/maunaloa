@@ -11,6 +11,13 @@
     [maunaloa.models.candlestickmodel :as CM]
     [net.cgrand.enlive-html :as html]))
 
+
+(defmacro j1 [f1] `(fn [v#] (~f1 v#)))
+
+(defmacro j2 [f1 f2] `(fn [v#] [(~f1 v#) (~f2 v#)]))
+
+(defmacro j3 [f1 f2 f3] `(fn [v#] [(~f1 v#) (~f2 v#) (~f3 v#)]))
+
 (def dx (LocalDate/of 2012 1 1))
 
 (defn gf [& [xml]]

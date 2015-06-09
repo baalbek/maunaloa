@@ -124,8 +124,6 @@ task copyall(dependsOn: [copydeps,cj])
 
 task quick(dependsOn: [build, cj, copydeps])
 
-task local(dependsOn: [build, cj])
-
 String myDepLibName(String pname, LibContext ctx) {
     switch (ctx) {
         case LibContext.BARE:
