@@ -43,6 +43,9 @@ public class MainframeController implements ControllerHub {
     @FXML private TabPane myTabPane;
     @FXML private Label lblLocalMongodbUrl;
     @FXML private Label lblSqlUrl;
+    @FXML private Button btnLeft;
+    @FXML private Button btnRight;
+    @FXML private Button btnEnd;
 
    /* @FXML private MenuBar myMenuBar;
     @FXML private Menu linesMenu;
@@ -235,6 +238,9 @@ public class MainframeController implements ControllerHub {
         cxIsCloud.selectedProperty().addListener(event -> {
                 windowDressingRepository.setCloud(cxIsCloud.isSelected());
         });
+    }
+    private void initNavButtons() {
+
     }
     private void initChoiceBoxTickers() {
         final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());
