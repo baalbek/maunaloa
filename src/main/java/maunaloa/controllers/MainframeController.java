@@ -43,9 +43,8 @@ public class MainframeController implements ControllerHub {
     @FXML private TabPane myTabPane;
     @FXML private Label lblLocalMongodbUrl;
     @FXML private Label lblSqlUrl;
-    @FXML private Button btnLeft;
-    @FXML private Button btnRight;
-    @FXML private Button btnEnd;
+    @FXML private Button btnShiftLeft;
+    @FXML private Button btnShiftRight;
 
    /* @FXML private MenuBar myMenuBar;
     @FXML private Menu linesMenu;
@@ -144,17 +143,15 @@ public class MainframeController implements ControllerHub {
     public void onLogout(ActionEvent event) {
 
     }
-    public void onShiftLeft(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::shiftLeft);
-    }
-    public void onShiftRight(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::shiftRight);
+    public void onShiftToEnd(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::shiftToEnd);
     }
     //endregion Events
 
     //region Initialize
     public void initialize() {
         initContextInfo();
+        initNavButtons();
         initChoiceBoxTickers();
         LocalDate csd = LocalDate.of(2012,1,1);
         Procedure4<ChartCanvasController,String,Integer,MaunaloaChart>  initController =
@@ -240,7 +237,12 @@ public class MainframeController implements ControllerHub {
         });
     }
     private void initNavButtons() {
-
+        btnShiftLeft.setOnAction(e -> {
+            currentController().ifPresent(ChartCanvasController::shiftLeft);
+        });
+        btnShiftRight.setOnAction(e -> {
+            currentController().ifPresent(ChartCanvasController::shiftRight);
+        });
     }
     private void initChoiceBoxTickers() {
         final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());

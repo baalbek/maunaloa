@@ -143,7 +143,8 @@ enum LibContext {
 }
 
 def scp2hilo(Closure fset) {
-    ant.scp(todir: 'rcs@hilo:/home/rcs/opt/java/develop/maunaloa/dist',
+    //ant.scp(todir: 'rcs@hilo:/home/rcs/opt/java/develop/maunaloa/dist',
+    ant.scp(todir: 'rcs@hilo:/home/rcs/tmp3',
             password: 'q2uebec9',
             verbose: 'true') {
         fset()
@@ -154,6 +155,24 @@ task hilo <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: myLibName)
+        }
+    }
+}
+
+task hiloq <<  {
+    scp2hilo {
+        ant.fileset(dir: 'dist') {
+            include(name: myDepLibName('maunaloaq',LibContext.BARE))
+        }
+    }
+}
+
+
+task hiloWithFriends <<  {
+    scp2hilo {
+        ant.fileset(dir: 'dist') {
+            include(name: myLibName)
+            include(name: myDepLibName('maunaloaq',LibContext.BARE))
         }
     }
 }

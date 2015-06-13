@@ -90,8 +90,8 @@
                   </MenuButton>
                   <MenuButton mnemonicParsing="false" text="Chart">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onShiftLeft" text="Shift Left" />
-                      <MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" />
+                      <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
+                      <!-- MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" / -->
                     </items>
                   </MenuButton>
                   <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
@@ -149,17 +149,12 @@
                       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                   </HBox.margin>
               </Label>
-                  <Button fx:id="btnLeft" mnemonicParsing="false" text="&lt;-">
+                  <Button fx:id="btnShiftLeft" mnemonicParsing="false" text="&lt;-">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnRight" mnemonicParsing="false" text="-&gt;">
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnEnd" mnemonicParsing="false" text="==&gt;">
+                  <Button fx:id="btnShiftRight" mnemonicParsing="false" text="-&gt;">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

@@ -161,10 +161,14 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         });
     }
     public void shiftLeft() {
-
+        System.out.println("Shift left <-- 2");
+        chart.shiftWeeks(2,myCanvas);
     }
     public void shiftRight() {
 
+    }
+    public void shiftToEnd() {
+        chart.shiftToEnd(myCanvas);
     }
     //endregion Events
 
