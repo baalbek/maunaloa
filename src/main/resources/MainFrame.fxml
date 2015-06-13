@@ -88,14 +88,15 @@
                         <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
                     </items>
                   </MenuButton>
-                  <MenuButton mnemonicParsing="false" text="Chart">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
-                      <!-- MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" / -->
-                    </items>
-                  </MenuButton>
                   <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
-                <Button mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />
+                  <Button mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />
+                  <MenuButton mnemonicParsing="false" text="Chart">
+                      <items>
+                          <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
+                          <!-- MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" / -->
+                          <MenuItem mnemonicParsing="false" onAction="#onShiftToDate" text="Shift To Date" />
+                      </items>
+                  </MenuButton>
               </items>
             </ToolBar>
         <HBox prefHeight="-1.0" prefWidth="-1.0">

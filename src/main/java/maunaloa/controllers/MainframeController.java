@@ -147,6 +147,9 @@ public class MainframeController implements ControllerHub {
     public void onShiftToEnd(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::shiftToEnd);
     }
+    public void onShiftToDate(ActionEvent event) {
+
+    }
     //endregion Events
 
     //region Initialize
