@@ -8,13 +8,10 @@ import javafx.scene.layout.VBox;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.controllers.helpers.*;
-import maunaloa.entities.windowdressing.LevelEntity;
-import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
-import oahu.financial.repository.StockMarketRepository;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.MaunaloaChartViewModel;
@@ -28,6 +25,7 @@ import java.util.function.Consumer;
 
 /**
  * Created by rcs on 4/13/14.
+ *
  */
 public class ChartCanvasController implements MaunaloaChartViewModel, DerivativesControllerListener {
     //region FXML
@@ -161,11 +159,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         });
     }
     public void shiftLeft() {
-        System.out.println("Shift left <-- 2");
-        chart.shiftWeeks(2,myCanvas);
+        chart.shiftWeeks(numShiftWeeks,myCanvas);
     }
     public void shiftRight() {
-
+        chart.shiftWeeks(-numShiftWeeks,myCanvas);
     }
     public void shiftToEnd() {
         chart.shiftToEnd(myCanvas);
@@ -176,11 +173,20 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     private MaunaloaChart chart;
     private String name;
     private int location;
+    private int numShiftWeeks;
     private Stock stock;
     private IRuler vruler;
     private IRuler hruler;
     private ControllerHub hub;
     private LocalDate chartStartDate;
+
+    public int getNumShiftWeeks() {
+        return numShiftWeeks;
+    }
+
+    public void setNumShiftWeeks(int numShiftWeeks) {
+        this.numShiftWeeks = numShiftWeeks;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -287,5 +293,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     public void setChartStartDate(LocalDate chartStartDate) {
         this.chartStartDate = chartStartDate;
     }
+
     //endregion DerivativesControllerListener
 }

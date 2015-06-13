@@ -25,9 +25,11 @@ ext.numericTowerVersion = '0.0.2'
 
 
 ext.major = '5'
-ext.minor = '0'
+ext.minor = '1'
 
 version = "${major}.${minor}.SNAPSHOT"
+
+//version = "${major}.${minor}.0"
 
 ext.myLibName = "maunaloa-${version}.jar"
 
@@ -206,21 +208,33 @@ task copyRcsLibs(type: Copy) {
     description 'Copies all local (rcs) dependent jar files into dist'
     //into 'dist' from new File("$libsDir/$myLibName")
     into 'dist' from new File(myDepLibName('oahu',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('oahux',LibContext.FULL_PATH))
     into 'dist' from new File(myDepLibName('maunakea',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('maunaloax',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('maunaloaq',LibContext.FULL_PATH))
     into 'dist' from new File(myDepLibName('vega',LibContext.FULL_PATH))
+    into 'dist' from new File(myDepLibName('waimea',LibContext.FULL_PATH))
     into 'dist' from new File(myDepLibName('ranoraraku',LibContext.FULL_PATH))
 }
 
 task deleteRcsLibs(type: Delete) {
     description 'Deletes all local (rcs) dependent jar files from dist'
     println myDepLibName('oahu',LibContext.DIST)
+    println myDepLibName('oahux',LibContext.DIST)
     println myDepLibName('maunakea',LibContext.DIST)
+    println myDepLibName('maunaloax',LibContext.DIST)
+    println myDepLibName('maunaloaq',LibContext.DIST)
     println myDepLibName('vega',LibContext.DIST)
+    println myDepLibName('waimea',LibContext.DIST)
     println myDepLibName('ranoraraku',LibContext.DIST)
     delete "$libsDir/$myLibName",
             myDepLibName('oahu',LibContext.DIST),
+            myDepLibName('oahux',LibContext.DIST),
             myDepLibName('maunakea',LibContext.DIST),
+            myDepLibName('maunaloax',LibContext.DIST),
+            myDepLibName('maunaloaq',LibContext.DIST),
             myDepLibName('vega',LibContext.DIST),
+            myDepLibName('waimea',LibContext.DIST),
             myDepLibName('ranoraraku',LibContext.DIST)
 }
 
