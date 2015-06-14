@@ -14,7 +14,6 @@ import oahu.financial.Stock;
 import oahu.financial.repository.StockMarketRepository;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
-import oahu.functional.Procedure5;
 import oahux.chart.MaunaloaChart;
 
 import java.time.LocalDate;
