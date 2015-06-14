@@ -1,5 +1,6 @@
 (ns scaffold3
   (:import
+    [oahux.chart MaunaloaChart]
     [oahux.controllers MaunaloaChartViewModel]
     [vega.filters Common]
     [vega.filters.ehlers Itrend CyberCycle]
@@ -48,24 +49,11 @@
     MaunaloaChartViewModel
     (stockPrices [this period] (sp "YAR"))))
 
-(defn crbund [] (CT1/create-bundle nil (vm) "YAR"))
+(defn chart []
+  (reify
+    MaunaloaChart
+    (getNumShiftWeeks [this] 4)))
 
-(def minmax U/find-min-max)
 
-(defn create-freqs [f data-values freqs]
-  (map
-    #(f data-values %) freqs))
-
-(defn bundle [ticker & freqs]
-  (let [beans (sp ticker)
-        prices (j1 .getValue beans)
-        freqs_ (or freqs [10 50])
-        itrends (create-freqs itr prices freqs_)
-        dx (j1 .getDx beans)]
-    {:beans beans
-     :prices prices
-     :dx dx
-     :freqs freqs_
-     :itrends itrends}))
 
 

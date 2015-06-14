@@ -158,15 +158,14 @@ public class MainframeController implements ControllerHub {
         initNavButtons();
         initChoiceBoxTickers();
         LocalDate csd = LocalDate.of(2012,1,1);
-        Procedure5<ChartCanvasController,String,Integer,Integer,MaunaloaChart> initController =
+        Procedure4<ChartCanvasController,String,Integer,MaunaloaChart> initController =
                 (ChartCanvasController controller,
                                 String name,
                                 Integer location,
-                                Integer numShiftWeeks,
                                 MaunaloaChart chart) -> {
                     controller.setName(name);
                     controller.setLocation(location);
-                    controller.setNumShiftWeeks(numShiftWeeks);
+                    controller.setNumShiftWeeks(Integer.valueOf(chart.getNumShiftWeeks()));
                     controller.setChart(chart);
                     controller.setHub(this);
                     controller.setChartStartDate(csd);
@@ -174,7 +173,7 @@ public class MainframeController implements ControllerHub {
                 };
 
 
-        initController.apply(candlesticksController, "Candlesticks", 1, 4, candlesticksChart);
+        initController.apply(candlesticksController, "Candlesticks", 1, candlesticksChart);
         /*--->>>
         initController.apply(weeksController, "Weeks", 2, weeklyChart);
         initController.apply(obxCandlesticksController, "OBX Candlest.", 3, obxCandlesticksChart);

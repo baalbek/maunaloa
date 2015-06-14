@@ -101,7 +101,9 @@
     </bean>
 
 
-    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" />
+    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1">
+        <property name="numShiftWeeks" value="10" />
+    </bean>
 
     <!--
     <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
