@@ -11,6 +11,7 @@
   (:require
     [waimea.utils.commonutils :as U]
     [maunaloa.views.charts.CT1 :as CT1]
+    [maunaloa.views.viewscommon :as VC]
     [vega.financial.calculator.BlackScholes :as bs])
   (:use
     [clojure.string :only [split]]
@@ -54,6 +55,6 @@
     MaunaloaChart
     (getNumShiftWeeks [this] 4)))
 
-
+(def crbund VC/create-bundle)
 
 

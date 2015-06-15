@@ -118,14 +118,6 @@ task copydeps(type: Copy) {
     into 'dist' from configurations.runtime
 }
 
-task cj(type: Copy) {
-    into 'dist' from new File("$libsDir/$myLibName")
-}
-
-task copyall(dependsOn: [copydeps,cj])
-
-task quick(dependsOn: [build, cj, copydeps])
-
 String myDepLibName(String pname, LibContext ctx) {
     switch (ctx) {
         case LibContext.BARE:
