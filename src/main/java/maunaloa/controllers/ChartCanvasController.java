@@ -242,6 +242,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     @Override
     public void setVruler(IRuler ruler) {
         this.vruler = ruler;
+        levelHelper.updateVruler(ruler);
     }
 
     @Override

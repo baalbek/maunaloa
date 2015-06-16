@@ -17,17 +17,20 @@ import oahux.chart.IRuler;
 
 /**
  * Created by rcs on 5/3/14.
+ *
  */
 public class LevelLine extends AbstractSelectableLine {
 
     //region Init
-    private final IBoundaryRuler ruler;
+    private IBoundaryRuler ruler;
     private double levelValue;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
     private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
     private Group group ;
     private Line line;
+    private Circle anchor;
+    private Text valueLabel;
 
     public LevelLine(double levelValue, IRuler ruler) {
         //this(levelValue, ruler, Color.BLACK);
@@ -48,8 +51,8 @@ public class LevelLine extends AbstractSelectableLine {
         line.setStroke(statusColors.get(StatusCodes.ENTITY_NEW));
 
         String labelText = String.format("%.1f", levelValue);
-        Text valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,labelText);
-        Circle anchor = createAnchor(line, valueLabel);
+        valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,labelText);
+        anchor = createAnchor(line, valueLabel);
 
         group = new Group();
         group.getChildren().addAll(line,anchor);
@@ -113,6 +116,12 @@ public class LevelLine extends AbstractSelectableLine {
     //endregion Private Methods
 
     //region Public |Methods
+    public void updateRuler(IRuler ruler) {
+        this.ruler = (IBoundaryRuler)ruler;
+        double newY = ruler.calcPix(levelValue);
+        anchor.setCenterY(newY);
+        valueLabel.setY(newY-valueLabelDeltaY);
+    }
     public Group view() {
         if (group == null) {
             createLevel();
@@ -133,5 +142,6 @@ public class LevelLine extends AbstractSelectableLine {
     public Line getLine() {
         return line;
     }
+
     //endregion AbstractSelectableLine
 }

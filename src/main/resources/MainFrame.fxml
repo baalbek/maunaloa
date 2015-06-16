@@ -55,15 +55,6 @@
       <children>
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
-                  <MenuButton mnemonicParsing="false" text="Lines">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Delete Selected" />
-                      <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="Delete All" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#onSetInactiveSelLines" text="Set Inactive Selected" />
-                        <MenuItem mnemonicParsing="false" onAction="#onSetInactiveAllLines" text="Set Inactive All" />
-                    </items>
-                  </MenuButton>
                   <MenuButton mnemonicParsing="false" text="Repository">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#onLevelsFromRepos" text="Fetch Levels" />
@@ -87,6 +78,15 @@
                         <MenuItem mnemonicParsing="false" onAction="#onUpdateSpot" text="Update Spot" />
                         <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
                     </items>
+                  </MenuButton>
+                  <MenuButton mnemonicParsing="false" text="Lines">
+                      <items>
+                          <MenuItem mnemonicParsing="false" onAction="#onDeleteSelLines" text="Delete Selected" />
+                          <MenuItem mnemonicParsing="false" onAction="#onDeleteAllLines" text="Delete All" />
+                          <SeparatorMenuItem mnemonicParsing="false" />
+                          <MenuItem mnemonicParsing="false" onAction="#onSetInactiveSelLines" text="Set Inactive Selected" />
+                          <MenuItem mnemonicParsing="false" onAction="#onSetInactiveAllLines" text="Set Inactive All" />
+                      </items>
                   </MenuButton>
                   <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
                   <Button mnemonicParsing="false" onAction="#onNewFibonacciLine" text="Fibonacci Line" />

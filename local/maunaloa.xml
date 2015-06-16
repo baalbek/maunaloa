@@ -102,7 +102,7 @@
 
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1">
-        <property name="numShiftWeeks" value="10" />
+        <property name="numShiftWeeks" value="6" />
     </bean>
 
     <!--

@@ -149,6 +149,9 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     public double getLevelValue() {
         return levelLine.getLevelValue();
     }
+    public LevelLine getLevelLine() {
+        return levelLine;
+    }
     @Override
     public String toString() {
         int numComments = comments == null ? 0 : comments.size();
