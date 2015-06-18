@@ -31,7 +31,7 @@ import java.util.Optional;
 public class FibLineEntity extends AbstractWindowDressingItem implements ChartItem {
     //region Properties
     //private final MaunaloaChartViewModel viewModel;
-    private final Tuple<IRuler> rulers;
+    private Tuple<IRuler> rulers;
 
     private FinancialCoord fp1, fp2;
     private Tuple<Double> p1,p2;
@@ -217,6 +217,15 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         }
     }
     //endregion Interface ChartItem
+
+    //region Public Methods
+    public DraggableLine getLine() {
+        return dragLine;
+    }
+    public void updateRulers(Tuple<IRuler> rulers) {
+       this.rulers = rulers;
+    }
+    //endregion Public Methods
 
     //region Private/Protected
     private boolean isClean() {

@@ -3,6 +3,7 @@ package maunaloa.controllers.helpers;
 import javafx.scene.layout.Pane;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.views.charts.ChartItem;
+import oahu.domain.Tuple;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
@@ -42,11 +43,11 @@ public class LevelHelper extends AbstractControllerHelper {
         }
     }
 
-    public void updateVruler(IRuler ruler) {
+    public void updateRulers(IRuler hruler, IRuler vruler) {
         lineMap().forEach((Stock key, List<ChartItem> values) -> {
             values.forEach((ChartItem x) -> {
                 LevelEntity ent = (LevelEntity)x;
-                ent.getLevelLine().updateRuler(ruler);
+                ent.getLevelLine().updateRuler(vruler);
             });
         });
     }

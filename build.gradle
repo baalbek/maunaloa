@@ -146,7 +146,8 @@ def scp2hilo(Closure fset) {
     }
 }
 
-task hilo <<  {
+task hilo (description: 'Scp jars: maunaloa',
+           group: 'Hilo') <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: myLibName)
@@ -154,7 +155,8 @@ task hilo <<  {
     }
 }
 
-task hiloq <<  {
+task hiloq (description: 'Scp jars: maunaloaq',
+            group: 'Hilo') <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: myDepLibName('maunaloaq',LibContext.BARE))
@@ -163,7 +165,8 @@ task hiloq <<  {
 }
 
 
-task hiloWithFriends <<  {
+task hiloWithFriends(description: 'Scp jars: maunaloa, maunaloaq',
+                     group: 'Hilo') <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: myLibName)
@@ -174,7 +177,8 @@ task hiloWithFriends <<  {
 
 def depLibs = ['oahu','oahux','maunakea','maunaloax','maunaloaq','ranoraraku','vega','waimea']
 
-task hilofull << {
+task hilofull (description: 'Scp jars: all RCS jars',
+               group: 'Hilo') <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
             depLibs.each { s ->
@@ -185,7 +189,9 @@ task hilofull << {
     }
 }
 
-task hilofullest << {
+task hilofullest (description: 'Scp jars: THE WORKS',
+                  group: 'Hilo') <<  {
+    group 'Hilo'
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: "*.jar")

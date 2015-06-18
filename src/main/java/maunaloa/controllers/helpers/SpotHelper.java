@@ -2,7 +2,9 @@ package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.SpotItem;
+import oahu.domain.Tuple;
 import oahu.financial.StockPrice;
+import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 
 import java.util.ArrayList;
@@ -31,5 +33,8 @@ public class SpotHelper extends AbstractControllerHelper {
         }
         spotItem = new SpotItem(spot,boss.getHruler(),boss.getVruler());
         updateMyPaneLines(spotItem, lineMap());
+    }
+    public void updateRulers(IRuler hruler, IRuler vruler) {
+
     }
 }

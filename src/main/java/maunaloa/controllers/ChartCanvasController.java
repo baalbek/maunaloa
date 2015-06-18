@@ -18,6 +18,7 @@ import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +61,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
 
     //region Private Methods
     //endregion Private Methods
+
+    //region Public Methods
+    //endregion Public Methods
 
     //region Events
 
@@ -160,12 +164,20 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     }
     public void shiftLeft() {
         chart.shiftWeeks(numShiftWeeks,myCanvas);
+        notifyChartShift();
     }
     public void shiftRight() {
         chart.shiftWeeks(-numShiftWeeks,myCanvas);
+        notifyChartShift();
     }
     public void shiftToEnd() {
         chart.shiftToEnd(myCanvas);
+        notifyChartShift();
+    }
+    private void notifyChartShift() {
+        levelHelper.updateRulers(hruler,vruler);
+        fibonacciHelper.updateRulers(hruler,vruler);
+        spotHelper.updateRulers(hruler,vruler);
     }
     //endregion Events
 
@@ -242,7 +254,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     @Override
     public void setVruler(IRuler ruler) {
         this.vruler = ruler;
-        levelHelper.updateVruler(ruler);
+        _rulers = null;
     }
 
     @Override
@@ -253,6 +265,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     @Override
     public void setHruler(IRuler ruler) {
         this.hruler = ruler;
+        _rulers = null;
     }
 
     @Override
