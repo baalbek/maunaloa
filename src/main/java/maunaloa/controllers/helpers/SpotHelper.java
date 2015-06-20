@@ -34,7 +34,7 @@ public class SpotHelper extends AbstractControllerHelper {
         spotItem = new SpotItem(spot,boss.getHruler(),boss.getVruler());
         updateMyPaneLines(spotItem, lineMap());
     }
-    public void updateRulers(IRuler hruler, IRuler vruler) {
+    public void updateRulers(Tuple<IRuler> rulers) {
 
     }
 }

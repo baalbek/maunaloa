@@ -5,6 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
@@ -17,6 +18,7 @@ import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import org.bson.types.ObjectId;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -222,8 +224,41 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     public DraggableLine getLine() {
         return dragLine;
     }
-    public void updateRulers(Tuple<IRuler> rulers) {
-       this.rulers = rulers;
+    public void updateRulers(Tuple<IRuler> newRulers) {
+        IRuler oldHruler = rulers.first();
+        IRuler oldVruler = rulers.second();
+
+        Circle startAnchor = dragLine.getStartAnchor();
+        Circle endAnchor = dragLine.getEndAnchor();
+
+        /*
+        fp1 = new FinancialCoord(
+                oldHruler.calcValue(startAnchor.getCenterX()),
+                oldVruler.calcValue(startAnchor.getCenterY()));
+        fp2 = new FinancialCoord(
+                oldHruler.calcValue(endAnchor.getCenterX()),
+                oldVruler.calcValue(endAnchor.getCenterY()));
+        //*/
+
+        LocalDate d1 = (LocalDate)oldHruler.calcValue(startAnchor.getCenterX());
+        double y1 = (Double)oldVruler.calcValue(startAnchor.getCenterY());
+
+        LocalDate d2 = (LocalDate)oldHruler.calcValue(endAnchor.getCenterX());
+        double y2 = (Double)oldVruler.calcValue(endAnchor.getCenterY());
+
+        //System.out.println("d1: "+d1+", y1: "+y1+", d2: "+d2+", y2: "+y2);
+
+        IRuler newHruler = newRulers.first();
+        IRuler newVruler = newRulers.second();
+
+        startAnchor.setCenterX(newHruler.calcPix(d1));
+        startAnchor.setCenterY(newVruler.calcPix(y1));
+
+
+        endAnchor.setCenterX(newHruler.calcPix(d2));
+        endAnchor.setCenterY(newVruler.calcPix(y2));
+
+        rulers = newRulers;
     }
     //endregion Public Methods
 

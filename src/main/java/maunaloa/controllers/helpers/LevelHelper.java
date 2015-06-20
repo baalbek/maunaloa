@@ -43,7 +43,8 @@ public class LevelHelper extends AbstractControllerHelper {
         }
     }
 
-    public void updateRulers(IRuler hruler, IRuler vruler) {
+    public void updateRulers(Tuple<IRuler> rulers) {
+        IRuler vruler = rulers.second();
         lineMap().forEach((Stock key, List<ChartItem> values) -> {
             values.forEach((ChartItem x) -> {
                 LevelEntity ent = (LevelEntity)x;

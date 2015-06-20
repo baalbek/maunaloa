@@ -5,10 +5,13 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import maunaloa.entities.windowdressing.FibLineEntity;
+import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
+
+import java.util.List;
 
 
 /**
@@ -63,7 +66,13 @@ public class FibonacciHelper extends AbstractControllerHelper {
             myPane.setOnMouseReleased(null);
         });
     }
-    public void updateRulers(IRuler hruler, IRuler vruler) {
+    public void updateRulers(Tuple<IRuler> rulers) {
+        lineMap().forEach((Stock key, List<ChartItem> values) -> {
+            values.forEach((ChartItem x) -> {
+                FibLineEntity ent = (FibLineEntity)x;
+                ent.updateRulers(rulers);
+            });
+        });
 
     }
     //endregion Events

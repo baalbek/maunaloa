@@ -175,9 +175,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         notifyChartShift();
     }
     private void notifyChartShift() {
-        levelHelper.updateRulers(hruler,vruler);
-        fibonacciHelper.updateRulers(hruler,vruler);
-        spotHelper.updateRulers(hruler,vruler);
+        levelHelper.updateRulers(getRulers());
+        fibonacciHelper.updateRulers(getRulers());
+        spotHelper.updateRulers(getRulers());
     }
     //endregion Events
 
