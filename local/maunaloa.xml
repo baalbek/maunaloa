@@ -105,9 +105,11 @@
         <property name="numShiftWeeks" value="6" />
     </bean>
 
-    <!--
-    <bean id="chartWeeks" class="maunaloa.views.charts.CT2" />
+    <bean id="chartWeeks" class="maunaloa.views.charts.CT2">
+        <property name="numShiftWeeks" value="6" />
+    </bean>
 
+    <!--
     <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
 
     <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" scope="prototype" />
@@ -122,8 +124,8 @@
           class="maunaloa.controllers.MainframeController">
 
         <property name="candlesticksChart" ref="chartCandlesticks" />
-        <!--
         <property name="weeklyChart" ref="chartWeeks" />
+        <!--
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
         <property name="osebxCandlesticksChart" ref="obxChartCandlesticks" />

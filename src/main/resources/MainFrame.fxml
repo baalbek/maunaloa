@@ -20,12 +20,12 @@
             <fx:include fx:id="candlesticks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
-          <!--
         <Tab text="Weeks">
           <content>
             <fx:include fx:id="weeks" source="ChartCanvas.fxml" />
           </content>
         </Tab>
+          <!--
           <Tab text="OBX Candlesticks">
               <content>
                   <fx:include fx:id="obxCandlesticks" source="ChartCanvas.fxml" />

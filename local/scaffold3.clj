@@ -10,8 +10,8 @@
     [java.time LocalDate DayOfWeek])
   (:require
     [waimea.utils.commonutils :as U]
-    [maunaloa.views.charts.CT1 :as CT1]
     [maunaloa.views.viewscommon :as VC]
+    [maunaloa.models.candlestickmodel :as CM]
     [vega.financial.calculator.BlackScholes :as bs])
   (:use
     [clojure.string :only [split]]
@@ -26,7 +26,7 @@
 (def itr (Itrend.))
 (def cc (CyberCycle.))
 
-(def dx (LocalDate/of 2014 9 15))
+(def dx (LocalDate/of 2001 9 15))
 
 (defn gf [& [xml]]
   (let [cur-xml (if (nil? xml)  "maunaloa2.xml" xml)
@@ -57,4 +57,16 @@
 
 (def crbund VC/create-bundle)
 
+
+(defn filter-by-index [coll idxs]
+  ((fn helper [coll idxs offset]
+     (lazy-seq
+       (when-let [idx (first idxs)]
+         (if (= idx offset)
+           (cons (first coll)
+             (helper (rest coll) (rest idxs) (inc offset)))
+           (helper (rest coll) idxs (inc offset))))))
+    coll idxs 0))
+
+(def cndl-weeks CM/candlestick-weeks)
 

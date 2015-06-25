@@ -220,3 +220,11 @@ task buildAndCopy(type: Copy, dependsOn: build) {
     description 'Builds maunaloa jar and copies into dist'
     into 'dist' from new File("$libsDir/$myLibName")
 }
+
+task buildAndCopyAll(type: Copy, dependsOn: build) {
+    description 'Builds maunaloa jar and copies into dist'
+    into 'dist' from new File("$libsDir/$myLibName")
+    depLibs.each { s ->
+        into 'dist' from new File(myDepLibName(s,LibContext.FULL_PATH))
+    }
+}

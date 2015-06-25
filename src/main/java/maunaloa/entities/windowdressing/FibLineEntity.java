@@ -246,8 +246,6 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         LocalDate d2 = (LocalDate)oldHruler.calcValue(endAnchor.getCenterX());
         double y2 = (Double)oldVruler.calcValue(endAnchor.getCenterY());
 
-        //System.out.println("d1: "+d1+", y1: "+y1+", d2: "+d2+", y2: "+y2);
-
         IRuler newHruler = newRulers.first();
         IRuler newVruler = newRulers.second();
 
