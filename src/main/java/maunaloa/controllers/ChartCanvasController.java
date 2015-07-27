@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.controllers.helpers.*;
+import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.domain.Tuple;
 import oahu.financial.Stock;
@@ -173,6 +174,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     public void shiftToEnd() {
         chart.shiftToEnd(myCanvas);
         notifyChartShift();
+    }
+    public void shiftToDate() {
+        FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
+                new ShiftToDateController());
+
     }
     private void notifyChartShift() {
         levelHelper.updateRulers(getRulers());

@@ -27,9 +27,9 @@ public class MainframeController implements ControllerHub {
     //region FXML
     @FXML private ChartCanvasController candlesticksController;
     @FXML private ChartCanvasController weeksController;
-    /*
     @FXML private ChartCanvasController osebxCandlesticksController;
     @FXML private ChartCanvasController osebxWeeksController;
+    /*
     @FXML private ChartCanvasController obxCandlesticksController;
     @FXML private ChartCanvasController obxWeeksController;
     */
@@ -46,30 +46,33 @@ public class MainframeController implements ControllerHub {
     @FXML private Button btnShiftLeft;
     @FXML private Button btnShiftRight;
 
+    static final int CONTROLLER_DAY = 1;
+    static final int CONTROLLER_WEEK = 2;
+    static final int CONTROLLER_OSEBX_DAY = 3;
+    static final int CONTROLLER_OSEBX_WEEK = 4;
    /* @FXML private MenuBar myMenuBar;
     @FXML private Menu linesMenu;
     @FXML private Menu mongodbMenu;
     */
 
     //endregion FXML
-
-    //region Private Methods
+//region Private Methods
     private Optional<ChartCanvasController> currentController() {
         int index =  myTabPane.getSelectionModel().getSelectedIndex();
         ChartCanvasController result = null;
         switch (index) {
-            case 1: result = candlesticksController;
+            case CONTROLLER_DAY: result = candlesticksController;
                 break;
-            case 2: result = weeksController;
+            case CONTROLLER_WEEK: result = weeksController;
+                break;
+            case CONTROLLER_OSEBX_DAY: result = osebxCandlesticksController;
+                break;
+            case CONTROLLER_OSEBX_WEEK: result = osebxWeeksController;
                 break;
             /* --->>>
             case 3: result = obxCandlesticksController;
                 break;
             case 4: result = obxWeeksController;
-                break;
-            case 5: result = osebxCandlesticksController;
-                break;
-            case 6: result = osebxWeeksController;
                 break;
             //*/
         }
@@ -147,7 +150,7 @@ public class MainframeController implements ControllerHub {
         currentController().ifPresent(ChartCanvasController::shiftToEnd);
     }
     public void onShiftToDate(ActionEvent event) {
-
+        currentController().ifPresent(ChartCanvasController::shiftToDate);
     }
     //endregion Events
 
@@ -174,11 +177,11 @@ public class MainframeController implements ControllerHub {
 
         initController.apply(candlesticksController, "Candlesticks", 1, candlesticksChart);
         initController.apply(weeksController, "Weeks", 2, weeklyChart);
+        initController.apply(osebxCandlesticksController, "OSEBX Candlest.", 5, osebxCandlesticksChart);
+        initController.apply(osebxWeeksController, "OSEBX Weeks", 6, osebxWeeklyChart);
         /*--->>>
         initController.apply(obxCandlesticksController, "OBX Candlest.", 3, obxCandlesticksChart);
         initController.apply(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
-        initController.apply(osebxCandlesticksController, "OSEBX Candlest.", 5, osebxCandlesticksChart);
-        initController.apply(osebxWeeksController, "OSEBX Weeks", 6, osebxWeeklyChart);
         */
 
         initOptionsController();
@@ -271,8 +274,8 @@ public class MainframeController implements ControllerHub {
                     weeksController.setStock(s);
                     break;
                 case 2:
-                    //--->>> osebxCandlesticksController.setStock(s);
-                    //--->>> osebxWeeksController.setStock(s);
+                    osebxCandlesticksController.setStock(s);
+                    osebxWeeksController.setStock(s);
                     break;
                 case 3:
                     //--->>> obxCandlesticksController.setStock(s);

@@ -8,9 +8,10 @@ ext.htmlunitVersion = '2.15'
 ext.junitVersion = '4.11'
 ext.log4jVersion = '1.2.17'
 ext.aspectjVersion = '1.8.4'
-ext.mybatisVersion = '3.2.8'
+ext.mybatisVersion = '3.3.0'
 ext.mongoVersion = '2.12.5'
-ext.postgresVersion = '9.1-901.jdbc4'
+//ext.postgresVersion = '9.1-901.jdbc4'
+ext.postgresVersion = '9.4-1201-jdbc41'
 ext.commonsLangVersion = '20030203.000129'
 ext.enliveVersion = '1.1.5'
 ext.coltVersion = '1.2.0'
@@ -191,7 +192,6 @@ task hilofull (description: 'Scp jars: all RCS jars',
 
 task hilofullest (description: 'Scp jars: THE WORKS',
                   group: 'Hilo') <<  {
-    group 'Hilo'
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: "*.jar")

@@ -112,6 +112,16 @@
         <property name="hasVolume" value="true" />
         <property name="isWeekly" value="true" />
     </bean>
+    <bean id="osebxChartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
+        <property name="numShiftWeeks" value="6" />
+        <property name="hasVolume" value="false" />
+        <property name="isWeekly" value="false" />
+    </bean>
+    <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
+        <property name="numShiftWeeks" value="6" />
+        <property name="hasVolume" value="false" />
+        <property name="isWeekly" value="true" />
+    </bean>
 
     <!--
     <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
@@ -129,11 +139,11 @@
 
         <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="weeklyChart" ref="chartWeeks" />
+        <property name="osebxCandlesticksChart" ref="osebxChartCandlesticks" />
+        <property name="osebxWeeklyChart" ref="osebxChartWeeks" />
         <!--
         <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
         <property name="obxWeeklyChart" ref="obxChartWeeks" />
-        <property name="osebxCandlesticksChart" ref="obxChartCandlesticks" />
-        <property name="osebxWeeklyChart" ref="obxChartWeeks" />
         -->
         <property name="stockRepository" ref="stockRepository" />
         <property name="derivativeRepository" ref="derivativeRepository" />
