@@ -168,7 +168,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         notifyChartShift();
     }
     public void shiftRight() {
-        chart.shiftWeeks(-numShiftWeeks,myCanvas);
+        chart.shiftWeeks(-numShiftWeeks, myCanvas);
         notifyChartShift();
     }
     public void shiftToEnd() {
@@ -177,8 +177,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     }
     public void shiftToDate() {
         FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
-                new ShiftToDateController());
-
+                new ShiftToDateController(shiftDate -> {
+                    System.out.println(shiftDate);
+                    //notifyChartShift();
+                }));
     }
     private void notifyChartShift() {
         levelHelper.updateRulers(getRulers());
