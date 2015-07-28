@@ -106,7 +106,6 @@
         (fn [v]
           [
             (.getYear v)
-            ;(.get v IsoFields/WEEK_OF_WEEK_BASED_YEAR)
             (-> v .getMonth .getValue)
             (.getDayOfMonth v)
             ])
@@ -137,8 +136,6 @@
   (let [d1 (.adjustInto DayOfWeek/FRIDAY head-date)
         d0 (.minusWeeks d1 2)
         date-nums (items-between-dates d0 d1)]
-        ;dnum->date (fn [[y m d]] (LocalDate/of y m d))]
-    ;(rseq (vec (map dnum->date date-nums)))))
     (rseq (vec date-nums))))
 
 
