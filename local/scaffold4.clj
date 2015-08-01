@@ -1,6 +1,9 @@
 (ns scaffold4
   (:import
-    [org.springframework.context.support ClassPathXmlApplicationContext]))
+    [java.time LocalDate DayOfWeek]
+    [org.springframework.context.support ClassPathXmlApplicationContext])
+  (:require
+    [maunaloa.models.candlestickmodel :as cm]))
 
 (def gf
   (memoize 
@@ -10,6 +13,17 @@
 
 (defn bn [bean-name]
   (.getBean (gf) bean-name))
+
+(defn srepos [] (bn "stockRepository"))
+
+(def dx (LocalDate/of 2012 1 1))
+
+(def dw (.adjustInto DayOfWeek/FRIDAY dx))
+
+(defn sp [ticker] (.findStockPrices (srepos) ticker dx))
+
+(def cndl cm/candlestick-weeks)
+
 
 
 (comment et 
