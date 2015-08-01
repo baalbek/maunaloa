@@ -163,12 +163,12 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
             });
         });
     }
-    public void shiftLeft() {
-        chart.shiftWeeks(numShiftWeeks,myCanvas);
+    public void shiftLeft(int weeks) {
+        chart.shiftWeeks(weeks,myCanvas);
         notifyChartShift();
     }
-    public void shiftRight() {
-        chart.shiftWeeks(-numShiftWeeks, myCanvas);
+    public void shiftRight(int weeks) {
+        chart.shiftWeeks(-weeks, myCanvas);
         notifyChartShift();
     }
     public void shiftToEnd() {
@@ -194,20 +194,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     private MaunaloaChart chart;
     private String name;
     private int location;
-    private int numShiftWeeks;
     private Stock stock;
     private IRuler vruler;
     private IRuler hruler;
     private ControllerHub hub;
     private LocalDate chartStartDate;
-
-    public int getNumShiftWeeks() {
-        return numShiftWeeks;
-    }
-
-    public void setNumShiftWeeks(int numShiftWeeks) {
-        this.numShiftWeeks = numShiftWeeks;
-    }
 
     public void setName(String name) {
         this.name = name;

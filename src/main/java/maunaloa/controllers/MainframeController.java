@@ -35,6 +35,7 @@ public class MainframeController implements ControllerHub {
     */
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
+    @FXML private ChoiceBox cbShiftWeeks;
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
@@ -167,7 +168,6 @@ public class MainframeController implements ControllerHub {
                                 MaunaloaChart chart) -> {
                     controller.setName(name);
                     controller.setLocation(location);
-                    controller.setNumShiftWeeks(Integer.valueOf(chart.getNumShiftWeeks()));
                     controller.setChart(chart);
                     controller.setHub(this);
                     controller.setChartStartDate(csd);
@@ -245,10 +245,12 @@ public class MainframeController implements ControllerHub {
     }
     private void initNavButtons() {
         btnShiftLeft.setOnAction(e -> {
-            currentController().ifPresent(ChartCanvasController::shiftLeft);
+            currentController().ifPresent(controller ->
+            controller.shiftLeft(numShiftWeeks));
         });
         btnShiftRight.setOnAction(e -> {
-            currentController().ifPresent(ChartCanvasController::shiftRight);
+            currentController().ifPresent(controller ->
+            controller.shiftRight(numShiftWeeks));
         });
     }
     private void initChoiceBoxTickers() {
@@ -314,6 +316,7 @@ public class MainframeController implements ControllerHub {
     private WindowDressingRepository windowDressingRepository;
     private String sqldbUrl;
     private String chartStartDate;
+    private int numShiftWeeks = 6;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -394,6 +397,10 @@ public class MainframeController implements ControllerHub {
 
     public void setChartStartDate(String chartStartDate) {
         this.chartStartDate = chartStartDate;
+    }
+
+    public void setNumShiftWeeks(int numShiftWeeks) {
+        this.numShiftWeeks = numShiftWeeks;
     }
 
     //endregion Properties

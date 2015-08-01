@@ -102,23 +102,19 @@
 
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="numShiftWeeks" value="6" />
         <property name="hasVolume" value="true" />
         <property name="isWeekly" value="false" />
     </bean>
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="numShiftWeeks" value="6" />
         <property name="hasVolume" value="true" />
         <property name="isWeekly" value="true" />
     </bean>
     <bean id="osebxChartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="numShiftWeeks" value="6" />
         <property name="hasVolume" value="false" />
         <property name="isWeekly" value="false" />
     </bean>
     <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="numShiftWeeks" value="6" />
         <property name="hasVolume" value="false" />
         <property name="isWeekly" value="true" />
     </bean>
@@ -149,6 +145,7 @@
         <property name="derivativeRepository" ref="derivativeRepository" />
         <property name="windowDressingRepository" ref="windowdressing" />
         <property name="chartStartDate" value="2012-2-1" />
+        <property name="numShiftWeeks" value="6" />
     </bean>
 </beans>
 
