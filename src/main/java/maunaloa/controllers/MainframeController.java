@@ -1,5 +1,9 @@
 package maunaloa.controllers;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +21,8 @@ import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -186,6 +192,16 @@ public class MainframeController implements ControllerHub {
 
         initOptionsController();
 
+        cbShiftWeeks.getItems().add(1);
+        cbShiftWeeks.getItems().add(2);
+        cbShiftWeeks.getItems().add(3);
+        cbShiftWeeks.getItems().add(4);
+        cbShiftWeeks.getItems().add(5);
+        cbShiftWeeks.getItems().add(6);
+        cbShiftWeeks.getItems().add(7);
+        cbShiftWeeks.getItems().add(8);
+
+        numShiftWeeksProperty.bind(cbShiftWeeks.getSelectionModel().selectedItemProperty());
     }
 
     private void initOptionsController() {
@@ -246,11 +262,11 @@ public class MainframeController implements ControllerHub {
     private void initNavButtons() {
         btnShiftLeft.setOnAction(e -> {
             currentController().ifPresent(controller ->
-            controller.shiftLeft(numShiftWeeks));
+                    controller.shiftLeft(numShiftWeeksProperty.get()));
         });
         btnShiftRight.setOnAction(e -> {
             currentController().ifPresent(controller ->
-            controller.shiftRight(numShiftWeeks));
+            controller.shiftRight(numShiftWeeksProperty.get()));
         });
     }
     private void initChoiceBoxTickers() {
@@ -316,7 +332,7 @@ public class MainframeController implements ControllerHub {
     private WindowDressingRepository windowDressingRepository;
     private String sqldbUrl;
     private String chartStartDate;
-    private int numShiftWeeks = 6;
+    private IntegerProperty numShiftWeeksProperty = new SimpleIntegerProperty(6);
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -397,10 +413,6 @@ public class MainframeController implements ControllerHub {
 
     public void setChartStartDate(String chartStartDate) {
         this.chartStartDate = chartStartDate;
-    }
-
-    public void setNumShiftWeeks(int numShiftWeeks) {
-        this.numShiftWeeks = numShiftWeeks;
     }
 
     //endregion Properties

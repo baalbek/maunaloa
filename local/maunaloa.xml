@@ -145,7 +145,6 @@
         <property name="derivativeRepository" ref="derivativeRepository" />
         <property name="windowDressingRepository" ref="windowdressing" />
         <property name="chartStartDate" value="2012-2-1" />
-        <property name="numShiftWeeks" value="6" />
     </bean>
 </beans>
 
