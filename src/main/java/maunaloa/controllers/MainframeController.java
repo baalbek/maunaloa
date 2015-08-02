@@ -1,7 +1,9 @@
 package maunaloa.controllers;
 
 import javafx.beans.InvalidationListener;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.repository.WindowDressingRepository;
+import maunaloa.service.FxUtils;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.repository.StockMarketRepository;
@@ -52,6 +55,7 @@ public class MainframeController implements ControllerHub {
     @FXML private Label lblSqlUrl;
     @FXML private Button btnShiftLeft;
     @FXML private Button btnShiftRight;
+    @FXML private CheckMenuItem mnuShiftAllCharts;
 
     static final int CONTROLLER_DAY = 1;
     static final int CONTROLLER_WEEK = 2;
@@ -154,10 +158,25 @@ public class MainframeController implements ControllerHub {
 
     }
     public void onShiftToEnd(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::shiftToEnd);
+        if (shiftBothChartsProperty.get() == true) {
+            candlesticksController.shiftToEnd();
+            weeksController.shiftToEnd();
+        }
+        else {
+            currentController().ifPresent(ChartCanvasController::shiftToDate);
+        }
     }
     public void onShiftToDate(ActionEvent event) {
-        currentController().ifPresent(ChartCanvasController::shiftToDate);
+        if (shiftBothChartsProperty.get() == true) {
+            FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
+                    new ShiftToDateController(shiftDate -> {
+                        candlesticksController.shiftToDate(shiftDate);
+                        weeksController.shiftToDate(shiftDate);
+                    }));
+        }
+        else {
+            currentController().ifPresent(ChartCanvasController::shiftToDate);
+        }
     }
     //endregion Events
 
@@ -202,6 +221,8 @@ public class MainframeController implements ControllerHub {
         cbShiftWeeks.getItems().add(8);
 
         numShiftWeeksProperty.bind(cbShiftWeeks.getSelectionModel().selectedItemProperty());
+
+        shiftBothChartsProperty.bind(mnuShiftAllCharts.selectedProperty());
     }
 
     private void initOptionsController() {
@@ -261,12 +282,24 @@ public class MainframeController implements ControllerHub {
     }
     private void initNavButtons() {
         btnShiftLeft.setOnAction(e -> {
-            currentController().ifPresent(controller ->
-                    controller.shiftLeft(numShiftWeeksProperty.get()));
+            if (shiftBothChartsProperty.get() == true) {
+                candlesticksController.shiftLeft(numShiftWeeksProperty.get());
+                weeksController.shiftLeft(numShiftWeeksProperty.get());
+            }
+            else {
+                currentController().ifPresent(controller ->
+                        controller.shiftLeft(numShiftWeeksProperty.get()));
+            }
         });
         btnShiftRight.setOnAction(e -> {
-            currentController().ifPresent(controller ->
-            controller.shiftRight(numShiftWeeksProperty.get()));
+            if (shiftBothChartsProperty.get() == true) {
+                candlesticksController.shiftRight(numShiftWeeksProperty.get());
+                weeksController.shiftRight(numShiftWeeksProperty.get());
+            }
+            else {
+                currentController().ifPresent(controller ->
+                        controller.shiftRight(numShiftWeeksProperty.get()));
+            }
         });
     }
     private void initChoiceBoxTickers() {
@@ -333,6 +366,7 @@ public class MainframeController implements ControllerHub {
     private String sqldbUrl;
     private String chartStartDate;
     private IntegerProperty numShiftWeeksProperty = new SimpleIntegerProperty(6);
+    private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;

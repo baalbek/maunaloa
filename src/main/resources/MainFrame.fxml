@@ -95,6 +95,7 @@
                           <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
                           <!-- MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" / -->
                           <MenuItem mnemonicParsing="false" onAction="#onShiftToDate" text="Shift To Date" />
+                        <CheckMenuItem fx:id="mnuShiftAllCharts" mnemonicParsing="false" selected="true" text="Shift all harts" />
                       </items>
                   </MenuButton>
               </items>
