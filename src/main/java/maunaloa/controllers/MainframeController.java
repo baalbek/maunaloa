@@ -1,11 +1,9 @@
 package maunaloa.controllers;
 
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,13 +22,12 @@ import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
  * Created by rcs on 4/12/14.
+ *
  */
 public class MainframeController implements ControllerHub {
     //region FXML
@@ -260,10 +257,10 @@ public class MainframeController implements ControllerHub {
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
             optionsController.setDerivativeRepository(getDerivativeRepository());
-            /*
+            //*
             optionsController.addDerivativesControllerListener(candlesticksController);
             optionsController.addDerivativesControllerListener(weeksController);
-            */
+            //*/
         }
 
         //--->>> optionsController.addDerivativesControllerListener(candlesticksController);

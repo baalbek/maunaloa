@@ -27,7 +27,7 @@ import org.apache.log4j.Logger;
 import java.util.*;
 import java.util.function.Function;
 
-/**
+/*
  * Created by rcs on 4/13/14.
  */
 public class DerivativesController {

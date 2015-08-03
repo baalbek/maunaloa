@@ -178,12 +178,12 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     public void shiftToDate() {
         FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
                 new ShiftToDateController(shiftDate -> {
-                    chart.shiftToDate(shiftDate,myCanvas);
-                    notifyChartShift();
+                    shiftToDate(shiftDate);
                 }));
     }
     public void shiftToDate(LocalDate shiftDate) {
         chart.shiftToDate(shiftDate,myCanvas);
+        notifyChartShift();
     }
     private void notifyChartShift() {
         levelHelper.updateRulers(getRulers());
