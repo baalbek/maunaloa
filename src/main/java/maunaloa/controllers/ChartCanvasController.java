@@ -235,6 +235,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         this.hub = hub;
     }
 
+    LocalDate getLastCurrentDateShown() {
+        return chart.getLastCurrentDateShown();
+    }
+
     //endregion Properties
 
     //region MaunaloaChartViewModel

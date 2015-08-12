@@ -97,6 +97,11 @@ public class MainframeController implements ControllerHub {
     }
     public void onNewLevel(ActionEvent event)  {
         currentController().ifPresent(ChartCanvasController::onNewLevel);
+        /*
+        currentController().ifPresent(c -> {
+            System.out.println(c.getLastCurrentDateShown());
+        });
+        */
     }
     public void onFibLinesFromRepos(ActionEvent event) {
         //currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
