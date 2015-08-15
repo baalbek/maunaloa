@@ -3,6 +3,7 @@
     [java.time LocalDate DayOfWeek]
     [org.springframework.context.support ClassPathXmlApplicationContext])
   (:require
+    [maunaloa.views.viewscommon :as vc]
     [maunaloa.models.candlestickmodel :as cm]))
 
 (def gf
@@ -18,12 +19,18 @@
 
 (def dx (LocalDate/of 2012 1 1))
 
+(def dx1 (LocalDate/of 2014 8 29))
+
 (def dw (.adjustInto DayOfWeek/FRIDAY dx))
 
 (defn sp [ticker] (.findStockPrices (srepos) ticker dx))
 
 (def cndl cm/candlestick-weeks)
 
+(def fi vc/find-index)
+
+;(def yar (map #(.getDx %) (sp "YAR")))
+(def nhy (map #(.getDx %) (sp "YAR")))
 
 
 (comment et 

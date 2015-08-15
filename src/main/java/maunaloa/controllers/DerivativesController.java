@@ -338,6 +338,9 @@ public class DerivativesController {
     public void setDerivativeRepository(DerivativeRepository derivativeRepository) {
         this.derivativeRepository = derivativeRepository;
     }
+    public DerivativeRepository getDerivativeRepository() {
+        return derivativeRepository;
+    }
 
     public ObjectProperty<Toggle> selectedDerivativeProperty() {
         return _selectedDerivativeProperty;

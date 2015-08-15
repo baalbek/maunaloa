@@ -16,6 +16,7 @@ import maunaloa.repository.WindowDressingRepository;
 import maunaloa.service.FxUtils;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
+import oahu.financial.html.EtradeDownloader;
 import oahu.financial.repository.StockMarketRepository;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
@@ -174,6 +175,7 @@ public class MainframeController implements ControllerHub {
                     new ShiftToDateController(shiftDate -> {
                         candlesticksController.shiftToDate(shiftDate);
                         weeksController.shiftToDate(shiftDate);
+                        System.out.println(String.format("Last date shown: %s",candlesticksChart.getLastCurrentDateShown()));
                     }));
         }
         else {
@@ -234,6 +236,9 @@ public class MainframeController implements ControllerHub {
             if (prop == null) return;
             Stock stock = (Stock)prop;
             System.out.println(stock.getTicker());
+            if (listener != null) {
+                listener.setDownloadDate(candlesticksChart.getLastCurrentDateShown());
+            }
             optionsController.setStock(stock);
         };
 
@@ -367,6 +372,7 @@ public class MainframeController implements ControllerHub {
     private WindowDressingRepository windowDressingRepository;
     private String sqldbUrl;
     private String chartStartDate;
+    private ControllerHubListener listener;
     private IntegerProperty numShiftWeeksProperty = new SimpleIntegerProperty(6);
     private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
 
@@ -449,6 +455,10 @@ public class MainframeController implements ControllerHub {
 
     public void setChartStartDate(String chartStartDate) {
         this.chartStartDate = chartStartDate;
+    }
+
+    public void setListener(ControllerHubListener listener) {
+        this.listener = listener;
     }
 
     //endregion Properties
