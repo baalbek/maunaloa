@@ -16,7 +16,6 @@ import maunaloa.repository.WindowDressingRepository;
 import maunaloa.service.FxUtils;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
-import oahu.financial.html.EtradeDownloader;
 import oahu.financial.repository.StockMarketRepository;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
@@ -42,7 +41,7 @@ public class MainframeController implements ControllerHub {
     */
     @FXML private DerivativesController optionsController;
     @FXML private ChoiceBox cbTickers;
-    @FXML private ChoiceBox cbShiftWeeks;
+    @FXML private ChoiceBox cbShiftAmount;
     @FXML private ToggleGroup rgDerivatives;
     @FXML private CheckBox cxLoadOptionsHtml;
     @FXML private CheckBox cxLoadStockHtml;
@@ -54,6 +53,8 @@ public class MainframeController implements ControllerHub {
     @FXML private Button btnShiftLeft;
     @FXML private Button btnShiftRight;
     @FXML private CheckMenuItem mnuShiftAllCharts;
+    @FXML private CheckMenuItem mnuIsShiftDays;
+
 
     static final int CONTROLLER_DAY = 1;
     static final int CONTROLLER_WEEK = 2;
@@ -175,7 +176,7 @@ public class MainframeController implements ControllerHub {
                     new ShiftToDateController(shiftDate -> {
                         candlesticksController.shiftToDate(shiftDate);
                         weeksController.shiftToDate(shiftDate);
-                        System.out.println(String.format("Last date shown: %s",candlesticksChart.getLastCurrentDateShown()));
+                        System.out.println(String.format("Last date shown: %s", candlesticksChart.getLastCurrentDateShown()));
                     }));
         }
         else {
@@ -215,18 +216,20 @@ public class MainframeController implements ControllerHub {
 
         initOptionsController();
 
-        cbShiftWeeks.getItems().add(1);
-        cbShiftWeeks.getItems().add(2);
-        cbShiftWeeks.getItems().add(3);
-        cbShiftWeeks.getItems().add(4);
-        cbShiftWeeks.getItems().add(5);
-        cbShiftWeeks.getItems().add(6);
-        cbShiftWeeks.getItems().add(7);
-        cbShiftWeeks.getItems().add(8);
+        cbShiftAmount.getItems().add(1);
+        cbShiftAmount.getItems().add(2);
+        cbShiftAmount.getItems().add(3);
+        cbShiftAmount.getItems().add(4);
+        cbShiftAmount.getItems().add(5);
+        cbShiftAmount.getItems().add(6);
+        cbShiftAmount.getItems().add(7);
+        cbShiftAmount.getItems().add(8);
 
-        numShiftWeeksProperty.bind(cbShiftWeeks.getSelectionModel().selectedItemProperty());
+        shiftAmountProperty.bind(cbShiftAmount.getSelectionModel().selectedItemProperty());
 
         shiftBothChartsProperty.bind(mnuShiftAllCharts.selectedProperty());
+
+        isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
     }
 
     private void initOptionsController() {
@@ -290,22 +293,22 @@ public class MainframeController implements ControllerHub {
     private void initNavButtons() {
         btnShiftLeft.setOnAction(e -> {
             if (shiftBothChartsProperty.get() == true) {
-                candlesticksController.shiftLeft(numShiftWeeksProperty.get());
-                weeksController.shiftLeft(numShiftWeeksProperty.get());
+                candlesticksController.shiftLeft(isShiftDaysProperty.get(),shiftAmountProperty.get());
+                weeksController.shiftLeft(isShiftDaysProperty.get(),shiftAmountProperty.get());
             }
             else {
                 currentController().ifPresent(controller ->
-                        controller.shiftLeft(numShiftWeeksProperty.get()));
+                        controller.shiftLeft(isShiftDaysProperty.get(), shiftAmountProperty.get()));
             }
         });
         btnShiftRight.setOnAction(e -> {
             if (shiftBothChartsProperty.get() == true) {
-                candlesticksController.shiftRight(numShiftWeeksProperty.get());
-                weeksController.shiftRight(numShiftWeeksProperty.get());
+                candlesticksController.shiftRight(isShiftDaysProperty.get(),shiftAmountProperty.get());
+                weeksController.shiftRight(isShiftDaysProperty.get(),shiftAmountProperty.get());
             }
             else {
                 currentController().ifPresent(controller ->
-                        controller.shiftRight(numShiftWeeksProperty.get()));
+                        controller.shiftRight(isShiftDaysProperty.get(), shiftAmountProperty.get()));
             }
         });
     }
@@ -373,8 +376,9 @@ public class MainframeController implements ControllerHub {
     private String sqldbUrl;
     private String chartStartDate;
     private ControllerHubListener listener;
-    private IntegerProperty numShiftWeeksProperty = new SimpleIntegerProperty(6);
+    private IntegerProperty shiftAmountProperty = new SimpleIntegerProperty(6);
     private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
+    private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;

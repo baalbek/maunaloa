@@ -95,7 +95,9 @@
                           <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
                           <!-- MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" / -->
                           <MenuItem mnemonicParsing="false" onAction="#onShiftToDate" text="Shift To Date" />
-                        <CheckMenuItem fx:id="mnuShiftAllCharts" mnemonicParsing="false" selected="true" text="Shift all harts" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <CheckMenuItem fx:id="mnuIsShiftDays" mnemonicParsing="false" selected="true" text="Is Shift Days" />
+                        <CheckMenuItem fx:id="mnuShiftAllCharts" mnemonicParsing="false" text="Shift all Charts" />
                       </items>
                   </MenuButton>
               </items>
@@ -161,7 +163,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
-                  <ChoiceBox fx:id="cbShiftWeeks">
+                  <ChoiceBox fx:id="cbShiftAmount">
                      <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>

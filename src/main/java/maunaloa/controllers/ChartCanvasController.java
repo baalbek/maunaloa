@@ -163,12 +163,22 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
             });
         });
     }
-    public void shiftLeft(int weeks) {
-        chart.shiftWeeks(weeks,myCanvas);
+    public void shiftLeft(boolean isShiftDays, int amount) {
+        if (isShiftDays == true) {
+            chart.shiftDays(amount,myCanvas);
+        }
+        else {
+            chart.shiftWeeks(amount,myCanvas);
+        }
         notifyChartShift();
     }
-    public void shiftRight(int weeks) {
-        chart.shiftWeeks(-weeks, myCanvas);
+    public void shiftRight(boolean isShiftDays, int amount) {
+        if (isShiftDays == true) {
+            chart.shiftDays(-amount,myCanvas);
+        }
+        else {
+            chart.shiftWeeks(-amount,myCanvas);
+        }
         notifyChartShift();
     }
     public void shiftToEnd() {
