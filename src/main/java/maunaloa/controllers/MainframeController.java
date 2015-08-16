@@ -161,6 +161,9 @@ public class MainframeController implements ControllerHub {
     public void onLogout(ActionEvent event) {
 
     }
+    public void onInvalidateDerivativesRepository (ActionEvent event) {
+        derivativeRepository.invalidate();
+    }
     public void onShiftToEnd(ActionEvent event) {
         if (shiftBothChartsProperty.get() == true) {
             candlesticksController.shiftToEnd();
@@ -180,7 +183,14 @@ public class MainframeController implements ControllerHub {
                     }));
         }
         else {
-            currentController().ifPresent(ChartCanvasController::shiftToDate);
+            Optional<ChartCanvasController>  ctrl = currentController();
+            if (ctrl.isPresent() == true) {
+                ctrl.get().shiftToDate();
+            }
+            else {
+                candlesticksController.shiftToDate();
+            }
+            //currentController().ifPresent(ChartCanvasController::shiftToDate);
         }
     }
     //endregion Events

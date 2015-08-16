@@ -77,6 +77,8 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#onUpdateSpot" text="Update Spot" />
                         <MenuItem mnemonicParsing="false" onAction="#onUpdateDerivatives" text="Update Derivatives" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onInvalidateDerivativesRepository" text="Invalidate Derivatives Repository" />
                     </items>
                   </MenuButton>
                   <MenuButton mnemonicParsing="false" text="Lines">

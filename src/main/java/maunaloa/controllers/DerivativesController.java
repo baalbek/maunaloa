@@ -1,5 +1,6 @@
 package maunaloa.controllers;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -80,7 +81,7 @@ public class DerivativesController {
         initStockPrice();
         btnOptionPurchase.setOnAction(event -> {
             PurchaseCategory cat =
-                    (PurchaseCategory)cbPurchaseType.getSelectionModel().selectedItemProperty().get();
+                    (PurchaseCategory) cbPurchaseType.getSelectionModel().selectedItemProperty().get();
 
             if (cat == null) return;
 
@@ -180,23 +181,35 @@ public class DerivativesController {
 
     private void _updateDerivatives() {
         String ticker = this.stock.getTicker();
-        switch (_selectedDerivativeProperty.get().getUserData().toString()) {
-            case "calls":
-                log.info(String.format("Fetching calls for %s",ticker));
-                load((s) -> { return derivativeRepository.getCalls(s); }, ticker);
-                break;
-            case "puts":
-                log.info(String.format("Fetching puts for %s",ticker));
-                load((s) -> { return derivativeRepository.getPuts(s); }, ticker);
-                break;
-            case "all":
-                //loadAll();
-                break;
+        try {
+            switch (_selectedDerivativeProperty.get().getUserData().toString()) {
+                case "calls":
+                    log.info(String.format("Fetching calls for %s", ticker));
+                    load((s) -> {
+                        return derivativeRepository.getCalls(s);
+                    }, ticker);
+                    break;
+                case "puts":
+                    log.info(String.format("Fetching puts for %s", ticker));
+                    load((s) -> {
+                        return derivativeRepository.getPuts(s);
+                    }, ticker);
+                    break;
+                case "all":
+                    //loadAll();
+                    break;
+            }
+            if (_selectedLoadStockProperty.get() == true) {
+                StockPrice spot = derivativeRepository.getSpot(ticker);
+                stockPrice.setPrice(spot);
+                fireAssignStockPriceEvent(spot);
+            }
         }
-        if (_selectedLoadStockProperty.get() == true) {
-            StockPrice spot = derivativeRepository.getSpot(ticker);
-            stockPrice.setPrice(spot);
-            fireAssignStockPriceEvent(spot);
+        catch (FailingHttpStatusCodeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid URL");
+            alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
+            alert.showAndWait();
         }
     }
 
