@@ -19,7 +19,6 @@ import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -196,9 +195,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         notifyChartShift();
     }
     private void notifyChartShift() {
-        levelHelper.updateRulers(getRulers());
-        fibonacciHelper.updateRulers(getRulers());
-        spotHelper.updateRulers(getRulers());
+        Tuple<IRuler> rulers = getRulers();
+        levelHelper.updateRulers(rulers);
+        fibonacciHelper.updateRulers(rulers);
+        spotHelper.updateRulers(rulers);
+        riscLinesHelper.updateRuler(rulers.second());
     }
     //endregion Events
 

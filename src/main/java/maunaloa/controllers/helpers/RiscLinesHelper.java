@@ -2,7 +2,8 @@ package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.RiscLines;
-import oahu.financial.StockPrice;
+import oahu.domain.Tuple;
+import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
@@ -36,5 +37,12 @@ public class RiscLinesHelper extends AbstractControllerHelper {
         }
         updateMyPaneLines(curLines, lineMap());
     }
+    public void updateRuler(IRuler ruler) {
+        if (curLines == null) return;
 
+        for (ChartItem item : curLines) {
+            RiscLines rl = (RiscLines)item;
+            rl.updateRuler(ruler);
+        }
+    }
 }
