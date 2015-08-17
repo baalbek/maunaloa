@@ -30,7 +30,7 @@
 (def fi vc/find-index)
 
 ;(def yar (map #(.getDx %) (sp "YAR")))
-(def nhy (map #(.getDx %) (sp "YAR")))
+;(def nhy (map #(.getDx %) (sp "NHY")))
 
 
 (comment et 

@@ -2,7 +2,6 @@ package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.RiscLines;
-import oahu.domain.Tuple;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
