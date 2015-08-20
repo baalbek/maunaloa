@@ -15,6 +15,11 @@
             <fx:include fx:id="options" source="DerivativesTableView.fxml" />
           </content>
         </Tab>
+          <Tab text="Option Prices">
+              <content>
+                  <fx:include fx:id="opxPrices" source="SpotOptionPriceView.fxml" />
+              </content>
+          </Tab>
         <Tab text="Candlesticks">
           <content>
             <fx:include fx:id="candlesticks" source="ChartCanvas.fxml" />

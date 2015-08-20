@@ -156,6 +156,15 @@ task hilo (description: 'Scp jars: maunaloa',
     }
 }
 
+task hiloConfig (description: 'Scp config files: maunaloa.xml',
+           group: 'Hilo') <<  {
+    scp2hilo {
+        ant.fileset(dir: 'dist') {
+            include(name: 'maunaloa.xml')
+        }
+    }
+}
+
 task hiloq (description: 'Scp jars: maunaloaq',
             group: 'Hilo') <<  {
     scp2hilo {

@@ -56,10 +56,10 @@ public class MainframeController implements ControllerHub {
     @FXML private CheckMenuItem mnuIsShiftDays;
 
 
-    static final int CONTROLLER_DAY = 1;
-    static final int CONTROLLER_WEEK = 2;
-    static final int CONTROLLER_OSEBX_DAY = 3;
-    static final int CONTROLLER_OSEBX_WEEK = 4;
+    static final int CONTROLLER_DAY = 2;
+    static final int CONTROLLER_WEEK = 3;
+    static final int CONTROLLER_OSEBX_DAY = 4;
+    static final int CONTROLLER_OSEBX_WEEK = 5;
    /* @FXML private MenuBar myMenuBar;
     @FXML private Menu linesMenu;
     @FXML private Menu mongodbMenu;
