@@ -58,12 +58,6 @@ public class MainframeController implements ControllerHub {
     @FXML private CheckMenuItem mnuShiftAllCharts;
     @FXML private CheckMenuItem mnuIsShiftDays;
 
-    /*
-    static final int CONTROLLER_DAY = 2;
-    static final int CONTROLLER_WEEK = 3;
-    static final int CONTROLLER_OSEBX_DAY = 4;
-    static final int CONTROLLER_OSEBX_WEEK = 5;
-    //*/
 
    /* @FXML private MenuBar myMenuBar;
     @FXML private Menu linesMenu;
@@ -72,6 +66,7 @@ public class MainframeController implements ControllerHub {
 
     //endregion FXML
 
+    //region ControllerEnum
     /*
     private enum ControllerEnum {
         EMPTY(-1),DAY(2), WEEK(3), OSEBX_DAY(4), OSEBX_WEEK(5);
@@ -93,48 +88,25 @@ public class MainframeController implements ControllerHub {
         }
     }
     //*/
+    //endregion ControllerEnum
 
     private Map<ControllerEnum,ChartCanvasController> _controllers = new HashMap<>();
+
+    private static ControllerEnum controllerEnumfromInt(int i) {
+        switch (i) {
+            case 2: return ControllerEnum.DAY;
+            case 3: return ControllerEnum.WEEK;
+            case 4: return ControllerEnum.OSEBX_DAY;
+            case 5: return ControllerEnum.OSEBX_WEEK;
+            default: return ControllerEnum.EMPTY;
+        }
+    }
 
     //region Private Methods
     private Optional<ChartCanvasController> currentController() {
         int index =  myTabPane.getSelectionModel().getSelectedIndex();
-        ControllerEnum ce = ControllerEnum.fromInt(index);
+        ControllerEnum ce = controllerEnumfromInt(index);
         return _controllers.containsKey(ce) ? Optional.of(_controllers.get(ce)) : Optional.empty();
-
-        //region Obsolete
-        //ChartCanvasController result = null;
-        /*
-        Controller c = Controller.fromInt(index);
-        switch (c) {
-            case DAY: result = candlesticksController;
-                break;
-            case WEEK: result = weeksController;
-                break;
-            case OSEBX_DAY: result = osebxCandlesticksController;
-                break;
-            case OSEBX_WEEK: result = osebxWeeksController;
-                break;
-        }
-        //*/
-        /*
-        switch (index) {
-            case CONTROLLER_DAY: result = candlesticksController;
-                break;
-            case CONTROLLER_WEEK: result = weeksController;
-                break;
-            case CONTROLLER_OSEBX_DAY: result = osebxCandlesticksController;
-                break;
-            case CONTROLLER_OSEBX_WEEK: result = osebxWeeksController;
-                break;
-            //case 3: result = obxCandlesticksController;
-            //    break;
-            //case 4: result = obxWeeksController;
-            //     break;
-        }
-        //*/
-        //return result == null ? Optional.empty() : Optional.of(result);
-        //endregion Obsolete
     }
     //endregion Private Methods
 
@@ -213,7 +185,7 @@ public class MainframeController implements ControllerHub {
         derivativeRepository.invalidate();
     }
     public void onShiftToEnd(ActionEvent event) {
-        if (shiftBothChartsProperty.get() == true) {
+        if (shiftBothChartsProperty.get()) {
             candlesticksController.shiftToEnd();
             weeksController.shiftToEnd();
         }
@@ -222,7 +194,7 @@ public class MainframeController implements ControllerHub {
         }
     }
     public void onShiftToDate(ActionEvent event) {
-        if (shiftBothChartsProperty.get() == true) {
+        if (shiftBothChartsProperty.get()) {
             FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
                     new ShiftToDateController(shiftDate -> {
                         candlesticksController.shiftToDate(shiftDate);
@@ -232,7 +204,7 @@ public class MainframeController implements ControllerHub {
         }
         else {
             Optional<ChartCanvasController>  ctrl = currentController();
-            if (ctrl.isPresent() == true) {
+            if (ctrl.isPresent()) {
                 ctrl.get().shiftToDate();
             }
             else {
@@ -353,7 +325,7 @@ public class MainframeController implements ControllerHub {
     }
     private void initNavButtons() {
         btnShiftLeft.setOnAction(e -> {
-            if (shiftBothChartsProperty.get() == true) {
+            if (shiftBothChartsProperty.get()) {
                 candlesticksController.shiftLeft(isShiftDaysProperty.get(),shiftAmountProperty.get());
                 weeksController.shiftLeft(isShiftDaysProperty.get(),shiftAmountProperty.get());
             }
@@ -363,7 +335,7 @@ public class MainframeController implements ControllerHub {
             }
         });
         btnShiftRight.setOnAction(e -> {
-            if (shiftBothChartsProperty.get() == true) {
+            if (shiftBothChartsProperty.get()) {
                 candlesticksController.shiftRight(isShiftDaysProperty.get(),shiftAmountProperty.get());
                 weeksController.shiftRight(isShiftDaysProperty.get(),shiftAmountProperty.get());
             }

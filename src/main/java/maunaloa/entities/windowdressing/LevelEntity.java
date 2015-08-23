@@ -14,6 +14,7 @@ import maunaloa.views.charts.DraggableTextArea;
 import maunaloa.views.charts.LevelLine;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
+import oahux.controllers.ControllerEnum;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
@@ -34,7 +35,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
 
     public LevelEntity(ObjectId oid,
                        String ticker,
-                       int location,
+                       ControllerEnum location,
                        double levelValue,
                        IRuler vruler) {
         this(ticker,location,levelValue,vruler);
@@ -43,7 +44,7 @@ public class LevelEntity extends AbstractWindowDressingItem implements ChartItem
     }
 
     public LevelEntity(String ticker,
-                       int location,
+                       ControllerEnum location,
                        double levelValue,
                        IRuler vruler) {
         super(ticker,location);

@@ -16,6 +16,7 @@ import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
+import oahux.controllers.ControllerEnum;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
@@ -117,7 +118,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     //region Create
 
     public FibLineEntity(String ticker,
-                         int location,
+                         ControllerEnum location,
                          Line line,
                          Tuple<IRuler> rulers) {
         super(ticker,location);
@@ -130,7 +131,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
 
 
     public FibLineEntity(String ticker,
-                         int location,
+                         ControllerEnum location,
                          Tuple<Double> p1,
                          Tuple<Double> p2,
                          Tuple<IRuler> rulers) {
@@ -143,7 +144,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
 
     public FibLineEntity(ObjectId oid,
                          String ticker,
-                         int location,
+                         ControllerEnum location,
                          FinancialCoord fp1,
                          FinancialCoord fp2,
                          Tuple<IRuler> rulers) {

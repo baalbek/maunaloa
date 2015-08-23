@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import maunaloa.StatusCodes;
 import maunaloa.entities.MaunaloaEntity;
 import maunaloa.service.Logx;
+import oahux.controllers.ControllerEnum;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
@@ -24,12 +25,12 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
     protected ObjectId oid;
     protected final String ticker;
-    protected final int location;
+    protected final ControllerEnum location;
 
     protected List<CommentEntity> comments;
 
     public AbstractWindowDressingItem(String ticker,
-                                      int location) {
+                                      ControllerEnum location) {
         this.ticker = ticker;
         this.location = location;
     }
@@ -45,7 +46,7 @@ public abstract class AbstractWindowDressingItem implements MaunaloaEntity {
         return ticker;
     }
 
-    public int getLocation() {
+    public ControllerEnum getLocation() {
         return location;
     }
 

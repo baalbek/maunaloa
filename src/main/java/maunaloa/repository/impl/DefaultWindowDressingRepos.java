@@ -15,6 +15,7 @@ import maunaloa.views.charts.FinancialCoord;
 import oahu.domain.Tuple;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
+import oahux.controllers.ControllerEnum;
 import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
@@ -36,8 +37,8 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     private HashMap<String, List<ChartItem>> levels;
     private HashMap<ObjectId, List<CommentEntity>> commentsMap;
 
-    private String makeKey(String ticker, int location) {
-        return String.format("%s:%d", ticker, location);
+    private String makeKey(String ticker, ControllerEnum location) {
+        return String.format("%s:%s", ticker, location);
     }
 
     private DB _cloudConnection;
@@ -79,10 +80,11 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     };*/
     //endregion Private Stuff
 
+
     //region Interface WindowDressingRepository
     @Override
     public List<ChartItem> fetchLevels(String ticker,
-                                       int location,
+                                       ControllerEnum location,
                                        int status,
                                        IRuler vruler,
                                        Procedure3<LevelEntity,CommentEntity,Boolean> onAddedNewComment) {
@@ -192,7 +194,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
 
     @Override
     public List<ChartItem> fetchFibLines(String ticker,
-                                         int location,
+                                         ControllerEnum location,
                                          int status,
                                          Tuple<IRuler> rulers) {
         if (fibLines == null) {
