@@ -66,7 +66,21 @@ public class MainframeController implements ControllerHub {
     */
 
     //endregion FXML
-//region Private Methods
+
+    /*
+    private enum Controller {
+        DAY(2), WEEK(3), OSEBX_DAY(4), OSEBX_WEEK(5);
+        private final int index;
+        Controller(int index) {
+            this.index = index;
+        }
+        public int getIndex() {
+            return index;
+        }
+    }
+    //*/
+
+    //region Private Methods
     private Optional<ChartCanvasController> currentController() {
         int index =  myTabPane.getSelectionModel().getSelectedIndex();
         ChartCanvasController result = null;
@@ -196,6 +210,8 @@ public class MainframeController implements ControllerHub {
     //endregion Events
 
     //region Initialize
+
+    @SuppressWarnings("unchecked")
     public void initialize() {
         initContextInfo();
         initNavButtons();
@@ -322,6 +338,7 @@ public class MainframeController implements ControllerHub {
             }
         });
     }
+    @SuppressWarnings("unchecked")
     private void initChoiceBoxTickers() {
         final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());
         cbTickers.setConverter(new StringConverter<Stock>() {
