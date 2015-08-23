@@ -20,8 +20,11 @@ import oahu.financial.repository.StockMarketRepository;
 import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
+import oahux.controllers.ControllerEnum;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -55,11 +58,13 @@ public class MainframeController implements ControllerHub {
     @FXML private CheckMenuItem mnuShiftAllCharts;
     @FXML private CheckMenuItem mnuIsShiftDays;
 
-
+    /*
     static final int CONTROLLER_DAY = 2;
     static final int CONTROLLER_WEEK = 3;
     static final int CONTROLLER_OSEBX_DAY = 4;
     static final int CONTROLLER_OSEBX_WEEK = 5;
+    //*/
+
    /* @FXML private MenuBar myMenuBar;
     @FXML private Menu linesMenu;
     @FXML private Menu mongodbMenu;
@@ -68,22 +73,51 @@ public class MainframeController implements ControllerHub {
     //endregion FXML
 
     /*
-    private enum Controller {
-        DAY(2), WEEK(3), OSEBX_DAY(4), OSEBX_WEEK(5);
+    private enum ControllerEnum {
+        EMPTY(-1),DAY(2), WEEK(3), OSEBX_DAY(4), OSEBX_WEEK(5);
         private final int index;
-        Controller(int index) {
+        ControllerEnum(int index) {
             this.index = index;
         }
         public int getIndex() {
             return index;
         }
+        public static ControllerEnum fromInt(int i) {
+            switch (i) {
+                case 2: return DAY;
+                case 3: return WEEK;
+                case 4: return OSEBX_DAY;
+                case 5: return OSEBX_WEEK;
+                default: return EMPTY;
+            }
+        }
     }
     //*/
+
+    private Map<ControllerEnum,ChartCanvasController> _controllers = new HashMap<>();
 
     //region Private Methods
     private Optional<ChartCanvasController> currentController() {
         int index =  myTabPane.getSelectionModel().getSelectedIndex();
-        ChartCanvasController result = null;
+        ControllerEnum ce = ControllerEnum.fromInt(index);
+        return _controllers.containsKey(ce) ? Optional.of(_controllers.get(ce)) : Optional.empty();
+
+        //region Obsolete
+        //ChartCanvasController result = null;
+        /*
+        Controller c = Controller.fromInt(index);
+        switch (c) {
+            case DAY: result = candlesticksController;
+                break;
+            case WEEK: result = weeksController;
+                break;
+            case OSEBX_DAY: result = osebxCandlesticksController;
+                break;
+            case OSEBX_WEEK: result = osebxWeeksController;
+                break;
+        }
+        //*/
+        /*
         switch (index) {
             case CONTROLLER_DAY: result = candlesticksController;
                 break;
@@ -93,14 +127,14 @@ public class MainframeController implements ControllerHub {
                 break;
             case CONTROLLER_OSEBX_WEEK: result = osebxWeeksController;
                 break;
-            /* --->>>
-            case 3: result = obxCandlesticksController;
-                break;
-            case 4: result = obxWeeksController;
-                break;
-            //*/
+            //case 3: result = obxCandlesticksController;
+            //    break;
+            //case 4: result = obxWeeksController;
+            //     break;
         }
-        return result == null ? Optional.empty() : Optional.of(result);
+        //*/
+        //return result == null ? Optional.empty() : Optional.of(result);
+        //endregion Obsolete
     }
     //endregion Private Methods
 
@@ -217,27 +251,28 @@ public class MainframeController implements ControllerHub {
         initNavButtons();
         initChoiceBoxTickers();
         LocalDate csd = LocalDate.of(2012,1,1);
-        Procedure4<ChartCanvasController,String,Integer,MaunaloaChart> initController =
+        Procedure4<ChartCanvasController,String,ControllerEnum,MaunaloaChart> initController =
                 (ChartCanvasController controller,
                                 String name,
-                                Integer location,
+                                ControllerEnum location,
                                 MaunaloaChart chart) -> {
                     controller.setName(name);
                     controller.setLocation(location);
                     controller.setChart(chart);
                     controller.setHub(this);
                     controller.setChartStartDate(csd);
+                    _controllers.put(location, controller);
                     System.out.println("Setting up controller " + name);
                 };
 
 
-        initController.apply(candlesticksController, "Candlesticks", 1, candlesticksChart);
-        initController.apply(weeksController, "Weeks", 2, weeklyChart);
-        initController.apply(osebxCandlesticksController, "OSEBX Candlest.", 5, osebxCandlesticksChart);
-        initController.apply(osebxWeeksController, "OSEBX Weeks", 6, osebxWeeklyChart);
+        initController.apply(candlesticksController, "Candlesticks", ControllerEnum.DAY, candlesticksChart);
+        initController.apply(weeksController, "Weeks", ControllerEnum.WEEK, weeklyChart);
+        initController.apply(osebxCandlesticksController, "OSEBX Candlest.", ControllerEnum.OSEBX_DAY, osebxCandlesticksChart);
+        initController.apply(osebxWeeksController, "OSEBX Weeks", ControllerEnum.OSEBX_WEEK, osebxWeeklyChart);
         /*--->>>
-        initController.apply(obxCandlesticksController, "OBX Candlest.", 3, obxCandlesticksChart);
-        initController.apply(obxWeeksController, "OBX Weeks", 4, obxWeeklyChart);
+        initController.apply(obxCandlesticksController, "OBX Candlest.", 6, obxCandlesticksChart);
+        initController.apply(obxWeeksController, "OBX Weeks", 7, obxWeeklyChart);
         */
 
         initOptionsController();

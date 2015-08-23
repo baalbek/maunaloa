@@ -15,6 +15,7 @@ import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
+import oahux.controllers.ControllerEnum;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
@@ -206,7 +207,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     //region Properties
     private MaunaloaChart chart;
     private String name;
-    private int location;
+    private ControllerEnum location;
     private Stock stock;
     private IRuler vruler;
     private IRuler hruler;
@@ -216,7 +217,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     public void setName(String name) {
         this.name = name;
     }
-    public void setLocation(int location) {
+    public void setLocation(ControllerEnum location) {
         this.location = location;
 
     }
@@ -291,7 +292,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     }
 
     @Override
-    public int getLocation() {
+    public ControllerEnum getLocation() {
         return location;
     }
 
@@ -309,14 +310,21 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     //region DerivativesControllerListener
     @Override
     public void notifyDerivativesCalculated(List<DerivativeFx> calculated) {
+        /*===>>>
         if (location > 4) return;
 
         riscLinesHelper.updateRiscs(calculated);
+        //*/
+        switch (location) {
+            case DAY:
+            case WEEK:
+                riscLinesHelper.updateRiscs(calculated);
+        }
     }
 
     @Override
     public void notifySpotUpdated(StockPrice spot) {
-        if ((location == 1) || (location == 3)) {
+        if ((location == ControllerEnum.DAY) || (location == ControllerEnum.WEEK)) {
             spotHelper.updateSpot(spot);
         }
     }
