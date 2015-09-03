@@ -11,4 +11,5 @@ import java.util.List;
 public interface DerivativesControllerListener {
     void notifyDerivativesCalculated(List<DerivativeFx> calculated);
     void notifySpotUpdated(StockPrice spot);
+    void notifySpotOptsEvent(List<DerivativeFx> selected);
 }

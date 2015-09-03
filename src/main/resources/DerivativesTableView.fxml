@@ -5,12 +5,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="maunaloa.controllers.DerivativesController">
+<BorderPane prefHeight="-1.0" prefWidth="-1.0"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="maunaloa.controllers.DerivativesController">
   <center>
     <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="682.0" prefWidth="1268.0">
       <columns>
         <TableColumn fx:id="colSelected" prefWidth="75.0" text="Selected" />
-        <TableColumn fx:id="colOpName" editable="true" prefWidth="75.0" text="Option" />
+        <TableColumn fx:id="colOid" prefWidth="75.0" text="Oid" />
+          <TableColumn fx:id="colOpName" editable="true" prefWidth="75.0" text="Option" />
         <TableColumn fx:id="colExpiry" prefWidth="75.0" text="Expiry" />
         <TableColumn fx:id="colDays" prefWidth="75.0" text="Days" />
         <TableColumn fx:id="colBuy" prefWidth="75.0" text="Buy" />
@@ -92,6 +96,11 @@
                   <TextField fx:id="txPurchaseAmount" alignment="CENTER_RIGHT" prefWidth="75.0" text="10" />
                </graphic>
             </Label>
+            <Button fx:id="btnSpotOpts" mnemonicParsing="false" text="Spotopts">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
       </children>
     </HBox>
   </top>

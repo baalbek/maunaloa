@@ -10,12 +10,13 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="maunaloa.controllers.SpotOptionPriceController">
   <center>
-    <TableView id="TableView" fx:id="derivativesTableView" editable="true" prefHeight="682.0" prefWidth="1268.0">
+    <TableView id="TableView" fx:id="tableView" editable="true" prefHeight="682.0" prefWidth="1268.0">
       <columns>
         <TableColumn fx:id="colOpxId" prefWidth="75.0" text="Opx.id" />
         <TableColumn fx:id="colOpxName" prefWidth="75.0" text="Option" />
-        <TableColumn fx:id="colExpiry" prefWidth="75.0" text="Expiry" />
-        <TableColumn fx:id="colDays" prefWidth="75.0" text="Days" />
+          <TableColumn fx:id="colDays" prefWidth="75.0" text="Days" />
+        <TableColumn fx:id="colPurchaseDate" prefWidth="75.0" text="Purchase Date" />
+        <TableColumn fx:id="colSpot" prefWidth="75.0" text="Spot" />
         <TableColumn fx:id="colBuy" prefWidth="75.0" text="Buy" />
         <TableColumn fx:id="colSell" prefWidth="75.0" text="Sell" />
       </columns>

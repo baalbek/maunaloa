@@ -324,9 +324,16 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
 
     @Override
     public void notifySpotUpdated(StockPrice spot) {
-        if ((location == ControllerEnum.DAY) || (location == ControllerEnum.WEEK)) {
-            spotHelper.updateSpot(spot);
+        switch (location) {
+            case DAY:
+            case WEEK:
+                spotHelper.updateSpot(spot);
         }
+    }
+
+    @Override
+    public void notifySpotOptsEvent(List<DerivativeFx> selected) {
+
     }
 
     public void setChartStartDate(LocalDate chartStartDate) {

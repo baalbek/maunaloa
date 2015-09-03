@@ -43,6 +43,7 @@ public class MainframeController implements ControllerHub {
     @FXML private ChartCanvasController obxWeeksController;
     */
     @FXML private DerivativesController optionsController;
+    @FXML private SpotOptionPriceController opxPricesController;
     @FXML private ChoiceBox cbTickers;
     @FXML private ChoiceBox cbShiftAmount;
     @FXML private ToggleGroup rgDerivatives;
@@ -263,6 +264,8 @@ public class MainframeController implements ControllerHub {
         shiftBothChartsProperty.bind(mnuShiftAllCharts.selectedProperty());
 
         isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
+
+        opxPricesController.setHub(this);
     }
 
     private void initOptionsController() {
@@ -306,6 +309,7 @@ public class MainframeController implements ControllerHub {
             //*
             optionsController.addDerivativesControllerListener(candlesticksController);
             optionsController.addDerivativesControllerListener(weeksController);
+            optionsController.addDerivativesControllerListener(opxPricesController);
             //*/
         }
 

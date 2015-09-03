@@ -119,6 +119,11 @@ public class DerivativeFxImpl implements DerivativeFx {
         return derivativePrice.getDerivative().getExpiry();
     }
 
+    @Override
+    public int getDerivativeOid() {
+        return getDerivative().getOid();
+    }
+
 
     //--------------------------------------------------
     //------------- Parent

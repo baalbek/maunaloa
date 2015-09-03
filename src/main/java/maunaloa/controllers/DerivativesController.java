@@ -26,6 +26,7 @@ import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /*
@@ -38,6 +39,7 @@ public class DerivativesController {
     @FXML
     private TableView<DerivativeFx> derivativesTableView;
     @FXML private TableColumn<DerivativeFx, String> colOpName;
+    @FXML private TableColumn<DerivativeFx, Integer> colOid;
     @FXML private TableColumn<DerivativeFx, Boolean> colSelected;
     @FXML private TableColumn<DerivativeFx, Date> colExpiry;
 
@@ -54,6 +56,7 @@ public class DerivativesController {
     @FXML private TableColumn<DerivativeFx, Double> colSpRisc;
 
     @FXML private Button btnOptionPurchase;
+    @FXML private Button btnSpotOpts;
     @FXML private ChoiceBox cbRisc;
     @FXML private ChoiceBox cbPurchaseType;
     @FXML private TextField txPurchaseAmount;
@@ -69,7 +72,7 @@ public class DerivativesController {
     private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<Toggle>();
     private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
     private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
-    private List<DerivativesControllerListener> calculatedListeners;
+    private List<DerivativesControllerListener> derivativesControllerListeners;
     private StockPriceFx stockPrice = new StockPriceFx();
     private Stock stock;
 
@@ -79,6 +82,11 @@ public class DerivativesController {
         initChoiceBoxPurchaseCategory();
         initGrid();
         initStockPrice();
+        btnSpotOpts.setOnAction(event -> {
+            if (derivativesControllerListeners != null) {
+                fireSpotOptsEvent();
+            }
+        });
         btnOptionPurchase.setOnAction(event -> {
             PurchaseCategory cat =
                     (PurchaseCategory) cbPurchaseType.getSelectionModel().selectedItemProperty().get();
@@ -124,6 +132,7 @@ public class DerivativesController {
     }
     private void initGrid() {
         colOpName.setCellValueFactory(new PropertyValueFactory<DerivativeFx, String>("ticker"));
+        colOid.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Integer>("derivativeOid"));
 
 
         colSelected.setCellValueFactory(new PropertyValueFactory<DerivativeFx, Boolean>("isChecked"));
@@ -154,10 +163,10 @@ public class DerivativesController {
 
     //endregion Public Methods
     public void addDerivativesControllerListener(DerivativesControllerListener listener) {
-        if (calculatedListeners == null) {
-            calculatedListeners = new ArrayList<>();
+        if (derivativesControllerListeners == null) {
+            derivativesControllerListeners = new ArrayList<>();
         }
-        calculatedListeners.add(listener);
+        derivativesControllerListeners.add(listener);
     }
     public void setStock(Stock stock) {
         if (stock == null) {
@@ -216,8 +225,8 @@ public class DerivativesController {
     //endregion Public Methods
     //region Private Methods
     private void fireAssignStockPriceEvent(StockPrice spot) {
-        if (calculatedListeners != null) {
-            calculatedListeners.stream().forEach(l -> l.notifySpotUpdated(spot));
+        if (derivativesControllerListeners != null) {
+            derivativesControllerListeners.stream().forEach(l -> l.notifySpotUpdated(spot));
         }
     }
     private void initStockPrice() {
@@ -297,50 +306,64 @@ public class DerivativesController {
         });
         txRisc.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                double newRiscValue = Double.parseDouble(newValue.replace(",","."));
+                double newRiscValue = Double.parseDouble(newValue.replace(",", "."));
                 if (newRiscValue > 0) {
                     calcRisc(new RiscItem(newRiscValue));
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
             }
         });
     }
     private void initChoiceBoxPurchaseCategory(){
         List<PurchaseCategory> items = new ArrayList<>();
         items.add(new PurchaseCategory(3,"Real Trade"));
-        items.add(new PurchaseCategory(4,"Test Trade"));
-        items.add(new PurchaseCategory(11,"Paper Trade"));
+        items.add(new PurchaseCategory(4, "Test Trade"));
+        items.add(new PurchaseCategory(11, "Paper Trade"));
         final ObservableList<PurchaseCategory> cbitems = FXCollections.observableArrayList(items);
         cbPurchaseType.getItems().addAll(cbitems);
     }
-    private void calcRisc(RiscItem riscItem) {
-        List<DerivativeFx> calculated = new ArrayList<>();
 
+    private List<DerivativeFx> getSelectedDerivatives(Consumer<DerivativeFx> processDerivative) {
+        List<DerivativeFx> selectedOptions = new ArrayList<>();
         for (DerivativeFx fx : derivativesTableView.getItems()) {
             if (fx.isCheckedProperty().get() == true) {
-                fx.setRisk(riscItem.getValue());
-                calculated.add(fx);
+                if (processDerivative != null) {
+                    processDerivative.accept(fx);
+                }
+                selectedOptions.add(fx);
             }
         }
-
-        if (calculated.size() > 0) {
-            fireCalculatedEvent(calculated);
-        }
+        return selectedOptions;
+    }
+    private void calcRisc(RiscItem riscItem) {
+        fireCalculatedEvent(getSelectedDerivatives(fx -> {
+            fx.setRisk(riscItem.getValue());
+        }));
     }
 
+
+    //private void fireSpotOptsEvent(List<DerivativeFx> selected) {
+    private void fireSpotOptsEvent() {
+        List<DerivativeFx> selected = getSelectedDerivatives(null);
+        if (selected.size() == 0) return;
+        if (derivativesControllerListeners.size() == 0) return;
+        for (DerivativesControllerListener l : derivativesControllerListeners) {
+            l.notifySpotOptsEvent(selected);
+        }
+    }
     private void fireCalculatedEvent(List<DerivativeFx> calculated) {
         /*if (log.isDebugEnabled()) {
-            log.debug(String.format("fireCalculatedEvent listeners: %d",calculatedListeners.size()));
+            log.debug(String.format("fireCalculatedEvent listeners: %d",derivativesControllerListeners.size()));
         }*/
 
-        if (calculatedListeners.size() == 0) return;
+        if (calculated.size() == 0) return;
+        if (derivativesControllerListeners.size() == 0) return;
 
         /*DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
-        for (DerivativesControllerListener l : calculatedListeners) {
+        for (DerivativesControllerListener l : derivativesControllerListeners) {
             l.notify(evt);
         }*/
-        for (DerivativesControllerListener l : calculatedListeners) {
+        for (DerivativesControllerListener l : derivativesControllerListeners) {
             l.notifyDerivativesCalculated(calculated);
         }
     }
