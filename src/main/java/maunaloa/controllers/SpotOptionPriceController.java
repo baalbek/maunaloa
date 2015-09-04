@@ -12,6 +12,7 @@ import oahux.financial.DerivativeFx;
 import ranoraraku.beans.options.SpotOptionPriceBean;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -64,15 +65,18 @@ public class SpotOptionPriceController implements DerivativesControllerListener 
 
     @Override
     public void notifySpotOptsEvent(List<DerivativeFx> items) {
-        for (DerivativeFx item : items) {
-            int opx_id = item.getDerivative().getOid();
-            System.out.printf("Finding prices for %d\n", opx_id);
-            System.out.printf("Item %s\n",item.getDerivative().getTicker());
-            Collection<SpotOptionPrice> prices = hub.getStockRepository().findOptionPrices(opx_id);
-            for (SpotOptionPrice price : prices) {
-                System.out.printf("Opx id: %d\n", price.getOpxId());
+        Collection<SpotOptionPrice> allPrices = null;
+        if (items.size() == 1) {
+            allPrices = hub.getStockRepository().findOptionPrices(items.get(0).getOid());
+        } else {
+            allPrices = new ArrayList<>();
+            for (DerivativeFx item : items) {
+                int opx_id = item.getDerivative().getOid();
+                allPrices.addAll(hub.getStockRepository().findOptionPrices(opx_id));
             }
-            ObservableList<SpotOptionPrice> itemsx = FXCollections.observableArrayList(prices);
+        }
+        if (allPrices != null) {
+            ObservableList<SpotOptionPrice> itemsx = FXCollections.observableArrayList(allPrices);
             tableView.getItems().setAll(itemsx);
         }
     }

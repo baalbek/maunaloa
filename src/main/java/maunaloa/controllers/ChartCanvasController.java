@@ -3,6 +3,7 @@ package maunaloa.controllers;
 import javafx.beans.InvalidationListener;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.MaunaloaStatus;
@@ -34,6 +35,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     @FXML private Canvas myCanvas;
     @FXML private VBox myContainer;
     @FXML private Pane myPane;
+    @FXML private TextField chartDate;
+
     //endregion FXML
 
     //region Init
@@ -201,6 +204,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         fibonacciHelper.updateRulers(rulers);
         spotHelper.updateRulers(rulers);
         riscLinesHelper.updateRuler(rulers.second());
+        chartDate.setText(String.format("Chart date: %s",chart.getLastCurrentDateShown().toString()));
     }
     //endregion Events
 
@@ -237,6 +241,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
             levelHelper.notifyStockChanged();
             riscLinesHelper.notifyStockChanged();
             spotHelper.notifyStockChanged();
+            chartDate.setText(String.format("Chart date: %s",chart.getLastCurrentDateShown().toString()));
         }
     }
     public ControllerHub getHub() {
