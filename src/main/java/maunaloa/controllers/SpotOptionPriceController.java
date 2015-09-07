@@ -9,7 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import oahu.financial.SpotOptionPrice;
 import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
-import ranoraraku.beans.options.SpotOptionPriceBean;
+import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ import java.util.List;
  *
  */
 public class SpotOptionPriceController implements DerivativesControllerListener {
+    private Logger log = Logger.getLogger(getClass().getPackage().getName());
     @FXML private TableView<SpotOptionPrice> tableView;
     @FXML private TableColumn<SpotOptionPrice, Integer> colOpxId;
     @FXML private TableColumn<SpotOptionPrice, String> colOpxName;
@@ -67,7 +68,9 @@ public class SpotOptionPriceController implements DerivativesControllerListener 
     public void notifySpotOptsEvent(List<DerivativeFx> items) {
         Collection<SpotOptionPrice> allPrices = null;
         if (items.size() == 1) {
-            allPrices = hub.getStockRepository().findOptionPrices(items.get(0).getOid());
+            int opx_id = items.get(0).getDerivative().getOid();
+            allPrices = hub.getStockRepository().findOptionPrices(opx_id);
+            log.info(String.format("Prices size == 1 for %d, number of option priced: %d", opx_id, allPrices.size()));
         } else {
             allPrices = new ArrayList<>();
             for (DerivativeFx item : items) {

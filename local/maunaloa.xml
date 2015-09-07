@@ -107,6 +107,7 @@
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="true" />
         <property name="isWeekly" value="false" />
+        <property name="colorBackground" value="#000" />
     </bean>
 
     <bean id="chartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
