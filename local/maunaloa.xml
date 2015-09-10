@@ -17,6 +17,10 @@
             </list>
         </property>
     </bean>
+    <bean id="colorRepository"
+          class="maunaloa.repository.DefaultColorRepository">
+        <property name="background" value="#F5DEB3" />
+    </bean>
 
     <!--
     <bean id="dateEditor"
@@ -117,7 +121,7 @@
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="true" />
         <property name="isWeekly" value="false" />
-        <property name="colorBackground" value="#F5DEB3" />
+        <property name="colorRepos" ref="colorRepository" />
         <!--
         <property name="colorForeground" value="#008080" />
         -->
@@ -126,14 +130,17 @@
     <bean id="chartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="true" />
         <property name="isWeekly" value="true" />
+        <property name="colorRepos" ref="colorRepository" />
     </bean>
     <bean id="osebxChartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="false" />
         <property name="isWeekly" value="false" />
+        <property name="colorRepos" ref="colorRepository" />
     </bean>
     <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="false" />
         <property name="isWeekly" value="true" />
+        <property name="colorRepos" ref="colorRepository" />
     </bean>
 
     <!--
