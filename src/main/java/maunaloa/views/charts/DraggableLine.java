@@ -23,7 +23,6 @@ public class DraggableLine extends AbstractSelectableLine {
     private final DoubleProperty anchorRadius;
     private final BooleanProperty anchorsVisible ;
     private final double startX, startY, endX, endY;
-    private Circle anchor;
 
     public DraggableLine(Line line) {
         this.line = line;
@@ -82,7 +81,7 @@ public class DraggableLine extends AbstractSelectableLine {
 
     //region Private Methods
     private Circle createAnchor(DoubleProperty x, DoubleProperty y) {
-        anchor = new Circle();
+        Circle anchor = new Circle();
         anchor.centerXProperty().bindBidirectional(x);
         anchor.centerYProperty().bindBidirectional(y);
         anchor.radiusProperty().bind(anchorRadius);

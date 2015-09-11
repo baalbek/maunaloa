@@ -12,9 +12,9 @@ public class DefaultColorRepository implements ColorRepository {
     // BACKGROUND, FOREGROUND, VOLUME;
     private Color background = Color.WHITE;
     private Color foreground = Color.BLACK;
-    private Color cycle10 = Color.RED;
+    private Color cycle10 = Color.DARKMAGENTA;
     private Color cycle50 = Color.RED;
-    private Color cycle200 = Color.RED;
+    private Color cycle200 = Color.BLUE;
     private Color volume = Color.RED;
     private Color candlesticksBear = Color.RED;
 
@@ -24,8 +24,8 @@ public class DefaultColorRepository implements ColorRepository {
         switch (c) {
             case BACKGROUND: return background;
             case FOREGROUND: return foreground;
-            case VOLUME: return foreground;
-            case CNDL_BEAR: return foreground;
+            case VOLUME: return volume;
+            case CNDL_BEAR: return candlesticksBear;
             default: return Color.WHITE;
         }
     }

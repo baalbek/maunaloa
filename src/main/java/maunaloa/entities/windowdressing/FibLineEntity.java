@@ -47,6 +47,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     //region Private Methods
     private void setupDragLine() {
         dragLine.setOnMouseReleased((evt, anchor) -> {
+            System.out.println(anchor);
             anchor.setCenterX(rulers.first().snapTo(anchor.getCenterX()));
             cleanStatusProperty().set(isClean());
         });
