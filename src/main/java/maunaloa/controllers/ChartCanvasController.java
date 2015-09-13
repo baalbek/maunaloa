@@ -30,7 +30,7 @@ import java.util.function.Consumer;
  * Created by rcs on 4/13/14.
  *
  */
-public class ChartCanvasController implements MaunaloaChartViewModel, DerivativesControllerListener {
+public class ChartCanvasController implements MaunaloaChartViewModel {
     //region FXML
     @FXML private Canvas myCanvas;
     @FXML private VBox myContainer;
@@ -40,10 +40,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     //endregion FXML
 
     //region Init
-    private FibonacciHelper fibonacciHelper;
-    private LevelHelper levelHelper;
-    private RiscLinesHelper riscLinesHelper;
-    private SpotHelper spotHelper;
 
     public void initialize() {
         InvalidationListener listener = e -> {
@@ -62,12 +58,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
     }
 
     //endregion Init
-
-    //region Private Methods
-    //endregion Private Methods
-
-    //region Public Methods
-    //endregion Public Methods
 
     //region Events
 
@@ -206,9 +196,32 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         riscLinesHelper.updateRuler(rulers.second());
         chartDate.setText(String.format("Chart date: %s",chart.getLastCurrentDateShown().toString()));
     }
+    public void addNotifyDerivativesCalculated(DerivativesController controller) {
+        controller.addOnCalculatedEvents((calculated) -> {
+            switch (location) {
+                case DAY:
+                case WEEK:
+                    riscLinesHelper.updateRiscs(calculated);
+            }
+        });
+    }
+
+    public void addNotifySpotUpdated(DerivativesController controller) {
+        controller.addOnAssignSpotEvents((spot) -> {
+            switch (location) {
+                case DAY:
+                case WEEK:
+                    spotHelper.updateSpot(spot);
+            }
+        });
+    }
     //endregion Events
 
     //region Properties
+    private FibonacciHelper fibonacciHelper;
+    private LevelHelper levelHelper;
+    private RiscLinesHelper riscLinesHelper;
+    private SpotHelper spotHelper;
     private MaunaloaChart chart;
     private String name;
     private ControllerEnum location;
@@ -256,6 +269,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
         return chart.getLastCurrentDateShown();
     }
 
+    public void setChartStartDate(LocalDate chartStartDate) {
+        this.chartStartDate = chartStartDate;
+    }
     //endregion Properties
 
     //region MaunaloaChartViewModel
@@ -312,38 +328,4 @@ public class ChartCanvasController implements MaunaloaChartViewModel, Derivative
 
     //endregion MaunaloaChartViewModel
 
-    //region DerivativesControllerListener
-    @Override
-    public void notifyDerivativesCalculated(List<DerivativeFx> calculated) {
-        /*===>>>
-        if (location > 4) return;
-
-        riscLinesHelper.updateRiscs(calculated);
-        //*/
-        switch (location) {
-            case DAY:
-            case WEEK:
-                riscLinesHelper.updateRiscs(calculated);
-        }
-    }
-
-    @Override
-    public void notifySpotUpdated(StockPrice spot) {
-        switch (location) {
-            case DAY:
-            case WEEK:
-                spotHelper.updateSpot(spot);
-        }
-    }
-
-    @Override
-    public void notifySpotOptsEvent(List<DerivativeFx> selected) {
-
-    }
-
-    public void setChartStartDate(LocalDate chartStartDate) {
-        this.chartStartDate = chartStartDate;
-    }
-
-    //endregion DerivativesControllerListener
 }

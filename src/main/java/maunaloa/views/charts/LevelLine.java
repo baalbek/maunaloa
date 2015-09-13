@@ -50,9 +50,8 @@ public class LevelLine extends AbstractSelectableLine {
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
         line.setStroke(statusColors.get(StatusCodes.ENTITY_NEW));
 
-        String labelText = String.format("%.1f", levelValue);
-        valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,labelText);
-        anchor = createAnchor(line, valueLabel);
+        valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,valueLabelText());
+        anchor = createAnchor();
 
         group = new Group();
         group.getChildren().addAll(line,anchor);
@@ -61,7 +60,11 @@ public class LevelLine extends AbstractSelectableLine {
         addMouseEvents(line);
     }
 
-    private Circle createAnchor(Line line, Text label) {
+    protected String valueLabelText () {
+        return String.format("%.1f", levelValue);
+    }
+
+    private Circle createAnchor() {
         final Circle anchor = new Circle();
         anchor.setCenterX(line.getStartX());
         anchor.setCenterY(line.getStartY());
@@ -74,12 +77,11 @@ public class LevelLine extends AbstractSelectableLine {
         anchor.setStrokeWidth(0.5);
         anchor.setFill(Color.TRANSPARENT);
         anchor.setStroke(Color.BLACK);
-        //anchor.getStyleClass().add("draggable-line-anchor");
 
         final ObjectProperty<Point2D> mousePressPoint = new SimpleObjectProperty<>();
+
         anchor.addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
             mousePressPoint.set(new Point2D(event.getX(), event.getY()));
-            //onMousePressed();
             event.consume();
         });
         anchor.addEventHandler(MouseEvent.MOUSE_DRAGGED, event -> {
@@ -93,12 +95,10 @@ public class LevelLine extends AbstractSelectableLine {
                 anchor.setCenterY(oldCenterY+deltaY);
 
                 levelValue = (Double) ruler.calcValue(anchor.getCenterY());
-                //double yVal = (Double) ruler.calcValue(anchor.getCenterY());
 
-                label.setText(String.format("%.1f", levelValue));
-                label.setX(anchor.getCenterX()+valueLabelDeltaX);
-                label.setY(anchor.getCenterY()-valueLabelDeltaY);
-                // onMouseDragged(event);
+                valueLabel.setX(anchor.getCenterX()+valueLabelDeltaX);
+                valueLabel.setY(anchor.getCenterY()-valueLabelDeltaY);
+                valueLabel.setText(valueLabelText());
 
                 event.consume();
             }

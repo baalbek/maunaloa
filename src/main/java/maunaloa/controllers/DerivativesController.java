@@ -67,15 +67,6 @@ public class DerivativesController {
     @FXML private TextField txLo;
     //endregion FXML
 
-    private DerivativeRepository derivativeRepository;
-    private StockMarketRepository stockMarketRepository;
-    private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<Toggle>();
-    private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
-    private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
-    private List<DerivativesControllerListener> derivativesControllerListeners;
-    private StockPriceFx stockPrice = new StockPriceFx();
-    private Stock stock;
-
     //region Initialization methods
     public void initialize() {
         initChoiceBoxRisc();
@@ -83,9 +74,11 @@ public class DerivativesController {
         initGrid();
         initStockPrice();
         btnSpotOpts.setOnAction(event -> {
+            /*
             if (derivativesControllerListeners != null) {
                 fireSpotOptsEvent();
             }
+            */
         });
         btnOptionPurchase.setOnAction(event -> {
             PurchaseCategory cat =
@@ -161,13 +154,8 @@ public class DerivativesController {
     }
     //endregion Initialization methods
 
-    //endregion Public Methods
-    public void addDerivativesControllerListener(DerivativesControllerListener listener) {
-        if (derivativesControllerListeners == null) {
-            derivativesControllerListeners = new ArrayList<>();
-        }
-        derivativesControllerListeners.add(listener);
-    }
+    //region Public Methods
+
     public void setStock(Stock stock) {
         if (stock == null) {
             log.warn("Stock was null");
@@ -188,47 +176,9 @@ public class DerivativesController {
         _updateDerivatives();
     }
 
-    private void _updateDerivatives() {
-        String ticker = this.stock.getTicker();
-        try {
-            switch (_selectedDerivativeProperty.get().getUserData().toString()) {
-                case "calls":
-                    log.info(String.format("Fetching calls for %s", ticker));
-                    load((s) -> {
-                        return derivativeRepository.getCalls(s);
-                    }, ticker);
-                    break;
-                case "puts":
-                    log.info(String.format("Fetching puts for %s", ticker));
-                    load((s) -> {
-                        return derivativeRepository.getPuts(s);
-                    }, ticker);
-                    break;
-                case "all":
-                    //loadAll();
-                    break;
-            }
-            if (_selectedLoadStockProperty.get() == true) {
-                StockPrice spot = derivativeRepository.getSpot(ticker);
-                stockPrice.setPrice(spot);
-                fireAssignStockPriceEvent(spot);
-            }
-        }
-        catch (FailingHttpStatusCodeException ex) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid URL");
-            alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
-            alert.showAndWait();
-        }
-    }
-
     //endregion Public Methods
+
     //region Private Methods
-    private void fireAssignStockPriceEvent(StockPrice spot) {
-        if (derivativesControllerListeners != null) {
-            derivativesControllerListeners.stream().forEach(l -> l.notifySpotUpdated(spot));
-        }
-    }
     private void initStockPrice() {
         StringConverter<? extends Number> converter =  new DoubleStringConverter();
         Bindings.bindBidirectional(txSpot.textProperty(), stockPrice.clsProperty(), (StringConverter<Number>) converter);
@@ -269,34 +219,6 @@ public class DerivativesController {
         return result;
     }
 
-    /*private void setChoiceBoxRiscValues(ObservableList<DerivativeFx> derivatives) {
-        Comparator<DerivativeFx> compFx = (a,b) -> {
-            double aVal = a.getSell();
-            double bVal = b.getSell();
-            if (aVal < bVal) {
-                return -1;
-            }
-            else if (aVal > bVal) {
-                return 1;
-            }
-            else {
-                return 0;
-            }
-        };
-        cbRisc.getItems().clear();
-
-        Optional<DerivativeFx> maxFxObj = derivatives.stream().max(compFx);
-        Optional<DerivativeFx> minFxObj = derivatives.stream().min(compFx);
-        double maxFx = maxFxObj.isPresent() ? maxFxObj.get().getSell() : 100.0;
-        double minFx = minFxObj.isPresent() ? minFxObj.get().getSell() : 0.0;
-        System.out.println("Min: " + minFx + ", max: " + maxFx);
-
-        final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(riscItems(maxFx,minFx));
-        cbRisc.getItems().addAll(cbitems);
-        cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable,value,newValue) -> {
-            calcRisc(cbitems.get(newValue.intValue()));
-        });
-    }*/
     private void initChoiceBoxRisc() {
         final ObservableList<RiscItem> cbitems = FXCollections.observableArrayList(riscItems());
 
@@ -340,36 +262,53 @@ public class DerivativesController {
             fx.setRisk(riscItem.getValue());
         }));
     }
-
-
-    //private void fireSpotOptsEvent(List<DerivativeFx> selected) {
-    private void fireSpotOptsEvent() {
-        List<DerivativeFx> selected = getSelectedDerivatives(null);
-        if (selected.size() == 0) return;
-        if (derivativesControllerListeners.size() == 0) return;
-        for (DerivativesControllerListener l : derivativesControllerListeners) {
-            l.notifySpotOptsEvent(selected);
+    private void _updateDerivatives() {
+        String ticker = this.stock.getTicker();
+        try {
+            switch (_selectedDerivativeProperty.get().getUserData().toString()) {
+                case "calls":
+                    log.info(String.format("Fetching calls for %s", ticker));
+                    load((s) -> {
+                        return derivativeRepository.getCalls(s);
+                    }, ticker);
+                    break;
+                case "puts":
+                    log.info(String.format("Fetching puts for %s", ticker));
+                    load((s) -> {
+                        return derivativeRepository.getPuts(s);
+                    }, ticker);
+                    break;
+                case "all":
+                    //loadAll();
+                    break;
+            }
+            if (_selectedLoadStockProperty.get() == true) {
+                StockPrice spot = derivativeRepository.getSpot(ticker);
+                stockPrice.setPrice(spot);
+                fireAssignStockPriceEvent(spot);
+            }
+        }
+        catch (FailingHttpStatusCodeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid URL");
+            alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
+            alert.showAndWait();
         }
     }
-    private void fireCalculatedEvent(List<DerivativeFx> calculated) {
-        /*if (log.isDebugEnabled()) {
-            log.debug(String.format("fireCalculatedEvent listeners: %d",derivativesControllerListeners.size()));
-        }*/
 
-        if (calculated.size() == 0) return;
-        if (derivativesControllerListeners.size() == 0) return;
 
-        /*DerivativesCalculatedEvent evt = new DerivativesCalculatedEvent(calculated);
-        for (DerivativesControllerListener l : derivativesControllerListeners) {
-            l.notify(evt);
-        }*/
-        for (DerivativesControllerListener l : derivativesControllerListeners) {
-            l.notifyDerivativesCalculated(calculated);
-        }
-    }
+
     //endregion Private Methods
 
     //region Properties
+
+    private DerivativeRepository derivativeRepository;
+    private StockMarketRepository stockMarketRepository;
+    private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<Toggle>();
+    private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
+    private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
+    private StockPriceFx stockPrice = new StockPriceFx();
+    private Stock stock;
 
     public void setDerivativeRepository(DerivativeRepository derivativeRepository) {
         this.derivativeRepository = derivativeRepository;
@@ -397,5 +336,58 @@ public class DerivativesController {
     public void setStockMarketRepository(StockMarketRepository stockMarketRepository) {
         this.stockMarketRepository = stockMarketRepository;
     }
+
     //endregion Properties
+
+    //region Events
+
+    /*
+    private Collection<Consumer<List<DerivativeFx>>> onSpotOptsEvents;
+    public void addOnSpotOptsEvents(Consumer<List<DerivativeFx>> evt) {
+        if (onSpotOptsEvents == null) {
+            onSpotOptsEvents = new ArrayList<>();
+        }
+        onSpotOptsEvents.add(evt);
+    }
+    //*/
+    private Consumer<List<DerivativeFx>> onSpotOptsEvent;
+    public void addOnSpotOptsEvents(Consumer<List<DerivativeFx>> evt) {
+        onSpotOptsEvent = evt;
+    }
+
+    private Collection<Consumer<List<DerivativeFx>>> onCalculatedEvents;
+    public void addOnCalculatedEvents(Consumer<List<DerivativeFx>> evt) {
+        if (onCalculatedEvents == null) {
+            onCalculatedEvents = new ArrayList<>();
+        }
+        onCalculatedEvents.add(evt);
+    }
+    private Collection<Consumer<StockPrice>> onAssignSpotEvents;
+    public void addOnAssignSpotEvents(Consumer<StockPrice> evt) {
+        if (onAssignSpotEvents == null) {
+            onAssignSpotEvents = new ArrayList<>();
+        }
+        onAssignSpotEvents.add(evt);
+    }
+    private void fireSpotOptsEvent() {
+        List<DerivativeFx> selected = getSelectedDerivatives(null);
+
+        if ((selected.size() == 0) || (onSpotOptsEvent == null)) return;
+
+        onSpotOptsEvent.accept(selected);
+    }
+    private void fireCalculatedEvent(List<DerivativeFx> calculated) {
+        if ((calculated.size() == 0) || (onCalculatedEvents == null)) return;
+
+        for (Consumer<List<DerivativeFx>> evt : onCalculatedEvents) {
+            evt.accept(calculated);
+        }
+    }
+    private void fireAssignStockPriceEvent(StockPrice spot) {
+        if (onAssignSpotEvents == null) return;
+        for (Consumer<StockPrice> evt : onAssignSpotEvents) {
+            evt.accept(spot);
+        }
+    }
+    //endregion Events
 }

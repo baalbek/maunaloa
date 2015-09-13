@@ -1,26 +1,19 @@
 package maunaloa.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import oahu.financial.SpotOptionPrice;
-import oahu.financial.StockPrice;
-import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by rcs on 19.08.15.
  *
  */
-public class SpotOptionPriceController implements DerivativesControllerListener {
+public class SpotOptionPriceController {
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
     @FXML private TableView<SpotOptionPrice> tableView;
     @FXML private TableColumn<SpotOptionPrice, Integer> colOpxId;
@@ -53,17 +46,14 @@ public class SpotOptionPriceController implements DerivativesControllerListener 
         this.hub = hub;
     }
 
+    public void addNotifySpotOptsEvent(DerivativesController controller) {
+        controller.addOnSpotOptsEvents((calculated) -> {
+
+        });
+    }
+
     //region Interface DerivativesControllerListener
-    @Override
-    public void notifyDerivativesCalculated(List<DerivativeFx> calculated) {
-
-    }
-
-    @Override
-    public void notifySpotUpdated(StockPrice spot) {
-
-    }
-
+    /*
     @Override
     public void notifySpotOptsEvent(List<DerivativeFx> items) {
         Collection<SpotOptionPrice> allPrices = null;
@@ -83,6 +73,7 @@ public class SpotOptionPriceController implements DerivativesControllerListener 
             tableView.getItems().setAll(itemsx);
         }
     }
+    //*/
     //endregion Interface DerivativesControllerListener
 
 }

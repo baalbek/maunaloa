@@ -292,25 +292,23 @@ public class MainframeController implements ControllerHub {
                 setStock.apply();
             }
         });
-        /*cxComments.selectedProperty().addListener(e -> {
-            if (cxComments.isSelected()) {
-                showComments();
-            }
-            else {
-                hideComments();
-            }
-        });*/
 
         if (optionsController != null) {
             optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
             optionsController.setDerivativeRepository(getDerivativeRepository());
-            //*
+            /*
             optionsController.addDerivativesControllerListener(candlesticksController);
             optionsController.addDerivativesControllerListener(weeksController);
             optionsController.addDerivativesControllerListener(opxPricesController);
             //*/
+            candlesticksController.addNotifyDerivativesCalculated(optionsController);
+            candlesticksController.addNotifySpotUpdated(optionsController);
+            weeksController.addNotifyDerivativesCalculated(optionsController);
+            weeksController.addNotifySpotUpdated(optionsController);
+
+            opxPricesController.addNotifySpotOptsEvent(optionsController);
         }
 
         //--->>> optionsController.addDerivativesControllerListener(candlesticksController);
