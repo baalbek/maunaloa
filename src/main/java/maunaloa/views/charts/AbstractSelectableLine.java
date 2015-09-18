@@ -53,7 +53,7 @@ public abstract class AbstractSelectableLine {
                 }
             }
             else {
-                switch (getStatus()) {
+                switch (status.get()) { //(getStatus()) {
                     case StatusCodes.UNSELECTED:
                         setStatus(StatusCodes.SELECTED);
                         break;
@@ -78,9 +78,11 @@ public abstract class AbstractSelectableLine {
             line.getStrokeDashArray().clear();
         }
     }
+    /*
     public int getStatus() {
         return status.get();
     }
+    //*/
 
     public IntegerProperty statusProperty() {
         return status;

@@ -62,7 +62,9 @@ public class App extends Application {
         Parent parent = (Parent)loader.load();
 
         stage.setTitle("Maunaloa!");
-        stage.setScene(new Scene(parent));
+        Scene scene = new Scene(parent);
+        //scene.getStylesheets().add("JMetroDarkTheme.css");
+        stage.setScene(scene);
         stage.show();
     }
 

@@ -17,13 +17,9 @@ import java.util.Optional;
  * Time: 15:14
  */
 public interface ChartItem {
-    public static int NA = 0;
-    public static int SELECTED = 1;
-    public static int DIRTY = 2;
+    //public enum ChartItemStatus { NA, SELECTED, DIRTY };
     Node view();
     Optional<Node> commentsView();
-/*    int getStatus();
-    void setStatus(int value);*/
     void setEntityStatus(int value);
     MaunaloaStatus getStatus();
     void saveToRepos(WindowDressingRepository repos);

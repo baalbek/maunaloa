@@ -53,6 +53,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         myCanvas.heightProperty().addListener(listener);
         fibonacciHelper = new FibonacciHelper(this);
         levelHelper = new LevelHelper(this);
+        sliderHelper = new OptionPriceSliderHelper(this);
         riscLinesHelper = new RiscLinesHelper(this);
         spotHelper = new SpotHelper(this);
     }
@@ -215,11 +216,22 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             }
         });
     }
+    public void addNewOptionPriceSliderEvent(DerivativesController controller) {
+        controller.addNewOptionPriceSliderEvents((selected) -> {
+            switch (location) {
+                case DAY:
+                case WEEK:
+                    sliderHelper.updateSliders(selected);
+
+            }
+        });
+    }
     //endregion Events
 
     //region Properties
     private FibonacciHelper fibonacciHelper;
     private LevelHelper levelHelper;
+    private OptionPriceSliderHelper sliderHelper; 
     private RiscLinesHelper riscLinesHelper;
     private SpotHelper spotHelper;
     private MaunaloaChart chart;

@@ -57,6 +57,7 @@ public class DerivativesController {
 
     @FXML private Button btnOptionPurchase;
     @FXML private Button btnSpotOpts;
+    @FXML private Button btnOptionPriceSliders;
     @FXML private ChoiceBox cbRisc;
     @FXML private ChoiceBox cbPurchaseType;
     @FXML private TextField txPurchaseAmount;
@@ -79,6 +80,13 @@ public class DerivativesController {
                 fireSpotOptsEvent();
             }
             */
+        });
+
+        btnOptionPriceSliders.setOnAction(event -> {
+            if (newOptionPriceSliderEvents == null) return;
+            for (Consumer<List<DerivativeFx>> evt : newOptionPriceSliderEvents) {
+                evt.accept(getSelectedDerivatives(null));
+            }
         });
         btnOptionPurchase.setOnAction(event -> {
             PurchaseCategory cat =
@@ -194,6 +202,7 @@ public class DerivativesController {
         }
     }
 
+    /*
     private List<RiscItem> riscItems(double low, double hi) {
         List<RiscItem> result = new ArrayList<>();
 
@@ -206,6 +215,8 @@ public class DerivativesController {
         }
         return result;
     }
+    //*/
+
     private List<RiscItem> riscItems() {
         List<RiscItem> result = new ArrayList<>();
 
@@ -350,6 +361,14 @@ public class DerivativesController {
         onSpotOptsEvents.add(evt);
     }
     //*/
+    private Collection<Consumer<List<DerivativeFx>>> newOptionPriceSliderEvents;
+    public void addNewOptionPriceSliderEvents(Consumer<List<DerivativeFx>> evt) {
+        if (newOptionPriceSliderEvents == null) {
+            newOptionPriceSliderEvents = new ArrayList<>();
+        }
+        newOptionPriceSliderEvents.add(evt);
+    }
+
     private Consumer<List<DerivativeFx>> onSpotOptsEvent;
     public void addOnSpotOptsEvents(Consumer<List<DerivativeFx>> evt) {
         onSpotOptsEvent = evt;

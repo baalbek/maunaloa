@@ -15,6 +15,8 @@ import maunaloa.StatusCodes;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 
+import java.util.function.Function;
+
 /**
  * Created by rcs on 5/3/14.
  *
@@ -27,6 +29,7 @@ public class LevelLine extends AbstractSelectableLine {
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
     private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
+    private Function<Double,String> valueLabelTextFn;
     private Group group ;
     private Line line;
     private Circle anchor;
@@ -40,6 +43,12 @@ public class LevelLine extends AbstractSelectableLine {
     }
 
     //endregion Init
+
+    //region Properties
+    public void setValueLabelFunc(Function<Double,String> fun) {
+        valueLabelTextFn = fun;
+    }
+    //endregion Properties
 
 
     //region Private Methods
@@ -60,8 +69,14 @@ public class LevelLine extends AbstractSelectableLine {
         addMouseEvents(line);
     }
 
-    protected String valueLabelText () {
-        return String.format("%.1f", levelValue);
+
+    private String valueLabelText () {
+        if (valueLabelTextFn == null) {
+            return String.format("%.1f", levelValue);
+        }
+        else {
+            return String.format("%s", valueLabelTextFn.apply(levelValue));
+        }
     }
 
     private Circle createAnchor() {

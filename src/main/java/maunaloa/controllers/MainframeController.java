@@ -305,6 +305,7 @@ public class MainframeController implements ControllerHub {
             //*/
             candlesticksController.addNotifyDerivativesCalculated(optionsController);
             candlesticksController.addNotifySpotUpdated(optionsController);
+            candlesticksController.addNewOptionPriceSliderEvent(optionsController);
             weeksController.addNotifyDerivativesCalculated(optionsController);
             weeksController.addNotifySpotUpdated(optionsController);
 
