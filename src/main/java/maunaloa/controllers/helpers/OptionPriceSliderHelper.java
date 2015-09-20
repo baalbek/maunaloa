@@ -1,7 +1,6 @@
 package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
-import maunaloa.views.charts.LevelLine;
 import maunaloa.views.charts.OptionPriceSlider;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;

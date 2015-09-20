@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.views.charts.ChartItem;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;

@@ -507,7 +507,7 @@ public class MainframeController implements ControllerHub {
     //region REPL Demo Methods
     /*
     public java.util.List<javafx.scene.Node> fetchNodes(String ticker, int location) {
-        oahu.domain.Tuple<oahux.chart.IRuler> rulers = new oahu.domain.Tuple<>(
+        oahu.dto.Tuple<oahux.chart.IRuler> rulers = new oahu.dto.Tuple<>(
                                                 maunaloax.views.chart.DefaultDateRuler.createDummy(),
                                                 maunaloax.views.chart.DefaultVRuler.createDummy());
         java.util.List<maunaloa.views.charts.ChartItem> items =

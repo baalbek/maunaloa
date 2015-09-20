@@ -11,14 +11,13 @@ import maunaloa.StatusCodes;
 import maunaloa.controllers.helpers.*;
 import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.ControllerEnum;
 import oahux.controllers.MaunaloaChartViewModel;
-import oahux.financial.DerivativeFx;
 
 import java.time.LocalDate;
 import java.util.Collection;

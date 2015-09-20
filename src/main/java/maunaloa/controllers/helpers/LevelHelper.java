@@ -3,7 +3,7 @@ package maunaloa.controllers.helpers;
 import javafx.scene.layout.Pane;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.views.charts.ChartItem;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;

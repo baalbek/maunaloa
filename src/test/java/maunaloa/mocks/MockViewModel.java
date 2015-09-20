@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.layout.Pane;
 import maunaloax.views.chart.DefaultDateRuler;
 import maunaloax.views.chart.DefaultVRuler;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;

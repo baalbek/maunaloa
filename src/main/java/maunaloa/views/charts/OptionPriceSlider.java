@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import maunaloa.MaunaloaStatus;
 import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
+import oahu.financial.OptionCalculator;
 import oahux.chart.IRuler;
 import oahux.financial.DerivativeFx;
 
@@ -23,9 +24,16 @@ public class OptionPriceSlider implements ChartItem {
 
     public OptionPriceSlider(DerivativeFx derivative, IRuler ruler) {
         this.derivative = derivative;
-        this.levelLine = new LevelLine(35, ruler);
+        this.levelLine = new LevelLine(derivative.getStockPrice().getValue(), ruler);
         this.levelLine.setValueLabelFunc((levelValue) -> {
-            return String.format("Blast: %.2f", derivative.getBuy() + levelValue);
+            OptionCalculator calculator = derivative.getCalculator();
+            double strike = derivative.getDerivative().getX();
+            double t =  0.5; //derivative.getDerivative().getExpiry()
+            double sigma = derivative.getIvBuy();
+            double optionPrice = derivative.getDerivative().getOpType() == 1 ?
+                calculator.callPrice(levelValue,strike,t,sigma) :
+                calculator.putPrice(levelValue,strike,t,sigma);
+            return String.format("Option price: %.2f", optionPrice);
         });
     }
 
@@ -41,53 +49,6 @@ public class OptionPriceSlider implements ChartItem {
 
     @Override
     public void setEntityStatus(int value) {
-
-    }
-
-    @Override
-    public MaunaloaStatus getStatus() {
-        return null;
-    }
-
-    @Override
-    public void saveToRepos(WindowDressingRepository repos) {
-
-    }
-
-    @Override
-    public Optional<List<CommentEntity>> getComments() {
-        return null;
-    }
-
-    @Override
-    public void removeFrom(ObservableList<Node> container) {
-
-    }
-}
-/*
-public class OptionPriceSlider extends LevelLine implements ChartItem {
-    private final DerivativeFx derivative;
-    public OptionPriceSlider(double levelValue, IRuler ruler) {
-        super(levelValue, ruler);
-        derivative = null;
-    }
-    public OptionPriceSlider(DerivativeFx derivative, double levelValue, IRuler ruler) {
-        super(levelValue, ruler);
-        this.derivative = derivative;
-    }
-
-    @Override
-    protected String valueLabelText() {
-        return "Hi";
-    }
-
-    @Override
-    public Optional<Node> commentsView() {
-        return null;
-    }
-
-    @Override
-    public void setEntityStatus(int value) {
     }
 
     @Override
@@ -101,11 +62,10 @@ public class OptionPriceSlider extends LevelLine implements ChartItem {
 
     @Override
     public Optional<List<CommentEntity>> getComments() {
-        return Optional.empty();
+        return null;
     }
 
     @Override
     public void removeFrom(ObservableList<Node> container) {
     }
 }
-//*/

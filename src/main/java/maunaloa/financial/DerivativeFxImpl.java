@@ -33,6 +33,10 @@ public class DerivativeFxImpl implements DerivativeFx {
         this.calculator = calculator;
     }
 
+    @Override
+    public OptionCalculator getCalculator() {
+        return calculator;
+    }
     //--------------------------------------------------
     //------------- Checked
     //--------------------------------------------------

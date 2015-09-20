@@ -2,13 +2,10 @@ package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.SpotItem;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rcs on 5/26/14.

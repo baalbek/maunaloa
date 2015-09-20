@@ -12,7 +12,7 @@ import maunaloa.repository.WindowDressingRepository;
 import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerEnum;

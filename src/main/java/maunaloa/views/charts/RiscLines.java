@@ -13,7 +13,7 @@ import maunaloa.MaunaloaStatus;
 import maunaloa.StatusCodes;
 import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
-import oahu.domain.Tuple2;
+import oahu.dto.Tuple2;
 import oahu.exceptions.NotImplementedException;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;

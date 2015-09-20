@@ -13,7 +13,7 @@ import maunaloa.repository.WindowDressingRepository;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerEnum;

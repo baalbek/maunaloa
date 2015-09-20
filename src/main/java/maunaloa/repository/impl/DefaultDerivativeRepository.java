@@ -2,7 +2,7 @@ package maunaloa.repository.impl;
 
 import maunaloa.financial.DerivativeFxImpl;
 import maunaloa.repository.DerivativeRepository;
-import oahu.domain.Tuple3;
+import oahu.dto.Tuple3;
 import oahu.financial.DerivativePrice;
 import oahu.financial.OptionCalculator;
 import oahu.financial.StockPrice;

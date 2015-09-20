@@ -5,13 +5,11 @@ import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.views.charts.ChartItem;
-import oahu.domain.Tuple;
+import oahu.dto.Tuple;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerEnum;
-import org.bson.types.ObjectId;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
