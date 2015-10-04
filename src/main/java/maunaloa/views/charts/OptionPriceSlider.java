@@ -28,12 +28,22 @@ public class OptionPriceSlider implements ChartItem {
         this.levelLine.setValueLabelFunc((levelValue) -> {
             OptionCalculator calculator = derivative.getCalculator();
             double strike = derivative.getDerivative().getX();
-            double t =  0.5; //derivative.getDerivative().getExpiry()
-            double sigma = derivative.getIvBuy();
-            double optionPrice = derivative.getDerivative().getOpType() == 1 ?
-                calculator.callPrice(levelValue,strike,t,sigma) :
-                calculator.putPrice(levelValue,strike,t,sigma);
-            return String.format("Option price: %.2f", optionPrice);
+            double t =  derivative.getDays() / 365.0;
+            double ivBuy = derivative.getIvBuy();
+            //double ivSell = derivative.getIvSell();
+            double buy = derivative.getDerivative().getOpType() == 1 ?
+                calculator.callPrice(levelValue,strike,t,ivBuy) :
+                calculator.putPrice(levelValue,strike,t,ivBuy);
+            /*
+            double sell = derivative.getDerivative().getOpType() == 1 ?
+                    calculator.callPrice(levelValue,strike,t,ivSell) :
+                    calculator.putPrice(levelValue,strike,t,ivSell);
+                    //*/
+            return String.format("Option price buy (%.4f): %.2f kr, level: %.2f kr, Option: %s",
+                    ivBuy,
+                    buy,
+                    levelValue,
+                    derivative.getTicker());
         });
     }
 

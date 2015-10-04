@@ -15,6 +15,9 @@ ext.postgresVersion = '9.4-1201-jdbc41'
 ext.commonsLangVersion = '20030203.000129'
 ext.enliveVersion = '1.1.5'
 ext.coltVersion = '1.2.0'
+ext.ehcacheVersion = '1.0.1'
+ext.ehcacheSpringVersion = '1.2.0'
+
 
 
 //-------------------- clojure ---------------------
@@ -69,6 +72,11 @@ dependencies {
     //------------------- clojure-------------------
     runtime "org.clojure:clojure:$clojureVersion"
     runtime "org.clojure:clojure-contrib:$clojureContribVersion"
+    //------------------- JCache -------------------
+    //runtime "org.ehcache:jcache:$ehcacheVersion"
+    //runtime "org.jsr107.ri:cache-annotations-ri-guice:1.0.0"
+    //compile "com.googlecode.ehcache-spring-annotations:ehcache-spring-annotations:$ehcacheSpringVersion"
+
     //------------------- diverse -------------------
     sshAntTask 'org.apache.ant:ant-jsch:1.9.4'
     sshAntTask 'com.jcraft:jsch:0.1.51'
