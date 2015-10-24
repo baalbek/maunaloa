@@ -75,17 +75,15 @@ public class DerivativesController {
         initGrid();
         initStockPrice();
         btnSpotOpts.setOnAction(event -> {
-            /*
-            if (derivativesControllerListeners != null) {
-                fireSpotOptsEvent();
-            }
-            */
+            if (onSpotOptsEvent == null) return;
+            onSpotOptsEvent.accept(getSelectedDerivatives(null));
         });
 
         btnOptionPriceSliders.setOnAction(event -> {
             if (newOptionPriceSliderEvents == null) return;
+            List<DerivativeFx> selected = getSelectedDerivatives(null);
             for (Consumer<List<DerivativeFx>> evt : newOptionPriceSliderEvents) {
-                evt.accept(getSelectedDerivatives(null));
+                evt.accept(selected);
             }
         });
         btnOptionPurchase.setOnAction(event -> {

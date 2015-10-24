@@ -2,6 +2,9 @@ package maunaloa.controllers.helpers;
 
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.OptionPriceSlider;
+import oahu.dto.Tuple;
+import oahu.financial.Stock;
+import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
@@ -34,5 +37,14 @@ public class OptionPriceSliderHelper extends AbstractControllerHelper {
             System.out.printf("Adding slider: %s", slider);
         }
         updateMyPaneLines(curLines, lineMap());
+    }
+
+    public void updateRuler(IRuler vruler) {
+        lineMap().forEach((Stock key, List<ChartItem> values) -> {
+            values.forEach((ChartItem x) -> {
+                OptionPriceSlider slider = (OptionPriceSlider)x;
+                slider.updateRuler(vruler);
+            });
+        });
     }
 }

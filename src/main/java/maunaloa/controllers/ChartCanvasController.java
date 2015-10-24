@@ -191,6 +191,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private void notifyChartShift() {
         Tuple<IRuler> rulers = getRulers();
         levelHelper.updateRulers(rulers);
+        sliderHelper.updateRuler(rulers.second());
         fibonacciHelper.updateRulers(rulers);
         spotHelper.updateRulers(rulers);
         riscLinesHelper.updateRuler(rulers.second());

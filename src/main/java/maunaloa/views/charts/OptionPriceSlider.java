@@ -47,6 +47,12 @@ public class OptionPriceSlider implements ChartItem {
         });
     }
 
+    public void updateRuler(IRuler ruler) {
+        if (levelLine != null) {
+            levelLine.updateRuler(ruler);
+        }
+    }
+
     @Override
     public Node view() {
         return levelLine.view();

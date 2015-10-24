@@ -1,13 +1,18 @@
 package maunaloa.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import oahu.financial.SpotOptionPrice;
+import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by rcs on 19.08.15.
@@ -47,8 +52,23 @@ public class SpotOptionPriceController {
     }
 
     public void addNotifySpotOptsEvent(DerivativesController controller) {
-        controller.addOnSpotOptsEvents((calculated) -> {
-
+        controller.addOnSpotOptsEvents((items) -> {
+            Collection<SpotOptionPrice> allPrices = null;
+            if (items.size() == 1) {
+                int opx_id = items.get(0).getDerivative().getOid();
+                allPrices = hub.getStockRepository().findOptionPrices(opx_id);
+                log.info(String.format("Prices size == 1 for %d, number of option priced: %d", opx_id, allPrices.size()));
+            } else {
+                allPrices = new ArrayList<>();
+                for (DerivativeFx item : items) {
+                    int opx_id = item.getDerivative().getOid();
+                    allPrices.addAll(hub.getStockRepository().findOptionPrices(opx_id));
+                }
+            }
+            if (allPrices != null) {
+                ObservableList<SpotOptionPrice> itemsx = FXCollections.observableArrayList(allPrices);
+                tableView.getItems().setAll(itemsx);
+            }
         });
     }
 
