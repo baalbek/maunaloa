@@ -16,6 +16,7 @@ import javafx.scene.text.Text;
 import maunaloa.MaunaloaStatus;
 import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
+import oahu.dto.Tuple;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 
@@ -29,11 +30,11 @@ import java.util.Optional;
  */
 public class DateLine implements ChartItem {
     private LocalDate currentDate;
-    private final IRuler dateRuler;
-    private final IBoundaryRuler boundaryRuler;
+    private IRuler dateRuler;
+    private IBoundaryRuler boundaryRuler;
     private double valueLabelDeltaX = 8.0;
     private double valueLabelDeltaY = 8.0;
-    private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
+    //private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
     private Group group ;
     private Line line;
     private Circle anchor;
@@ -50,8 +51,7 @@ public class DateLine implements ChartItem {
         if (group == null) {
             createGroup();
         }
-        System.out.println(group);
-        return group;
+       return group;
     }
 
     private String valueLabelText () {
@@ -66,7 +66,7 @@ public class DateLine implements ChartItem {
         line.endXProperty().bindBidirectional(anchor.centerXProperty());
         line.endYProperty().bindBidirectional(anchor.centerYProperty());
 
-        anchor.radiusProperty().bind(anchorRadius);
+        anchor.setRadius(7); //anchor.radiusProperty().bind(anchorRadius);
         anchor.setStrokeWidth(0.5);
         anchor.setFill(Color.TRANSPARENT);
         anchor.setStroke(Color.BLACK);
@@ -84,7 +84,7 @@ public class DateLine implements ChartItem {
                 mousePressPoint.set(new Point2D(event.getX(), event.getY()));
                 double oldCenterX = anchor.getCenterX() ;
                 double oldCenterY = anchor.getCenterY();
-                anchor.setCenterX(oldCenterX+deltaX);
+                anchor.setCenterX(oldCenterX + deltaX);
                 anchor.setCenterY(oldCenterY+deltaY);
 
 
@@ -116,6 +116,13 @@ public class DateLine implements ChartItem {
         group.getChildren().addAll(line,anchor,valueLabel);
     }
 
+    public void updateRulers(Tuple<IRuler> rulers) {
+        dateRuler = rulers.first();
+        boundaryRuler = (IBoundaryRuler)rulers.second();
+        double newX = dateRuler.calcPix(currentDate);
+        anchor.setCenterX(dateRuler.snapTo(newX));
+        valueLabel.setX(newX+valueLabelDeltaX);
+    }
     @Override
     public Optional<Node> commentsView() {
         return null;

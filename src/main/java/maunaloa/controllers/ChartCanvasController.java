@@ -199,6 +199,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         fibonacciHelper.updateRulers(rulers);
         spotHelper.updateRulers(rulers);
         riscLinesHelper.updateRuler(rulers.second());
+        dateLineHelper.updateRulers(rulers);
         chartDate.setText(String.format("Chart date: %s",chart.getLastCurrentDateShown().toString()));
     }
     public void addNotifyDerivativesCalculated(DerivativesController controller) {

@@ -28,7 +28,7 @@ public class LevelLine extends AbstractSelectableLine {
     private double levelValue;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
-    private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
+    //private DoubleProperty anchorRadius = new SimpleDoubleProperty(7);
     private Function<Double,String> valueLabelTextFn;
     private Group group ;
     private Line line;
@@ -88,7 +88,7 @@ public class LevelLine extends AbstractSelectableLine {
         line.startYProperty().bindBidirectional(anchor.centerYProperty());
         line.endYProperty().bindBidirectional(anchor.centerYProperty());
 
-        anchor.radiusProperty().bind(anchorRadius);
+        anchor.setRadius(7); //anchor.radiusProperty().bind(anchorRadius);
         anchor.setStrokeWidth(0.5);
         anchor.setFill(Color.TRANSPARENT);
         anchor.setStroke(Color.BLACK);

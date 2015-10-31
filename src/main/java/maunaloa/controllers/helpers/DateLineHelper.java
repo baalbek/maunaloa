@@ -1,12 +1,15 @@
 package maunaloa.controllers.helpers;
 
 import javafx.scene.layout.Pane;
+import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DateLine;
+import oahu.dto.Tuple;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by rcs on 30.10.15.
@@ -36,5 +39,15 @@ public class DateLineHelper extends AbstractControllerHelper {
                 myPane.setOnMouseReleased(null);
             });
         }
+    }
+
+    public void updateRulers(Tuple<IRuler> rulers) {
+        IRuler vruler = rulers.second();
+        lineMap().forEach((Stock key, List<ChartItem> values) -> {
+            values.forEach((ChartItem x) -> {
+                DateLine ent = (DateLine)x;
+                ent.updateRulers(rulers);
+            });
+        });
     }
 }
