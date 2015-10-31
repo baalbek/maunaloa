@@ -55,12 +55,16 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         sliderHelper = new OptionPriceSliderHelper(this);
         riscLinesHelper = new RiscLinesHelper(this);
         spotHelper = new SpotHelper(this);
+        dateLineHelper = new DateLineHelper(this);
     }
 
     //endregion Init
 
     //region Events
 
+    public void onNewDateLine() {
+        dateLineHelper.onNewDateLine();
+    }
     public void onNewFibonacciLine() {
         fibonacciHelper.onNewFibonacciLine();
     }
@@ -229,6 +233,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     //endregion Events
 
     //region Properties
+    private DateLineHelper dateLineHelper;
     private FibonacciHelper fibonacciHelper;
     private LevelHelper levelHelper;
     private OptionPriceSliderHelper sliderHelper; 

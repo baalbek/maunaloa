@@ -93,6 +93,8 @@
                           <SeparatorMenuItem mnemonicParsing="false" />
                           <MenuItem mnemonicParsing="false" onAction="#onSetInactiveSelLines" text="Set Inactive Selected" />
                           <MenuItem mnemonicParsing="false" onAction="#onSetInactiveAllLines" text="Set Inactive All" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#onNewDateLine" text="New Date Line" />
                       </items>
                   </MenuButton>
                   <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />

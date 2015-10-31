@@ -126,6 +126,9 @@ public class MainframeController implements ControllerHub {
         });
         */
     }
+    public void onNewDateLine(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onNewDateLine);
+    }
     public void onFibLinesFromRepos(ActionEvent event) {
         //currentController().ifPresent(ChartCanvasController::onFibLinesFromRepos);
         currentController().ifPresent(c -> {
