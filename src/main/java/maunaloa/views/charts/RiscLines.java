@@ -39,7 +39,7 @@ public class RiscLines implements ChartItem {
         this.ruler = (IBoundaryRuler)ruler;
 
     }
-    public void updateRuler(IRuler vruler) {
+    public void updateRuler(IRuler<Double> vruler) {
         ruler = (IBoundaryRuler)vruler;
 
         double yBe = ruler.calcPix(dpricefx.getBreakeven());

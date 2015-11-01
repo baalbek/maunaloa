@@ -7,10 +7,12 @@ import javafx.scene.shape.Line;
 import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.views.charts.ChartItem;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -66,7 +68,7 @@ public class FibonacciHelper extends AbstractControllerHelper {
             myPane.setOnMouseReleased(null);
         });
     }
-    public void updateRulers(Tuple<IRuler> rulers) {
+    public void updateRulers(Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers) {
         lineMap().forEach((Stock key, List<ChartItem> values) -> {
             values.forEach((ChartItem x) -> {
                 FibLineEntity ent = (FibLineEntity)x;

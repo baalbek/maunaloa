@@ -6,10 +6,12 @@ import maunaloa.entities.windowdressing.FibLineEntity;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.views.charts.ChartItem;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerEnum;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -25,7 +27,10 @@ public interface WindowDressingRepository {
     public static final int FIBLINES = 1;
     public static final int LEVEL = 2;
     public static final int ALL_ITEMS = 3;
-    List<ChartItem> fetchFibLines(String ticker, ControllerEnum location, int status, Tuple<IRuler> rulers);
+    List<ChartItem> fetchFibLines(String ticker,
+                                  ControllerEnum location,
+                                  int status,
+                                  Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers);
     List<ChartItem> fetchLevels(String ticker,
                                 ControllerEnum location,
                                 int status,

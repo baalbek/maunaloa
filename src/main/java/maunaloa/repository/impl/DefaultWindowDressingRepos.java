@@ -13,6 +13,7 @@ import maunaloa.service.Logx;
 import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahu.functional.Procedure3;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerEnum;
@@ -20,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.bson.types.ObjectId;
 
 import java.net.UnknownHostException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -79,6 +81,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         return coll.update(query, setObj);
     };*/
     //endregion Private Stuff
+
 
 
     //region Interface WindowDressingRepository
@@ -195,8 +198,7 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     @Override
     public List<ChartItem> fetchFibLines(String ticker,
                                          ControllerEnum location,
-                                         int status,
-                                         Tuple<IRuler> rulers) {
+                                         int status, Tuple2<IRuler<LocalDate>, IRuler<Double>> rulers) {
         if (fibLines == null) {
             fibLines = new HashMap<>();
         }

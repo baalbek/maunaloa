@@ -12,6 +12,7 @@ import maunaloa.controllers.helpers.*;
 import maunaloa.service.FxUtils;
 import maunaloa.views.charts.ChartItem;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -24,6 +25,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.logging.LoggingPermission;
 
 /**
  * Created by rcs on 4/13/14.
@@ -182,18 +184,18 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         chart.shiftToEnd(myCanvas);
         notifyChartShift();
     }
+
     public void shiftToDate() {
         FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
-                new ShiftToDateController(shiftDate -> {
-                    shiftToDate(shiftDate);
-                }));
+                new ShiftToDateController(this::shiftToDate));
     }
+
     public void shiftToDate(LocalDate shiftDate) {
         chart.shiftToDate(shiftDate,myCanvas);
         notifyChartShift();
     }
     private void notifyChartShift() {
-        Tuple<IRuler> rulers = getRulers();
+        Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers = getRulers();
         levelHelper.updateRulers(rulers);
         sliderHelper.updateRuler(rulers.second());
         fibonacciHelper.updateRulers(rulers);
@@ -244,8 +246,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private String name;
     private ControllerEnum location;
     private Stock stock;
-    private IRuler vruler;
-    private IRuler hruler;
+    private IRuler<Double> vruler;
+    private IRuler<LocalDate> hruler;
     private ControllerHub hub;
     private LocalDate chartStartDate;
 
@@ -304,23 +306,23 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
 
     @Override
-    public IRuler getVruler() {
+    public IRuler<Double> getVruler() {
         return vruler;
     }
 
     @Override
-    public void setVruler(IRuler ruler) {
+    public void setVruler(IRuler<Double> ruler) {
         this.vruler = ruler;
         _rulers = null;
     }
 
     @Override
-    public IRuler getHruler() {
+    public IRuler<LocalDate> getHruler() {
         return hruler;
     }
 
     @Override
-    public void setHruler(IRuler ruler) {
+    public void setHruler(IRuler<LocalDate> ruler) {
         this.hruler = ruler;
         _rulers = null;
     }
@@ -335,11 +337,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         return location;
     }
 
-    private Tuple<IRuler> _rulers;
+    private Tuple2<IRuler<LocalDate>,IRuler<Double>> _rulers;
     @Override
-    public Tuple<IRuler> getRulers() {
+    public Tuple2<IRuler<LocalDate>,IRuler<Double>> getRulers() {
         if (_rulers == null) {
-            _rulers = new Tuple<>(getHruler(),getVruler());
+            _rulers = new Tuple2<>(getHruler(),getVruler());
         }
         return _rulers;
     }

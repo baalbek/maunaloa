@@ -36,7 +36,7 @@ public class RiscLinesHelper extends AbstractControllerHelper {
         }
         updateMyPaneLines(curLines, lineMap());
     }
-    public void updateRuler(IRuler ruler) {
+    public void updateRuler(IRuler<Double> ruler) {
         if (curLines == null) return;
 
         for (ChartItem item : curLines) {

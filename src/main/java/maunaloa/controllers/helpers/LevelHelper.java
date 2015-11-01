@@ -4,10 +4,12 @@ import javafx.scene.layout.Pane;
 import maunaloa.entities.windowdressing.LevelEntity;
 import maunaloa.views.charts.ChartItem;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.MaunaloaChartViewModel;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ public class LevelHelper extends AbstractControllerHelper {
         }
     }
 
-    public void updateRulers(Tuple<IRuler> rulers) {
+    public void updateRulers(Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers) {
         IRuler vruler = rulers.second();
         lineMap().forEach((Stock key, List<ChartItem> values) -> {
             values.forEach((ChartItem x) -> {

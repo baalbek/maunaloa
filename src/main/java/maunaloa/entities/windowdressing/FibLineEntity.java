@@ -14,6 +14,7 @@ import maunaloa.views.charts.ChartItem;
 import maunaloa.views.charts.DraggableLine;
 import maunaloa.views.charts.FinancialCoord;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerEnum;
@@ -34,7 +35,7 @@ import java.util.Optional;
 public class FibLineEntity extends AbstractWindowDressingItem implements ChartItem {
     //region Properties
     //private final MaunaloaChartViewModel viewModel;
-    private Tuple<IRuler> rulers;
+    private Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers;
 
     private FinancialCoord fp1, fp2;
     private Tuple<Double> p1,p2;
@@ -96,7 +97,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
             protected double computeValue() {
                 double adjustment = (line.getEndY() - line.getStartY()) * level;
                 double y = line.getStartY();
-                return (isFlipped == true) ? y - adjustment : y + adjustment;
+                return (isFlipped) ? y - adjustment : y + adjustment;
             }
         };
     }
@@ -121,7 +122,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     public FibLineEntity(String ticker,
                          ControllerEnum location,
                          Line line,
-                         Tuple<IRuler> rulers) {
+                         Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers) {
         super(ticker,location);
         this.rulers = rulers;
         this.dragLine = new DraggableLine(line);
@@ -135,7 +136,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
                          ControllerEnum location,
                          Tuple<Double> p1,
                          Tuple<Double> p2,
-                         Tuple<IRuler> rulers) {
+                         Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers) {
         super(ticker,location);
         this.p1 = p1;
         this.p2 = p2;
@@ -148,7 +149,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
                          ControllerEnum location,
                          FinancialCoord fp1,
                          FinancialCoord fp2,
-                         Tuple<IRuler> rulers) {
+                         Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers) {
         super(ticker,location);
         this.oid = oid;
         this.fp1 = fp1;
@@ -161,6 +162,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     //region Interface ChartItem
     private Node _view;
     @Override
+    @SuppressWarnings("unchecked")
     public Node view() {
         if (_view == null) {
             if (dragLine == null) {
@@ -226,7 +228,7 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
     public DraggableLine getLine() {
         return dragLine;
     }
-    public void updateRulers(Tuple<IRuler> newRulers) {
+    public void updateRulers(Tuple2<IRuler<LocalDate>,IRuler<Double>> newRulers) {
         IRuler oldHruler = rulers.first();
         IRuler oldVruler = rulers.second();
 
@@ -248,8 +250,8 @@ public class FibLineEntity extends AbstractWindowDressingItem implements ChartIt
         LocalDate d2 = (LocalDate)oldHruler.calcValue(endAnchor.getCenterX());
         double y2 = (Double)oldVruler.calcValue(endAnchor.getCenterY());
 
-        IRuler newHruler = newRulers.first();
-        IRuler newVruler = newRulers.second();
+        IRuler<LocalDate> newHruler = newRulers.first();
+        IRuler<Double> newVruler = newRulers.second();
 
         startAnchor.setCenterX(newHruler.calcPix(d1));
         startAnchor.setCenterY(newVruler.calcPix(y1));

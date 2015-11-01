@@ -39,7 +39,7 @@ public class OptionPriceSliderHelper extends AbstractControllerHelper {
         updateMyPaneLines(curLines, lineMap());
     }
 
-    public void updateRuler(IRuler vruler) {
+    public void updateRuler(IRuler<Double> vruler) {
         lineMap().forEach((Stock key, List<ChartItem> values) -> {
             values.forEach((ChartItem x) -> {
                 OptionPriceSlider slider = (OptionPriceSlider)x;

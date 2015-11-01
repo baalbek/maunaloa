@@ -1,8 +1,6 @@
 package maunaloa.views.charts;
 
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
@@ -17,6 +15,7 @@ import maunaloa.MaunaloaStatus;
 import maunaloa.entities.windowdressing.CommentEntity;
 import maunaloa.repository.WindowDressingRepository;
 import oahu.dto.Tuple;
+import oahu.dto.Tuple2;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 
@@ -116,7 +115,7 @@ public class DateLine implements ChartItem {
         group.getChildren().addAll(line,anchor,valueLabel);
     }
 
-    public void updateRulers(Tuple<IRuler> rulers) {
+    public void updateRulers(Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers) {
         dateRuler = rulers.first();
         boundaryRuler = (IBoundaryRuler)rulers.second();
         double newX = dateRuler.calcPix(currentDate);
