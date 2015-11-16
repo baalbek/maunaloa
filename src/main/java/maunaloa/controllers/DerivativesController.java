@@ -298,10 +298,12 @@ public class DerivativesController {
             }
         }
         catch (FailingHttpStatusCodeException ex) {
+            /*
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid URL");
             alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
             alert.showAndWait();
+            */
         }
     }
 
