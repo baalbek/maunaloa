@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.repository.WindowDressingRepository;
@@ -58,6 +59,7 @@ public class MainframeController implements ControllerHub {
     @FXML private Button btnShiftRight;
     @FXML private CheckMenuItem mnuShiftAllCharts;
     @FXML private CheckMenuItem mnuIsShiftDays;
+    @FXML private BorderPane myBorderPane;
 
 
    /* @FXML private MenuBar myMenuBar;
@@ -223,6 +225,7 @@ public class MainframeController implements ControllerHub {
 
     @SuppressWarnings("unchecked")
     public void initialize() {
+        myBorderPane.setPrefSize(width,height);
         initContextInfo();
         initNavButtons();
         initChoiceBoxTickers();
@@ -419,6 +422,8 @@ public class MainframeController implements ControllerHub {
     private IntegerProperty shiftAmountProperty = new SimpleIntegerProperty(6);
     private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
     private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
+    private double width = 1400.0;
+    private double height = 850.0;
 
     public MaunaloaChart getCandlesticksChart() {
         return candlesticksChart;
@@ -503,6 +508,14 @@ public class MainframeController implements ControllerHub {
 
     public void setListener(ControllerHubListener listener) {
         this.listener = listener;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     //endregion Properties
