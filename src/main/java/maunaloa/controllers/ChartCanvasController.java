@@ -52,12 +52,14 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
         myCanvas.widthProperty().addListener(listener);
         myCanvas.heightProperty().addListener(listener);
+        /*
         fibonacciHelper = new FibonacciHelper(this);
         levelHelper = new LevelHelper(this);
         sliderHelper = new OptionPriceSliderHelper(this);
         riscLinesHelper = new RiscLinesHelper(this);
         spotHelper = new SpotHelper(this);
         dateLineHelper = new DateLineHelper(this);
+        */
     }
 
     //endregion Init
@@ -65,14 +67,15 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     //region Events
 
     public void onNewDateLine() {
-        dateLineHelper.onNewDateLine();
+        //dateLineHelper.onNewDateLine();
     }
     public void onNewFibonacciLine() {
-        fibonacciHelper.onNewFibonacciLine();
+        //fibonacciHelper.onNewFibonacciLine();
     }
     public void onNewLevel() {
-        levelHelper.onNewLevel();
+        //levelHelper.onNewLevel();
     }
+    /*
     public void onFibLinesFromRepos() {
         List<ChartItem> items =
                 hub.getWindowDressingRepository().fetchFibLines(
@@ -95,14 +98,16 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
                         });
         levelHelper.onLinesFromRepos(items);
     }
+    */
     public void onDeleteSelLines() {
-        fibonacciHelper.onDeleteSelLines();
-        levelHelper.onDeleteSelLines();
+        //fibonacciHelper.onDeleteSelLines();
+        //levelHelper.onDeleteSelLines();
     }
     public void onDeleteAllLines() {
-        fibonacciHelper.onDeleteAllLines();
-        levelHelper.onDeleteAllLines();
+        //fibonacciHelper.onDeleteAllLines();
+        //levelHelper.onDeleteAllLines();
     }
+    /*
     public void onSaveAllToRepos() {
         Consumer<AbstractControllerHelper> myUpdate = helper -> {
             Optional<List<ChartItem>> items = helper.items();
@@ -162,8 +167,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             });
         });
     }
+    */
     public void shiftLeft(boolean isShiftDays, int amount) {
-        if (isShiftDays == true) {
+        if (isShiftDays) {
             chart.shiftDays(amount,myCanvas);
         }
         else {
@@ -172,7 +178,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         notifyChartShift();
     }
     public void shiftRight(boolean isShiftDays, int amount) {
-        if (isShiftDays == true) {
+        if (isShiftDays) {
             chart.shiftDays(-amount,myCanvas);
         }
         else {
@@ -196,15 +202,18 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
     private void notifyChartShift() {
         Tuple2<IRuler<LocalDate>,IRuler<Double>> rulers = getRulers();
+        /*
         levelHelper.updateRulers(rulers);
         sliderHelper.updateRuler(rulers.second());
         fibonacciHelper.updateRulers(rulers);
         spotHelper.updateRulers(rulers);
         riscLinesHelper.updateRuler(rulers.second());
         dateLineHelper.updateRulers(rulers);
+        */
         chartDate.setText(String.format("Chart date: %s",chart.getLastCurrentDateShown().toString()));
     }
     public void addNotifyDerivativesCalculated(DerivativesController controller) {
+        /*
         controller.addOnCalculatedEvents((calculated) -> {
             switch (location) {
                 case DAY:
@@ -212,9 +221,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
                     riscLinesHelper.updateRiscs(calculated);
             }
         });
+        */
     }
 
     public void addNotifySpotUpdated(DerivativesController controller) {
+        /*
         controller.addOnAssignSpotEvents((spot) -> {
             switch (location) {
                 case DAY:
@@ -222,8 +233,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
                     spotHelper.updateSpot(spot);
             }
         });
+        */
     }
     public void addNewOptionPriceSliderEvent(DerivativesController controller) {
+        /*
         controller.addNewOptionPriceSliderEvents((selected) -> {
             switch (location) {
                 case DAY:
@@ -232,18 +245,21 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
             }
         });
+        */
     }
     //endregion Events
 
     //region Properties
+    /*
     private DateLineHelper dateLineHelper;
     private FibonacciHelper fibonacciHelper;
     private LevelHelper levelHelper;
     private OptionPriceSliderHelper sliderHelper; 
     private RiscLinesHelper riscLinesHelper;
     private SpotHelper spotHelper;
+    //*/
+
     private MaunaloaChart chart;
-    private String name;
     private ControllerEnum location;
     private Stock stock;
     private IRuler<Double> vruler;
@@ -251,9 +267,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private ControllerHub hub;
     private LocalDate chartStartDate;
 
-    public void setName(String name) {
-        this.name = name;
-    }
     public void setLocation(ControllerEnum location) {
         this.location = location;
 
@@ -264,16 +277,20 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
     public void setStock(Stock stock) {
         if (stock != null) {
+            /*
             fibonacciHelper.notifyStockChanging();
             levelHelper.notifyStockChanging();
             riscLinesHelper.notifyStockChanging();
             spotHelper.notifyStockChanging();
+            */
             this.stock = stock;
             chart.draw(myCanvas);
+            /*
             fibonacciHelper.notifyStockChanged();
             levelHelper.notifyStockChanged();
             riscLinesHelper.notifyStockChanged();
             spotHelper.notifyStockChanged();
+            */
             chartDate.setText(String.format("Chart date: %s",chart.getLastCurrentDateShown().toString()));
         }
     }

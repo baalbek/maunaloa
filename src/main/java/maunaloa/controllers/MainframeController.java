@@ -235,7 +235,7 @@ public class MainframeController implements ControllerHub {
                                 String name,
                                 ControllerEnum location,
                                 MaunaloaChart chart) -> {
-                    controller.setName(name);
+                    //controller.setName(name);
                     controller.setLocation(location);
                     controller.setChart(chart);
                     controller.setHub(this);

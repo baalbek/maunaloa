@@ -30,8 +30,10 @@ import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 4/22/14.
+ *
  */
 public class DefaultWindowDressingRepos implements WindowDressingRepository {
+
     //region Private Stuff
     private Logger log = Logger.getLogger(getClass().getPackage().getName());
 
@@ -81,8 +83,6 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
         return coll.update(query, setObj);
     };*/
     //endregion Private Stuff
-
-
 
     //region Interface WindowDressingRepository
     @Override
@@ -329,7 +329,6 @@ public class DefaultWindowDressingRepos implements WindowDressingRepository {
     }
 
     //endregion Interface WindowDressingRepository
-
 
     //region Properties
 
