@@ -54,7 +54,6 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(url);
 
         final MainframeController controller = factory.getBean("mainframe-controller",MainframeController.class);
-        controller.setSqldbUrl(getSqldbUrl());
         //controller.setSqldbUrl(getSqldbUrl());
 
         loader.setController(controller);

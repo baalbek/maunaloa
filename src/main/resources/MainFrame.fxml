@@ -58,6 +58,7 @@
   <top>
     <VBox prefHeight="-1.0" prefWidth="100.0">
       <children>
+          <!--
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>
                   <MenuButton mnemonicParsing="false" text="Repository">
@@ -102,7 +103,6 @@
                   <MenuButton mnemonicParsing="false" text="Chart">
                       <items>
                           <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
-                          <!-- MenuItem mnemonicParsing="false" onAction="#onShiftRight" text="Shift Right" / -->
                           <MenuItem mnemonicParsing="false" onAction="#onShiftToDate" text="Shift To Date" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <CheckMenuItem fx:id="mnuIsShiftDays" mnemonicParsing="false" selected="true" text="Is Shift Days" />
@@ -111,6 +111,7 @@
                   </MenuButton>
               </items>
             </ToolBar>
+            -->
         <HBox prefHeight="-1.0" prefWidth="-1.0">
           <children>
             <RadioButton fx:id="rgCalls" mnemonicParsing="false" selected="true" text="Calls" userData="calls">

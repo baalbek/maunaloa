@@ -26,8 +26,10 @@ public class MainframeController {
     @FXML private Label lblSqlUrl;
     @FXML private Button btnShiftLeft;
     @FXML private Button btnShiftRight;
+    /*
     @FXML private CheckMenuItem mnuShiftAllCharts;
     @FXML private CheckMenuItem mnuIsShiftDays;
+    */
     @FXML private BorderPane myBorderPane;
 
     //endregion FXML
@@ -49,9 +51,11 @@ public class MainframeController {
 
         shiftAmountProperty.bind(cbShiftAmount.getSelectionModel().selectedItemProperty());
 
+        /*
         shiftBothChartsProperty.bind(mnuShiftAllCharts.selectedProperty());
 
         isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
+        */
 
     }
 
@@ -63,7 +67,11 @@ public class MainframeController {
     private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
     private double width = 1400.0;
     private double height = 850.0;
+    private String chartStartDate;
 
+    public void setChartStartDate(String chartStartDate) {
+        this.chartStartDate = chartStartDate;
+    }
     //endregion Properties
 }
 

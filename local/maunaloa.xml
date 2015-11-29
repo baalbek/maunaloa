@@ -35,29 +35,30 @@
     </bean>
     -->
 
+    <!--
     <bean id="tickerFileNamer" class="maunaloa.financial.TickerFileNamer"></bean>
     <bean id="downloader" class="maunakea.financial.mocks.MockDownloader">
         <property name="htmlPath" value="file:///home/rcs/opt/java/netfondsjanitor/feed" />
-        <!--
-        <property name="htmlPath" value="file:///home/rcs/opt/java/netfondsjanitor/feed/2014/7/29" />
-        <property name="htmlPath" value="file:///home/rcs/opt/java/netfondsjanitor/feed/2015/8/3" />
-        <property name="htmlPath" value="file:///home/rcs/opt/java/maunaloa/html/2014/9/5" />
-        -->
         <property name="tickerFileNamer" ref="tickerFileNamer" />
     </bean>
+        -->
 
     <!-- END Downloader -->
 
     <bean id="etrade" class="maunakea.financial.repository.NetfondsDerivatives">
-        <property name="downloader" ref="downloader" />
+        <!--
+            <property name="downloader" ref="downloader" />
+            <property name="stockMarketRepos" ref="stockRepository" />
+        -->
         <property name="calculator" ref="calculator" />
-        <property name="stockMarketRepos" ref="stockRepository" />
         <property name="derivativePriceType" value="1" />
     </bean>
 
     <bean id="etrade2" class="maunakea.financial.repository.NetfondsStockIndex">
-        <property name="downloader" ref="downloader" />
-        <property name="stockMarketRepos" ref="stockRepository" />
+        <!--
+            <property name="downloader" ref="downloader" />
+            <property name="stockMarketRepos" ref="stockRepository" />
+        -->
     </bean>
 
     <bean id="mainframe-controller"
