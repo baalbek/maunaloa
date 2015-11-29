@@ -22,45 +22,6 @@
         <property name="background" value="#F5DEB3" />
     </bean>
 
-    <!--
-    <bean id="dateEditor"
-          class="org.springframework.beans.propertyeditors.CustomDateEditor">
-
-        <constructor-arg>
-            <bean class="java.text.SimpleDateFormat">
-                <constructor-arg value="yyyy-MM-dd" />
-            </bean>
-        </constructor-arg>
-        <constructor-arg value="true" />
-
-    </bean>
-
-    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-        <property name="customEditors">
-            <map>
-                <entry key="java.util.Date">
-                    <ref local="dateEditor" />
-                </entry>
-            </map>
-        </property>
-    </bean>
-    -->
-
-    <!--
-    <bean id="windowdressingmodel" class="maunaloa.models.mongodb.MongoWindowDressingModel">
-        <property name="cloud" value="false" />
-        <property name="mongodbHost" value="xochitecatl" />
-    </bean>
-
-    <bean id="facade" class="maunaloa.models.impl.FacadeImpl">
-        <property name="windowDressingModel" ref="windowdressingmodel" />
-        <property name="repos" ref="repos" />
-        <property name="etrade" ref="etrade" />
-        <property name="calculator" ref="calculator" />
-        <property name="defaultStartDate" value="2011-01-01" />
-    </bean>
-    -->
-
     <bean id="calculator" class="vega.financial.calculator.BlackScholes" />
 
     <!-- Downloader -->
@@ -87,9 +48,6 @@
 
     <!-- END Downloader -->
 
-    <bean id="stockRepository" class="ranoraraku.models.impl.CachedStockMarketReposImpl">
-    </bean>
-
     <bean id="etrade" class="maunakea.financial.repository.NetfondsDerivatives">
         <property name="downloader" ref="downloader" />
         <property name="calculator" ref="calculator" />
@@ -97,79 +55,14 @@
         <property name="derivativePriceType" value="1" />
     </bean>
 
-    <bean id="derivativeRepository" class="maunaloa.repository.impl.DefaultDerivativeRepository">
-        <property name="etrade" ref="etrade" />
-        <property name="calculator" ref="calculator" />
-    </bean>
-
     <bean id="etrade2" class="maunakea.financial.repository.NetfondsStockIndex">
         <property name="downloader" ref="downloader" />
         <property name="stockMarketRepos" ref="stockRepository" />
     </bean>
 
-    <bean id="stockIndexRepository" class="maunaloa.repository.impl.DefaultStockIndexRepository">
-        <property name="etrade" ref="etrade2" />
-    </bean>
-
-    <bean id="windowdressing" class="maunaloa.repository.impl.DefaultWindowDressingRepos">
-        <property name="cloud" value="false" />
-        <!--<property name="mongodbHost" value="palenque" />-->
-        <property name="mongodbHost" value="xochitecatl" />
-    </bean>
-
-
-    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="hasVolume" value="true" />
-        <property name="isWeekly" value="false" />
-        <property name="colorRepos" ref="colorRepository" />
-        <!--
-        <property name="colorForeground" value="#008080" />
-        -->
-    </bean>
-
-    <bean id="chartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="hasVolume" value="true" />
-        <property name="isWeekly" value="true" />
-        <property name="colorRepos" ref="colorRepository" />
-    </bean>
-    <bean id="osebxChartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="hasVolume" value="false" />
-        <property name="isWeekly" value="false" />
-        <property name="colorRepos" ref="colorRepository" />
-    </bean>
-    <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT1" scope="prototype">
-        <property name="hasVolume" value="false" />
-        <property name="isWeekly" value="true" />
-        <property name="colorRepos" ref="colorRepository" />
-    </bean>
-
-    <!--
-    <bean id="obxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
-
-    <bean id="obxChartWeeks" class="maunaloa.views.charts.CT4" scope="prototype" />
-
-    <bean id="osebxChartCandlesticks" class="maunaloa.views.charts.CT3" scope="prototype" />
-
-    <bean id="osebxChartWeeks" class="maunaloa.views.charts.CT4" scope="prototype" />
-
-    -->
-
     <bean id="mainframe-controller"
           class="maunaloa.controllers.MainframeController">
-
-        <property name="candlesticksChart" ref="chartCandlesticks" />
-        <property name="weeklyChart" ref="chartWeeks" />
-        <property name="osebxCandlesticksChart" ref="osebxChartCandlesticks" />
-        <property name="osebxWeeklyChart" ref="osebxChartWeeks" />
-        <!--
-        <property name="obxCandlesticksChart" ref="obxChartCandlesticks" />
-        <property name="obxWeeklyChart" ref="obxChartWeeks" />
-        -->
-        <property name="stockRepository" ref="stockRepository" />
-        <property name="derivativeRepository" ref="derivativeRepository" />
-        <property name="windowDressingRepository" ref="windowdressing" />
         <property name="chartStartDate" value="2012-2-1" />
-        <property name="listener" ref="tickerFileNamer" />
     </bean>
 </beans>
 
