@@ -7,13 +7,20 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import oahux.controllers.ControllerEnum;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * Created by rcs on 4/12/14.
  *
  */
 public class MainframeController {
+    //legendPane.managedProperty().bind(legendPane.visibleProperty());
     //region FXML
+    @FXML private ChartCanvasController candlesticksController;
     @FXML private ChoiceBox cbTickers;
     @FXML private ChoiceBox cbShiftAmount;
     @FXML private ToggleGroup rgDerivatives;
@@ -60,6 +67,26 @@ public class MainframeController {
     }
 
     //endregion Initialize
+
+    //region ChartCanvasController
+
+    private Map<ControllerEnum,ChartCanvasController> _controllers = new HashMap<>();
+
+    private static ControllerEnum controllerEnumfromInt(int i) {
+        switch (i) {
+            case 2: return ControllerEnum.DAY;
+            case 3: return ControllerEnum.WEEK;
+            case 4: return ControllerEnum.OSEBX_DAY;
+            case 5: return ControllerEnum.OSEBX_WEEK;
+            default: return ControllerEnum.EMPTY;
+        }
+    }
+    private Optional<ChartCanvasController> currentController() {
+        int index =  myTabPane.getSelectionModel().getSelectedIndex();
+        ControllerEnum ce = controllerEnumfromInt(index);
+        return _controllers.containsKey(ce) ? Optional.of(_controllers.get(ce)) : Optional.empty();
+    }
+    //endregion ChartCanvasController
 
     //region Properties
     private IntegerProperty shiftAmountProperty = new SimpleIntegerProperty(6);
