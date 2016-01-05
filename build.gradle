@@ -1,5 +1,5 @@
 apply plugin: 'java'
-
+archivesBaseName = 'maunaloa'
 group = 'rcstadheim'
 
 ext.springVersion = '4.2.3.RELEASE'
@@ -30,7 +30,7 @@ ext.numericTowerVersion = '0.0.4'
 ext.major = '5'
 ext.minor = '1'
 
-String version = "${major}.${minor}.SNAPSHOT"
+version = "${major}.${minor}.SNAPSHOT"
 
 //version = "${major}.${minor}.0"
 
@@ -52,11 +52,12 @@ dependencies {
     compile project(':oahux')
     compile project(':ranoraraku')
     compile project(':maunakea')
-    compile project(':kilauea')
     compile project(':maunaloax')
-    //compile project(':maunaloaq')
-    compile project(':waimea')
     compile project(':vega')
+    runtime project(':vegaq')
+    runtime project(':maunaloaq')
+    runtime project(':waimea')
+    runtime project(':kilauea')
 
     //------------------- aspectj -------------------
     compile "org.aspectj:aspectjrt:$aspectjVersion"
@@ -77,6 +78,9 @@ dependencies {
     //runtime "org.ehcache:jcache:$ehcacheVersion"
     //runtime "org.jsr107.ri:cache-annotations-ri-guice:1.0.0"
     //compile "com.googlecode.ehcache-spring-annotations:ehcache-spring-annotations:$ehcacheSpringVersion"
+
+    //------------------- Colt -------------------
+    runtime "colt:colt:$coltVersion"
 
     //------------------- Reactive -------------------
     //compile "io.reactive:rxjava:$reactiveVersion"
@@ -252,4 +256,8 @@ task buildAndCopyAll(type: Copy, dependsOn: build) {
 
 task showMeCache << {
     configurations.compile.each { println it }
+}
+
+task showClazzPath << {
+    println clazzPath()
 }
