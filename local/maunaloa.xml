@@ -14,6 +14,7 @@
         <property name="converters">
             <list>
                 <bean class="maunaloa.converters.StringToColorConverter"/>
+                <bean class="maunaloa.converters.StringToLocalDateConverter"/>
             </list>
         </property>
     </bean>
@@ -63,7 +64,7 @@
 
     <bean id="mainframe-controller"
           class="maunaloa.controllers.MainframeController">
-        <property name="chartStartDate" value="2012-2-1" />
+        <property name="chartStartDate" value="2012-02-01" />
     </bean>
 </beans>
 

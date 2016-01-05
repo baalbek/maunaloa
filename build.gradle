@@ -1,7 +1,6 @@
 apply plugin: 'java'
 
 group = 'rcstadheim'
-archivesBaseName = 'maunaloa'
 
 ext.springVersion = '4.2.3.RELEASE'
 ext.htmlunitVersion = '2.18'
@@ -10,29 +9,28 @@ ext.log4jVersion = '1.2.17'
 ext.aspectjVersion = '1.8.4'
 ext.mybatisVersion = '3.3.0'
 ext.mongoVersion = '2.12.5'
-//ext.postgresVersion = '9.1-901.jdbc4'
-//ext.postgresVersion = '9.4-1201-jdbc41'
 ext.postgresVersion = '9.4-1206-jdbc42'
 ext.commonsLangVersion = '20030203.000129'
 ext.enliveVersion = '1.1.5'
 ext.coltVersion = '1.2.0'
 ext.ehcacheVersion = '1.0.1'
 ext.ehcacheSpringVersion = '1.2.0'
+//ext.reactiveVersion = '1.1.0'
+//ext.sodiumVersion = '1.0.0'
 
 
 
 //-------------------- clojure ---------------------
-ext.clojureVersion = '1.6.0'
+ext.clojureVersion = '1.7.0'
 ext.clojureContribVersion = '1.2.0'
 ext.algoMonadsVersion = '0.1.5'
-ext.clojuresqueVersion = '1.5.8'
-ext.numericTowerVersion = '0.0.2'
+ext.numericTowerVersion = '0.0.4'
 
 
 ext.major = '5'
 ext.minor = '1'
 
-version = "${major}.${minor}.SNAPSHOT"
+String version = "${major}.${minor}.SNAPSHOT"
 
 //version = "${major}.${minor}.0"
 
@@ -52,12 +50,14 @@ repositories {
 dependencies {
     compile project(':oahu')
     compile project(':oahux')
-    compile project(':maunakea')
     compile project(':ranoraraku')
+    compile project(':maunakea')
+    compile project(':kilauea')
     compile project(':maunaloax')
+    //compile project(':maunaloaq')
+    compile project(':waimea')
     compile project(':vega')
-    runtime project(':waimea')
-    runtime project(':maunaloaq')
+
     //------------------- aspectj -------------------
     compile "org.aspectj:aspectjrt:$aspectjVersion"
     compile "org.aspectj:aspectjtools:$aspectjVersion"
@@ -72,12 +72,16 @@ dependencies {
     compile "org.mongodb:mongo-java-driver:$mongoVersion"
     //------------------- clojure-------------------
     runtime "org.clojure:clojure:$clojureVersion"
-    runtime "org.clojure:clojure-contrib:$clojureContribVersion"
+    //runtime "org.clojure:clojure-contrib:$clojureContribVersion"
     //------------------- JCache -------------------
     //runtime "org.ehcache:jcache:$ehcacheVersion"
     //runtime "org.jsr107.ri:cache-annotations-ri-guice:1.0.0"
     //compile "com.googlecode.ehcache-spring-annotations:ehcache-spring-annotations:$ehcacheSpringVersion"
 
+    //------------------- Reactive -------------------
+    //compile "io.reactive:rxjava:$reactiveVersion"
+    //compile "nz.sodium:sodium:$sodiumVersion"
+    //------------------- HtmlUnit-------------------
     compile "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
     //------------------- diverse -------------------
     sshAntTask 'org.apache.ant:ant-jsch:1.9.4'
@@ -179,7 +183,6 @@ task hiloq (description: 'Scp jars: maunaloaq',
             group: 'Hilo') <<  {
     scp2hilo {
         ant.fileset(dir: 'dist') {
-            include(name: myDepLibName('maunaloaq',LibContext.BARE))
         }
     }
 }
@@ -190,12 +193,11 @@ task hiloWithFriends(description: 'Scp jars: maunaloa, maunaloaq',
     scp2hilo {
         ant.fileset(dir: 'dist') {
             include(name: myLibName)
-            include(name: myDepLibName('maunaloaq',LibContext.BARE))
         }
     }
 }
 
-def depLibs = ['oahu','oahux','maunakea','maunaloax','maunaloaq','ranoraraku','vega','waimea']
+def depLibs = ['oahu','oahux','maunakea','maunaloax','ranoraraku','vega']
 
 task hilofull (description: 'Scp jars: all RCS jars',
                group: 'Hilo') <<  {

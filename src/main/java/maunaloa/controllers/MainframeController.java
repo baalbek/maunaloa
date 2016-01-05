@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import oahux.controllers.ControllerEnum;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -94,9 +95,9 @@ public class MainframeController {
     private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
     private double width = 1400.0;
     private double height = 850.0;
-    private String chartStartDate;
+    private LocalDate chartStartDate;
 
-    public void setChartStartDate(String chartStartDate) {
+    public void setChartStartDate(LocalDate chartStartDate) {
         this.chartStartDate = chartStartDate;
     }
     //endregion Properties
