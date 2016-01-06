@@ -100,6 +100,14 @@ public class MainframeController {
     public void setChartStartDate(LocalDate chartStartDate) {
         this.chartStartDate = chartStartDate;
     }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
     //endregion Properties
 }
 
