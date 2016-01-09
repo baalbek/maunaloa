@@ -12,6 +12,7 @@ import javafx.util.converter.DoubleStringConverter;
 import maunaloa.derivatives.PurchaseCategory;
 import maunaloa.derivatives.RiscItem;
 import maunaloa.stocks.StockPriceFx;
+import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
@@ -172,5 +173,7 @@ public class DerivativesController {
     //region Properties
 
     private StockPriceFx stockPrice = new StockPriceFx();
+    private nz.sodium.Cell<StockPrice> stockPriceCell;
     //endregion Properties
+
 }

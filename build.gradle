@@ -1,5 +1,4 @@
 apply plugin: 'java'
-archivesBaseName = 'maunaloa'
 group = 'rcstadheim'
 
 ext.springVersion = '4.2.3.RELEASE'
@@ -16,7 +15,7 @@ ext.coltVersion = '1.2.0'
 ext.ehcacheVersion = '1.0.1'
 ext.ehcacheSpringVersion = '1.2.0'
 //ext.reactiveVersion = '1.1.0'
-//ext.sodiumVersion = '1.0.0'
+ext.sodiumVersion = '1.0.0'
 
 
 
@@ -84,7 +83,7 @@ dependencies {
 
     //------------------- Reactive -------------------
     //compile "io.reactive:rxjava:$reactiveVersion"
-    //compile "nz.sodium:sodium:$sodiumVersion"
+    compile "nz.sodium:sodium:$sodiumVersion"
     //------------------- HtmlUnit-------------------
     compile "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
     //------------------- diverse -------------------

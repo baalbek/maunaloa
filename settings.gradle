@@ -1,3 +1,4 @@
+rootProject.name = 'maunaloa'
 includeFlat 'oahu'
 includeFlat 'oahux'
 includeFlat 'ranoraraku'
