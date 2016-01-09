@@ -21,19 +21,34 @@ import java.util.Optional;
 public class MainframeController {
     //legendPane.managedProperty().bind(legendPane.visibleProperty());
     //region FXML
-    @FXML private ChartCanvasController candlesticksController;
-    @FXML private ChoiceBox cbTickers;
-    @FXML private ChoiceBox cbShiftAmount;
-    @FXML private ToggleGroup rgDerivatives;
-    @FXML private CheckBox cxLoadOptionsHtml;
-    @FXML private CheckBox cxLoadStockHtml;
-    @FXML private CheckBox cxComments;
-    @FXML private CheckBox cxIsCloud;
-    @FXML private TabPane myTabPane;
-    @FXML private Label lblLocalMongodbUrl;
-    @FXML private Label lblSqlUrl;
-    @FXML private Button btnShiftLeft;
-    @FXML private Button btnShiftRight;
+    @FXML
+    private ChartCanvasController candlesticksController;
+    @FXML
+    private DerivativesController optionsController;
+    @FXML
+    private ChoiceBox cbTickers;
+    @FXML
+    private ChoiceBox cbShiftAmount;
+    @FXML
+    private ToggleGroup rgDerivatives;
+    @FXML
+    private CheckBox cxLoadOptionsHtml;
+    @FXML
+    private CheckBox cxLoadStockHtml;
+    @FXML
+    private CheckBox cxComments;
+    @FXML
+    private CheckBox cxIsCloud;
+    @FXML
+    private TabPane myTabPane;
+    @FXML
+    private Label lblLocalMongodbUrl;
+    @FXML
+    private Label lblSqlUrl;
+    @FXML
+    private Button btnShiftLeft;
+    @FXML
+    private Button btnShiftRight;
     /*
     @FXML private CheckMenuItem mnuShiftAllCharts;
     @FXML private CheckMenuItem mnuIsShiftDays;
@@ -64,8 +79,18 @@ public class MainframeController {
 
         isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
         */
-
+        initControllers();
     }
+
+    private void initControllers() {
+        if (optionsController != null) {
+            optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
+            optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
+            optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
+            //optionsController.setDerivativeRepository(getDerivativeRepository());
+        }
+    }
+
 
     //endregion Initialize
 

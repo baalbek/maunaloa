@@ -1,6 +1,11 @@
 package maunaloa.controllers;
 
+import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,13 +16,16 @@ import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import maunaloa.derivatives.PurchaseCategory;
 import maunaloa.derivatives.RiscItem;
+import maunaloa.repository.DerivativeRepository;
 import maunaloa.stocks.StockPriceFx;
-import oahu.financial.StockPrice;
+import oahu.financial.Stock;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by rcs on 06.01.16.
@@ -112,13 +120,13 @@ public class DerivativesController {
 
         cbRisc.getItems().addAll(cbitems);
         cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable, value, newValue) -> {
-            //calcRisc(cbitems.get(newValue.intValue()));
+            calcRisc(cbitems.get(newValue.intValue()));
         });
         txRisc.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 double newRiscValue = Double.parseDouble(newValue.replace(",", "."));
                 if (newRiscValue > 0) {
-                    //calcRisc(new RiscItem(newRiscValue));
+                    calcRisc(new RiscItem(newRiscValue));
                 }
             } catch (Exception ex) {
             }
@@ -170,10 +178,85 @@ public class DerivativesController {
     }
     //endregion Initialization methods
 
+
+    //region Private Methods
+    private void calcRisc(RiscItem riscItem) {
+        /*
+        fireCalculatedEvent(getSelectedDerivatives(fx -> {
+            fx.setRisk(riscItem.getValue());
+        }));
+        */
+    }
+    private void _updateDerivatives() {
+        String ticker = this.stock.getTicker();
+        try {
+            switch (_selectedDerivativeProperty.get().getUserData().toString()) {
+                case "calls":
+                    log.info(String.format("Fetching calls for %s", ticker));
+                    load((s) -> derivativeRepository.getCalls(s), ticker);
+                    break;
+                case "puts":
+                    log.info(String.format("Fetching puts for %s", ticker));
+                    load((s) -> derivativeRepository.getPuts(s), ticker);
+                    break;
+                case "all":
+                    //loadAll();
+                    break;
+            }
+            if (_selectedLoadStockProperty.get()) {
+                derivativeRepository.getSpot(ticker).ifPresent(spot -> {
+                    stockPrice.setPrice(spot);
+                    //===>>> fireAssignStockPriceEvent(spot);
+                });
+            }
+        }
+        catch (FailingHttpStatusCodeException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid URL");
+            alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
+            alert.showAndWait();
+        }
+    }
+    private void load(Function<String,Collection<DerivativeFx>> action, String ticker) {
+        if  (_selectedLoadDerivativesProperty.get()) {
+            ObservableList<DerivativeFx> items = FXCollections.observableArrayList(action.apply(ticker));
+            derivativesTableView.getItems().setAll(items);
+        }
+    }
+    //endregion Private Methods
+
     //region Properties
 
+    private DerivativeRepository derivativeRepository;
+    private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
+    private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
+    private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<>();
     private StockPriceFx stockPrice = new StockPriceFx();
-    private nz.sodium.Cell<StockPrice> stockPriceCell;
-    //endregion Properties
+    private Stock stock;
 
+    private nz.sodium.Cell<Stock> stockPriceCell;
+
+    public void setStockPriceStream(nz.sodium.Stream<Stock> stockPriceStream) {
+        this.stockPriceCell = stockPriceStream.hold(null);
+        this.stockPriceCell.listen( s -> {
+            if (s == null) {
+                log.warn("Stock was null");
+                return;
+            }
+            stock = s;
+            _updateDerivatives();
+        });
+    }
+    public ObjectProperty<Toggle> selectedDerivativeProperty() {
+        return _selectedDerivativeProperty;
+    }
+
+    public BooleanProperty selectedLoadStockProperty() {
+        return _selectedLoadStockProperty;
+    }
+
+    public BooleanProperty selectedLoadDerivativesProperty() {
+        return _selectedLoadDerivativesProperty;
+    }
+    //endregion Properties
 }
