@@ -4,10 +4,22 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import oahux.controllers.ControllerEnum;
+import javafx.util.StringConverter;
+import maunaloa.converters.TickerFileNamer;
+import maunaloa.repository.DerivativeRepository;
+import nz.sodium.StreamSink;
+import oahu.exceptions.NotImplementedException;
+import oahu.financial.Stock;
+import oahu.financial.repository.StockMarketRepository;
+import oahu.functional.Procedure4;
+import oahux.chart.MaunaloaChart;
+import oahux.controllers.ControllerCategory;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -80,6 +92,7 @@ public class MainframeController {
         isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
         */
         initControllers();
+        initChoiceBoxTickers();
     }
 
     private void initControllers() {
@@ -87,43 +100,116 @@ public class MainframeController {
             optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
-            //optionsController.setDerivativeRepository(getDerivativeRepository());
+            optionsController.setMainframeController(this);
         }
+        Procedure4<ChartCanvasController,String,ControllerCategory,MaunaloaChart> initController =
+                (ChartCanvasController controller,
+                 String name,
+                 ControllerCategory location,
+                 MaunaloaChart chart) -> {
+                    controller.setControllerCategory(location);
+                    controller.setChart(chart);
+                    controller.setMainframeController(this);
+                    /*
+                    controller.setName(name);
+                    controller.setLocation(location);
+                    controller.setHub(this);
+                    controller.setChartStartDate(csd);
+                    */
+                    _controllers.put(location, controller);
+                    System.out.println("Setting up controller " + name);
+                };
+
+
+        initController.apply(candlesticksController, "Candlesticks", ControllerCategory.DAY, candlesticksChart);
     }
 
+    @SuppressWarnings("unchecked")
+    private void initChoiceBoxTickers() {
+        final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());
+        cbTickers.setConverter(new StringConverter<Stock>() {
+            @Override
+            public String toString(Stock o) {
+                return String.format("[%s] %s",o.getTicker(),o.getCompanyName());
+            }
+
+            @Override
+            public Stock fromString(String s) {
+                throw new NotImplementedException();
+            }
+        });
+        cbTickers.getItems().addAll(cbitems);
+        /*
+        Consumer<Stock> setStock = (Stock s) -> {
+            System.out.println(String.format("[ %d ] %s, category: %d",s.getOid(), s.getCompanyName(), s.getTickerCategory()));
+            switch (s.getTickerCategory()) {
+                case 1:
+                    candlesticksController.setStock(s);
+                    optionsController.setStock(s);
+                    weeksController.setStock(s);
+                    break;
+                case 2:
+                    osebxCandlesticksController.setStock(s);
+                    osebxWeeksController.setStock(s);
+                    break;
+                case 3:
+                    //--->>> obxCandlesticksController.setStock(s);
+                    //--->>> obxWeeksController.setStock(s);
+                    break;
+            }
+        };
+        */
+        optionsController.setStockPriceStream(stockChanged);
+        cbTickers.getSelectionModel().selectedIndexProperty().addListener(
+                (ObservableValue<? extends Number> observableValue, Number value, Number newValue) -> {
+                    tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
+                    Stock s = cbitems.get(newValue.intValue());
+                    ((StreamSink)stockChanged).send(s);
+                });
+
+    }
 
     //endregion Initialize
 
     //region ChartCanvasController
 
-    private Map<ControllerEnum,ChartCanvasController> _controllers = new HashMap<>();
+    private Map<ControllerCategory,ChartCanvasController> _controllers = new HashMap<>();
 
-    private static ControllerEnum controllerEnumfromInt(int i) {
+    private static ControllerCategory controllerEnumfromInt(int i) {
         switch (i) {
-            case 2: return ControllerEnum.DAY;
-            case 3: return ControllerEnum.WEEK;
-            case 4: return ControllerEnum.OSEBX_DAY;
-            case 5: return ControllerEnum.OSEBX_WEEK;
-            default: return ControllerEnum.EMPTY;
+            case 2: return ControllerCategory.DAY;
+            case 3: return ControllerCategory.WEEK;
+            case 4: return ControllerCategory.OSEBX_DAY;
+            case 5: return ControllerCategory.OSEBX_WEEK;
+            default: return ControllerCategory.EMPTY;
         }
     }
     private Optional<ChartCanvasController> currentController() {
         int index =  myTabPane.getSelectionModel().getSelectedIndex();
-        ControllerEnum ce = controllerEnumfromInt(index);
+        ControllerCategory ce = controllerEnumfromInt(index);
         return _controllers.containsKey(ce) ? Optional.of(_controllers.get(ce)) : Optional.empty();
     }
     //endregion ChartCanvasController
 
     //region Properties
+    private final nz.sodium.Stream<Stock> stockChanged = new StreamSink<>();
     private IntegerProperty shiftAmountProperty = new SimpleIntegerProperty(6);
     private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
     private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
+    private TickerFileNamer tickerFileNamer;
     private double width = 1400.0;
     private double height = 850.0;
     private LocalDate chartStartDate;
 
+    private DerivativeRepository derivativeRepository;
+    private StockMarketRepository stockRepository;
+    private MaunaloaChart candlesticksChart;
+
     public void setChartStartDate(LocalDate chartStartDate) {
         this.chartStartDate = chartStartDate;
+    }
+    public LocalDate getChartStartDate() {
+        return chartStartDate;
     }
 
     public void setWidth(double width) {
@@ -133,6 +219,27 @@ public class MainframeController {
     public void setHeight(double height) {
         this.height = height;
     }
+
+    public DerivativeRepository getDerivativeRepository() {
+        return derivativeRepository;
+    }
+    public void setDerivativeRepository(DerivativeRepository derivativeRepository) {
+        this.derivativeRepository = derivativeRepository;
+    }
+
+    public void setStockRepository(StockMarketRepository stockRepository) {
+        this.stockRepository = stockRepository;
+    }
+
+    public void setTickerFileNamer(TickerFileNamer tickerFileNamer) {
+        this.tickerFileNamer = tickerFileNamer;
+    }
+
+    public void setCandlesticksChart(MaunaloaChart candlesticksChart) {
+        this.candlesticksChart = candlesticksChart;
+    }
+
+
     //endregion Properties
 }
 

@@ -189,6 +189,7 @@ public class DerivativesController {
     }
     private void _updateDerivatives() {
         String ticker = this.stock.getTicker();
+        DerivativeRepository derivativeRepository = mainframeController.getDerivativeRepository();
         try {
             switch (_selectedDerivativeProperty.get().getUserData().toString()) {
                 case "calls":
@@ -198,9 +199,6 @@ public class DerivativesController {
                 case "puts":
                     log.info(String.format("Fetching puts for %s", ticker));
                     load((s) -> derivativeRepository.getPuts(s), ticker);
-                    break;
-                case "all":
-                    //loadAll();
                     break;
             }
             if (_selectedLoadStockProperty.get()) {
@@ -227,7 +225,7 @@ public class DerivativesController {
 
     //region Properties
 
-    private DerivativeRepository derivativeRepository;
+    private MainframeController mainframeController;
     private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
     private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
     private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<>();
@@ -258,5 +256,10 @@ public class DerivativesController {
     public BooleanProperty selectedLoadDerivativesProperty() {
         return _selectedLoadDerivativesProperty;
     }
+
+    public void setMainframeController(MainframeController mainframeController) {
+        this.mainframeController = mainframeController;
+    }
+
     //endregion Properties
 }

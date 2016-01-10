@@ -36,21 +36,21 @@
     </bean>
     -->
 
-    <!--
-    <bean id="tickerFileNamer" class="maunaloa.financial.TickerFileNamer"></bean>
+    <bean id="tickerFileNamer" class="maunaloa.converters.TickerFileNamer"/>
     <bean id="downloader" class="maunakea.financial.mocks.MockDownloader">
         <property name="htmlPath" value="file:///home/rcs/opt/java/netfondsjanitor/feed" />
         <property name="tickerFileNamer" ref="tickerFileNamer" />
     </bean>
-        -->
 
     <!-- END Downloader -->
 
+    <bean id="stockRepository" class="ranoraraku.models.impl.CachedStockMarketReposImpl">
+    </bean>
+
+
     <bean id="etrade" class="maunakea.financial.repository.NetfondsDerivatives">
-        <!--
-            <property name="downloader" ref="downloader" />
-            <property name="stockMarketRepos" ref="stockRepository" />
-        -->
+        <property name="downloader" ref="downloader" />
+        <property name="stockMarketRepos" ref="stockRepository" />
         <property name="calculator" ref="calculator" />
         <property name="derivativePriceType" value="1" />
     </bean>
@@ -62,9 +62,24 @@
         -->
     </bean>
 
+    <bean id="derivativeRepository" class="maunaloa.repository.DerivativeRepository">
+        <property name="etrade" ref="etrade" />
+        <property name="calculator" ref="calculator" />
+    </bean>
+
+    <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
+        <property name="hasVolume" value="true" />
+        <property name="isWeekly" value="false" />
+        <property name="colorRepos" ref="colorRepository" />
+    </bean>
+
     <bean id="mainframe-controller"
           class="maunaloa.controllers.MainframeController">
+        <property name="candlesticksChart" ref="chartCandlesticks" />
         <property name="chartStartDate" value="2012-02-01" />
+        <property name="stockRepository" ref="stockRepository" />
+        <property name="derivativeRepository" ref="derivativeRepository" />
+        <property name="tickerFileNamer" ref="tickerFileNamer" />
     </bean>
 </beans>
 
