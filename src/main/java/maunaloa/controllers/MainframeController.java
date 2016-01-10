@@ -17,6 +17,7 @@ import nz.sodium.StreamSink;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.repository.StockMarketRepository;
+import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.ControllerCategory;
@@ -25,6 +26,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * Created by rcs on 4/12/14.
@@ -159,14 +161,28 @@ public class MainframeController {
             }
         };
         */
+        Consumer<Stock> setStock = (stock) -> {
+            if (stock == null) {
+                Object prop = cbTickers.valueProperty().get();
+                if (prop == null) return;
+                stock = (Stock)prop;
+            }
+            tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
+            ((StreamSink)stockChanged).send(stock);
+        };
         optionsController.setStockPriceStream(stockChanged);
+
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(
                 (ObservableValue<? extends Number> observableValue, Number value, Number newValue) -> {
-                    tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
                     Stock s = cbitems.get(newValue.intValue());
-                    ((StreamSink)stockChanged).send(s);
+                    setStock.accept(s);
                 });
 
+        cxLoadOptionsHtml.selectedProperty().addListener(e -> {
+            if (cxLoadOptionsHtml.isSelected()) {
+                setStock.accept(null);
+            }
+        });
     }
 
     //endregion Initialize

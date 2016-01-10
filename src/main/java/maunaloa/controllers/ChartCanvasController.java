@@ -29,7 +29,7 @@ public class ChartCanvasController {
         this.controllerCategory = controllerCategory;
     }
     LocalDate getLastCurrentDateShown() {
-        return chart.getLastCurrentDateShown();
+        return LocalDate.of(2015,8,3); //chart.getLastCurrentDateShown();
     }
     //endregion Properties
 }
