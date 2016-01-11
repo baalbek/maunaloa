@@ -17,7 +17,6 @@ import nz.sodium.StreamSink;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.repository.StockMarketRepository;
-import oahu.functional.Procedure0;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.ControllerCategory;
@@ -67,7 +66,8 @@ public class MainframeController {
     @FXML private CheckMenuItem mnuShiftAllCharts;
     @FXML private CheckMenuItem mnuIsShiftDays;
     */
-    @FXML private BorderPane myBorderPane;
+    @FXML
+    private BorderPane myBorderPane;
 
     //endregion FXML
 
@@ -128,7 +128,7 @@ public class MainframeController {
 
     @SuppressWarnings("unchecked")
     private void initChoiceBoxTickers() {
-        final ObservableList<Stock> cbitems = FXCollections.observableArrayList(stockRepository.getStocks());
+        final ObservableList<Stock> cbitems = FXCollections.observableArrayList(getStockRepository().getStocks());
         cbTickers.setConverter(new StringConverter<Stock>() {
             @Override
             public String toString(Stock o) {
@@ -171,6 +171,7 @@ public class MainframeController {
             ((StreamSink)stockChanged).send(stock);
         };
         optionsController.setStockPriceStream(stockChanged);
+        candlesticksController.setStockPriceStream(stockChanged);
 
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(
                 (ObservableValue<? extends Number> observableValue, Number value, Number newValue) -> {
@@ -246,6 +247,9 @@ public class MainframeController {
     public void setStockRepository(StockMarketRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
+    public StockMarketRepository getStockRepository() {
+        return stockRepository;
+    }
 
     public void setTickerFileNamer(TickerFileNamer tickerFileNamer) {
         this.tickerFileNamer = tickerFileNamer;
@@ -254,6 +258,7 @@ public class MainframeController {
     public void setCandlesticksChart(MaunaloaChart candlesticksChart) {
         this.candlesticksChart = candlesticksChart;
     }
+
 
 
     //endregion Properties
