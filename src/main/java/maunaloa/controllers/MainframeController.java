@@ -103,21 +103,18 @@ public class MainframeController {
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
             optionsController.setMainframeController(this);
+            optionsController.setStockPriceStream(stockChanged);
         }
         Procedure4<ChartCanvasController,String,ControllerCategory,MaunaloaChart> initController =
                 (ChartCanvasController controller,
                  String name,
                  ControllerCategory location,
                  MaunaloaChart chart) -> {
+                    // controller.setName(name);
                     controller.setControllerCategory(location);
                     controller.setChart(chart);
                     controller.setMainframeController(this);
-                    /*
-                    controller.setName(name);
-                    controller.setLocation(location);
-                    controller.setHub(this);
-                    controller.setChartStartDate(csd);
-                    */
+                    controller.setStockPriceStream(stockChanged);
                     _controllers.put(location, controller);
                     System.out.println("Setting up controller " + name);
                 };
@@ -170,8 +167,6 @@ public class MainframeController {
             tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
             ((StreamSink)stockChanged).send(stock);
         };
-        optionsController.setStockPriceStream(stockChanged);
-        candlesticksController.setStockPriceStream(stockChanged);
 
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(
                 (ObservableValue<? extends Number> observableValue, Number value, Number newValue) -> {
