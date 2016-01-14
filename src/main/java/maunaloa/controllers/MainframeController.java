@@ -119,7 +119,7 @@ public class MainframeController {
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
             optionsController.setMainframeController(this);
-            optionsController.setStockPriceStream(stockChanged);
+            optionsController.addStockCellListenerFor(stockCatAllCell);
         }
         Procedure4<ChartCanvasController,ControllerCategory,MaunaloaChart,nz.sodium.Cell<Stock>> initController =
                 (controller,
@@ -132,7 +132,6 @@ public class MainframeController {
                     controller.addStockCellListenerFor(stockCell);
                     _controllers.put(location, controller);
                 };
-
 
         initController.apply(candlesticksController, ControllerCategory.DAY, candlesticksChart, stockCat1Cell);
         initController.apply(weeksController, ControllerCategory.WEEK, weeklyChart, stockCat1Cell);
@@ -222,6 +221,7 @@ public class MainframeController {
     private final nz.sodium.Stream<Stock> stockChanged = new StreamSink<>();
     private final nz.sodium.Cell<Stock> stockCat1Cell = stockChanged.filter(x -> x.getTickerCategory() == 1).hold(null);
     private final nz.sodium.Cell<Stock> stockCat2Cell = stockChanged.filter(x -> x.getTickerCategory() == 2).hold(null);
+    private final nz.sodium.Cell<Stock> stockCatAllCell = stockChanged.hold(null);
     //endregion Events
 
     //region Properties

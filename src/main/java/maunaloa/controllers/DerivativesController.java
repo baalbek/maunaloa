@@ -236,9 +236,8 @@ public class DerivativesController {
 
     private nz.sodium.Cell<Stock> stockPriceCell;
 
-    public void setStockPriceStream(nz.sodium.Stream<Stock> stockPriceStream) {
-        this.stockPriceCell = stockPriceStream.hold(null);
-        this.stockPriceCell.listen( s -> {
+    public void addStockCellListenerFor(nz.sodium.Cell<Stock> cell) {
+        cell.listen( s -> {
             if (s == null) {
                 log.warn("Stock was null");
                 return;
@@ -247,6 +246,7 @@ public class DerivativesController {
             _updateDerivatives();
         });
     }
+
     public ObjectProperty<Toggle> selectedDerivativeProperty() {
         return _selectedDerivativeProperty;
     }
