@@ -218,11 +218,13 @@ public class MainframeController {
     }
     //endregion ChartCanvasController
 
-    //region Properties
+    //region Events
     private final nz.sodium.Stream<Stock> stockChanged = new StreamSink<>();
     private final nz.sodium.Cell<Stock> stockCat1Cell = stockChanged.filter(x -> x.getTickerCategory() == 1).hold(null);
     private final nz.sodium.Cell<Stock> stockCat2Cell = stockChanged.filter(x -> x.getTickerCategory() == 2).hold(null);
+    //endregion Events
 
+    //region Properties
     private IntegerProperty shiftAmountProperty = new SimpleIntegerProperty(6);
     private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
     private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
