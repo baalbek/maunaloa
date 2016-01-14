@@ -36,30 +36,46 @@ public class MainframeController {
     //region FXML
     @FXML
     private ChartCanvasController candlesticksController;
+
+    @FXML
+    private ChartCanvasController weeksController;
+
     @FXML
     private DerivativesController optionsController;
+
     @FXML
     private ChoiceBox cbTickers;
+
     @FXML
     private ChoiceBox cbShiftAmount;
+
     @FXML
     private ToggleGroup rgDerivatives;
+
     @FXML
     private CheckBox cxLoadOptionsHtml;
+
     @FXML
     private CheckBox cxLoadStockHtml;
+
     @FXML
     private CheckBox cxComments;
+
     @FXML
     private CheckBox cxIsCloud;
+
     @FXML
     private TabPane myTabPane;
+
     @FXML
     private Label lblLocalMongodbUrl;
+
     @FXML
     private Label lblSqlUrl;
+
     @FXML
     private Button btnShiftLeft;
+
     @FXML
     private Button btnShiftRight;
     /*
@@ -105,22 +121,21 @@ public class MainframeController {
             optionsController.setMainframeController(this);
             optionsController.setStockPriceStream(stockChanged);
         }
-        Procedure4<ChartCanvasController,String,ControllerCategory,MaunaloaChart> initController =
-                (ChartCanvasController controller,
-                 String name,
-                 ControllerCategory location,
-                 MaunaloaChart chart) -> {
-                    // controller.setName(name);
+        Procedure4<ChartCanvasController,ControllerCategory,MaunaloaChart,nz.sodium.Cell<Stock>> initController =
+                (controller,
+                 location,
+                 chart,
+                 stockCell) -> {
                     controller.setControllerCategory(location);
                     controller.setChart(chart);
                     controller.setMainframeController(this);
-                    controller.setStockPriceStream(stockChanged);
+                    controller.addStockCellListenerFor(stockCell);
                     _controllers.put(location, controller);
-                    System.out.println("Setting up controller " + name);
                 };
 
 
-        initController.apply(candlesticksController, "Candlesticks", ControllerCategory.DAY, candlesticksChart);
+        initController.apply(candlesticksController, ControllerCategory.DAY, candlesticksChart, stockCat1Cell);
+        initController.apply(weeksController, ControllerCategory.WEEK, weeklyChart, stockCat1Cell);
     }
 
     @SuppressWarnings("unchecked")
@@ -205,6 +220,9 @@ public class MainframeController {
 
     //region Properties
     private final nz.sodium.Stream<Stock> stockChanged = new StreamSink<>();
+    private final nz.sodium.Cell<Stock> stockCat1Cell = stockChanged.filter(x -> x.getTickerCategory() == 1).hold(null);
+    private final nz.sodium.Cell<Stock> stockCat2Cell = stockChanged.filter(x -> x.getTickerCategory() == 2).hold(null);
+
     private IntegerProperty shiftAmountProperty = new SimpleIntegerProperty(6);
     private BooleanProperty shiftBothChartsProperty = new SimpleBooleanProperty(true);
     private BooleanProperty isShiftDaysProperty = new SimpleBooleanProperty(true);
@@ -216,6 +234,7 @@ public class MainframeController {
     private DerivativeRepository derivativeRepository;
     private StockMarketRepository stockRepository;
     private MaunaloaChart candlesticksChart;
+    private MaunaloaChart weeklyChart;
 
     public void setChartStartDate(LocalDate chartStartDate) {
         this.chartStartDate = chartStartDate;
@@ -254,6 +273,9 @@ public class MainframeController {
         this.candlesticksChart = candlesticksChart;
     }
 
+    public void setWeeklyChart(MaunaloaChart weeklyChart) {
+        this.weeklyChart = weeklyChart;
+    }
 
 
     //endregion Properties

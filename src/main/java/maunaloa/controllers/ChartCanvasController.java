@@ -35,6 +35,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private TextField chartDate;
     //endregion FXML
 
+    //region Shift
+
+
+    //endregion Shift
+
     //region Init
     public void initialize() {
         InvalidationListener listener = e -> {
@@ -73,6 +78,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         return LocalDate.of(2015,2,16); //chart.getLastCurrentDateShown();
     }
 
+    /*
     private nz.sodium.Cell<Stock> stockPriceCell;
     public void setStockPriceStream(nz.sodium.Stream<Stock> stockPriceStream) {
         this.stockPriceCell = stockPriceStream.hold(null);
@@ -80,6 +86,17 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             if (s == null) {
                 return;
             }
+            stock = s;
+            chart.draw(myCanvas);
+        });
+    }
+    */
+    public void addStockCellListenerFor(nz.sodium.Cell<Stock> cell) {
+        cell.listen( s -> {
+            if (s == null) {
+                return;
+            }
+            //if (s.getTickerCategory() == )
             stock = s;
             chart.draw(myCanvas);
         });
@@ -102,12 +119,12 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
     @Override
     public void setVruler(IRuler<Double> ruler) {
-
+        this.vruler = ruler;
     }
 
     @Override
     public void setHruler(IRuler<LocalDate> ruler) {
-
+        this.vruler = ruler;
     }
     //endregion MaunaloaChartViewModel
 }
