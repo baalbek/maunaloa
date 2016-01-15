@@ -127,4 +127,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         this.vruler = ruler;
     }
     //endregion MaunaloaChartViewModel
+
+    //region Shift
+
+    //endregion Shift
 }

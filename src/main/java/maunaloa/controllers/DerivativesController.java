@@ -194,11 +194,11 @@ public class DerivativesController {
             switch (_selectedDerivativeProperty.get().getUserData().toString()) {
                 case "calls":
                     log.info(String.format("Fetching calls for %s", ticker));
-                    load((s) -> derivativeRepository.getCalls(s), ticker);
+                    load(derivativeRepository::getCalls, ticker);
                     break;
                 case "puts":
                     log.info(String.format("Fetching puts for %s", ticker));
-                    load((s) -> derivativeRepository.getPuts(s), ticker);
+                    load(derivativeRepository::getPuts, ticker);
                     break;
             }
             if (_selectedLoadStockProperty.get()) {
@@ -215,6 +215,7 @@ public class DerivativesController {
             alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
             alert.showAndWait();
             */
+            ex.printStackTrace();
         }
     }
     private void load(Function<String,Collection<DerivativeFx>> action, String ticker) {
@@ -225,17 +226,7 @@ public class DerivativesController {
     }
     //endregion Private Methods
 
-    //region Properties
-
-    private MainframeController mainframeController;
-    private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
-    private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
-    private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<>();
-    private StockPriceFx stockPrice = new StockPriceFx();
-    private Stock stock;
-
-    private nz.sodium.Cell<Stock> stockPriceCell;
-
+    //region Events
     public void addStockCellListenerFor(nz.sodium.Cell<Stock> cell) {
         cell.listen( s -> {
             if (s == null) {
@@ -246,6 +237,16 @@ public class DerivativesController {
             _updateDerivatives();
         });
     }
+    //endregion Events
+
+    //region Properties
+
+    private MainframeController mainframeController;
+    private BooleanProperty _selectedLoadStockProperty = new SimpleBooleanProperty();
+    private BooleanProperty _selectedLoadDerivativesProperty = new SimpleBooleanProperty();
+    private ObjectProperty<Toggle> _selectedDerivativeProperty = new SimpleObjectProperty<>();
+    private StockPriceFx stockPrice = new StockPriceFx();
+    private Stock stock;
 
     public ObjectProperty<Toggle> selectedDerivativeProperty() {
         return _selectedDerivativeProperty;
