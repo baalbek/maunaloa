@@ -119,7 +119,7 @@ public class MainframeController {
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
             optionsController.setMainframeController(this);
-            optionsController.addStockCellListenerFor(stockCatAllCell);
+            optionsController.addStockChangedListener(stockCatAllCell);
         }
         Procedure4<ChartCanvasController,ControllerCategory,MaunaloaChart,nz.sodium.Cell<Stock>> initController =
                 (controller,
@@ -129,12 +129,14 @@ public class MainframeController {
                     controller.setControllerCategory(location);
                     controller.setChart(chart);
                     controller.setMainframeController(this);
-                    controller.addStockCellListenerFor(stockCell);
+                    controller.addStockChangedListener(stockCell);
                     _controllers.put(location, controller);
+                    controller.addOptionRiscCalculatedListener(optionsController.riscCalculatedCell);
                 };
 
         initController.apply(candlesticksController, ControllerCategory.DAY, candlesticksChart, stockCat1Cell);
         initController.apply(weeksController, ControllerCategory.WEEK, weeklyChart, stockCat1Cell);
+
     }
 
     @SuppressWarnings("unchecked")

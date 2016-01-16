@@ -12,9 +12,11 @@ import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
 import oahux.controllers.ControllerCategory;
 import oahux.controllers.MaunaloaChartViewModel;
+import oahux.financial.DerivativeFx;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by rcs on 30.11.15.
@@ -54,6 +56,23 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     }
     //endregion Init
 
+    //region Events
+    public void addStockChangedListener(nz.sodium.Cell<Stock> cell) {
+        cell.listen( s -> {
+            if (s == null) {
+                return;
+            }
+            stock = s;
+            chart.draw(myCanvas);
+        });
+    }
+    public void addOptionRiscCalculatedListener(nz.sodium.Cell<List<DerivativeFx>> cell) {
+
+    }
+    //endregion Events
+
+
+
     //region Properties
     private ControllerCategory controllerCategory;
     private MainframeController mainframeController;
@@ -77,31 +96,6 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     LocalDate getLastCurrentDateShown() {
         return LocalDate.of(2015,2,16); //chart.getLastCurrentDateShown();
     }
-
-    /*
-    private nz.sodium.Cell<Stock> stockPriceCell;
-    public void setStockPriceStream(nz.sodium.Stream<Stock> stockPriceStream) {
-        this.stockPriceCell = stockPriceStream.hold(null);
-        this.stockPriceCell.listen( s -> {
-            if (s == null) {
-                return;
-            }
-            stock = s;
-            chart.draw(myCanvas);
-        });
-    }
-    */
-    public void addStockCellListenerFor(nz.sodium.Cell<Stock> cell) {
-        cell.listen( s -> {
-            if (s == null) {
-                return;
-            }
-            //if (s.getTickerCategory() == )
-            stock = s;
-            chart.draw(myCanvas);
-        });
-    }
-
     //endregion Properties
 
     //region MaunaloaChartViewModel

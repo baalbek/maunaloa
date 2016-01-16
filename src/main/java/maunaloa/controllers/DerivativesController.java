@@ -18,6 +18,7 @@ import maunaloa.derivatives.PurchaseCategory;
 import maunaloa.derivatives.RiscItem;
 import maunaloa.repository.DerivativeRepository;
 import maunaloa.stocks.StockPriceFx;
+import nz.sodium.StreamSink;
 import oahu.financial.Stock;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
@@ -25,6 +26,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -180,12 +182,17 @@ public class DerivativesController {
 
 
     //region Private Methods
-    private void calcRisc(RiscItem riscItem) {
-        /*
-        fireCalculatedEvent(getSelectedDerivatives(fx -> {
-            fx.setRisk(riscItem.getValue());
-        }));
-        */
+    private List<DerivativeFx> getSelectedDerivatives(Consumer<DerivativeFx> processDerivative) {
+        List<DerivativeFx> selectedOptions = new ArrayList<>();
+        for (DerivativeFx fx : derivativesTableView.getItems()) {
+            if (fx.isCheckedProperty().get() == true) {
+                if (processDerivative != null) {
+                    processDerivative.accept(fx);
+                }
+                selectedOptions.add(fx);
+            }
+        }
+        return selectedOptions;
     }
     private void _updateDerivatives() {
         String ticker = this.stock.getTicker();
@@ -227,7 +234,16 @@ public class DerivativesController {
     //endregion Private Methods
 
     //region Events
-    public void addStockCellListenerFor(nz.sodium.Cell<Stock> cell) {
+    private final nz.sodium.Stream<List<DerivativeFx>> riscCalculated = new StreamSink<>();
+    public final nz.sodium.Cell<List<DerivativeFx>> riscCalculatedCell = riscCalculated.hold(null);
+
+    @SuppressWarnings("unchecked")
+    private void calcRisc(RiscItem riscItem) {
+        List<DerivativeFx> selected = getSelectedDerivatives(fx -> fx.setRisk(riscItem.getValue()));
+        ((StreamSink)riscCalculated).send(selected);
+    }
+
+    public void addStockChangedListener(nz.sodium.Cell<Stock> cell) {
         cell.listen( s -> {
             if (s == null) {
                 log.warn("Stock was null");
