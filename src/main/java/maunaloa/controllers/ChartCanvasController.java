@@ -67,7 +67,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         });
     }
     public void addOptionRiscCalculatedListener(nz.sodium.Cell<List<DerivativeFx>> cell) {
-
+        cell.listen(x -> {
+            if (x == null) {
+                return;
+            }
+        });
     }
     //endregion Events
 

@@ -44,6 +44,9 @@
 
     <!-- END Downloader -->
 
+    <bean id="chartItemRepository" class="maunaloa.repository.DefaultChartItemRepository">
+    </bean>
+
     <bean id="stockRepository" class="ranoraraku.models.impl.CachedStockMarketReposImpl">
     </bean>
 
@@ -87,6 +90,7 @@
         <property name="chartStartDate" value="2012-02-01" />
 
         <!-- Repos -->
+        <property name="chartItemRepository" ref="chartItemRepository" />
         <property name="stockRepository" ref="stockRepository" />
         <property name="derivativeRepository" ref="derivativeRepository" />
 

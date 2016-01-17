@@ -185,7 +185,7 @@ public class DerivativesController {
     private List<DerivativeFx> getSelectedDerivatives(Consumer<DerivativeFx> processDerivative) {
         List<DerivativeFx> selectedOptions = new ArrayList<>();
         for (DerivativeFx fx : derivativesTableView.getItems()) {
-            if (fx.isCheckedProperty().get() == true) {
+            if (fx.isCheckedProperty().get()) {
                 if (processDerivative != null) {
                     processDerivative.accept(fx);
                 }
