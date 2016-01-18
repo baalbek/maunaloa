@@ -44,7 +44,7 @@
 
     <!-- END Downloader -->
 
-    <bean id="chartItemRepository" class="maunaloa.repository.DefaultChartItemRepository">
+    <bean id="chartItemRepository" class="maunaloa.repository.impl.DefaultChartItemRepository">
     </bean>
 
     <bean id="stockRepository" class="ranoraraku.models.impl.CachedStockMarketReposImpl">
@@ -65,7 +65,7 @@
         -->
     </bean>
 
-    <bean id="derivativeRepository" class="maunaloa.repository.DerivativeRepository">
+    <bean id="derivativeRepository" class="maunaloa.repository.impl.DefaultDerivativeRepository">
         <property name="etrade" ref="etrade" />
         <property name="calculator" ref="calculator" />
     </bean>

@@ -1,6 +1,7 @@
-package maunaloa.repository;
+package maunaloa.repository.impl;
 
 import maunaloa.charts.RiscLines;
+import maunaloa.repository.ChartItemRepository;
 import oahu.dto.Tuple2;
 import oahu.financial.Stock;
 import oahux.controllers.ControllerCategory;
