@@ -23,7 +23,8 @@
         <property name="background" value="#F5DEB3" />
     </bean>
 
-    <bean id="calculator" class="vega.financial.calculator.BlackScholes" />
+    <bean id="calculator" class="vega.financial.calculator.BlackScholes">
+    </bean>
 
     <!-- Downloader -->
     <!--
@@ -65,10 +66,13 @@
         -->
     </bean>
 
+    <!--
     <bean id="derivativeRepository" class="maunaloa.repository.impl.DefaultDerivativeRepository">
         <property name="etrade" ref="etrade" />
         <property name="calculator" ref="calculator" />
     </bean>
+    -->
+    <bean id="derivativeRepository" class="maunaloa.repository.impl.SimpleDerivativeRepository" />
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="true" />
