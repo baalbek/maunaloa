@@ -1,6 +1,7 @@
 package maunaloa.repository.impl;
 
 import maunaloa.derivatives.DerivativeFxImpl;
+import maunaloa.repository.DerivativeRepository;
 import oahu.dto.Tuple3;
 import oahu.financial.DerivativePrice;
 import oahu.financial.OptionCalculator;
@@ -15,19 +16,22 @@ import java.util.function.Function;
  * Created by rcs on 09.01.16.
  *
  */
-public class DefaultDerivativeRepository {
+public class DefaultDerivativeRepository implements DerivativeRepository {
 
-    //region Public Methods
+    //region interface DerivativeRepository
     @SuppressWarnings("unchecked")
+    @Override
     public Collection<DerivativeFx> getCalls(String ticker) {
         return (Collection<DerivativeFx>)getItems(ticker, Tuple3::second);
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public Collection<DerivativeFx> getPuts(String ticker) {
         return (Collection<DerivativeFx>)getItems(ticker, Tuple3::third);
     }
 
+    @Override
     public Optional<StockPrice> getSpot(String ticker) {
         return Optional.empty();
     }

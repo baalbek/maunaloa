@@ -71,6 +71,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             if (x == null) {
                 return;
             }
+            for (DerivativeFx fx : x) {
+                System.out.println(String.format("Calculated %s %.2f", fx.getTicker(), fx.stockPriceRiskProperty().get()));
+            }
         });
     }
     //endregion Events
