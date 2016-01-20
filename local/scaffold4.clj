@@ -17,6 +17,8 @@
 
 (defn srepos [] (bn "stockRepository"))
 
+(defn etrade [] (bn "etrade"))
+
 (def dx (LocalDate/of 2012 1 1))
 
 (def dx1 (LocalDate/of 2014 8 29))
@@ -25,9 +27,15 @@
 
 (defn sp [ticker] (.findStockPrices (srepos) ticker dx))
 
+(defn calls [ticker]
+  (.getCalls (etrade) ticker))
+
 (def cndl cm/candlestick-weeks)
 
 (def fi vc/find-index)
+
+(defn opx [ticker]
+  (.findDerivative (srepos) ticker))
 
 ;(def yar (map #(.getDx %) (sp "YAR")))
 ;(def nhy (map #(.getDx %) (sp "NHY")))

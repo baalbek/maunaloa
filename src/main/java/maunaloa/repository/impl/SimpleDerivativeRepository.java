@@ -31,10 +31,14 @@ public class SimpleDerivativeRepository implements DerivativeRepository {
         StockPriceBean stockPrice = new StockPriceBean(LocalDate.now(), 100,120,90,105, 1000000);
         stockPrice.setStock(stock);
 
+        /*
         java.util.Date exp = new java.util.Date();
         exp.setYear(2016 - 1900);
         exp.setMonth(6);
         exp.setDate(1);
+        */
+
+        LocalDate exp = LocalDate.of(2016,6,1);
 
         OptionCalculator calc = new DummyOptionCalculator(); //new vega.financial.calculator.BlackScholes();
 

@@ -12,6 +12,7 @@ import oahu.financial.StockPrice;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -119,7 +120,7 @@ public class DerivativeFxImpl implements DerivativeFx {
     }
 
     @Override
-    public Date getExpiry() {
+    public LocalDate getExpiry() {
         return derivativePrice.getDerivative().getExpiry();
     }
 

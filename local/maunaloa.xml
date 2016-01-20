@@ -52,7 +52,7 @@
     </bean>
 
 
-    <bean id="etrade" class="maunakea.financial.repository.NetfondsDerivatives">
+    <bean id="etrade" class="kilauea.financial.repository.NetfondsDerivatives">
         <property name="downloader" ref="downloader" />
         <property name="stockMarketRepos" ref="stockRepository" />
         <property name="calculator" ref="calculator" />
@@ -66,13 +66,13 @@
         -->
     </bean>
 
-    <!--
     <bean id="derivativeRepository" class="maunaloa.repository.impl.DefaultDerivativeRepository">
         <property name="etrade" ref="etrade" />
         <property name="calculator" ref="calculator" />
     </bean>
-    -->
+    <!--
     <bean id="derivativeRepository" class="maunaloa.repository.impl.SimpleDerivativeRepository" />
+    -->
 
     <bean id="chartCandlesticks" class="maunaloa.views.charts.CT1" scope="prototype">
         <property name="hasVolume" value="true" />
