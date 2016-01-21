@@ -106,12 +106,11 @@ public class DerivativesController {
     private List<RiscItem> riscItems() {
         List<RiscItem> result = new ArrayList<>();
 
-        for (int i=1; i<11; ++i) {
-            result.add(new RiscItem(i));
-            result.add(new RiscItem(i+0.5));
+        for (int i=1; i<10; ++i) {
+            result.add(new RiscItem(i*0.1));
         }
-        for (int i=11; i<25; ++i) {
-            result.add(new RiscItem(i));
+        for (int i=0; i<10; ++i) {
+            result.add(new RiscItem(1.0+i*0.25));
         }
         return result;
     }
@@ -126,6 +125,16 @@ public class DerivativesController {
         });
         txRisc.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
+                if (newValue == null) {
+                    return;
+                }
+                Character lastChar = newValue.charAt(newValue.length()-1);
+                if (lastChar.equals('.')) {
+                    return;
+                }
+                if (lastChar.equals(',')) {
+                    return;
+                }
                 double newRiscValue = Double.parseDouble(newValue.replace(",", "."));
                 if (newRiscValue > 0) {
                     calcRisc(new RiscItem(newRiscValue));

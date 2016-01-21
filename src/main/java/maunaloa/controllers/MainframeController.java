@@ -182,8 +182,9 @@ public class MainframeController {
                 if (prop == null) return;
                 stock = (Stock)prop;
             }
-            tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
+            System.out.println("TickerFileNamer date: " + tickerFileNamer.getDownloadDate());
             ((StreamSink)stockChanged).send(stock);
+            tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
         };
 
         cbTickers.getSelectionModel().selectedIndexProperty().addListener(

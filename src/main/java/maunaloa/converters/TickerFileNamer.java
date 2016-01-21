@@ -22,4 +22,8 @@ public class TickerFileNamer implements Function<String,String> {
     public void setDownloadDate(LocalDate date) {
         downloadDate = date;
     }
+
+    public LocalDate getDownloadDate() {
+        return downloadDate;
+    }
 }

@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import maunaloa.charts.RiscLines;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -72,7 +73,10 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
                 return;
             }
             for (DerivativeFx fx : x) {
-                System.out.println(String.format("Calculated %s %.2f", fx.getTicker(), fx.stockPriceRiskProperty().get()));
+                //System.out.println(String.format("Calculated %s %.2f", fx.getTicker(), fx.stockPriceRiskProperty().get()));
+                RiscLines rl = new RiscLines(fx, vruler);
+                myPane.getChildren().add(rl.view());
+                System.out.println("Adding " + rl);
             }
         });
     }
@@ -85,8 +89,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private MainframeController mainframeController;
     private MaunaloaChart chart;
     private Stock stock;
-    private IRuler vruler;
-    private IRuler hruler;
+    private IRuler<Double> vruler;
+    private IRuler<LocalDate> hruler;
 
     public void setMainframeController(MainframeController mainframeController) {
         this.mainframeController = mainframeController;
@@ -101,7 +105,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         this.controllerCategory = controllerCategory;
     }
     LocalDate getLastCurrentDateShown() {
-        return LocalDate.of(2015,2,16); //chart.getLastCurrentDateShown();
+        return chart.getLastCurrentDateShown(); //LocalDate.of(2015,2,16); //chart.getLastCurrentDateShown();
     }
     //endregion Properties
 
@@ -125,7 +129,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
     @Override
     public void setHruler(IRuler<LocalDate> ruler) {
-        this.vruler = ruler;
+        this.hruler = ruler;
     }
     //endregion MaunaloaChartViewModel
 
