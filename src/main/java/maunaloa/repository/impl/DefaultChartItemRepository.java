@@ -1,5 +1,7 @@
 package maunaloa.repository.impl;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import maunaloa.charts.RiscLines;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.repository.ChartItemRepository;
@@ -8,6 +10,7 @@ import oahu.financial.Stock;
 import oahux.controllers.ControllerLocation;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 17.01.16.
@@ -18,7 +21,7 @@ public class DefaultChartItemRepository implements ChartItemRepository {
     private Map<Tuple2<ControllerLocation,Stock>, List<RiscLines>> riscLines;
 
     @Override
-    public void addRiscLines(ChartCanvasController controller, Stock stock, RiscLines value) {
+    public void addRiscLines(ChartCanvasController controller, Stock stock, List<RiscLines> value) {
         if (riscLines == null) {
             riscLines = new HashMap<>();
         }
@@ -29,7 +32,10 @@ public class DefaultChartItemRepository implements ChartItemRepository {
             lines = new ArrayList<>();
             riscLines.put(key, lines);
         }
-        lines.add(value);
+        lines.addAll(value);
+        ObservableList<Node> container = controller.getPane().getChildren();
+        List<Node> nodes = value.stream().map(RiscLines::view).collect(Collectors.toList());
+        container.addAll(nodes);
     }
 
     /*

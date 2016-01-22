@@ -19,6 +19,7 @@ import oahux.financial.DerivativeFx;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by rcs on 30.11.15.
@@ -73,13 +74,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             if (x == null) {
                 return;
             }
-            for (DerivativeFx fx : x) {
-                ChartItemRepository repos = mainframeController.getChartItemRepository();
-
-                RiscLines rl = new RiscLines(fx, vruler);
-                myPane.getChildren().add(rl.view());
-                System.out.println("Adding " + rl);
-            }
+            ChartItemRepository repos = mainframeController.getChartItemRepository();
+            List<RiscLines> riscs = x.stream().map(fx -> new RiscLines(fx, vruler)).collect(Collectors.toList());
+            repos.addRiscLines(this,stock,riscs);
         });
     }
     //endregion Events
@@ -94,6 +91,9 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     private IRuler<Double> vruler;
     private IRuler<LocalDate> hruler;
 
+    public Pane getPane() {
+        return myPane;
+    }
     public void setMainframeController(MainframeController mainframeController) {
         this.mainframeController = mainframeController;
     }
