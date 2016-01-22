@@ -1,5 +1,6 @@
 package maunaloa.charts;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import oahux.chart.IRuler;
 
@@ -12,4 +13,5 @@ import java.time.LocalDate;
 public interface ChartItem {
     Node view();
     void updateRulers(IRuler<LocalDate> hruler, IRuler<Double> vruler);
+    void removeFrom(ObservableList<Node> container);
 }

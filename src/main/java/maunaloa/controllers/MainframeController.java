@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
-import maunaloa.charts.ChartItem;
 import maunaloa.converters.TickerFileNamer;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.repository.DerivativeRepository;
@@ -21,7 +20,7 @@ import oahu.financial.Stock;
 import oahu.financial.repository.StockMarketRepository;
 import oahu.functional.Procedure4;
 import oahux.chart.MaunaloaChart;
-import oahux.controllers.ControllerCategory;
+import oahux.controllers.ControllerLocation;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -123,12 +122,12 @@ public class MainframeController {
             optionsController.setMainframeController(this);
             optionsController.addStockChangedListener(stockCatAllCell);
         }
-        Procedure4<ChartCanvasController,ControllerCategory,MaunaloaChart,nz.sodium.Cell<Stock>> initController =
+        Procedure4<ChartCanvasController,ControllerLocation,MaunaloaChart,nz.sodium.Cell<Stock>> initController =
                 (controller,
                  location,
                  chart,
                  stockCell) -> {
-                    controller.setControllerCategory(location);
+                    controller.setControllerLocation(location);
                     controller.setChart(chart);
                     controller.setMainframeController(this);
                     controller.addStockChangedListener(stockCell);
@@ -136,8 +135,8 @@ public class MainframeController {
                     controller.addOptionRiscCalculatedListener(optionsController.riscCalculatedCell);
                 };
 
-        initController.apply(candlesticksController, ControllerCategory.DAY, candlesticksChart, stockCat1Cell);
-        initController.apply(weeksController, ControllerCategory.WEEK, weeklyChart, stockCat1Cell);
+        initController.apply(candlesticksController, ControllerLocation.DAY, candlesticksChart, stockCat1Cell);
+        initController.apply(weeksController, ControllerLocation.WEEK, weeklyChart, stockCat1Cell);
 
     }
 
@@ -204,20 +203,20 @@ public class MainframeController {
 
     //region ChartCanvasController
 
-    private Map<ControllerCategory,ChartCanvasController> _controllers = new HashMap<>();
+    private Map<ControllerLocation,ChartCanvasController> _controllers = new HashMap<>();
 
-    private static ControllerCategory controllerEnumfromInt(int i) {
+    private static ControllerLocation controllerEnumfromInt(int i) {
         switch (i) {
-            case 2: return ControllerCategory.DAY;
-            case 3: return ControllerCategory.WEEK;
-            case 4: return ControllerCategory.OSEBX_DAY;
-            case 5: return ControllerCategory.OSEBX_WEEK;
-            default: return ControllerCategory.EMPTY;
+            case 2: return ControllerLocation.DAY;
+            case 3: return ControllerLocation.WEEK;
+            case 4: return ControllerLocation.OSEBX_DAY;
+            case 5: return ControllerLocation.OSEBX_WEEK;
+            default: return ControllerLocation.EMPTY;
         }
     }
     private Optional<ChartCanvasController> currentController() {
         int index =  myTabPane.getSelectionModel().getSelectedIndex();
-        ControllerCategory ce = controllerEnumfromInt(index);
+        ControllerLocation ce = controllerEnumfromInt(index);
         return _controllers.containsKey(ce) ? Optional.of(_controllers.get(ce)) : Optional.empty();
     }
     //endregion ChartCanvasController

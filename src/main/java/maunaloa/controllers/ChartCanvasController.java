@@ -7,11 +7,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.charts.RiscLines;
+import maunaloa.repository.ChartItemRepository;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
 import oahux.chart.MaunaloaChart;
-import oahux.controllers.ControllerCategory;
+import oahux.controllers.ControllerLocation;
 import oahux.controllers.MaunaloaChartViewModel;
 import oahux.financial.DerivativeFx;
 
@@ -73,7 +74,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
                 return;
             }
             for (DerivativeFx fx : x) {
-                //System.out.println(String.format("Calculated %s %.2f", fx.getTicker(), fx.stockPriceRiskProperty().get()));
+                ChartItemRepository repos = mainframeController.getChartItemRepository();
+
                 RiscLines rl = new RiscLines(fx, vruler);
                 myPane.getChildren().add(rl.view());
                 System.out.println("Adding " + rl);
@@ -85,7 +87,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
 
 
     //region Properties
-    private ControllerCategory controllerCategory;
+    private ControllerLocation controllerLocation;
     private MainframeController mainframeController;
     private MaunaloaChart chart;
     private Stock stock;
@@ -101,8 +103,11 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
         this.chart.setViewModel(this);
     }
 
-    public void setControllerCategory(ControllerCategory controllerCategory) {
-        this.controllerCategory = controllerCategory;
+    public ControllerLocation getControllerLocation() {
+        return controllerLocation;
+    }
+    public void setControllerLocation(ControllerLocation controllerLocation) {
+        this.controllerLocation = controllerLocation;
     }
     LocalDate getLastCurrentDateShown() {
         return chart.getLastCurrentDateShown(); //LocalDate.of(2015,2,16); //chart.getLastCurrentDateShown();
@@ -131,6 +136,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     public void setHruler(IRuler<LocalDate> ruler) {
         this.hruler = ruler;
     }
+
     //endregion MaunaloaChartViewModel
 
     //region Shift

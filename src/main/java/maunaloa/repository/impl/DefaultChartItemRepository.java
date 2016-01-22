@@ -1,10 +1,11 @@
 package maunaloa.repository.impl;
 
 import maunaloa.charts.RiscLines;
+import maunaloa.controllers.ChartCanvasController;
 import maunaloa.repository.ChartItemRepository;
 import oahu.dto.Tuple2;
 import oahu.financial.Stock;
-import oahux.controllers.ControllerCategory;
+import oahux.controllers.ControllerLocation;
 
 import java.util.*;
 
@@ -14,8 +15,24 @@ import java.util.*;
  */
 public class DefaultChartItemRepository implements ChartItemRepository {
 
-    private Map<Tuple2<Stock,ControllerCategory>, List<RiscLines>> riscLines;
+    private Map<Tuple2<ControllerLocation,Stock>, List<RiscLines>> riscLines;
 
+    @Override
+    public void addRiscLines(ChartCanvasController controller, Stock stock, RiscLines value) {
+        if (riscLines == null) {
+            riscLines = new HashMap<>();
+        }
+        ControllerLocation location = controller.getControllerLocation();
+        Tuple2<ControllerLocation,Stock> key = new Tuple2<>(location,stock);
+        List<RiscLines> lines = riscLines.get(key);
+        if (lines == null) {
+            lines = new ArrayList<>();
+            riscLines.put(key, lines);
+        }
+        lines.add(value);
+    }
+
+    /*
     //region Interface ChartItemRepository
     @Override
     public void addRiscLines(Stock stock, ControllerCategory location, RiscLines value) {
@@ -50,4 +67,5 @@ public class DefaultChartItemRepository implements ChartItemRepository {
 
     //region Private Methods
     //endregion Private Methods
+    */
 }

@@ -1,5 +1,6 @@
 package maunaloa.charts;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -68,6 +69,13 @@ public class RiscLines implements ChartItem {
         riscLine.setEndY(yRisc);
         Text riscText = riscLevel.second();
         riscText.setY(yRisc - 8);
+    }
+
+    @Override
+    public void removeFrom(ObservableList<Node> container) {
+        if (group != null) {
+            container.remove(group);
+        }
     }
     //endregion Interface ChartItem
 
