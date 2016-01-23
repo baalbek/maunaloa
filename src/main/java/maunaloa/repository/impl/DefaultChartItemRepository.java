@@ -44,90 +44,61 @@ public class DefaultChartItemRepository implements ChartItemRepository {
     public void removeLines(ChartCanvasController controller, Stock stock, ChartItemType cit) {
         switch (cit) {
             case RISC_LINES:
-                removeLines(controller,stock,riscLines);
+                removeOrHideLines(controller,stock,riscLines,false);
                 break;
         }
     }
 
-    public <T extends ChartItem> void removeLines(ChartCanvasController controller,
-                                    Stock stock,
-                                    Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap) {
-        if (linesMap == null) {
-            return;
-        }
-        Tuple2<ControllerLocation,Stock> key = createKey(controller,stock);
-        List<T> lines = linesMap.get(key);
-        if (lines == null) {
-            return;
-        }
-        ObservableList<Node> container = controller.getPane().getChildren();
 
-        lines.forEach(l -> {
-            l.removeFrom(container);
-        });
-        linesMap.remove(key);
-        /*
-        if (riscLines == null) {
-            return;
-        }
-        Tuple2<ControllerLocation,Stock> key = createKey(controller,stock);
-        List<RiscLines> lines = riscLines.get(key);
-        if (lines == null) {
-            return;
-        }
 
-        ObservableList<Node> container = controller.getPane().getChildren();
-
-        lines.forEach(l -> {
-            l.removeFrom(container);
-        });
-        riscLines.remove(key);
-        */
-    }
     //endregion Interface ChartItemRepository
 
 
     //region Private Methods
+    private <T extends ChartItem> void removeOrHideLines(ChartCanvasController controller,
+                                                         Stock stock,
+                                                         Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap,
+                                                         boolean deleteLines) {
+        findLinesWithKey(controller,stock,linesMap).ifPresent(x -> {
+            ObservableList<Node> container = controller.getPane().getChildren();
+            x.lines.forEach(l -> {
+                l.removeFrom(container);
+            });
+            if (deleteLines) {
+                linesMap.remove(x.key);
+            }
+        });
+    }
+    private <T> Optional<LinesWithKey<T>> findLinesWithKey(
+            ChartCanvasController controller,
+            Stock stock,
+            Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap
+    ) {
+        if (linesMap == null) {
+            return Optional.empty();
+        }
+        Tuple2<ControllerLocation,Stock> key = createKey(controller,stock);
+        List<T> lines = linesMap.get(key);
+        if (lines == null) {
+            return Optional.empty();
+        }
+        else {
+            return Optional.of(new LinesWithKey<T>(lines,key));
+        }
+    }
+
     private Tuple2<ControllerLocation,Stock> createKey(ChartCanvasController controller,
                                                        Stock stock) {
         return new Tuple2<>(controller.getControllerLocation(), stock);
     }
     //endregion Private Methods
+}
 
-    /*
-    //region Interface ChartItemRepository
-    @Override
-    public void addRiscLines(Stock stock, ControllerCategory location, RiscLines value) {
-        if (riscLines == null) {
-            riscLines = new HashMap<>();
-        }
-        Tuple2<Stock,ControllerCategory> key = new Tuple2<>(stock,location);
-        List<RiscLines> lines = riscLines.get(key);
-        if (lines == null) {
-            lines = new ArrayList<>();
-            riscLines.put(key, lines);
-        }
-        lines.add(value);
+class LinesWithKey<T> {
+    public final List<T> lines;
+    public final Tuple2<ControllerLocation,Stock> key;
+    LinesWithKey(List<T> lines, Tuple2<ControllerLocation,Stock> key) {
+        this.lines = lines;
+        this.key = key;
     }
-
-    @Override
-    public Optional<List<RiscLines>> getRiscLines(Stock stock, ControllerCategory location) {
-
-        if (riscLines == null) {
-            return Optional.empty();
-        }
-
-        List<RiscLines> lines = riscLines.get(new Tuple2<>(stock,location));
-
-        if (lines == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(lines);
-    }
-    //endregion Interface ChartItemRepository
-
-    //region Private Methods
-    //endregion Private Methods
-    */
 }
