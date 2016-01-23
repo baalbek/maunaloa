@@ -22,29 +22,21 @@ public class DefaultChartItemRepository implements ChartItemRepository {
 
     private Map<Tuple2<ControllerLocation,Stock>, List<RiscLines>> riscLines;
 
+
     //region Interface ChartItemRepository
     @Override
     public void addRiscLines(ChartCanvasController controller, Stock stock, List<RiscLines> value) {
         if (riscLines == null) {
             riscLines = new HashMap<>();
         }
-        Tuple2<ControllerLocation,Stock> key = createKey(controller,stock);
-        List<RiscLines> lines = riscLines.get(key);
-        if (lines == null) {
-            lines = new ArrayList<>();
-            riscLines.put(key, lines);
-        }
-        lines.addAll(value);
-        ObservableList<Node> container = controller.getPane().getChildren();
-        List<Node> nodes = value.stream().map(RiscLines::view).collect(Collectors.toList());
-        container.addAll(nodes);
+        addLines(controller,stock,riscLines,value);
     }
 
     @Override
     public void removeLines(ChartCanvasController controller, Stock stock, ChartItemType cit) {
         switch (cit) {
             case RISC_LINES:
-                removeOrHideLines(controller,stock,riscLines,false);
+                removeOrHideLines(controller,stock,riscLines,true);
                 break;
         }
     }
@@ -55,6 +47,21 @@ public class DefaultChartItemRepository implements ChartItemRepository {
 
 
     //region Private Methods
+    private <T extends ChartItem> void addLines(ChartCanvasController controller,
+                                                Stock stock,
+                                                Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap,
+                                                List<T> value) {
+        Tuple2<ControllerLocation,Stock> key = createKey(controller,stock);
+        List<T> lines = linesMap.get(key);
+        if (lines == null) {
+            lines = new ArrayList<>();
+            linesMap.put(key, lines);
+        }
+        lines.addAll(value);
+        ObservableList<Node> container = controller.getPane().getChildren();
+        List<Node> nodes = value.stream().map(T::view).collect(Collectors.toList());
+        container.addAll(nodes);
+    }
     private <T extends ChartItem> void removeOrHideLines(ChartCanvasController controller,
                                                          Stock stock,
                                                          Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap,

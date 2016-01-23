@@ -84,15 +84,10 @@ public class RiscLines implements ChartItem {
     private Tuple2<Line,Text> createLevel(double value, Color lineColor, String text){
         Point2D pt0 = ruler.getUpperLeft();
         Point2D pt = ruler.getLowerRight();
-        System.out.println("Value: " + value);
         double yBe = ruler.calcPix(value);
         Line line = new Line(pt0.getX(),yBe,pt.getX(),yBe);
         line.setStroke(lineColor);
         Text textItem = new Text(pt0.getX()+20,yBe-8,text);
-        System.out.println(textItem.getText());
-        System.out.println("pt0: " + pt0);
-        System.out.println("pt: " + pt);
-        System.out.println("yBe: " + yBe);
         return new Tuple2<>(line, textItem);
     }
     //endregion Private Methods
