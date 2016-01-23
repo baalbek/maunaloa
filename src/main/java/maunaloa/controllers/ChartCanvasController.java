@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.charts.RiscLines;
 import maunaloa.repository.ChartItemRepository;
+import maunaloa.repository.ChartItemType;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -76,6 +77,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             }
             ChartItemRepository repos = mainframeController.getChartItemRepository();
             List<RiscLines> riscs = x.stream().map(fx -> new RiscLines(fx, vruler)).collect(Collectors.toList());
+            repos.removeLines(this,stock, ChartItemType.RISC_LINES);
             repos.addRiscLines(this,stock,riscs);
         });
     }

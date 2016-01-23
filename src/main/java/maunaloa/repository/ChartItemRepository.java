@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface ChartItemRepository {
     void addRiscLines(ChartCanvasController controller, Stock stock, List<RiscLines> value);
+    void removeLines(ChartCanvasController controller, Stock stock, ChartItemType cit);
     /*
     void addRiscLines(Stock stock, ControllerCategory location, RiscLines value);
     void removeRiscLines(Stock stock, ControllerCategory location);
