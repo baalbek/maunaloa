@@ -58,6 +58,11 @@
   <top>
     <VBox prefHeight="-1.0" prefWidth="100.0">
       <children>
+          <ToolBar prefHeight="40.0" prefWidth="200.0">
+            <items>
+                <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
+            </items>
+          </ToolBar>
           <!--
             <ToolBar prefHeight="40.0" prefWidth="200.0">
               <items>

@@ -17,6 +17,7 @@ public class DefaultColorRepository implements ColorRepository {
     private Color cycle200 = Color.BLUE;
     private Color volume = Color.RED;
     private Color candlesticksBear = Color.RED;
+    private Color entityNew = Color.ORANGERED;
 
     //region Interface Methods 
     @Override
@@ -26,6 +27,7 @@ public class DefaultColorRepository implements ColorRepository {
             case FOREGROUND: return foreground;
             case VOLUME: return volume;
             case CNDL_BEAR: return candlesticksBear;
+            case ENTITY_NEW: return entityNew;
             default: return Color.WHITE;
         }
     }
