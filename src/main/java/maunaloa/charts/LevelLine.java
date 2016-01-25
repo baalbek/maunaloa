@@ -25,7 +25,7 @@ import java.util.function.Function;
 public class LevelLine {
 
     //region Init
-    private IBoundaryRuler ruler;
+    private IBoundaryRuler<Double> ruler;
     private double levelValue;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
@@ -37,8 +37,8 @@ public class LevelLine {
     private Text valueLabel;
     private final ColorRepository colorRepos;
 
-    public LevelLine(double levelValue, IRuler ruler, ColorRepository colorRepos) {
-        this.ruler = (IBoundaryRuler)ruler;
+    public LevelLine(double levelValue, IRuler<Double> ruler, ColorRepository colorRepos) {
+        this.ruler = (IBoundaryRuler<Double>)ruler;
         this.levelValue = levelValue;
         this.colorRepos = colorRepos;
     }
@@ -134,8 +134,8 @@ public class LevelLine {
     //endregion Private Methods
 
     //region Public |Methods
-    public void updateRuler(IRuler ruler) {
-        this.ruler = (IBoundaryRuler)ruler;
+    public void updateRuler(IRuler<Double> ruler) {
+        this.ruler = (IBoundaryRuler<Double>)ruler;
         double newY = ruler.calcPix(levelValue);
         anchor.setCenterY(newY);
         valueLabel.setY(newY-valueLabelDeltaY);

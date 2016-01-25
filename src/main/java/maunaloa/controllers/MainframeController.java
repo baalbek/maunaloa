@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -226,6 +227,10 @@ public class MainframeController {
     private final nz.sodium.Cell<Stock> stockCat1Cell = stockChanged.filter(x -> x.getTickerCategory() == 1).hold(null);
     private final nz.sodium.Cell<Stock> stockCat2Cell = stockChanged.filter(x -> x.getTickerCategory() == 2).hold(null);
     private final nz.sodium.Cell<Stock> stockCatAllCell = stockChanged.hold(null);
+
+    public void onNewLevel(ActionEvent event) {
+        currentController().ifPresent(ChartCanvasController::onNewLevel);
+    }
     //endregion Events
 
     //region Properties

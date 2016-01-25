@@ -46,6 +46,7 @@
     <!-- END Downloader -->
 
     <bean id="chartItemRepository" class="maunaloa.repository.impl.DefaultChartItemRepository">
+        <property name="colorRepos" ref="colorRepository" />
     </bean>
 
     <bean id="stockRepository" class="ranoraraku.models.impl.CachedStockMarketReposImpl">

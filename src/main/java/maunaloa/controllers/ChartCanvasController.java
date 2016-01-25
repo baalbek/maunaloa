@@ -6,6 +6,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import maunaloa.charts.LevelLine;
 import maunaloa.charts.RiscLines;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.repository.ChartItemType;
@@ -80,6 +81,26 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             repos.removeLines(this,stock, ChartItemType.RISC_LINES);
             repos.addRiscLines(this,stock,riscs);
         });
+    }
+    public void onNewLevel() {
+        ChartItemRepository repos = mainframeController.getChartItemRepository();
+
+        if (stock != null) {
+            myPane.setOnMouseReleased(e -> {
+
+                double value = vruler.calcValue(e.getY());
+                //LevelLine line = new LevelLine(value,vruler,col)
+                /*
+                LevelEntity entity =
+                        new LevelEntity(stock.getTicker(),
+                                boss.getLocation(),
+                                value,
+                                boss.getVruler());
+                addNewLevel(entity);
+                */
+                myPane.setOnMouseReleased(null);
+            });
+        }
     }
     //endregion Events
 

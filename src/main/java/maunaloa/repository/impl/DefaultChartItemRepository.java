@@ -10,6 +10,7 @@ import maunaloa.repository.ChartItemType;
 import oahu.dto.Tuple2;
 import oahu.financial.Stock;
 import oahux.controllers.ControllerLocation;
+import oahux.repository.ColorRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,7 +22,13 @@ import java.util.stream.Collectors;
 public class DefaultChartItemRepository implements ChartItemRepository {
 
     private Map<Tuple2<ControllerLocation,Stock>, List<RiscLines>> riscLines;
+    private ColorRepository colorRepos;
 
+    //region Properties
+    public void setColorRepos(ColorRepository colorRepos) {
+        this.colorRepos = colorRepos;
+    }
+    //endregion Properties
 
     //region Interface ChartItemRepository
     @Override
@@ -98,6 +105,7 @@ public class DefaultChartItemRepository implements ChartItemRepository {
                                                        Stock stock) {
         return new Tuple2<>(controller.getControllerLocation(), stock);
     }
+
     //endregion Private Methods
 }
 
