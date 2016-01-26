@@ -13,12 +13,11 @@ import java.time.LocalDate;
  *
  */
 public class LevelEntity implements ChartItem {
-    private LevelLine level;
+    private LevelLine levelLine;
     private double levelValue;
     private IRuler<Double> ruler;
 
     public LevelEntity(Double value, IRuler<Double> ruler) {
-        this.level = null;
         this.ruler = ruler;
     }
 
@@ -26,6 +25,9 @@ public class LevelEntity implements ChartItem {
     private Node _view;
     @Override
     public Node view() {
+        if (_view == null) {
+            levelLine = new LevelLine(levelValue, ruler);
+        }
         return null;
     }
 
