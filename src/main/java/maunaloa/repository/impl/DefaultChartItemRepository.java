@@ -4,11 +4,13 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.charts.ChartItem;
 import maunaloa.charts.RiscLines;
+import maunaloa.charts.entities.LevelEntity;
 import maunaloa.controllers.ChartCanvasController;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.repository.ChartItemType;
 import oahu.dto.Tuple2;
 import oahu.financial.Stock;
+import oahux.chart.IRuler;
 import oahux.controllers.ControllerLocation;
 import oahux.repository.ColorRepository;
 
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class DefaultChartItemRepository implements ChartItemRepository {
 
     private Map<Tuple2<ControllerLocation,Stock>, List<RiscLines>> riscLines;
+    private Map<Tuple2<ControllerLocation,Stock>, List<LevelEntity>> levelLines;
     private ColorRepository colorRepos;
 
     //region Properties
@@ -31,6 +34,17 @@ public class DefaultChartItemRepository implements ChartItemRepository {
     //endregion Properties
 
     //region Interface ChartItemRepository
+    public LevelEntity newLevelEntity(ChartCanvasController controller,
+                                      Stock stock,
+                                      IRuler<Double> ruler,
+                                      double levelValue) {
+        if (levelLines == null) {
+            levelLines = new HashMap<>();
+        }
+        LevelEntity ent = new LevelEntity(levelValue, ruler, colorRepos);
+        addLine(controller,stock,levelLines,ent);
+        return ent;
+    }
     @Override
     public void addRiscLines(ChartCanvasController controller, Stock stock, List<RiscLines> value) {
         if (riscLines == null) {
@@ -45,6 +59,10 @@ public class DefaultChartItemRepository implements ChartItemRepository {
             case RISC_LINES:
                 removeOrHideLines(controller,stock,riscLines,true);
                 break;
+            case LEVEL_LINES:
+                removeOrHideLines(controller,stock,levelLines,true);
+                break;
+
         }
     }
 
@@ -54,6 +72,20 @@ public class DefaultChartItemRepository implements ChartItemRepository {
 
 
     //region Private Methods
+    private <T extends ChartItem> void addLine(ChartCanvasController controller,
+                                                Stock stock,
+                                                Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap,
+                                                T value) {
+        Tuple2<ControllerLocation,Stock> key = createKey(controller,stock);
+        List<T> lines = linesMap.get(key);
+        if (lines == null) {
+            lines = new ArrayList<>();
+            linesMap.put(key, lines);
+        }
+        lines.add(value);
+        ObservableList<Node> container = controller.getPane().getChildren();
+        container.add(value.view());
+    }
     private <T extends ChartItem> void addLines(ChartCanvasController controller,
                                                 Stock stock,
                                                 Map<Tuple2<ControllerLocation,Stock>,List<T>> linesMap,

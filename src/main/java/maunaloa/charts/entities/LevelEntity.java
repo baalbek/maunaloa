@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import maunaloa.charts.ChartItem;
 import maunaloa.charts.LevelLine;
 import oahux.chart.IRuler;
+import oahux.repository.ColorRepository;
 
 import java.time.LocalDate;
 
@@ -17,8 +18,9 @@ public class LevelEntity implements ChartItem {
     private double levelValue;
     private IRuler<Double> ruler;
 
-    public LevelEntity(Double value, IRuler<Double> ruler) {
+    public LevelEntity(Double value, IRuler<Double> ruler, ColorRepository colorRepos) {
         this.ruler = ruler;
+        levelLine = new LevelLine(levelValue, ruler, colorRepos);
     }
 
     //region Interface ChartItem
@@ -26,7 +28,6 @@ public class LevelEntity implements ChartItem {
     @Override
     public Node view() {
         if (_view == null) {
-            levelLine = new LevelLine(levelValue, ruler);
         }
         return null;
     }
