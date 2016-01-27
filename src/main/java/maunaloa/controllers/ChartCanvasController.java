@@ -89,7 +89,8 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             myPane.setOnMouseReleased(e -> {
 
                 double value = vruler.calcValue(e.getY());
-                //LevelLine line = new LevelLine(value,vruler,col)
+                repos.newLevelEntity(this, stock, vruler, value);
+                //LevelLine line = new LevelLine(v:walue,vruler,col)
                 /*
                 LevelEntity entity =
                         new LevelEntity(stock.getTicker(),

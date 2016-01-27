@@ -21,15 +21,25 @@ public class LevelEntity implements ChartItem {
     public LevelEntity(Double value, IRuler<Double> ruler, ColorRepository colorRepos) {
         this.ruler = ruler;
         levelLine = new LevelLine(levelValue, ruler, colorRepos);
+        System.out.println("New LevelLine: " + levelLine);
     }
 
     //region Interface ChartItem
-    private Node _view;
+    //private Node _view;
     @Override
     public Node view() {
+        /*
         if (_view == null) {
+            levelLine.setOnMouseReleased((evt,anchor) -> {
+                cleanStatusProperty().set(isClean());
+            });
+            levelLine.setOnMouseReleasedShift(evt -> {
+                loadCommentsDialog();
+            });
+            _view = levelLine.view();
         }
-        return null;
+        */
+        return levelLine.view();
     }
 
     @Override
