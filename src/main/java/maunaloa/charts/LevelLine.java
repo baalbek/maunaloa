@@ -16,7 +16,9 @@ import oahux.chart.IRuler;
 import oahux.repository.ColorReposEnum;
 import oahux.repository.ColorRepository;
 
+import java.util.Optional;
 import java.util.function.Function;
+import java.util.logging.Level;
 
 /**
  * Created by rcs on 5/3/14.
@@ -26,6 +28,7 @@ public class LevelLine {
 
     //region Init
     private IBoundaryRuler<Double> ruler;
+    private Optional<Double> levelPix;
     private double levelValue;
     private double valueLabelDeltaX = 20.0;
     private double valueLabelDeltaY = 8.0;
@@ -37,10 +40,32 @@ public class LevelLine {
     private Text valueLabel;
     private final ColorRepository colorRepos;
 
+    /*
     public LevelLine(double levelValue, IRuler<Double> ruler, ColorRepository colorRepos) {
         this.ruler = (IBoundaryRuler<Double>)ruler;
         this.levelValue = levelValue;
         this.colorRepos = colorRepos;
+    }
+    */
+    private LevelLine(IRuler<Double> ruler, ColorRepository colorRepos) {
+        this.ruler = (IBoundaryRuler<Double>)ruler;
+        this.colorRepos = colorRepos;
+    }
+
+
+    public static LevelLine ofValue(double levelValue,
+                                    IRuler<Double> ruler,
+                                    ColorRepository repos) {
+        LevelLine result = new LevelLine(ruler,repos);
+        result.levelValue = levelValue;
+        return result;
+    }
+    public static LevelLine ofPix(double pix,
+                                  IRuler<Double> ruler,
+                                  ColorRepository repos) {
+        LevelLine result = new LevelLine(ruler,repos);
+        result.levelPix = Optional.of(pix);
+        return result;
     }
 
     //endregion Init
@@ -56,7 +81,16 @@ public class LevelLine {
     private void createLevel(){
         Point2D pt0 = ruler.getUpperLeft();
         Point2D pt = ruler.getLowerRight();
-        double yBe = ruler.calcPix(levelValue);
+        double yBe = 0.0;
+
+        if (levelPix.isPresent()) {
+            yBe = levelPix.get();
+            levelValue = ruler.calcValue(levelPix.get());
+        }
+        else {
+            yBe = ruler.calcPix(levelValue);
+        }
+        System.out.println("Upper Y: " + pt0.getY() + ", lower Y: " + pt.getY() + ", y: " + yBe);
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
         line.setStroke(colorRepos.colorFor(ColorReposEnum.ENTITY_NEW));
 
@@ -110,7 +144,7 @@ public class LevelLine {
                 anchor.setCenterX(oldCenterX+deltaX);
                 anchor.setCenterY(oldCenterY+deltaY);
 
-                levelValue = (Double) ruler.calcValue(anchor.getCenterY());
+                levelValue = ruler.calcValue(anchor.getCenterY());
 
                 valueLabel.setX(anchor.getCenterX()+valueLabelDeltaX);
                 valueLabel.setY(anchor.getCenterY()-valueLabelDeltaY);

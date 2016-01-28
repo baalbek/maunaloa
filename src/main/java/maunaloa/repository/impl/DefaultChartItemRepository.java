@@ -37,11 +37,11 @@ public class DefaultChartItemRepository implements ChartItemRepository {
     public LevelEntity newLevelEntity(ChartCanvasController controller,
                                       Stock stock,
                                       IRuler<Double> ruler,
-                                      double levelValue) {
+                                      double levelPix) {
         if (levelLines == null) {
             levelLines = new HashMap<>();
         }
-        LevelEntity ent = new LevelEntity(levelValue, ruler, colorRepos);
+        LevelEntity ent = LevelEntity.ofPix(levelPix,ruler,colorRepos); //new LevelEntity(levelValue, ruler, colorRepos);
         addLine(controller,stock,levelLines,ent);
         return ent;
     }

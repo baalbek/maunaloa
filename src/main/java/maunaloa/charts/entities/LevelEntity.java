@@ -18,10 +18,19 @@ public class LevelEntity implements ChartItem {
     private double levelValue;
     private IRuler<Double> ruler;
 
+    /*
     public LevelEntity(Double value, IRuler<Double> ruler, ColorRepository colorRepos) {
         this.ruler = ruler;
         levelLine = new LevelLine(levelValue, ruler, colorRepos);
         System.out.println("New LevelLine: " + levelLine);
+    }
+    */
+    private LevelEntity() {
+    }
+    public static LevelEntity ofPix(double pix, IRuler<Double> ruler, ColorRepository colorRepos) {
+        LevelEntity result = new LevelEntity();
+        result.levelLine = LevelLine.ofPix(pix,ruler,colorRepos);
+        return result;
     }
 
     //region Interface ChartItem
