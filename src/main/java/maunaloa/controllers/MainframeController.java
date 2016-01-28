@@ -80,10 +80,13 @@ public class MainframeController {
 
     @FXML
     private Button btnShiftRight;
-    /*
-    @FXML private CheckMenuItem mnuShiftAllCharts;
-    @FXML private CheckMenuItem mnuIsShiftDays;
-    */
+
+    @FXML
+    private CheckMenuItem mnuShiftAllCharts;
+
+    @FXML
+    private CheckMenuItem mnuIsShiftDays;
+
     @FXML
     private BorderPane myBorderPane;
 
@@ -111,10 +114,14 @@ public class MainframeController {
 
         isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
         */
+        initNavButtons();
         initControllers();
         initChoiceBoxTickers();
     }
 
+    private void initNavButtons() {
+
+    }
     private void initControllers() {
         if (optionsController != null) {
             optionsController.selectedDerivativeProperty().bind(rgDerivatives.selectedToggleProperty());
