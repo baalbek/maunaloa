@@ -3,6 +3,7 @@ package maunaloa.repository.impl;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.charts.ChartItem;
+import maunaloa.charts.OptionPriceSlider;
 import maunaloa.charts.RiscLines;
 import maunaloa.charts.entities.LevelEntity;
 import maunaloa.controllers.ChartCanvasController;
@@ -12,6 +13,7 @@ import oahu.dto.Tuple2;
 import oahu.financial.Stock;
 import oahux.chart.IRuler;
 import oahux.controllers.ControllerLocation;
+import oahux.financial.DerivativeFx;
 import oahux.repository.ColorRepository;
 
 import java.util.*;
@@ -25,6 +27,7 @@ public class DefaultChartItemRepository implements ChartItemRepository {
 
     private Map<Tuple2<ControllerLocation,Stock>, List<RiscLines>> riscLines;
     private Map<Tuple2<ControllerLocation,Stock>, List<LevelEntity>> levelLines;
+    private Map<Tuple2<ControllerLocation,Stock>, List<OptionPriceSlider>> optionSliders;
     private ColorRepository colorRepos;
 
     //region Properties
@@ -34,6 +37,18 @@ public class DefaultChartItemRepository implements ChartItemRepository {
     //endregion Properties
 
     //region Interface ChartItemRepository
+    public OptionPriceSlider newOptionPriceSlider(ChartCanvasController controller,
+                                                  Stock stock,
+                                                  DerivativeFx derivative,
+                                                  IRuler<Double> ruler) {
+        if (optionSliders == null) {
+            optionSliders = new HashMap<>();
+        }
+        OptionPriceSlider slider = new OptionPriceSlider(derivative,ruler,colorRepos);
+        addLine(controller,stock,optionSliders,slider);
+        return slider;
+    }
+
     public LevelEntity newLevelEntity(ChartCanvasController controller,
                                       Stock stock,
                                       IRuler<Double> ruler,

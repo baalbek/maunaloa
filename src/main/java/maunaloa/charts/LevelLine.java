@@ -18,7 +18,6 @@ import oahux.repository.ColorRepository;
 
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.logging.Level;
 
 /**
  * Created by rcs on 5/3/14.
