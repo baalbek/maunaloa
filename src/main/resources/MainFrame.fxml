@@ -63,11 +63,9 @@
                 <Button mnemonicParsing="false" onAction="#onNewLevel" text="Level" />
                 <MenuButton mnemonicParsing="false" text="Chart">
                     <items>
-                        <!--
                         <MenuItem mnemonicParsing="false" onAction="#onShiftToEnd" text="Shift To End" />
                         <MenuItem mnemonicParsing="false" onAction="#onShiftToDate" text="Shift To Date" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        -->
                         <CheckMenuItem fx:id="mnuIsShiftDays" mnemonicParsing="false" selected="true" text="Is Shift Days" />
                         <CheckMenuItem fx:id="mnuShiftAllCharts" mnemonicParsing="false" text="Shift all Charts" />
                     </items>

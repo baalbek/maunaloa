@@ -15,6 +15,7 @@ import javafx.util.StringConverter;
 import maunaloa.converters.TickerFileNamer;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.repository.DerivativeRepository;
+import maunaloa.service.FxUtils;
 import nz.sodium.StreamSink;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
@@ -108,18 +109,41 @@ public class MainframeController {
         cbShiftAmount.getItems().add(8);
 
         shiftAmountProperty.bind(cbShiftAmount.getSelectionModel().selectedItemProperty());
-
-        /*
         shiftBothChartsProperty.bind(mnuShiftAllCharts.selectedProperty());
-
         isShiftDaysProperty.bind(mnuIsShiftDays.selectedProperty());
-        */
+
         initNavButtons();
         initControllers();
         initChoiceBoxTickers();
     }
 
     private void initNavButtons() {
+        btnShiftLeft.setOnAction(e -> {
+            if (shiftBothChartsProperty.get()) {
+                candlesticksController.shift(isShiftDaysProperty.get(),shiftAmountProperty.get(),
+                        ChartCanvasController.ShiftDirection.SHIFT_LEFT);
+                weeksController.shift(isShiftDaysProperty.get(),shiftAmountProperty.get(),
+                        ChartCanvasController.ShiftDirection.SHIFT_LEFT);
+            }
+            else {
+                currentController().ifPresent(controller ->
+                        controller.shift(isShiftDaysProperty.get(), shiftAmountProperty.get(),
+                                ChartCanvasController.ShiftDirection.SHIFT_LEFT));
+            }
+        });
+        btnShiftRight.setOnAction(e -> {
+            if (shiftBothChartsProperty.get()) {
+                candlesticksController.shift(isShiftDaysProperty.get(),shiftAmountProperty.get(),
+                        ChartCanvasController.ShiftDirection.SHIFT_RIGHT);
+                weeksController.shift(isShiftDaysProperty.get(),shiftAmountProperty.get(),
+                        ChartCanvasController.ShiftDirection.SHIFT_RIGHT);
+            }
+            else {
+                currentController().ifPresent(controller ->
+                        controller.shift(isShiftDaysProperty.get(), shiftAmountProperty.get(),
+                                ChartCanvasController.ShiftDirection.SHIFT_RIGHT));
+            }
+        });
 
     }
     private void initControllers() {
@@ -237,6 +261,34 @@ public class MainframeController {
 
     public void onNewLevel(ActionEvent event) {
         currentController().ifPresent(ChartCanvasController::onNewLevel);
+    }
+    public void onShiftToEnd(ActionEvent event) {
+        if (shiftBothChartsProperty.get()) {
+            candlesticksController.shiftToEnd();
+            weeksController.shiftToEnd();
+        }
+        else {
+            currentController().ifPresent(ChartCanvasController::shiftToEnd);
+        }
+    }
+    public void onShiftToDate(ActionEvent event) {
+        if (shiftBothChartsProperty.get()) {
+            FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
+                    new ShiftToDateController(shiftDate -> {
+                        candlesticksController.shiftToDate(shiftDate);
+                        weeksController.shiftToDate(shiftDate);
+                        System.out.println(String.format("Last date shown: %s", candlesticksChart.getLastCurrentDateShown()));
+                    }));
+        }
+        else {
+            Optional<ChartCanvasController>  ctrl = currentController();
+            if (ctrl.isPresent()) {
+                ctrl.get().shiftToDate();
+            }
+            else {
+                candlesticksController.shiftToDate();
+            }
+        }
     }
     //endregion Events
 

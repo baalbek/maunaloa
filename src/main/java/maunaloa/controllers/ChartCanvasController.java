@@ -10,6 +10,7 @@ import maunaloa.charts.LevelLine;
 import maunaloa.charts.RiscLines;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.repository.ChartItemType;
+import maunaloa.service.FxUtils;
 import oahu.financial.Stock;
 import oahu.financial.StockPrice;
 import oahux.chart.IRuler;
@@ -43,8 +44,31 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     //endregion FXML
 
     //region Shift
-
-
+    public enum ShiftDirection { SHIFT_LEFT, SHIFT_RIGHT };
+    public void shift(boolean isShiftDays, int amount, ShiftDirection shiftDirection) {
+        if (shiftDirection == ShiftDirection.SHIFT_RIGHT) {
+            amount = -amount;
+        }
+        if (isShiftDays) {
+            chart.shiftDays(amount,myCanvas);
+        }
+        else {
+            chart.shiftWeeks(amount,myCanvas);
+        }
+        //notifyChartShiftb();
+    }
+    public void shiftToEnd() {
+        chart.shiftToEnd(myCanvas);
+    }
+    public void shiftToDate() {
+        FxUtils.loadApp("/ShiftToDateCanvas.fxml", "Shift to date",
+                new ShiftToDateController(shiftDate -> {
+                    chart.shiftToDate(shiftDate,myCanvas);
+                }));
+    }
+    public void shiftToDate(LocalDate shiftDate) {
+        chart.shiftToDate(shiftDate, myCanvas);
+    }
     //endregion Shift
 
     //region Init
