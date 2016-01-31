@@ -101,6 +101,9 @@ public class DerivativesController {
         initChoiceBoxRisc();
         initChoiceBoxPurchaseCategory();
         initGrid();
+        btnOptionPriceSliders.setOnAction(event -> {
+            shodOptionSliders();
+        });
     }
 
     private List<RiscItem> riscItems() {
@@ -244,12 +247,20 @@ public class DerivativesController {
 
     //region Events
     private final nz.sodium.Stream<List<DerivativeFx>> riscCalculated = new StreamSink<>();
-    public final nz.sodium.Cell<List<DerivativeFx>> riscCalculatedCell = riscCalculated.hold(null);
+    public final nz.sodium.Cell<List<DerivativeFx>> onRiscCalculated = riscCalculated.hold(null);
+
+    private final nz.sodium.Stream<List<DerivativeFx>> optionSlidersShow = new StreamSink<>();
+    public final nz.sodium.Cell<List<DerivativeFx>> onOptionSlidersShow = optionSlidersShow.hold(null);
 
     @SuppressWarnings("unchecked")
     private void calcRisc(RiscItem riscItem) {
         List<DerivativeFx> selected = getSelectedDerivatives(fx -> fx.setRisk(riscItem.getValue()));
         ((StreamSink)riscCalculated).send(selected);
+    }
+    @SuppressWarnings("unchecked")
+    private void shodOptionSliders() {
+        List<DerivativeFx> selected = getSelectedDerivatives(null);
+        ((StreamSink)optionSlidersShow).send(selected);
     }
 
     public void addStockChangedListener(nz.sodium.Cell<Stock> cell) {

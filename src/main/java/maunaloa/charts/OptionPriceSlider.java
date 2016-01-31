@@ -2,12 +2,13 @@ package maunaloa.charts;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import maunaloa.repository.ChartItemRepository;
 import oahu.financial.OptionCalculator;
 import oahux.chart.IRuler;
 import oahux.financial.DerivativeFx;
-import oahux.repository.ColorRepository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Created by rcs on 12.09.15.
@@ -19,9 +20,9 @@ public class OptionPriceSlider implements ChartItem {
     private final LevelLine levelLine;
     private final DerivativeFx derivative;
 
-    public OptionPriceSlider(DerivativeFx derivative, IRuler<Double> ruler, ColorRepository colorRepos) {
+    public OptionPriceSlider(DerivativeFx derivative, IRuler<Double> ruler, Optional<ChartItemRepository> repository) {
         this.derivative = derivative;
-        this.levelLine = LevelLine.ofValue(derivative.getStockPrice().getValue(), ruler, colorRepos);
+        this.levelLine = LevelLine.ofValue(derivative.getStockPrice().getValue(), ruler, repository);
         this.levelLine.setValueLabelFunc((levelValue) -> {
             OptionCalculator calculator = derivative.getCalculator();
             double strike = derivative.getDerivative().getX();
@@ -44,11 +45,6 @@ public class OptionPriceSlider implements ChartItem {
         });
     }
 
-    public void updateRuler(IRuler ruler) {
-        if (levelLine != null) {
-            levelLine.updateRuler(ruler);
-        }
-    }
 
     @Override
     public Node view() {
@@ -57,7 +53,9 @@ public class OptionPriceSlider implements ChartItem {
 
     @Override
     public void updateRulers(IRuler<LocalDate> hruler, IRuler<Double> vruler) {
-
+        if (levelLine != null) {
+            levelLine.updateRuler(vruler);
+        }
     }
 
     @Override

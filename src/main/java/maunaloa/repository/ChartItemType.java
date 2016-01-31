@@ -5,5 +5,5 @@ package maunaloa.repository;
  *
  */
 public enum ChartItemType {
-    RISC_LINES, LEVEL_LINES
+    RISC_LINES, LEVEL_LINES, OPTION_PRICE_SLIDERS
 }

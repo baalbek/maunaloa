@@ -11,6 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import maunaloa.repository.ChartItemRepository;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
 import oahux.repository.ColorReposEnum;
@@ -37,7 +38,7 @@ public class LevelLine {
     private Line line;
     private Circle anchor;
     private Text valueLabel;
-    private final ColorRepository colorRepos;
+    private final Optional<ChartItemRepository> repository;
 
     /*
     public LevelLine(double levelValue, IRuler<Double> ruler, ColorRepository colorRepos) {
@@ -46,22 +47,23 @@ public class LevelLine {
         this.colorRepos = colorRepos;
     }
     */
-    private LevelLine(IRuler<Double> ruler, ColorRepository colorRepos) {
+    private LevelLine(IRuler<Double> ruler, Optional<ChartItemRepository> repository) {
         this.ruler = (IBoundaryRuler<Double>)ruler;
-        this.colorRepos = colorRepos;
+        this.repository = repository;
     }
 
 
     public static LevelLine ofValue(double levelValue,
                                     IRuler<Double> ruler,
-                                    ColorRepository repos) {
+                                    Optional<ChartItemRepository> repos) {
         LevelLine result = new LevelLine(ruler,repos);
         result.levelValue = levelValue;
+        result.levelPix = Optional.empty();
         return result;
     }
     public static LevelLine ofPix(double pix,
                                   IRuler<Double> ruler,
-                                  ColorRepository repos) {
+                                  Optional<ChartItemRepository> repos) {
         LevelLine result = new LevelLine(ruler,repos);
         result.levelPix = Optional.of(pix);
         return result;
@@ -91,7 +93,11 @@ public class LevelLine {
         }
         System.out.println("Upper Y: " + pt0.getY() + ", lower Y: " + pt.getY() + ", y: " + yBe);
         line = new Line(pt0.getX() + 50,yBe,pt.getX(),yBe);
-        line.setStroke(colorRepos.colorFor(ColorReposEnum.ENTITY_NEW));
+
+        repository.ifPresent(r -> {
+            //line.setStroke(repository.colorFor(ColorReposEnum.ENTITY_NEW));
+        });
+        //line.setStroke(colorRepos.colorFor(ColorReposEnum.ENTITY_NEW));
 
         valueLabel = new Text(pt0.getX()+ 50 + valueLabelDeltaX,yBe-valueLabelDeltaY,valueLabelText());
         anchor = createAnchor();

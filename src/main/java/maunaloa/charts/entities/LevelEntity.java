@@ -4,10 +4,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.charts.ChartItem;
 import maunaloa.charts.LevelLine;
+import maunaloa.repository.ChartItemRepository;
 import oahux.chart.IRuler;
-import oahux.repository.ColorRepository;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 /**
  * Created by rcs on 25.01.16.
@@ -27,9 +28,10 @@ public class LevelEntity implements ChartItem {
     */
     private LevelEntity() {
     }
-    public static LevelEntity ofPix(double pix, IRuler<Double> ruler, ColorRepository colorRepos) {
+    //public static LevelEntity ofPix(double pix, IRuler<Double> ruler, ColorRepository colorRepos) {
+    public static LevelEntity ofPix(double pix, IRuler<Double> ruler, Optional<ChartItemRepository> repos) {
         LevelEntity result = new LevelEntity();
-        result.levelLine = LevelLine.ofPix(pix,ruler,colorRepos);
+        result.levelLine = LevelLine.ofPix(pix,ruler,repos);
         return result;
     }
 

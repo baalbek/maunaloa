@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import maunaloa.charts.LevelLine;
+import maunaloa.charts.OptionPriceSlider;
 import maunaloa.charts.RiscLines;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.repository.ChartItemType;
@@ -22,6 +23,7 @@ import oahux.financial.DerivativeFx;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -93,6 +95,19 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
             }
             stock = s;
             chart.draw(myCanvas);
+        });
+    }
+    public void addOptionSlidersShowListener(nz.sodium.Cell<List<DerivativeFx>> cell) {
+        cell.listen(x -> {
+            if (x == null) {
+                return;
+            }
+            ChartItemRepository repos = mainframeController.getChartItemRepository();
+            repos.removeLines(this,stock, ChartItemType.OPTION_PRICE_SLIDERS);
+            List<OptionPriceSlider> sliders = x.stream().
+                    map(fx -> new OptionPriceSlider(fx, vruler, Optional.of(repos))).
+                    collect(Collectors.toList());
+            repos.addOptionPriceSliders(this,stock,sliders);
         });
     }
     public void addOptionRiscCalculatedListener(nz.sodium.Cell<List<DerivativeFx>> cell) {

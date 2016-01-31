@@ -164,7 +164,13 @@ public class MainframeController {
                     controller.setMainframeController(this);
                     controller.addStockChangedListener(stockCell);
                     _controllers.put(location, controller);
-                    controller.addOptionRiscCalculatedListener(optionsController.riscCalculatedCell);
+                    controller.addOptionRiscCalculatedListener(optionsController.onRiscCalculated);
+                    switch (controller.getControllerLocation()) {
+                        case DAY:
+                        case WEEK:
+                            controller.addOptionSlidersShowListener(optionsController.onOptionSlidersShow);
+                            break;
+                    }
                 };
 
         initController.apply(candlesticksController, ControllerLocation.DAY, candlesticksChart, stockCat1Cell);

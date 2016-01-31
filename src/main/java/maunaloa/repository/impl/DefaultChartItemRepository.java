@@ -37,6 +37,7 @@ public class DefaultChartItemRepository implements ChartItemRepository {
     //endregion Properties
 
     //region Interface ChartItemRepository
+    /*
     public OptionPriceSlider newOptionPriceSlider(ChartCanvasController controller,
                                                   Stock stock,
                                                   DerivativeFx derivative,
@@ -44,11 +45,13 @@ public class DefaultChartItemRepository implements ChartItemRepository {
         if (optionSliders == null) {
             optionSliders = new HashMap<>();
         }
-        OptionPriceSlider slider = new OptionPriceSlider(derivative,ruler,colorRepos);
+        OptionPriceSlider slider = new OptionPriceSlider(derivative,ruler,Optional.of(this));
         addLine(controller,stock,optionSliders,slider);
         return slider;
     }
+    //*/
 
+    @Override
     public LevelEntity newLevelEntity(ChartCanvasController controller,
                                       Stock stock,
                                       IRuler<Double> ruler,
@@ -56,10 +59,24 @@ public class DefaultChartItemRepository implements ChartItemRepository {
         if (levelLines == null) {
             levelLines = new HashMap<>();
         }
-        LevelEntity ent = LevelEntity.ofPix(levelPix,ruler,colorRepos); //new LevelEntity(levelValue, ruler, colorRepos);
+        LevelEntity ent = LevelEntity.ofPix(levelPix,ruler,Optional.of(this)); //new LevelEntity(levelValue, ruler, colorRepos);
         addLine(controller,stock,levelLines,ent);
         return ent;
     }
+
+    @Override
+    public ColorRepository getColorRepository() {
+        return colorRepos;
+    }
+
+    @Override
+    public void addOptionPriceSliders(ChartCanvasController controller, Stock stock, List<OptionPriceSlider> value) {
+        if (optionSliders == null) {
+            optionSliders = new HashMap<>();
+        }
+        addLines(controller,stock,optionSliders,value);
+    }
+
     @Override
     public void addRiscLines(ChartCanvasController controller, Stock stock, List<RiscLines> value) {
         if (riscLines == null) {
