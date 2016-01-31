@@ -94,6 +94,9 @@ public class DefaultChartItemRepository implements ChartItemRepository {
             case LEVEL_LINES:
                 removeOrHideLines(controller,stock,levelLines,true);
                 break;
+            case OPTION_PRICE_SLIDERS:
+                removeOrHideLines(controller,stock,optionSliders,true);
+                break;
 
         }
     }
