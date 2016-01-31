@@ -6,7 +6,6 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import maunaloa.charts.LevelLine;
 import maunaloa.charts.OptionPriceSlider;
 import maunaloa.charts.RiscLines;
 import maunaloa.repository.ChartItemRepository;

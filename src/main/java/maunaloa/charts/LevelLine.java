@@ -14,8 +14,6 @@ import javafx.scene.text.Text;
 import maunaloa.repository.ChartItemRepository;
 import oahux.chart.IBoundaryRuler;
 import oahux.chart.IRuler;
-import oahux.repository.ColorReposEnum;
-import oahux.repository.ColorRepository;
 
 import java.util.Optional;
 import java.util.function.Function;

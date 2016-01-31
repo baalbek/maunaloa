@@ -55,12 +55,16 @@ public class LevelEntity implements ChartItem {
 
     @Override
     public void updateRulers(IRuler<LocalDate> hruler, IRuler<Double> vruler) {
-
+        if (levelLine != null) {
+            levelLine.updateRuler(vruler);
+        }
     }
 
     @Override
     public void removeFrom(ObservableList<Node> container) {
-
+        if (levelLine != null) {
+            container.remove(levelLine.view());
+        }
     }
     //endregion Interface ChartItem
 

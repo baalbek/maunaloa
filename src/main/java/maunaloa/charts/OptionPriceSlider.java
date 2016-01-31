@@ -60,7 +60,9 @@ public class OptionPriceSlider implements ChartItem {
 
     @Override
     public void removeFrom(ObservableList<Node> container) {
-
+        if (levelLine != null) {
+            container.remove(levelLine.view());
+        }
     }
 
 }
