@@ -16,7 +16,6 @@ import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import maunaloa.derivatives.PurchaseCategory;
 import maunaloa.derivatives.RiscItem;
-import maunaloa.repository.DerivativeRepository;
 import maunaloa.stocks.StockPriceFx;
 import nz.sodium.StreamSink;
 import oahu.financial.Stock;
@@ -207,6 +206,7 @@ public class DerivativesController {
         return selectedOptions;
     }
     private void _updateDerivatives() {
+        /* ===>>>
         String ticker = this.stock.getTicker();
         DerivativeRepository derivativeRepository = mainframeController.getDerivativeRepository();
         try {
@@ -228,14 +228,9 @@ public class DerivativesController {
             }
         }
         catch (FailingHttpStatusCodeException ex) {
-            /*
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid URL");
-            alert.setContentText(String.format("Url for %s not valid: %s", ticker, ex.getStatusMessage()));
-            alert.showAndWait();
-            */
             ex.printStackTrace();
         }
+        //*/
     }
     private void load(Function<String,Collection<DerivativeFx>> action, String ticker) {
         if  (_selectedLoadDerivativesProperty.get()) {

@@ -1,16 +1,15 @@
 apply plugin: 'java'
 group = 'rcstadheim'
 
-ext.springVersion = '4.2.3.RELEASE'
-ext.htmlunitVersion = '2.18'
+ext.springVersion = '4.3.1.RELEASE'
+ext.htmlunitVersion = '2.22'
 ext.junitVersion = '4.11'
 ext.log4jVersion = '1.2.17'
 ext.aspectjVersion = '1.8.4'
-ext.mybatisVersion = '3.3.0'
+ext.mybatisVersion = '3.4.1'
 ext.mongoVersion = '2.12.5'
 ext.postgresVersion = '9.4-1206-jdbc42'
 ext.commonsLangVersion = '20030203.000129'
-ext.enliveVersion = '1.1.5'
 ext.coltVersion = '1.2.0'
 ext.ehcacheVersion = '1.0.1'
 ext.ehcacheSpringVersion = '1.2.0'
@@ -27,7 +26,9 @@ ext.numericTowerVersion = '0.0.4'
 
 
 ext.major = '5'
-ext.minor = '1'
+ext.minor = '3'
+
+ext.parentDist = '/home/rcs/opt/java/maunaloa/dist'
 
 version = "${major}.${minor}.SNAPSHOT"
 
@@ -50,13 +51,12 @@ dependencies {
     compile project(':oahu')
     compile project(':oahux')
     compile project(':ranoraraku')
-    compile project(':maunakea')
     compile project(':maunaloax')
     compile project(':vega')
+    compile project(':netfonds-repos')
     runtime project(':vegaq')
     runtime project(':maunaloaq')
     runtime project(':waimea')
-    runtime project(':kilauea')
 
     //------------------- aspectj -------------------
     compile "org.aspectj:aspectjrt:$aspectjVersion"
@@ -93,6 +93,7 @@ dependencies {
     compile "log4j:log4j:$log4jVersion"
 }
 
+/*
 buildscript {
     repositories {
         maven {
@@ -104,6 +105,7 @@ buildscript {
         classpath 'clojuresque:clojuresque:1.5.8'
     }
 }
+//*/
 
 task configureSshAntTask {
     description = 'Scp task'
@@ -200,7 +202,7 @@ task hiloWithFriends(description: 'Scp jars: maunaloa, maunaloaq',
     }
 }
 
-def depLibs = ['oahu','oahux','maunakea','maunaloax','ranoraraku','vega']
+def depLibs = ['oahu','oahux','maunaloax','ranoraraku','vega']
 
 task hilofull (description: 'Scp jars: all RCS jars',
                group: 'Hilo') <<  {

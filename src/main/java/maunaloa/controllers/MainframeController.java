@@ -14,7 +14,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.StringConverter;
 import maunaloa.converters.TickerFileNamer;
 import maunaloa.repository.ChartItemRepository;
-import maunaloa.repository.DerivativeRepository;
 import maunaloa.service.FxUtils;
 import nz.sodium.StreamSink;
 import oahu.exceptions.NotImplementedException;
@@ -308,7 +307,6 @@ public class MainframeController {
     private LocalDate chartStartDate;
 
     private ChartItemRepository chartItemRepository;
-    private DerivativeRepository derivativeRepository;
     private StockMarketRepository stockRepository;
     private MaunaloaChart candlesticksChart;
     private MaunaloaChart weeklyChart;
@@ -326,13 +324,6 @@ public class MainframeController {
 
     public void setHeight(double height) {
         this.height = height;
-    }
-
-    public DerivativeRepository getDerivativeRepository() {
-        return derivativeRepository;
-    }
-    public void setDerivativeRepository(DerivativeRepository derivativeRepository) {
-        this.derivativeRepository = derivativeRepository;
     }
 
     public void setStockRepository(StockMarketRepository stockRepository) {

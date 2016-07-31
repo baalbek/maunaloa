@@ -3,6 +3,7 @@ package maunaloa.charts;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import maunaloa.repository.ChartItemRepository;
+import oahu.financial.Derivative;
 import oahu.financial.OptionCalculator;
 import oahux.chart.IRuler;
 import oahux.financial.DerivativeFx;
@@ -29,7 +30,7 @@ public class OptionPriceSlider implements ChartItem {
             double t =  derivative.getDays() / 365.0;
             double ivBuy = derivative.getIvBuy();
             //double ivSell = derivative.getIvSell();
-            double buy = derivative.getDerivative().getOpType() == 1 ?
+            double buy = derivative.getDerivative().getOpType() == Derivative.OptionType.CALL ?
                 calculator.callPrice(levelValue,strike,t,ivBuy) :
                 calculator.putPrice(levelValue,strike,t,ivBuy);
             /*
