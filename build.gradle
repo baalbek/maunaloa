@@ -7,7 +7,8 @@ ext.junitVersion = '4.11'
 ext.log4jVersion = '1.2.17'
 ext.aspectjVersion = '1.8.4'
 ext.mybatisVersion = '3.4.1'
-ext.mongoVersion = '3.3.0'
+//ext.mongoVersion = '3.3.0'
+ext.mongoVersion = '2.12.5'
 ext.postgresVersion = '9.4-1206-jdbc42'
 ext.commonsLangVersion = '20030203.000129'
 ext.coltVersion = '1.2.0'
@@ -54,8 +55,6 @@ dependencies {
     compile project(':maunaloax')
     compile project(':vega')
     compile project(':netfonds-repos')
-    runtime project(':vegaq')
-    runtime project(':maunaloaq')
     runtime project(':waimea')
 
     //------------------- aspectj -------------------
