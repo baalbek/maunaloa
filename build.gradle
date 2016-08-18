@@ -15,7 +15,7 @@ ext.coltVersion = '1.2.0'
 ext.ehcacheVersion = '1.0.1'
 ext.ehcacheSpringVersion = '1.2.0'
 //ext.reactiveVersion = '1.1.0'
-ext.sodiumVersion = '1.0.0'
+ext.sodiumVersion = '1.1.0'
 
 
 
