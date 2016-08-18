@@ -16,6 +16,7 @@ ext.ehcacheVersion = '1.0.1'
 ext.ehcacheSpringVersion = '1.2.0'
 //ext.reactiveVersion = '1.1.0'
 ext.sodiumVersion = '1.0.0'
+ext.rxVersion = '1.1.9'
 
 
 
@@ -55,6 +56,7 @@ dependencies {
     compile project(':maunaloax')
     compile project(':vega')
     compile project(':netfonds-repos')
+
     runtime project(':waimea')
 
     //------------------- aspectj -------------------
@@ -82,7 +84,8 @@ dependencies {
 
     //------------------- Reactive -------------------
     //compile "io.reactive:rxjava:$reactiveVersion"
-    compile "nz.sodium:sodium:$sodiumVersion"
+    //compile "nz.sodium:sodium:$sodiumVersion"
+    compile group: 'io.reactivex', name: 'rxjava', version: rxVersion
     //------------------- HtmlUnit-------------------
     compile "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"
     //------------------- diverse -------------------
