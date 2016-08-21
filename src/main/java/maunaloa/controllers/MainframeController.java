@@ -15,7 +15,6 @@ import javafx.util.StringConverter;
 import maunaloa.converters.TickerFileNamer;
 import maunaloa.repository.ChartItemRepository;
 import maunaloa.service.FxUtils;
-import nz.sodium.StreamSink;
 import oahu.exceptions.NotImplementedException;
 import oahu.financial.Stock;
 import oahu.financial.repository.StockMarketRepository;
@@ -151,8 +150,9 @@ public class MainframeController {
             optionsController.selectedLoadStockProperty().bind(cxLoadStockHtml.selectedProperty());
             optionsController.selectedLoadDerivativesProperty().bind(cxLoadOptionsHtml.selectedProperty());
             optionsController.setMainframeController(this);
-            optionsController.addStockChangedListener(stockCatAllCell);
+            //===>>> optionsController.addStockChangedListener(stockCatAllCell);
         }
+        /* ===>>>
         Procedure4<ChartCanvasController,ControllerLocation,MaunaloaChart,nz.sodium.Cell<Stock>> initController =
                 (controller,
                  location,
@@ -161,19 +161,22 @@ public class MainframeController {
                     controller.setControllerLocation(location);
                     controller.setChart(chart);
                     controller.setMainframeController(this);
-                    controller.addStockChangedListener(stockCell);
+                    //===>>> controller.addStockChangedListener(stockCell);
                     _controllers.put(location, controller);
-                    controller.addOptionRiscCalculatedListener(optionsController.onRiscCalculated);
+                    //===>>> controller.addOptionRiscCalculatedListener(optionsController.onRiscCalculated);
                     switch (controller.getControllerLocation()) {
                         case DAY:
                         case WEEK:
-                            controller.addOptionSlidersShowListener(optionsController.onOptionSlidersShow);
+                            //===>>> controller.addOptionSlidersShowListener(optionsController.onOptionSlidersShow);
                             break;
                     }
                 };
 
+        //*/
+        /* ===>>>
         initController.apply(candlesticksController, ControllerLocation.DAY, candlesticksChart, stockCat1Cell);
         initController.apply(weeksController, ControllerLocation.WEEK, weeklyChart, stockCat1Cell);
+        //*/
 
     }
 
@@ -219,7 +222,7 @@ public class MainframeController {
                 stock = (Stock)prop;
             }
             System.out.println("TickerFileNamer date: " + tickerFileNamer.getDownloadDate());
-            ((StreamSink)stockChanged).send(stock);
+            //===>>> ((StreamSink)stockChanged).send(stock);
             tickerFileNamer.setDownloadDate(candlesticksController.getLastCurrentDateShown());
         };
 
@@ -259,6 +262,7 @@ public class MainframeController {
     //endregion ChartCanvasController
 
     //region Events
+    /*
     private final nz.sodium.Stream<Stock> stockChanged = new StreamSink<>();
     private final nz.sodium.Cell<Stock> stockCat1Cell = stockChanged.filter(x -> x.getTickerCategory() == 1).hold(null);
     private final nz.sodium.Cell<Stock> stockCat2Cell = stockChanged.filter(x -> x.getTickerCategory() == 2).hold(null);
@@ -295,6 +299,7 @@ public class MainframeController {
             }
         }
     }
+    //*/
     //endregion Events
 
     //region Properties

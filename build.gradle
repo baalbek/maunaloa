@@ -14,8 +14,6 @@ ext.commonsLangVersion = '20030203.000129'
 ext.coltVersion = '1.2.0'
 ext.ehcacheVersion = '1.0.1'
 ext.ehcacheSpringVersion = '1.2.0'
-//ext.reactiveVersion = '1.1.0'
-ext.sodiumVersion = '1.0.0'
 ext.rxVersion = '1.1.9'
 
 
@@ -83,8 +81,6 @@ dependencies {
     runtime "colt:colt:$coltVersion"
 
     //------------------- Reactive -------------------
-    //compile "io.reactive:rxjava:$reactiveVersion"
-    //compile "nz.sodium:sodium:$sodiumVersion"
     compile group: 'io.reactivex', name: 'rxjava', version: rxVersion
     //------------------- HtmlUnit-------------------
     compile "net.sourceforge.htmlunit:htmlunit:$htmlunitVersion"

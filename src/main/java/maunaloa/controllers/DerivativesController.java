@@ -1,6 +1,5 @@
 package maunaloa.controllers;
 
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -17,7 +16,6 @@ import javafx.util.converter.DoubleStringConverter;
 import maunaloa.derivatives.PurchaseCategory;
 import maunaloa.derivatives.RiscItem;
 import maunaloa.stocks.StockPriceFx;
-import nz.sodium.StreamSink;
 import oahu.financial.Stock;
 import oahux.financial.DerivativeFx;
 import org.apache.log4j.Logger;
@@ -101,7 +99,7 @@ public class DerivativesController {
         initChoiceBoxPurchaseCategory();
         initGrid();
         btnOptionPriceSliders.setOnAction(event -> {
-            shodOptionSliders();
+            //shodOptionSliders();
         });
     }
 
@@ -123,7 +121,7 @@ public class DerivativesController {
 
         cbRisc.getItems().addAll(cbitems);
         cbRisc.getSelectionModel().selectedIndexProperty().addListener((observable, value, newValue) -> {
-            calcRisc(cbitems.get(newValue.intValue()));
+            //===>>> calcRisc(cbitems.get(newValue.intValue()));
         });
         txRisc.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -139,7 +137,7 @@ public class DerivativesController {
                 }
                 double newRiscValue = Double.parseDouble(newValue.replace(",", "."));
                 if (newRiscValue > 0) {
-                    calcRisc(new RiscItem(newRiscValue));
+                    //===>>> calcRisc(new RiscItem(newRiscValue));
                 }
             } catch (Exception ex) {
             }
@@ -241,6 +239,7 @@ public class DerivativesController {
     //endregion Private Methods
 
     //region Events
+    /*
     private final nz.sodium.Stream<List<DerivativeFx>> riscCalculated = new StreamSink<>();
     public final nz.sodium.Cell<List<DerivativeFx>> onRiscCalculated = riscCalculated.hold(null);
 
@@ -257,7 +256,6 @@ public class DerivativesController {
         List<DerivativeFx> selected = getSelectedDerivatives(null);
         ((StreamSink)optionSlidersShow).send(selected);
     }
-
     public void addStockChangedListener(nz.sodium.Cell<Stock> cell) {
         cell.listen( s -> {
             if (s == null) {
@@ -268,6 +266,7 @@ public class DerivativesController {
             _updateDerivatives();
         });
     }
+    //*/
     //endregion Events
 
     //region Properties

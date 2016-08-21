@@ -87,6 +87,7 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
     //endregion Init
 
     //region Events
+    /*
     public void addStockChangedListener(nz.sodium.Cell<Stock> cell) {
         cell.listen( s -> {
             if (s == null) {
@@ -129,18 +130,17 @@ public class ChartCanvasController implements MaunaloaChartViewModel {
                 double value = e.getY(); //vruler.calcValue(e.getY());
                 repos.newLevelEntity(this, stock, vruler, value);
                 //LevelLine line = new LevelLine(v:walue,vruler,col)
-                /*
-                LevelEntity entity =
-                        new LevelEntity(stock.getTicker(),
-                                boss.getLocation(),
-                                value,
-                                boss.getVruler());
-                addNewLevel(entity);
-                */
+                //LevelEntity entity =
+                //  new LevelEntity(stock.getTicker(),
+                //                boss.getLocation(),
+                //                value,
+                //                boss.getVruler());
+                //addNewLevel(entity);
                 myPane.setOnMouseReleased(null);
             });
         }
     }
+    //*/
     //endregion Events
 
 
